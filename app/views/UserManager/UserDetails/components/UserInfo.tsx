@@ -1,0 +1,181 @@
+import React from "react";
+import { View, Text, TouchableOpacity, Image } from "react-native";
+import styles from "./styles";
+import {
+  BLACK_COLOR,
+  GRAY_COLOR,
+  GRAY_LIGHT_COLOR,
+} from "../../../../components/utilities/constant";
+import { ScrollView } from "react-native-gesture-handler";
+import images from "../../../../assets/images";
+import strings from "../../../../components/utilities/Localization";
+
+const UserInfoView = (props: any) => {
+  const item = props?.items || {};
+  var birthDate = new Date(item.dateofbirth);
+
+  // get difference from current date;
+  var difference = Date.now() - birthDate.getTime();
+
+  var ageDate = new Date(difference);
+  var calculatedAge: any = Math.abs(ageDate.getUTCFullYear() - 1970);
+  
+  return (
+    <ScrollView>
+      <View style={styles.Txtview}>
+        <View style={styles.projectContainer}>
+          <Text style={styles.projectTxt}>Full Name</Text>
+        </View>
+        <View>
+          <Text>:</Text>
+        </View>
+        <View style={styles.nameContainer}>
+          <Text style={styles.nameTxt}>
+            {item.user_name === "" ||
+            item.user_name === undefined ||
+            item.user_name === "null"
+              ? strings.notfount
+              : item.user_name}
+          </Text>
+        </View>
+      </View>
+      <View style={styles.Txtview}>
+        <View style={styles.projectContainer}>
+          <Text style={styles.projectTxt}>Mobile no</Text>
+        </View>
+        <View>
+          <Text>:</Text>
+        </View>
+        <View style={styles.nameContainer}>
+          <Text style={styles.nameTxt}>
+            {item.mobile === "" ||
+            item.mobile === undefined ||
+            item.mobile === "null"
+              ? strings.notfount
+              : item.mobile}
+          </Text>
+        </View>
+      </View>
+      <View style={styles.Txtview}>
+        <View style={styles.projectContainer}>
+          <Text style={styles.projectTxt}>Whatsapp no.</Text>
+        </View>
+        <View>
+          <Text>:</Text>
+        </View>
+        <View style={styles.nameContainer}>
+          <Text style={styles.nameTxt}>
+            {item.whatsapp_no === "" ||
+            item.whatsapp_no === undefined ||
+            item.whatsapp_no === "null"
+              ? strings.notfount
+              : item.whatsapp_no}
+          </Text>
+        </View>
+      </View>
+      <View style={styles.Txtview}>
+        <View style={styles.projectContainer}>
+          <Text style={styles.projectTxt}>Email</Text>
+        </View>
+        <View>
+          <Text>:</Text>
+        </View>
+        <View style={styles.nameContainer}>
+          <Text style={styles.nameTxt}>
+            {item.email === "" ||
+            item.email === undefined ||
+            item.email === "null"
+              ? strings.notfount
+              : item.email}
+          </Text>
+        </View>
+      </View>
+      <View style={styles.Txtview}>
+        <View style={styles.projectContainer}>
+          <Text style={styles.projectTxt}>Address</Text>
+        </View>
+        <View>
+          <Text>:</Text>
+        </View>
+        <View style={styles.nameContainer}>
+          <Text style={styles.nameTxt}>
+            {item.address === "" ||
+            item.address === undefined ||
+            item.address === "null"
+              ? strings.notfount
+              : item.address}
+          </Text>
+        </View>
+      </View>
+      <View style={styles.Txtview}>
+        <View style={styles.projectContainer}>
+          <Text style={styles.projectTxt}>City</Text>
+        </View>
+        <View>
+          <Text>:</Text>
+        </View>
+        <View style={styles.nameContainer}>
+          <Text style={styles.nameTxt}>
+            {calculatedAge === "" ||
+            calculatedAge === undefined ||
+            calculatedAge === "null"
+              ? strings.notfount
+              : calculatedAge + 'Y'}
+          </Text>
+        </View>
+      </View>
+      <View style={styles.Txtview}>
+        <View style={styles.projectContainer}>
+          <Text style={styles.projectTxt}>Age</Text>
+        </View>
+        <View>
+          <Text>:</Text>
+        </View>
+        <View style={styles.nameContainer}>
+          <Text style={styles.nameTxt}>
+            {item.city === "" ||
+            item.city === undefined ||
+            item.city === "null"
+              ? strings.notfount
+              : item.city}
+          </Text>
+        </View>
+      </View>
+      <View style={styles.Txtview}>
+        <View style={styles.projectContainer}>
+          <Text style={styles.projectTxt}>Aadhaar no.</Text>
+        </View>
+        <View>
+          <Text>:</Text>
+        </View>
+        <View style={styles.nameContainer}>
+          <Text style={styles.nameTxt}>
+            {item.adhar_no === "" ||
+            item.adhar_no === undefined ||
+            item.adhar_no === "null"
+              ? strings.notfount
+              : item.adhar_no}
+          </Text>
+        </View>
+      </View>
+      <View style={styles.Txtview}>
+        <View style={styles.projectContainer}>
+          <Text style={styles.projectTxt}>Pancard no.</Text>
+        </View>
+        <View>
+          <Text>:</Text>
+        </View>
+        <View style={styles.nameContainer}>
+          <Text style={styles.nameTxt}>
+            {item.pancard_no === "" ||
+            item.pancard_no === undefined ||
+            item.pancard_no === "null"
+              ? strings.notfount
+              : item.pancard_no}
+          </Text>
+        </View>
+      </View>
+    </ScrollView>
+  );
+};
+export default UserInfoView;
