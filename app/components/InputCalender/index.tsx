@@ -124,12 +124,12 @@ const InputCalender = (props: any) => {
         (<DatePicker
           modal={true}
           mode={'date'}
-          minimumDate={props?.minimumDate ? props?.minimumDate : ''}
+          minimumDate={props?.minimumDate ? props?.minimumDate : null}
           maximumDate={props.headingText === strings.dateOfBirth ||
             props.placeholderText === strings.dateOfBirth
             ?
             new Date(moment(minDate).format()) :
-            props.maximumDate ? props.maximumDate : ''}
+            props.maximumDate ? props.maximumDate : null}
           open={open}
           date={props.headingText === strings.dateOfBirth ||
             props.placeholderText === strings.dateOfBirth
