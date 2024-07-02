@@ -1592,6 +1592,7 @@ const AddNewVisitorForm = (props: any) => {
         handleCloseCountry={props.handleCloseCountry}
         countryData={props.countryData}
         selectCountryData={props.selectCountryData}
+        countryCode={props?.formData?.country_code}
       />
     </View>
   );

@@ -86,7 +86,7 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
     cp_type: "",
     cp_id: "",
     cp_emp_id: "",
-    country_code: "",
+    country_code: "+91",
   });
   const [NavigationType, setNavigationType] = useState(0);
   const [dropDownType, setDropDownType] = useState(0);

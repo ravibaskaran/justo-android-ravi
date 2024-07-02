@@ -1453,6 +1453,7 @@ const VisitorUpdateView = (props: any) => {
         handleCloseCountry={props.handleCloseCountry}
         countryData={props.countryData}
         selectCountryData={props.selectCountryData}
+        countryCode={props?.updateForm?.country_code}
       />
     </View>
   );

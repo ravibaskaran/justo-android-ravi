@@ -6,7 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-native-modal";
 import styles from "./styles";
 import images from "app/assets/images";
@@ -14,6 +14,15 @@ import { normalizeSpacing } from "../scaleFontSize";
 import { Isios } from "../utilities/constant";
 
 const CountryPickerModal = (props: any) => {
+  const [scrollIndex, setscrollIndex] = useState(0);
+
+  useEffect(() => {
+    let index = props?.countryData?.findIndex(
+      (obj: any) => obj?.dial_code === props?.countryCode
+    );
+    if (index > -1) setscrollIndex(index);
+  }, [props?.countryCode]);
+
   return (
     <Modal
       isVisible={props.countyPicker}
@@ -23,8 +32,8 @@ const CountryPickerModal = (props: any) => {
       style={{}}
     >
       <View style={styles.countyModelCon}>
-        <View style={{  }}>
-          <View style={[styles.topContainer, {alignItems: 'center'}]}>
+        <View style={{}}>
+          <View style={[styles.topContainer, { alignItems: "center" }]}>
             <Text style={styles.topTxt}>{"Country Code"}</Text>
             <TouchableOpacity
               onPress={() => props.handleCloseCountry()}
@@ -42,33 +51,53 @@ const CountryPickerModal = (props: any) => {
             <TextInput
               // keyboardType="phone-pad"
               onChangeText={(text) => {
-                  console.log("🚀 ~ file: CountryPickerModal.tsx:43 ~ text:", text)
-                  
-                return props.handleCountryCode(text)}
-              }
+                console.log(
+                  "🚀 ~ file: CountryPickerModal.tsx:43 ~ text:",
+                  text
+                );
+
+                return props.handleCountryCode(text);
+              }}
               // value={props.countryCode}
               placeholder="Search..."
-              style={[styles.serchInput, Isios ? {
-                marginTop: normalizeSpacing(8),
-              }: {}]}
+              style={[
+                styles.serchInput,
+                Isios
+                  ? {
+                      marginTop: normalizeSpacing(8),
+                    }
+                  : {},
+              ]}
               placeholderTextColor={"#a9a9a9"}
             />
           </View>
         </View>
         <FlatList
+          initialScrollIndex={scrollIndex}
           nestedScrollEnabled={true}
           data={props.countryData}
+          initialNumToRender={20}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item, index }) => (
             <TouchableOpacity
               onPress={() => props.selectCountryData(item.dial_code, item.flag)}
-              style={styles.countryCodeSelect}
+              style={[
+                styles.countryCodeSelect,
+                {
+                  backgroundColor:
+                    item.dial_code == props?.countryCode
+                      ? "#a9a9a9"
+                      : "#f5f5f5",
+                },
+              ]}
             >
-              <Text style={{ textAlign: "left", width: normalizeSpacing(30) }}>{item.flag}</Text>
+              <Text style={{ textAlign: "left", width: normalizeSpacing(30) }}>
+                {item.flag}
+              </Text>
               <Text style={{ textAlign: "left", width: normalizeSpacing(50) }}>
                 {item.dial_code}
               </Text>
-              <Text style={{ marginLeft: 10, textAlign: "left", width: '70%' }}>
+              <Text style={{ marginLeft: 10, textAlign: "left", width: "70%" }}>
                 {item.name}
               </Text>
             </TouchableOpacity>
