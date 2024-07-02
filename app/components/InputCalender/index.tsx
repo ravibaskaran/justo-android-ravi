@@ -1,4 +1,4 @@
-import { View, TextInput, Image, TouchableOpacity, Text } from 'react-native';
+import { View, TextInput, Image, TouchableOpacity, Text, Pressable } from 'react-native';
 import React, { useState } from 'react';
 import styles from '../InputField/styles';
 import { BLACK_COLOR, DATE_FORMAT, DATE_FORMAT_EXCL, Isios, RED_COLOR, TIME_FORMAT } from '../utilities/constant';
@@ -88,7 +88,7 @@ const InputCalender = (props: any) => {
     setOpen(true)
   }
   return (
-    <View>
+    <Pressable onPress={() => setOpen(true)}>
       <View style={styles.inputHeadinView}>
         <Text style={styles.inputHeadingText}>{props.headingText}</Text>
         {props.require ? (<RequiredStart />) : null}
@@ -174,7 +174,7 @@ const InputCalender = (props: any) => {
         />)
       }
 
-    </View>
+    </Pressable>
   );
 };
 
