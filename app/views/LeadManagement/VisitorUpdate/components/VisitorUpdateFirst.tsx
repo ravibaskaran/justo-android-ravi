@@ -255,6 +255,14 @@ const VisitorUpdateView = (props: any) => {
             value={props?.updateForm?.lead_source}
             onChange={(item: any) => {
               console.log("item: ", item);
+              if (
+                props?.updateForm?.lead_source_id ===
+                  CONST_IDS?.cp_lead_source_id ||
+                props?.updateForm?.lead_source_id ===
+                  CONST_IDS?.by_self_lead_source_id
+              ) {
+                props.handleLeadSourcePressWhenNoCp();
+              }
               props.setUpdateForm({
                 ...props.updateForm,
                 lead_source: item._id,

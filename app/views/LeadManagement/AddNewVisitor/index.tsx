@@ -1008,6 +1008,7 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
       selectCountryData={selectCountryData}
       handleCloseCountry={handleCloseCountry}
       disabled={disabled}
+      handleLeadSourcePressWhenNoCp={getAllPropertyData}
     />
   );
 };

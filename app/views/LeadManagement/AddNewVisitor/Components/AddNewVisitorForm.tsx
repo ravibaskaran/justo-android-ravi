@@ -270,6 +270,11 @@ const AddNewVisitorForm = (props: any) => {
               valueField={"_id"}
               value={props?.formData?.lead_source}
               onChange={(item: any) => {
+                if (
+                  props?.formData?.lead_source === CONST_IDS?.cp_lead_source_id
+                ) {
+                  props.handleLeadSourcePressWhenNoCp();
+                }
                 props.setFormData({
                   ...props.formData,
                   lead_source: item._id,
@@ -278,6 +283,7 @@ const AddNewVisitorForm = (props: any) => {
                   cp_id: "",
                   cp_emp_id: "",
                 });
+
                 if (
                   !(
                     userData?.userData?.data?.role_id ===

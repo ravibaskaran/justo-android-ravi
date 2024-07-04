@@ -149,10 +149,10 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
       if (response?.data?.length > 0) {
         dispatch({ type: STOP_LOADING });
         const list = sourcingPropertyList?.filter((o1: any) =>
-        response?.data?.some((o2: any) => o1?.property_id === o2?.property_id)
+          response?.data?.some((o2: any) => o1?.property_id === o2?.property_id)
         );
         setAllProperty(list);
-        if(list?.length === 0) {
+        if (list?.length === 0) {
           ErrorMessage({
             msg: "No property assigned to this CP",
             backgroundColor: RED_COLOR,
@@ -178,7 +178,7 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
         userData?.data?.role_id === ROLE_IDS.closingmanager_id ||
         userData?.data?.role_id === ROLE_IDS.clusterhead_id ||
         userData?.data?.role_id === ROLE_IDS.sitehead_id ||
-        userData?.data?.role_id === ROLE_IDS.businesshead_id 
+        userData?.data?.role_id === ROLE_IDS.businesshead_id
       ) {
         dispatch(
           getAllProperty({
@@ -187,12 +187,14 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
           })
         );
         getAllPropertyData();
-  
+
         if (propertyData?.response?.status === 200) {
           if (propertyData?.response?.data?.length > 0) {
-            const activeData = propertyData?.response?.data.filter((el: any) => {
-              return el.status == true;
-            });
+            const activeData = propertyData?.response?.data.filter(
+              (el: any) => {
+                return el.status == true;
+              }
+            );
             activeData?.length > 0
               ? setAllProperty(activeData)
               : setAllProperty([]);
@@ -213,7 +215,7 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
   //     userData?.data?.role_id === ROLE_IDS.closingmanager_id ||
   //     userData?.data?.role_id === ROLE_IDS.clusterhead_id ||
   //     userData?.data?.role_id === ROLE_IDS.sitehead_id ||
-  //     userData?.data?.role_id === ROLE_IDS.businesshead_id 
+  //     userData?.data?.role_id === ROLE_IDS.businesshead_id
   //   ) {
   //     dispatch(
   //       getAllProperty({
@@ -292,7 +294,7 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
         cp_emp_id: response?.data[0]?.cp_emp_id,
         cp_name: response?.data[0]?.cp_name,
       });
-      setCountryCode(response?.data[0]?.customer_detail?.country_code)
+      setCountryCode(response?.data[0]?.customer_detail?.country_code);
     }
   }, [response]);
 
@@ -584,10 +586,18 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
     ) {
       isError = false;
       errorMessage = "Please fill mobile number";
-    } else if (updateForm?.mobile && countryCode === "+91" && Regexs.mobilenumRegex.test(updateForm?.mobile) === false) {
+    } else if (
+      updateForm?.mobile &&
+      countryCode === "+91" &&
+      Regexs.mobilenumRegex.test(updateForm?.mobile) === false
+    ) {
       isError = false;
       errorMessage = "Please enter valid Mobile number";
-    } else if (updateForm?.mobile && countryCode !== "+91" && updateForm?.mobile?.length < 10) {
+    } else if (
+      updateForm?.mobile &&
+      countryCode !== "+91" &&
+      updateForm?.mobile?.length < 10
+    ) {
       isError = false;
       errorMessage = "Please Enter valid mobile number";
     }
@@ -877,6 +887,7 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
         countyPicker={countyPicker}
         setCountyPicker={setCountyPicker}
         handleCountryCode={handleCountryCode}
+        handleLeadSourcePressWhenNoCp={getAllPropertyData}
       />
     </>
   );
