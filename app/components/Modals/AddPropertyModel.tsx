@@ -117,7 +117,7 @@ const AddPropertyModel = (props: any) => {
                     ); */
                 const getSelected = checkActiveStatus(item?.property_id);
                 return (
-                  <View style={styles.innerBoxVwlist}>
+                  <View key={item?._id} style={styles.innerBoxVwlist}>
                     <Text style={styles.innerBoxVwlistfont}>
                       {item.property_title}
                     </Text>

@@ -388,6 +388,12 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
           ) {
             isError = false;
             errorMessage = strings.reraCertNoReqVal;
+          } else if (
+            agencyData.rera_certificate_no &&
+            Regexs.reraRegex.test(agencyData.rera_certificate_no) === false
+          ) {
+            isError = false;
+            errorMessage = strings.reraCertNoCheckValid;
           }
           // else if (
           //   agencyData.location == undefined ||
@@ -480,6 +486,12 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
           ) {
             isError = false;
             errorMessage = strings.reraCertNoReqVal;
+          }else if (
+            agencyData.rera_certificate_no &&
+            Regexs.reraRegex.test(agencyData.rera_certificate_no) === false
+          ) {
+            isError = false;
+            errorMessage = strings.reraCertNoCheckValid;
           }
           // else if (
           //   agencyData.location == undefined ||
@@ -501,7 +513,7 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
           ) {
             isError = false;
             errorMessage = strings.gstReqVal;
-          } 
+          }
           // else if (
           //   agencyData.gstApplicable == 2 &&
           //   (agencyData?.propidership_declaration_letter == null ||
@@ -510,7 +522,7 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
           // ) {
           //   isError = false;
           //   errorMessage = strings.DeclrLttrImgReqVal;
-          // } 
+          // }
           else if (selectedProperty?.length === 0) {
             isError = false;
             errorMessage = strings.propertyReqVal;
@@ -603,12 +615,12 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
           // }
         } else if (agencyData?.cp_type === 2) {
           if (
-            agencyData.gst !== ""  &&
+            agencyData.gst !== "" &&
             Regexs.gstRegex.test(agencyData.gst) === false
           ) {
             isError = false;
             errorMessage = strings.gstReqVal;
-          }  
+          }
           // else if (
           //   agencyData.gstApplicable == 2 &&
           //   (agencyData?.propidership_declaration_letter == null ||
@@ -617,7 +629,7 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
           // ) {
           //   isError = false;
           //   errorMessage = strings.DeclrLttrImgReqVal;
-          // }  
+          // }
           else if (selectedProperty?.length === 0) {
             isError = false;
             errorMessage = strings.propertyReqVal;
@@ -829,10 +841,20 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
                   ...emailMobvalidation,
                   primary_mobile: "wrongEmployeeMobile",
                 });
+                let errorMessage = strings.mobileAlreadyValidReqVal;
+                ErrorMessage({
+                  msg: errorMessage,
+                  backgroundColor: RED_COLOR,
+                });
               } else {
                 setEmailMobValidation({
                   ...emailMobvalidation,
                   primary_mobile: "wrongMobile",
+                });
+                let errorMessage = strings.mobileAlreadyValidReqVal;
+                ErrorMessage({
+                  msg: errorMessage,
+                  backgroundColor: RED_COLOR,
                 });
               }
               break;

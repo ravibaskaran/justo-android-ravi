@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   addBtn: {
     backgroundColor: PRIMARY_THEME_COLOR,
     width: normalizeWidth(140),
-    height: normalizeHeight(25),
+    height: normalizeHeight(45),
     borderRadius: 100,
     alignItems: 'center',
     justifyContent: 'center'

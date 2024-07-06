@@ -194,16 +194,26 @@ const AppointmentDtailsItem = (props: any) => {
           </Text>
         </View>
       </View>
-      {item?.checkin_status &&
-        (<View style={styles.Txtview}>
+      {item?.checkin_status && (
+        <View style={styles.Txtview}>
           <View style={styles.projectContainer}>
             <Text style={styles.projectTxt}>{strings.checkinstatus}</Text>
           </View>
-          <View><Text>:</Text></View>
-          <View style={styles.nameContainer}>
-            <Text style={[styles.nameTxt, { color: item?.checkin_status ? GREEN_COLOR : BLACK_COLOR }]}>{item?.checkin_status ? 'Visited' : strings.notfount}</Text>
+          <View>
+            <Text>:</Text>
           </View>
-        </View>)}
+          <View style={styles.nameContainer}>
+            <Text
+              style={[
+                styles.nameTxt,
+                { color: item?.checkin_status ? GREEN_COLOR : BLACK_COLOR },
+              ]}
+            >
+              {item?.checkin_status ? "Visited" : strings.notfount}
+            </Text>
+          </View>
+        </View>
+      )}
       <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
           <Text style={styles.projectTxt}>Appiontment Complete :</Text>
@@ -435,7 +445,7 @@ const AppointmentDtailsItem = (props: any) => {
         {item.status === 1 ? (
           <Button
             width={Isios ? 200 : 160}
-            height={30}
+            height={45}
             bgcolor={WHITE_COLOR}
             bordercolor={PRIMARY_THEME_COLOR}
             borderWidth={1}
@@ -448,7 +458,7 @@ const AppointmentDtailsItem = (props: any) => {
         ) : null}
         <Button
           width={Isios ? 200 : 160}
-          height={30}
+          height={item.status === 1 ? 45 : 30}
           bgcolor={WHITE_COLOR}
           bordercolor={PRIMARY_THEME_COLOR}
           borderWidth={1}

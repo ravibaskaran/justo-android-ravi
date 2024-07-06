@@ -1,4 +1,4 @@
-import { View, FlatList } from "react-native";
+import { View, FlatList, Text } from "react-native";
 import React, { useRef, useState } from "react";
 import styles from "./Styles";
 import images from "../../../../assets/images";
@@ -64,6 +64,9 @@ const LeadManagementView = (props: any) => {
         statusBarColor={PRIMARY_THEME_COLOR}
         barStyle={"light-content"}
       />
+      <Text style={styles.count}>
+        Count : {props?.moreData ? props?.moreData : 0}
+      </Text>
       <View style={styles.propertyListView}>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Button

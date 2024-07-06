@@ -149,7 +149,7 @@ const InputCalender = (props: any) => {
           modal={true}
           mode={"time"}
           open={open}
-          minimumDate={props?.minimumDate ? props?.minimumDate : ''}
+          minimumDate={props?.minimumDate ? props?.minimumDate : null}
           date={new Date()}
           onDateChange={(date) => {
             setOpen(false)

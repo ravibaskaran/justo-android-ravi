@@ -90,7 +90,7 @@ const PropertyView = (props: any) => {
       location: "",
       property_name: "",
       property_type: "",
-      property_id: ""
+      property_id: "",
     });
     props.getallproperty(0);
     setPropertyList([]);
@@ -121,6 +121,12 @@ const PropertyView = (props: any) => {
         handleOnRightFirstIconPress={() => setFilterisVisible(true)}
       />
       <View style={styles.propertyListView}>
+        <Text style={styles.count}>
+          Count :{" "}
+          {propertyData?.response?.total_data
+            ? propertyData?.response?.total_data
+            : 0}
+        </Text>
         <FlatList
           data={propertyList}
           showsVerticalScrollIndicator={false}

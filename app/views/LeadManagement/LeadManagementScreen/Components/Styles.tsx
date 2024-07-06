@@ -1,5 +1,10 @@
-import { StyleSheet } from 'react-native';
-import { normalize, normalizeHeight, normalizeSpacing, normalizeWidth } from '../../../../components/scaleFontSize';
+import { StyleSheet } from "react-native";
+import {
+  normalize,
+  normalizeHeight,
+  normalizeSpacing,
+  normalizeWidth,
+} from "../../../../components/scaleFontSize";
 import {
   BLACK_COLOR,
   CALL_COLOR,
@@ -9,7 +14,7 @@ import {
   GRAY_LIGHT_COLOR,
   PRIMARY_THEME_COLOR,
   WHITE_COLOR,
-} from '../../../../components/utilities/constant';
+} from "../../../../components/utilities/constant";
 
 const styles = StyleSheet.create({
   headerStyle: {
@@ -23,13 +28,13 @@ const styles = StyleSheet.create({
   },
   propertyListView: {
     flex: 1,
-    margin: normalizeSpacing(10),
+    margin: normalizeSpacing(5),
   },
   TopBtnView: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginVertical: normalizeSpacing(10),
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center",
   },
   IteamView: {
     backgroundColor: WHITE_COLOR,
@@ -38,8 +43,8 @@ const styles = StyleSheet.create({
     marginVertical: normalizeSpacing(10),
   },
   Txtview: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     borderBottomColor: GRAY_COLOR,
     borderBottomWidth: 1,
     padding: normalizeSpacing(4),
@@ -47,28 +52,28 @@ const styles = StyleSheet.create({
   },
   projectContainer: {
     flex: 2.5,
-    alignItems: 'flex-end',
+    alignItems: "flex-end",
   },
   projectTxt: {
     fontSize: normalize(15),
     fontFamily: FONT_FAMILY_SEMIBOLD,
-    color: GRAY_LIGHT_COLOR
+    color: GRAY_LIGHT_COLOR,
   },
   nameContainer: {
     flex: 3.5,
-    alignItems: 'flex-start',
+    alignItems: "flex-start",
   },
   nameTxt: {
     fontSize: normalize(15),
     fontFamily: FONT_FAMILY_EXTRABOLD,
     color: BLACK_COLOR,
-    marginHorizontal: normalizeSpacing(10)
+    marginHorizontal: normalizeSpacing(10),
   },
   buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginVertical: normalizeSpacing(10),
-    alignItems: 'flex-end'
+    alignItems: "flex-end",
   },
   button: {
     top: 10,
@@ -76,42 +81,43 @@ const styles = StyleSheet.create({
     width: normalizeWidth(100),
     height: normalizeHeight(25),
     marginLeft: normalizeSpacing(10),
-    justifyContent: 'center',
+    justifyContent: "center",
     borderWidth: 0.5,
-    borderRadius: 10
+    borderRadius: 10,
   },
   Viewbutton: {
     top: 10,
     backgroundColor: PRIMARY_THEME_COLOR,
     borderBottomEndRadius: 10,
     borderTopLeftRadius: 10,
-    padding: normalizeSpacing(5)
+    padding: normalizeSpacing(5),
   },
   arrow: {
     tintColor: WHITE_COLOR,
     width: normalizeWidth(30),
-    height: normalizeHeight(30)
+    height: normalizeHeight(30),
   },
   buttonTxt: {
     color: BLACK_COLOR,
-    textAlign: 'center'
+    textAlign: "center",
   },
   BulkMainView: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   uploadView: {
     backgroundColor: GRAY_COLOR,
-    width: '90%',
+    width: "90%",
     height: normalizeHeight(100),
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: "center",
+    justifyContent: "center",
   },
   uploadTxt: {
     color: BLACK_COLOR,
     fontSize: normalize(18),
-  }
+  },
+  count: { alignSelf: "flex-end", marginRight: 2 },
 });
 
 export default styles;

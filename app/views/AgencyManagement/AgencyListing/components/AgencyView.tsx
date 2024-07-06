@@ -89,6 +89,9 @@ const AgencyView = (props: any) => {
         statusBarColor={PRIMARY_THEME_COLOR}
       />
       <View style={styles.propertyListView}>
+        <Text style={styles.count}>
+          Count : {props?.agentList?.length ? props?.agentList?.length : 0}
+        </Text>
         <View style={styles.btnView}>
           {/* Add New Cp */}
           {create && (

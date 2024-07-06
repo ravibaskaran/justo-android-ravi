@@ -12,7 +12,6 @@ import FilterModal from "./FollowUpModal";
 import { useSelector } from "react-redux";
 import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
 
-
 const FollowUpView = (props: any) => {
   const loadingref = false;
   const insets = useSafeAreaInsets();
@@ -33,10 +32,10 @@ const FollowUpView = (props: any) => {
       startdate: "",
       enddate: "",
       followup_for: "",
-      lead_id: ''
+      lead_id: "",
     });
     props.getFollowupList(0, {});
-    props.setFollowUpList([])
+    props.setFollowUpList([]);
   };
   return (
     <View style={styles.mainContainer}>
@@ -50,7 +49,11 @@ const FollowUpView = (props: any) => {
         RightFirstIconStyle={styles.RightFirstIconStyle}
         handleOnRightFirstIconPress={() => setFilterisVisible(true)}
       />
+     
       <View style={styles.followupItemView}>
+      <Text style={styles.count}>
+        Count : {props?.moreData ? props?.moreData : 0}
+      </Text>
         <FlatList
           data={Array.isArray(props?.followUpList) ? props?.followUpList : []}
           showsVerticalScrollIndicator={false}

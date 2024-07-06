@@ -23,7 +23,7 @@ const BookingListView = (props: any) => {
       start_date: "",
       end_date: "",
       status: "",
-      customer_name: ""
+      customer_name: "",
     });
   };
   return (
@@ -44,15 +44,18 @@ const BookingListView = (props: any) => {
         RightFirstIconStyle={{ tintColor: WHITE_COLOR }}
         handleOnRightFirstIconPress={() => setisVisable(true)}
       />
+      <Text style={styles.count}>
+        Count : {props?.moreData ? props?.moreData : 0}
+      </Text>
       <View style={{ alignItems: "flex-end", marginTop: normalizeSpacing(10) }}>
         <Button
           width={120}
           height={40}
           buttonText={"Reset"}
           handleBtnPress={() => {
-            props.navigation.setParams({onpressType: ''})
+            props.navigation.setParams({ onpressType: "" });
             props.setDatatype("");
-            onReset()
+            onReset();
           }}
         />
       </View>
@@ -88,7 +91,7 @@ const BookingListView = (props: any) => {
           }}
           refreshing={false}
           onRefresh={() => {
-            props.navigation.setParams({onpressType: ''})
+            props.navigation.setParams({ onpressType: "" });
             props.setDatatype("");
             props.getBookingLits(0);
             props.setBookingList([]);
@@ -96,7 +99,7 @@ const BookingListView = (props: any) => {
               start_date: "",
               end_date: "",
               status: "",
-              customer_name: ""
+              customer_name: "",
             });
           }}
         />

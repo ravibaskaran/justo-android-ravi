@@ -1,4 +1,11 @@
-import { View, Text, Image, TouchableOpacity, ScrollView, Keyboard } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  Keyboard,
+} from "react-native";
 import React, { useState } from "react";
 import Modal from "react-native-modal";
 import styles from "../../../../components/Modals/styles";
@@ -9,7 +16,11 @@ import InputField from "../../../../components/InputField";
 import DropdownInput from "../../../../components/DropDown";
 import InputCalender from "app/components/InputCalender";
 import moment from "moment";
-import { DATE_FORMAT, Isios, RED_COLOR } from "app/components/utilities/constant";
+import {
+  DATE_FORMAT,
+  Isios,
+  RED_COLOR,
+} from "app/components/utilities/constant";
 import { normalizeSpacing } from "app/components/scaleFontSize";
 import ErrorMessage from "app/components/ErrorMessage";
 const FilterModal = (props: any) => {
@@ -28,10 +39,16 @@ const FilterModal = (props: any) => {
     let isError = true;
     let errorMessage: any = "";
 
-    if (props.filterData?.startdate !== "" && props.filterData?.enddate === "") {
+    if (
+      props.filterData?.startdate !== "" &&
+      props.filterData?.enddate === ""
+    ) {
       isError = false;
       errorMessage = "Please enter end date";
-    } else if (props.filterData?.enddate !== "" && props.filterData?.startdate === "") {
+    } else if (
+      props.filterData?.enddate !== "" &&
+      props.filterData?.startdate === ""
+    ) {
       isError = false;
       errorMessage = "Please enter start date";
     } else if (!(props.filterData?.startdate <= props.filterData?.enddate)) {
@@ -50,16 +67,18 @@ const FilterModal = (props: any) => {
     return isError;
   };
   const handleFilter = () => {
-    if(validation()) {
-      props.setIsVisible(false)
-      props.getAgencyList(0, props.filterData)
+    if (validation()) {
+      props.setIsVisible(false);
+      props.getAgencyList(0, props.filterData);
     }
-  }
+  };
   return (
     <Modal isVisible={props.Visible}>
-      <ScrollView keyboardShouldPersistTaps={'handled'}
+      <ScrollView
+        keyboardShouldPersistTaps={"handled"}
         automaticallyAdjustKeyboardInsets={Isios ? true : false}
-        contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
+        contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+      >
         <View style={styles.mainContainer}>
           <View style={styles.topContainer}>
             <Text style={styles.topTxt}>{strings.searchAgency}</Text>
@@ -128,7 +147,7 @@ const FilterModal = (props: any) => {
                   });
                 }}
                 valueshow={props?.filterData?.search_by_name}
-                handleInputBtnPress={() => { }}
+                handleInputBtnPress={() => {}}
               />
             </View>
             {/* <View style={styles.inputWrap}>
@@ -166,19 +185,24 @@ const FilterModal = (props: any) => {
             <View style={[styles.inputWrap, { top: normalizeSpacing(10) }]}>
               <InputField
                 disableSpecialCharacters={true}
-                headingText={strings.searchBy + " " + strings.RERA + " "+ strings.number}
-                placeholderText={strings.searchBy + " " + strings.RERA + " "+ strings.number}
+                headingText={
+                  strings.searchBy + " " + strings.RERA + " " + strings.number
+                }
+                placeholderText={
+                  strings.searchBy + " " + strings.RERA + " " + strings.number
+                }
                 onChangeText={(data: any) => {
+                  if (data?.length > 12) return;
                   props.setFilterData({
                     ...props.filterData,
                     rera_no: data,
                   });
                 }}
                 valueshow={props?.filterData?.rera_no}
-                handleInputBtnPress={() => { }}
+                handleInputBtnPress={() => {}}
               />
             </View>
-            <View style={[styles.inputWrap , { top: normalizeSpacing(10) }]}>
+            <View style={[styles.inputWrap, { top: normalizeSpacing(10) }]}>
               <DropdownInput
                 style={styles.dropdown}
                 placeholderStyle={styles.placeholderStyle}
@@ -203,15 +227,17 @@ const FilterModal = (props: any) => {
             </View>
           </View>
           <View style={{ marginVertical: 20 }}>
-            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+            <View style={{ flexDirection: "row", justifyContent: "center" }}>
               <Button
                 width={135}
                 buttonText={strings.reset}
-                handleBtnPress={() => props.onReset()} />
+                handleBtnPress={() => props.onReset()}
+              />
               <Button
                 width={135}
                 handleBtnPress={() => handleFilter()}
-                buttonText={strings.apply} />
+                buttonText={strings.apply}
+              />
             </View>
           </View>
         </View>

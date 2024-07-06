@@ -1,5 +1,10 @@
-import {StyleSheet} from 'react-native';
-import {normalize, normalizeHeight, normalizeSpacing, normalizeWidth} from '../../../../components/scaleFontSize';
+import { StyleSheet } from "react-native";
+import {
+  normalize,
+  normalizeHeight,
+  normalizeSpacing,
+  normalizeWidth,
+} from "../../../../components/scaleFontSize";
 import {
   BLACK_COLOR,
   FONT_FAMILY_EXTRABOLD,
@@ -9,7 +14,7 @@ import {
   WHITE_COLOR,
   PRIMARY_THEME_COLOR_DARK,
   GRAY_LIGHT_COLOR,
-} from '../../../../components/utilities/constant';
+} from "../../../../components/utilities/constant";
 
 const styles = StyleSheet.create({
   headerStyle: {
@@ -31,71 +36,72 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginVertical: normalizeSpacing(10),
   },
-  Txtview : {
-    flexDirection: 'row',
-    alignItems: 'center',
+  Txtview: {
+    flexDirection: "row",
+    alignItems: "center",
     borderBottomColor: GRAY_COLOR,
     borderBottomWidth: 1,
     padding: normalizeSpacing(4),
     marginTop: normalizeSpacing(2),
   },
-  projectContainer : {
+  projectContainer: {
     flex: 2.5,
-    alignItems: 'flex-end',
+    alignItems: "flex-end",
   },
-  projectTxt : {
+  projectTxt: {
     fontSize: normalize(15),
     fontFamily: FONT_FAMILY_SEMIBOLD,
-    color: GRAY_LIGHT_COLOR
+    color: GRAY_LIGHT_COLOR,
   },
-  nameContainer : {
+  nameContainer: {
     flex: 3.5,
-    alignItems: 'flex-start',
+    alignItems: "flex-start",
   },
-  nameTxt : {
+  nameTxt: {
     fontSize: normalize(15),
     fontFamily: FONT_FAMILY_EXTRABOLD,
     color: BLACK_COLOR,
-    marginHorizontal: normalizeSpacing(10)
+    marginHorizontal: normalizeSpacing(10),
   },
-  buttonContainer : {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginVertical: normalizeSpacing(10),
   },
-  button : {
+  button: {
     top: 10,
     backgroundColor: WHITE_COLOR,
     width: normalizeWidth(100),
     height: normalizeHeight(30),
     marginLeft: normalizeSpacing(10),
-    justifyContent: 'center',
+    justifyContent: "center",
     borderWidth: 1,
-    borderRadius: 10
+    borderRadius: 10,
   },
-  Viewbutton : {
+  Viewbutton: {
     top: 10,
     backgroundColor: PRIMARY_THEME_COLOR,
     borderBottomEndRadius: 10,
     borderTopLeftRadius: 10,
-    padding: normalizeSpacing(5)
+    padding: normalizeSpacing(5),
   },
-  arrow : {
+  arrow: {
     tintColor: WHITE_COLOR,
     width: normalizeWidth(30),
-    height: normalizeHeight(30)
+    height: normalizeHeight(30),
   },
-  buttonTxt : {
+  buttonTxt: {
     color: WHITE_COLOR,
-    textAlign: 'center',
+    textAlign: "center",
     fontFamily: FONT_FAMILY_SEMIBOLD,
-  },  
+  },
   footer: {
     padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
   },
+  count: { alignSelf: "flex-end", marginRight: 2, marginBottom: 2 },
 });
 
 export default styles;

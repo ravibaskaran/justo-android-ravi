@@ -1,6 +1,19 @@
-import { normalizeSpacing, normalize, normalizeWidth, normalizeHeight } from 'app/components/scaleFontSize';
-import { BLACK_COLOR, FONT_FAMILY_EXTRABOLD, FONT_FAMILY_SEMIBOLD, GRAY_COLOR, GRAY_LIGHT_COLOR, PRIMARY_THEME_COLOR, WHITE_COLOR } from 'app/components/utilities/constant';
-import { StyleSheet } from 'react-native';
+import {
+  normalizeSpacing,
+  normalize,
+  normalizeWidth,
+  normalizeHeight,
+} from "app/components/scaleFontSize";
+import {
+  BLACK_COLOR,
+  FONT_FAMILY_EXTRABOLD,
+  FONT_FAMILY_SEMIBOLD,
+  GRAY_COLOR,
+  GRAY_LIGHT_COLOR,
+  PRIMARY_THEME_COLOR,
+  WHITE_COLOR,
+} from "app/components/utilities/constant";
+import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -19,8 +32,8 @@ const styles = StyleSheet.create({
     marginVertical: normalizeSpacing(10),
   },
   Txtview: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     borderBottomColor: GRAY_COLOR,
     borderBottomWidth: 1,
     padding: normalizeSpacing(8),
@@ -28,44 +41,44 @@ const styles = StyleSheet.create({
   },
   projectContainer: {
     flex: 2.5,
-    alignItems: 'flex-end',
+    alignItems: "flex-end",
   },
   projectTxt: {
     fontSize: normalize(15),
     fontFamily: FONT_FAMILY_SEMIBOLD,
-    color: GRAY_LIGHT_COLOR
+    color: GRAY_LIGHT_COLOR,
   },
   nameContainer: {
     flex: 3.5,
-    alignItems: 'flex-start',
+    alignItems: "flex-start",
   },
   nameTxt: {
     fontSize: normalize(15),
     fontFamily: FONT_FAMILY_EXTRABOLD,
     color: BLACK_COLOR,
-    marginHorizontal: normalizeSpacing(10)
+    marginHorizontal: normalizeSpacing(10),
   },
   buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginVertical: normalizeSpacing(10),
-    alignItems: 'flex-end'
+    alignItems: "flex-end",
   },
   Viewbutton: {
     top: 10,
     backgroundColor: PRIMARY_THEME_COLOR,
     borderBottomEndRadius: 10,
     borderTopLeftRadius: 10,
-    padding: normalizeSpacing(5)
+    padding: normalizeSpacing(5),
   },
   arrow: {
     tintColor: WHITE_COLOR,
     width: normalizeWidth(30),
-    height: normalizeHeight(30)
+    height: normalizeHeight(30),
   },
   topItemsVw: {
     paddingHorizontal: normalize(16),
-    paddingVertical: normalize(16)
+    paddingVertical: normalize(16),
   },
   inputWrap: {
     marginVertical: normalizeSpacing(10),
@@ -79,7 +92,8 @@ const styles = StyleSheet.create({
   textItem: {
     flex: 1,
     fontSize: 16,
-    color: GRAY_LIGHT_COLOR
+    color: GRAY_LIGHT_COLOR,
   },
-})
-export default styles
+  count: { alignSelf: "flex-end", marginRight: 2 },
+});
+export default styles;

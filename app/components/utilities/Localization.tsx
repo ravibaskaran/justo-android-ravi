@@ -145,6 +145,7 @@ const strings = new LocalizedStrings({
     employeesReqVal: 'Employees are require. Please add Employees',
     wrkngLocReqVal: 'Working Location is require. Please enter Working Location',
     reraCertNoReqVal: 'RERA Certificate No. is require. Please enter RERA Certificate No.',
+    reraCertNoCheckValid:'Please enter valid RERA Certificate No.',
     reraCertImgReqVal: 'RERA Certificate is require. Please Choose RERA Certificate',
     noReraRegReqVal: 'If you have not RERA certificate. Please click on no registerd for RERA',
     propDeclrLttrImgReqVal: 'Proprietorship Declaration Letter is require. Please Choose Proprietorship Declaration Letter',

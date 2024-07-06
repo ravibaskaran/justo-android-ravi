@@ -23,6 +23,10 @@ import { Alert, BackHandler } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import DashboardView from "./components/DashboardView";
 import { userLogout } from "app/Redux/Actions/AuthActions";
+import apiEndPoints from "app/components/utilities/apiEndPoints";
+import { apiCall } from "app/components/utilities/httpClient";
+import moment from "moment";
+import { handleApiError } from "app/components/ErrorMessage/HandleApiErrors";
 
 const DashboardScreen = ({ navigation }: any) => {
   const dispatch: any = useDispatch();
@@ -34,6 +38,7 @@ const DashboardScreen = ({ navigation }: any) => {
   const [dashboardData, setDashboardData] = useState<any>({});
   const [listData, setListData] = useState<any>([]);
   const [isEnabled, setIsEnabled] = useState<any>();
+  const [todayAppointmentWithCp, setTodayAppointmentWithCp] = useState(0);
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
@@ -55,15 +60,37 @@ const DashboardScreen = ({ navigation }: any) => {
   useFocusEffect(
     React.useCallback(() => {
       getDashboard();
-      return () => { };
+      if (getLoginType?.response?.data?.role_id === ROLE_IDS.sourcingmanager_id)
+        getAppointmentData();
+      return () => {};
     }, [navigation, isEnabled, getLoginType])
   );
   useFocusEffect(
     React.useCallback(() => {
-      dispatch(getPermission({}))
-      return () => { };
+      dispatch(getPermission({}));
+      return () => {};
     }, [navigation])
-  )
+  );
+
+  async function getAppointmentData() {
+    let params = {
+      appoiment: 2,
+      customer_name: "",
+      end_date: moment(new Date()).format("YYYY-MM-DD"),
+      start_date: moment(new Date()).format("YYYY-MM-DD"),
+      status: "",
+    };
+
+    const res = await apiCall(
+      "post",
+      apiEndPoints.GET_USER_APPOINTMENT_LIST,
+      params
+    );
+    if (res.data.status == 200)
+      setTodayAppointmentWithCp(res?.data?.data?.length);
+    else handleApiError(res?.data);
+  }
+
   useEffect(() => {
     if (response?.status === 200) {
       setDashboardData(response?.data);
@@ -71,8 +98,8 @@ const DashboardScreen = ({ navigation }: any) => {
     } else if (response?.status === 401) {
       setDashboardData({});
       setIsEnabled(null);
-      dispatch(userLogout())
-      navigation.navigate('AuthLoading');
+      dispatch(userLogout());
+      navigation.navigate("AuthLoading");
     } else {
       setDashboardData({});
       setIsEnabled(null);
@@ -86,8 +113,8 @@ const DashboardScreen = ({ navigation }: any) => {
       } else {
         setListData([]);
       }
-    } if (getLoginType?.response?.data?.role_id === ROLE_IDS.closingtl_id
-    ) {
+    }
+    if (getLoginType?.response?.data?.role_id === ROLE_IDS.closingtl_id) {
       if (CMListData?.response?.status === 200) {
         setListData(CMListData?.response?.data);
       } else {
@@ -120,7 +147,7 @@ const DashboardScreen = ({ navigation }: any) => {
     ) {
       dispatch(dashboardClosingData({}));
       if (getLoginType?.response?.data?.role_id === ROLE_IDS.closingtl_id) {
-        dispatch(getClosingManagerList({}))
+        dispatch(getClosingManagerList({}));
       } else {
         setListData([]);
       }
@@ -181,23 +208,23 @@ const DashboardScreen = ({ navigation }: any) => {
     if (type === "details") {
       navigation.navigate("SMDetails", data);
     } else {
-      navigation.navigate("SourcingManager", {type: 'active'});
+      navigation.navigate("SourcingManager", { type: "active" });
     }
   };
   const onPressCPList = (type: any, data: any) => {
     if (type === "details") {
       navigation.navigate("AgencyDetails", { data });
     } else {
-      navigation.navigate("AgencyListing", {type: 'active'});
+      navigation.navigate("AgencyListing", { type: "active" });
     }
   };
   const onPressCMLIST = (type: any, item: any) => {
     if (type === "details") {
-      navigation.navigate('CMDetails', item)
+      navigation.navigate("CMDetails", item);
     } else {
       navigation.navigate("ClosingManager");
     }
-  }
+  };
 
   const onpressBooking = (type: any, onpressType: any) => {
     if (type === "request") {
@@ -206,13 +233,16 @@ const DashboardScreen = ({ navigation }: any) => {
       navigation.navigate("BookingList", { type: "register", onpressType });
     } else if (type === "cancel") {
       navigation.navigate("CancelBooking", onpressType);
-    }
-    else {
+    } else {
       navigation.navigate("BookingList", { type: "readyToBook", onpressType });
     }
   };
   const onpressSMList = () => {
-    navigation.navigate("ClosingManager", {type: 'active'});
+    navigation.navigate("ClosingManager", { type: "active" });
+  };
+
+  const onpressAppointmentWithCP = () => {
+    navigation.navigate("AppointmentScreenCPSM", {});
   };
 
   return (
@@ -231,6 +261,8 @@ const DashboardScreen = ({ navigation }: any) => {
       onpressBooking={onpressBooking}
       onpressSMList={onpressSMList}
       getDashboard={getDashboard}
+      onpressAppointmentWithCP={onpressAppointmentWithCP}
+      todayAppointmentWithCp={todayAppointmentWithCp}
     />
   );
 };

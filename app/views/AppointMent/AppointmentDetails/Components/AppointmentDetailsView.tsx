@@ -16,7 +16,7 @@ import { Isios } from "app/components/utilities/constant";
 import JustForOkModal from "app/components/Modals/JustForOkModal";
 
 const AppointmentDetailsView = (props: any) => {
-  const { detailsData,getDetail } = props;
+  const { detailsData, getDetail } = props;
   const getLoginType = useSelector((state: any) => state.login);
   const { userData = {} } = useSelector((state: any) => state.userData) || [];
   const insets = useSafeAreaInsets();
@@ -163,7 +163,12 @@ const AppointmentDetailsView = (props: any) => {
                       width={150}
                     />
                   ) : null)}
-                {/* Ready To Book */}
+                
+                    <Button
+                      buttonText={strings.followup}
+                      handleBtnPress={() => props.onPressFollowUp()}
+                      width={150}
+                    />
                 {/* {approve && (
                   <Button
                     buttonText={strings.readytoBookHeader}
@@ -210,9 +215,7 @@ const AppointmentDetailsView = (props: any) => {
         setBookingData={props.setBookingData}
         BookingData={props.BookingData}
         handleBooking={() =>
-          props.handleBooking(
-            detailsData?.length > 0 ? detailsData[0] : {}
-          )
+          props.handleBooking(detailsData?.length > 0 ? detailsData[0] : {})
         }
       />
       {/* Cp Check-In Model */}
@@ -226,10 +229,8 @@ const AppointmentDetailsView = (props: any) => {
       <CancelModal
         cancelDataPress={() =>
           props.onpressCloseVisit({
-            lead_id:
-              detailsData?.length > 0 ? detailsData[0]?.lead_id : [],
-            appointment_id:
-              detailsData?.length > 0 ? detailsData[0]?._id : [],
+            lead_id: detailsData?.length > 0 ? detailsData[0]?.lead_id : [],
+            appointment_id: detailsData?.length > 0 ? detailsData[0]?._id : [],
             // cancle_type: 2,  //1=lead, 2=appoinment
           })
         }
@@ -247,14 +248,15 @@ const AppointmentDetailsView = (props: any) => {
         }}
         setIsVisible={props.setOkIsVisible}
       />
-      <JustForOkModal 
+      <JustForOkModal
         headertitle={"Success"}
         message={"Booking has been sent to CRM..."}
-        Visible={props.okBookingIsVisible} 
-        onPressRightButton={()=>{
-          props.setOkBookingIsVisible(false)
+        Visible={props.okBookingIsVisible}
+        onPressRightButton={() => {
+          props.setOkBookingIsVisible(false);
         }}
-        setIsVisible={props.setOkBookingIsVisible} />
+        setIsVisible={props.setOkBookingIsVisible}
+      />
     </View>
   );
 };

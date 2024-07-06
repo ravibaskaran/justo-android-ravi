@@ -40,6 +40,8 @@ const DashboardView = (props: any) => {
       setRefreshing(false);
     }, 2000);
   }
+
+
   const renderItem = ({ item, index }: any) => {
     return (
       <>
@@ -162,6 +164,8 @@ const DashboardView = (props: any) => {
               onPressSiteVisit={props.onPressSiteVisit}
               onPressSMList={props.onPressSMList}
               onPressCPList={props.onPressCPList}
+              onpressAppointmentWithCP={props.onpressAppointmentWithCP}
+              todayAppointmentWithCp={props?.todayAppointmentWithCp}
             />
           ) : (
             <>

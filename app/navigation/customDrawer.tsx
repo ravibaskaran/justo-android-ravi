@@ -177,6 +177,7 @@ const customDrawer = ({ navigation }: any) => {
               iconSource={item.icon}
               tabTitle={item?.title}
               handleDrawerNavigation={() => {
+                console.log(item?.path);
                 navigation.navigate(item.path, { type: item.type });
               }}
             />

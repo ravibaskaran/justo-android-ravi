@@ -25,9 +25,7 @@ const AppointmentDetails = ({ navigation, route }: any) => {
   const { response = {}, detail = "" } = useSelector(
     (state: any) => state.appointment
   );
-  const masterRemove = useSelector(
-    (state: any) => state.masterRemove
-  );
+  const masterRemove = useSelector((state: any) => state.masterRemove);
   const closeAppointment = useSelector(
     (state: any) => state.editAddAppointment
   );
@@ -36,25 +34,26 @@ const AppointmentDetails = ({ navigation, route }: any) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      dispatch(getAppointmentDetail({
-        appointment_id: data?._id
-      }))
-      return () => { };
+      dispatch(
+        getAppointmentDetail({
+          appointment_id: data?._id,
+        })
+      );
+      return () => {};
     }, [navigation])
-    );
+  );
 
   const getDetail = async () => {
     const res = await apiCall("post", apiEndPoints.GET_APPOINTMENT_DETAILS, {
       appointment_id: data?._id,
     });
-    setDetailsData(res?.data?.data)
-
+    setDetailsData(res?.data?.data);
   };
   useFocusEffect(
     React.useCallback(() => {
-      getDetail()
+      getDetail();
       return () => {};
-    }, [navigation, masterRemove ])
+    }, [navigation, masterRemove])
   );
 
   // useEffect(() => {
@@ -67,24 +66,23 @@ const AppointmentDetails = ({ navigation, route }: any) => {
 
   useEffect(() => {
     if (addedBookingData?.response?.status === 200) {
-      dispatch(removeAddBookingData())
+      dispatch(removeAddBookingData());
       ErrorMessage({
         msg: addedBookingData?.response?.message,
-        backgroundColor: GREEN_COLOR
-      })
+        backgroundColor: GREEN_COLOR,
+      });
       // navigation.navigate("BookingList", { type: "readyToBook" });
-      setOkBookingIsVisible(true)
-    }
-    else if (closeAppointment?.response?.status === 200) {
-      dispatch(removeEditUser())
+      setOkBookingIsVisible(true);
+    } else if (closeAppointment?.response?.status === 200) {
+      dispatch(removeEditUser());
       ErrorMessage({
         msg: closeAppointment?.response?.message,
-        backgroundColor: GREEN_COLOR
-      })
-      getDetail()
+        backgroundColor: GREEN_COLOR,
+      });
+      getDetail();
       // navigation.navigate("BookingList", { type: "readyToBook" });
     }
-  }, [addedBookingData, closeAppointment])
+  }, [addedBookingData, closeAppointment]);
 
   useEffect(() => {
     const backAction = () => {
@@ -147,6 +145,12 @@ const AppointmentDetails = ({ navigation, route }: any) => {
       navigation.navigate("Booking", { getBookingData: getBookingData });
     }
   };
+
+  const onPressFollowUp = () => {
+    data.fromAppointmentPage = true;
+    navigation.navigate("FollUpAdd", data);
+  };
+
   const handleViewFollowUp = (data: any) => {
     navigation.navigate("AllFollowUpScreen", data);
   };
@@ -195,6 +199,7 @@ const AppointmentDetails = ({ navigation, route }: any) => {
       setOkIsVisible={setOkIsVisible}
       detailsData={detailsData}
       getDetail={getDetail}
+      onPressFollowUp={onPressFollowUp}
     />
   );
 };

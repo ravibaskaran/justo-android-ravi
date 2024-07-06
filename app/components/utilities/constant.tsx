@@ -43,7 +43,6 @@ export const ONE_MONTH_DATES = new Date(
 
 export const GLOBAL_URL = "http://192.168.1.64:3002"; // localhost server
 
-
 // export const  GLOBAL_URL = 'https://prodapi.justoverse.com:3002' //prod
 
 export const MAP_KEY = "AIzaSyCbDx7Lk4eTMzptrQKXZvOPYgEMggrq8o4";
@@ -88,6 +87,7 @@ export const Regexs = {
   alphaNumeric: new RegExp(/^[A-Za-z0-9\s]*$/),
   gstRegex: new RegExp(/\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}/),
   oneSpaceRegex: new RegExp(/^([a-zA-Z0-9]+\s)*[a-zA-Z0-9]+$/),
+  reraRegex: new RegExp(/^[A-Za-z][0-9]{11}$/),
 };
 
 export const todayDate = {

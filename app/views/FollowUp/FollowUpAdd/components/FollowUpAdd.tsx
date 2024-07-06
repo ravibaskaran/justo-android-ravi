@@ -34,9 +34,9 @@ const FollowUpAddView = (props: any) => {
         statusBarColor={PRIMARY_THEME_COLOR}
       />
       <ScrollView
-      automaticallyAdjustKeyboardInsets={Isios ? true : false}
+        automaticallyAdjustKeyboardInsets={Isios ? true : false}
         keyboardShouldPersistTaps={"handled"}
-        style={{ flexGrow: 1}}
+        style={{ flexGrow: 1 }}
       >
         <View style={styles.topItemsVw}>
           <View style={styles.inputWrap}>
@@ -172,7 +172,11 @@ const FollowUpAddView = (props: any) => {
             <Button
               width={320}
               btnTxtsize={18}
-              buttonText={strings.update + " " + strings.followupHeader}
+              buttonText={
+                props?.fromAppointmentPage
+                  ? strings.followupHeader
+                  : strings.update + " " + strings.followupHeader
+              }
               handleBtnPress={() => props.handleUpdateStatus()}
             />
           </View>

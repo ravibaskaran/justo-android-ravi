@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { RadioButton } from "react-native-paper";
 import Header from "../../../../components/Header";
 import strings from "../../../../components/utilities/Localization";
@@ -18,6 +18,7 @@ import {
   GRAY_COLOR,
   Isios,
   PRIMARY_THEME_COLOR,
+  RED_COLOR,
   Regexs,
   validateEmail,
 } from "../../../../components/utilities/constant";
@@ -45,10 +46,12 @@ const AgentBasicInfoView = (props: any) => {
     "🚀 ~ file: AgentBasicInfoView.tsx:360 ~ props?.emailMobvalidation?.email:",
     props?.emailMobvalidation?.email
   );
+  const [showReraValidationError, setShowReraValidationError] =
+    useState<boolean>(false);
 
   const renderEmployee = (item: any, index: any) => {
     return (
-      <View style={styles.IteamView}>
+      <View style={styles.IteamView} key={index}>
         <View style={styles.Txtview}>
           <View style={styles.projectContainer}>
             <Text style={styles.projectTxt}>{strings.empName} :</Text>
@@ -399,9 +402,14 @@ const AgentBasicInfoView = (props: any) => {
                 ? strings.channelParnterReraNo
                 : strings.cpCompReraNo
             }
-            maxLength={20}
+            maxLength={12}
             valueshow={props.agencyData?.rera_certificate_no}
             onChangeText={(val: any) => {
+              if (val.length > 12) return;
+              if (Regexs.reraRegex.test(val) === false)
+                setShowReraValidationError(true);
+              else setShowReraValidationError(false);
+
               props.setAgencyData({
                 ...props.agencyData,
                 rera_certificate_no: val,
@@ -413,6 +421,16 @@ const AgentBasicInfoView = (props: any) => {
               });
             }}
           />
+          {showReraValidationError ? (
+            <View style={{ padding: 5 }}>
+              <Text style={{ fontSize: 12, color: RED_COLOR }}>
+                Starts with an alphabetic character. (eg:A12345678901)
+              </Text>
+              <Text style={{ fontSize: 12, color: RED_COLOR }}>
+                Has the remaining characters as numeric digits.
+              </Text>
+            </View>
+          ) : null}
         </View>
 
         {/* <View style={styles.inputWrap}>

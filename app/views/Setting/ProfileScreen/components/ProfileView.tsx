@@ -89,7 +89,9 @@ const ProfileView = (props: any) => {
             <Text style={styles.colon}>:</Text>
             <View style={styles.valueView}>
               <Text style={styles.valueText}>
-                {allDetails?.adhar_no && allDetails?.adhar_no != "null"
+                {allDetails?.adhar_no &&
+                allDetails?.adhar_no != "null" &&
+                allDetails?.adhar_no != "undefined"
                   ? allDetails?.adhar_no
                   : strings.notfount}
               </Text>
@@ -102,7 +104,9 @@ const ProfileView = (props: any) => {
             <Text style={styles.colon}>:</Text>
             <View style={styles.valueView}>
               <Text style={styles.valueText}>
-                {allDetails?.pancard_no && allDetails?.pancard_no != "null"
+                {allDetails?.pancard_no &&
+                allDetails?.pancard_no != "null" &&
+                allDetails?.pancard_no != "undefined"
                   ? allDetails?.pancard_no
                   : strings.notfount}{" "}
               </Text>
@@ -191,7 +195,9 @@ const ProfileView = (props: any) => {
             <Text style={styles.colon}>:</Text>
             <View style={styles.valueView}>
               <Text style={styles.valueText}>
-                {allDetails?.whatsapp_no && allDetails?.whatsapp_no != "null"
+                {allDetails?.whatsapp_no &&
+                allDetails?.whatsapp_no != "null" &&
+                allDetails?.whatsapp_no != "undefined"
                   ? allDetails?.whatsapp_no
                   : strings.notfount}
               </Text>
