@@ -402,14 +402,33 @@ const AgentBasicInfoView = (props: any) => {
                 ? strings.channelParnterReraNo
                 : strings.cpCompReraNo
             }
+            editable={props.emailMobileChng?.change}
             maxLength={12}
             valueshow={props.agencyData?.rera_certificate_no}
+            rightImageVw={styles.tickImgVw}
+            rightImageSty={styles.tickImg}
+            rightImgSrc={
+              props?.emailMobvalidation?.rera_certificate_no ===
+              "rera_certificate_no"
+                ? images.check
+                : null
+            }
+            onBlur={(val: any) => {
+              if (
+                Regexs.reraRegex.test(props.agencyData?.rera_certificate_no)
+              ) {
+                props.handleCheckEmailMobile(2);
+                props.setEmailMobileChng({
+                  ...props.emailMobileChng,
+                  onrera: "",
+                });
+                props.setEmailMobValidation({
+                  ...props.emailMobvalidation,
+                  rera_certificate_no: null,
+                });
+              }
+            }}
             onChangeText={(val: any) => {
-              if (val.length > 12) return;
-              if (Regexs.reraRegex.test(val) === false)
-                setShowReraValidationError(true);
-              else setShowReraValidationError(false);
-
               props.setAgencyData({
                 ...props.agencyData,
                 rera_certificate_no: val,
@@ -419,6 +438,27 @@ const AgentBasicInfoView = (props: any) => {
                     ? null
                     : "",
               });
+              if (Regexs.reraRegex.test(val)) {
+                setShowReraValidationError(false);
+                props.setEmailMobValidation({
+                  ...props.emailMobvalidation,
+                  rera_certificate_no: "reraStart",
+                });
+                props.setEmailMobileChng({
+                  ...props.emailMobileChng,
+                  onrera: "onrera",
+                });
+              } else {
+                setShowReraValidationError(true);
+                props.setEmailMobValidation({
+                  ...props.emailMobvalidation,
+                  rera_certificate_no: null,
+                });
+                props.setEmailMobileChng({
+                  ...props.emailMobileChng,
+                  onrera: null,
+                });
+              }
             }}
           />
           {showReraValidationError ? (

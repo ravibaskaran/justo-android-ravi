@@ -36,11 +36,13 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
     change: true,
     onemail: "",
     onmobile: "",
+    onrera: "",
   });
   const { userData = {} } = useSelector((state: any) => state.userData);
   const [emailMobvalidation, setEmailMobValidation] = useState<any>({
     primary_mobile: null,
     email: null,
+    rera_certificate_no: null,
   });
   const [employeeFormData, setEmployeeFormData] = useState<any>({
     employeeName: "",
@@ -177,6 +179,7 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
     setEmailMobValidation({
       primary_mobile: null,
       email: null,
+      rera_certificate_no: null,
     });
     setEmployees([]);
     setSelectedProperty([]);
@@ -247,12 +250,14 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
               change: true,
               onemail: "",
               onmobile: "",
+              onrera: "",
             });
           } else {
             setEmailMobileChng({
               change: false,
               onemail: "",
               onmobile: "",
+              onrera: "",
             });
           }
         }
@@ -308,6 +313,7 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
     setEmailMobValidation({
       primary_mobile: null,
       email: null,
+      rera_certificate_no: null,
     });
   }, [navigation]);
   useEffect(() => {
@@ -321,6 +327,7 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
       setEmailMobValidation({
         primary_mobile: null,
         email: null,
+        rera_certificate_no: null,
       });
       setSelectedProperty([]);
     }
@@ -330,8 +337,10 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
     if (
       emailMobvalidation.primary_mobile === "mobileStart" ||
       emailMobvalidation.email === "emailStart" ||
+      emailMobvalidation.rera_certificate_no === "reraStart" ||
       emailMobileChng.onmobile === "onmobile" ||
-      emailMobileChng.onemail === "onemail"
+      emailMobileChng.onemail === "onemail" ||
+      emailMobileChng.onrera === "onrera"
     ) {
       Keyboard.dismiss();
     } else {
@@ -389,8 +398,14 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
             isError = false;
             errorMessage = strings.reraCertNoReqVal;
           } else if (
+            emailMobileChng?.change &&
+            emailMobvalidation.rera_certificate_no == "wrongReraNumber"
+          ) {
+            isError = false;
+            errorMessage = strings.reraNumberAlreadyValidReqVal;
+          } else if (
             agencyData.rera_certificate_no &&
-            Regexs.reraRegex.test(agencyData.rera_certificate_no) === false
+            !Regexs.reraRegex.test(agencyData.rera_certificate_no)
           ) {
             isError = false;
             errorMessage = strings.reraCertNoCheckValid;
@@ -486,9 +501,15 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
           ) {
             isError = false;
             errorMessage = strings.reraCertNoReqVal;
-          }else if (
+          } else if (
+            emailMobileChng?.change &&
+            emailMobvalidation.rera_certificate_no == "wrongReraNumber"
+          ) {
+            isError = false;
+            errorMessage = strings.reraNumberAlreadyValidReqVal;
+          } else if (
             agencyData.rera_certificate_no &&
-            Regexs.reraRegex.test(agencyData.rera_certificate_no) === false
+            !Regexs.reraRegex.test(agencyData.rera_certificate_no)
           ) {
             isError = false;
             errorMessage = strings.reraCertNoCheckValid;
@@ -825,6 +846,12 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
               });
             }
             break;
+          case "rera_certificate_no":
+            setEmailMobValidation({
+              ...emailMobvalidation,
+              rera_certificate_no: emailAndMobileData?.check_type,
+            });
+            break;
           default:
             break;
         }
@@ -871,6 +898,17 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
                 });
               }
               break;
+            case "rera_certificate_no":
+              setEmailMobValidation({
+                ...emailMobvalidation,
+                rera_certificate_no: "wrongReraNumber",
+              });
+              let errorMessage = strings.reraNumberAlreadyValidReqVal;
+              ErrorMessage({
+                msg: errorMessage,
+                backgroundColor: RED_COLOR,
+              });
+              break;
             default:
               break;
           }
@@ -879,10 +917,12 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
     }
   }, [emailAndMobileData]);
   const handleCheckEmailMobile = (type: any) => {
-    const params =
-      type == 1
-        ? { mobile: agencyData?.primary_mobile }
-        : { email: agencyData?.email };
+    let params = {};
+    if (type == 1) params = { mobile: agencyData?.primary_mobile };
+    else if (type == 2)
+      params = { rera_certificate_no: agencyData?.rera_certificate_no };
+    else params = { email: agencyData?.email };
+
     dispatch(checkEmailMobile(params));
   };
   const handleCheckEmailMobileforEmployee = (type: any, data: any) => {
@@ -1103,6 +1143,7 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
     setEmailMobValidation({
       primary_mobile: null,
       email: null,
+      rera_certificate_no: null,
     });
   };
   const handleAddEmployee = () => {
@@ -1119,6 +1160,7 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
         ...emailMobvalidation,
         email: null,
         primary_mobile: null,
+        rera_certificate_no: null,
       });
     }
   };

@@ -138,7 +138,7 @@ export const AgencyCreateFormRemove = () => async (dispatch: any) => {
 };
 
 export const createAgency = (item: any) => async (dispatch: any) => {
-  console.log('item', item)
+  console.log("item", item);
   dispatch({ type: START_LOADING });
   try {
     const header = {
@@ -151,7 +151,7 @@ export const createAgency = (item: any) => async (dispatch: any) => {
       item,
       header
     );
-    console.log('res?.data?.status', res?.data)
+    console.log("res?.data?.status", res?.data);
     if (res?.data?.status === 200) {
       dispatch({
         type: CREATE_AGENCY,
@@ -170,13 +170,12 @@ export const createAgency = (item: any) => async (dispatch: any) => {
       type: CREATE_AGENCY_ERROR,
       payload: console.log(e),
     });
-  }
-  finally {
+  } finally {
     dispatch({ type: STOP_LOADING });
   }
 };
 export const editAgent = (params: any) => async (dispatch: any) => {
-console.log('params: ', params);
+  console.log("params: ", params);
   dispatch({ type: START_LOADING });
   try {
     const header = {
@@ -189,7 +188,7 @@ console.log('params: ', params);
       params,
       header
     );
-    console.log("🚀 ~ file: AgencyActions.tsx:193 ~ res.data:", res.data)
+    console.log("🚀 ~ file: AgencyActions.tsx:193 ~ res.data:", res.data);
     if (res.data.status == 200) {
       dispatch({
         type: EDIT_AGENCY,
@@ -209,39 +208,50 @@ console.log('params: ', params);
   }
 };
 export const checkEmailMobile = (item: any) => async (dispatch: any) => {
-  console.log('item: ', item);
-  dispatch({ type: START_LOADING })
+  console.log("item: ", item);
+  dispatch({ type: START_LOADING });
   try {
     const res = await apiCall("post", apiEndPoints.CHECKEMAILMOBILE, item);
     if (res.data.status === 200) {
       dispatch({
         type: CHECK_EMAIL_MOBILE,
         payload: res.data,
-        check_type: item.mobile ? "mobile" : item.email ? "email" : "",
-      })
+        check_type: item.mobile
+          ? "mobile"
+          : item.email
+          ? "email"
+          : item?.rera_certificate_no
+          ? "rera_certificate_no"
+          : "",
+      });
     } else if (res.data.status === 201) {
       dispatch({
         type: CHECK_EMAIL_MOBILE,
         payload: res.data,
-        check_type: item.mobile ? "mobile" : item.email ? "email" : "",
-      })
+        check_type: item.mobile
+          ? "mobile"
+          : item.email
+          ? "email"
+          : item?.rera_certificate_no
+          ? "rera_certificate_no"
+          : "",
+      });
     } else {
-      handleApiError(res?.data)
+      handleApiError(res?.data);
       dispatch({
         type: CHECK_EMAIL_MOBILE_ERROR,
         payload: [],
-      })
+      });
     }
   } catch (e) {
     dispatch({
       type: CHECK_EMAIL_MOBILE_ERROR,
       payload: console.log(e),
-    })
+    });
+  } finally {
+    dispatch({ type: STOP_LOADING });
   }
-  finally {
-    dispatch({ type: STOP_LOADING })
-  }
-}
+};
 export const emailCheckRemove = () => async (dispatch: any) => {
   try {
     dispatch({
@@ -267,4 +277,4 @@ export const removeAgency = () => async (dispatch: any) => {
       payload: console.log(e),
     });
   }
-}
+};
