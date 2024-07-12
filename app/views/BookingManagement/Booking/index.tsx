@@ -325,13 +325,11 @@ const BookingScreen = ({ navigation, route }: any) => {
     } else {
       newFormdata.append("appointment_id", bookingData.appointment_id);
     }
-
     if (type === "readyToBook" || type === "recovery") {
       dispatch(updateBookingDetailStatus(newFormdata));
     } else {
       dispatch(AddBooking(newFormdata));
     }
-    // }
   };
 
   return (
