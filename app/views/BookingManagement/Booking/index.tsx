@@ -62,11 +62,9 @@ const BookingScreen = ({ navigation, route }: any) => {
   const agencyDetails = useSelector((state: any) => state.agency);
   const [masterDatas, setMasterDatas] = useState<any>([]);
   const [propertyConfData, setPropertyConfData] = useState<any>([]);
-  const [flatTypes, setFlatTypes] = useState<any>([]);
   const [paymentTypes, setPaymentTypes] = useState<any>([]);
   const [dropDownType, setDropDownType] = useState<any>(null);
   const [quantity, setQuantity] = useState<any>(false);
-  const [maininventory, setMainInventory] = useState<any>([]);
   const [disabled, setDisabled] = useState(false);
   const [flatBookingsMap, setFlatBookingsMap] = useState<FlatBookingsMap>({
     flatBooking: [
@@ -353,9 +351,7 @@ const BookingScreen = ({ navigation, route }: any) => {
         quantity={quantity}
         setQuantity={setQuantity}
         handleInventoryPress={handleInventoryPress}
-        flatTypes={flatTypes}
         getBookingData={getBookingData}
-        // setcofigdata={setcofigdata}
         okIsVisible={okIsVisible}
         setOkIsVisible={setOkIsVisible}
         onPressRightButton={onPressRightButton}
