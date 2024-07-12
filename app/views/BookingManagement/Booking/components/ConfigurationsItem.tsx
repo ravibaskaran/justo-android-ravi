@@ -1,20 +1,24 @@
-import { View, Text } from "react-native";
-import React, { useEffect, useState } from "react";
+import { normalize } from "@rneui/themed";
+import { START_LOADING, STOP_LOADING } from "app/Redux/types";
 import DropdownInput from "app/components/DropDown";
-import styles from "./styles";
-import strings from "app/components/utilities/Localization";
+import InputField from "app/components/InputField";
+import PicturePickerModal from "app/components/Modals/PicturePicker";
 import Styles from "app/components/Modals/styles";
+import { RequiredStart } from "app/components/utilities/GlobalFuncations";
+import strings from "app/components/utilities/Localization";
+import apiEndPoints from "app/components/utilities/apiEndPoints";
 import {
   JW_LOGIN,
   JW_PASSWORD,
   PRIMARY_THEME_COLOR,
+  RED_COLOR,
 } from "app/components/utilities/constant";
-import { normalize } from "@rneui/themed";
-import Button from "../../../../components/Button";
-import { useDispatch } from "react-redux";
-import { START_LOADING, STOP_LOADING } from "app/Redux/types";
 import { apiCallJW } from "app/components/utilities/httpClient";
-import apiEndPoints from "app/components/utilities/apiEndPoints";
+import React, { useEffect, useState } from "react";
+import { Keyboard, Text, View } from "react-native";
+import { useDispatch } from "react-redux";
+import Button from "../../../../components/Button";
+import styles from "./styles";
 
 const ConfigurationsItem = (props: any) => {
   const [maininventory, setMainInventory] = useState<any>([]);
@@ -89,16 +93,94 @@ const ConfigurationsItem = (props: any) => {
 
   return (
     <View>
-      <View
-        style={{
-          padding: 5,
-          backgroundColor: "#e3e6e8",
-          borderRadius: 5,
-          marginTop: 20,
-        }}
-      >
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <View style={{ flex: 1, marginRight: 20, marginTop: 10 }}>
+      <View style={styles.flatContainer}>
+        <View style={styles.sectionContainer}>
+          <View style={[styles.inputContainer, { marginRight: 20 }]}>
+            <InputField
+              disableSpecialCharacters={true}
+              require={true}
+              placeholderText={"Amount"}
+              onChangeText={(data: any) => {
+                props.flatBooking.booking_amount = data;
+                setUpdateState(updateState + 1);
+              }}
+              valueshow={props?.flatBooking?.booking_amount}
+              keyboardtype={"number-pad"}
+              headingText={"Amount"}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <DropdownInput
+              require={true}
+              headingText={"Payment Type"}
+              data={Array.isArray(props?.masterDatas) ? props?.masterDatas : []}
+              inputWidth={"100%"}
+              paddingLeft={16}
+              maxHeight={300}
+              onFocus={() => {
+                props.getDropDownData(), Keyboard.dismiss();
+              }}
+              labelField={"title"}
+              valueField={"title"}
+              placeholder={
+                props?.flatBooking?.payment_type
+                  ? props?.flatBooking?.payment_type
+                  : "Payment Type"
+              }
+              value={props?.flatBooking?.payment_type}
+              onChange={(item: any) => {
+                props.flatBooking.payment_type = item.title;
+                setUpdateState(updateState + 1);
+              }}
+              newRenderItem={(item: any) => {
+                return (
+                  <>
+                    <View style={Styles.item}>
+                      <Text style={Styles.textItem}>{item.title}</Text>
+                    </View>
+                  </>
+                );
+              }}
+            />
+          </View>
+        </View>
+
+        <View style={styles.straightVw}>
+          <View style={{ flexDirection: "row" }}>
+            <Text
+              style={[
+                styles.titleTxt,
+                {
+                  bottom:
+                    typeof props?.flatBooking?.cheque_image === "object"
+                      ? 8
+                      : 0,
+                },
+              ]}
+            >
+              Attach Photo :
+            </Text>
+            <RequiredStart />
+          </View>
+          <View>
+            <Button
+              width={130}
+              height={45}
+              buttonText={strings.browse}
+              bgcolor={PRIMARY_THEME_COLOR}
+              border={14}
+              handleBtnPress={() => props.setBrowse(true)}
+            />
+            {typeof props?.flatBooking?.cheque_image === "object" ? (
+              <Text style={{ fontSize: 12, textAlign: "center" }}>
+                {"Photo Added"}
+              </Text>
+            ) : null}
+          </View>
+        </View>
+
+        <View style={styles.sectionContainer}>
+          <View style={[styles.inputContainer, { marginRight: 20 }]}>
             <DropdownInput
               require={true}
               headingText={strings.configurations}
@@ -131,7 +213,7 @@ const ConfigurationsItem = (props: any) => {
               }}
             />
           </View>
-          <View style={{ flex: 0.8, marginTop: 10 }}>
+          <View style={[styles.inputContainer, { flex: 0.8 }]}>
             <DropdownInput
               require={true}
               headingText={strings.floor}
@@ -197,40 +279,72 @@ const ConfigurationsItem = (props: any) => {
           />
         </View>
 
+        <View style={styles.subContainer}>
+          <Text style={[styles.projectTxt, { color: PRIMARY_THEME_COLOR }]}>
+            Carpet Area :
+          </Text>
+          <Text style={styles.subTxt}>
+            {props?.flatBooking?.saleable_area
+              ? `${props?.flatBooking?.carpet_area} Sq. ft.`
+              : "__"}
+          </Text>
+        </View>
+
         <View style={styles.inputWrap}>
-          <View style={styles.IteamView}>
-            <View style={styles.Txtview}>
-              <View style={styles.projectContainer}>
-                <Text
-                  style={[styles.projectTxt, { color: PRIMARY_THEME_COLOR }]}
-                >
-                  Carpet Area :
-                </Text>
-              </View>
-              <View style={styles.nameContainer}>
-                <Text style={styles.nameTxt}>
-                  {props?.flatBooking?.saleable_area
-                    ? `${props?.flatBooking?.carpet_area} Sq. ft.`
-                    : "__"}
-                </Text>
-              </View>
-            </View>
-          </View>
+          <InputField
+            require={true}
+            headingText={"Comment"}
+            placeholderText={"Comment"}
+            multiline={true}
+            inputheight={80}
+            onChangeText={(data: any) => {
+              props.flatBooking.description = data;
+              setUpdateState(updateState + 1);
+            }}
+            valueshow={props?.flatBooking?.description}
+          />
         </View>
       </View>
 
       {props?.flatBookingLength === props?.index + 1 ? (
-        <View style={{ marginVertical: normalize(20) }}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            marginVertical: normalize(20),
+          }}
+        >
           <Button
             buttonText={"Add More"}
             bgcolor={PRIMARY_THEME_COLOR}
             height={40}
             border={14}
+            width={150}
             handleBtnPress={() => props?.addMoreBtnPressed()}
             disabled={props.disabled}
           />
+          {props?.flatBookingLength > 1 ? (
+            <Button
+              buttonText={"Delete"}
+              bgcolor={RED_COLOR}
+              height={40}
+              border={14}
+              width={150}
+              handleBtnPress={() => props?.onDeleteBtnPress()}
+              disabled={props.disabled}
+            />
+          ) : null}
         </View>
       ) : null}
+
+      <PicturePickerModal
+        Visible={props.browse}
+        setVisible={props.setBrowse}
+        imageData={(data: any) => {
+          props.flatBooking.cheque_image = data;
+          setUpdateState(updateState + 1);
+        }}
+      />
     </View>
   );
 };

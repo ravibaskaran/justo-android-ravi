@@ -13,6 +13,7 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import BookingView from "./components/Booking";
+import { START_LOADING, STOP_LOADING } from "app/Redux/types";
 
 interface FlatBooking {
   flat_type: string;
@@ -20,6 +21,10 @@ interface FlatBooking {
   flat_name: string;
   saleable_area: number;
   carpet_area: number;
+  booking_amount: string;
+  payment_type: string;
+  cheque_image: any;
+  description: string;
 }
 
 // Define the type for the flatBookingsMap
@@ -34,25 +39,16 @@ const BookingScreen = ({ navigation, route }: any) => {
     lead_id: getBookingData?.lead_id ? getBookingData?.lead_id : "",
     property_id: getBookingData?.property_id ? getBookingData?.property_id : "",
     customer_id: getBookingData?.customer_id ? getBookingData?.customer_id : "",
-    booking_amount: "",
     tranjection_upi_cheque_number: "",
-    payment_type: "",
     booking_date: moment(new Date()).format(),
-    cheque_image: "",
     configuration: "",
     configuration_id: "",
     remaining: "",
     quantity: "",
-    description: "",
     booking_id: getBookingData?._id ? getBookingData?._id : "",
     appointment_id: getBookingData?.appointment_id
       ? getBookingData?.appointment_id
       : "",
-    flat_type: "",
-    floor: "",
-    flat_name: "",
-    saleable_area: "",
-    carpet_area: "",
   });
   const masterData = useSelector((state: any) => state.masterData) || {};
   const addedBookingData =
@@ -62,10 +58,10 @@ const BookingScreen = ({ navigation, route }: any) => {
   const agencyDetails = useSelector((state: any) => state.agency);
   const [masterDatas, setMasterDatas] = useState<any>([]);
   const [propertyConfData, setPropertyConfData] = useState<any>([]);
-  const [paymentTypes, setPaymentTypes] = useState<any>([]);
   const [dropDownType, setDropDownType] = useState<any>(null);
   const [quantity, setQuantity] = useState<any>(false);
   const [disabled, setDisabled] = useState(false);
+  const [browse, setBrowse] = useState(false);
   const [flatBookingsMap, setFlatBookingsMap] = useState<FlatBookingsMap>({
     flatBooking: [
       {
@@ -74,6 +70,10 @@ const BookingScreen = ({ navigation, route }: any) => {
         flat_name: "",
         saleable_area: 0,
         carpet_area: 0,
+        booking_amount: "",
+        payment_type: "",
+        cheque_image: "",
+        description: "",
       },
     ],
   });
@@ -122,6 +122,7 @@ const BookingScreen = ({ navigation, route }: any) => {
       setMasterDatas([]);
     }
   }, [masterData]);
+
   useEffect(() => {
     if (addedBookingData?.response?.status === 200) {
       dispatch(removeAddBookingData());
@@ -134,7 +135,6 @@ const BookingScreen = ({ navigation, route }: any) => {
     }
   }, [addedBookingData]);
 
-  const [browse, setBrowse] = useState(false);
   const handleBackPress = () => {
     navigation.goBack(null);
   };
@@ -147,6 +147,7 @@ const BookingScreen = ({ navigation, route }: any) => {
       });
     }
   };
+
   const onPressRightButton = () => {
     navigation.navigate("BookingList", { type: "request" });
     setOkIsVisible(false);
@@ -155,9 +156,29 @@ const BookingScreen = ({ navigation, route }: any) => {
   const isFlatDetailsDataValid = () => {
     let isError = true;
     let errorMessage: any = "";
-
     for (let flatBooking of flatBookingsMap?.flatBooking) {
-      if (flatBooking.flat_type == undefined || flatBooking.flat_type == "") {
+      if (
+        flatBooking.booking_amount == undefined ||
+        flatBooking.booking_amount == ""
+      ) {
+        isError = false;
+        errorMessage = "Booking Amount is require. Please enter Booking Amount";
+      } else if (
+        flatBooking.payment_type == undefined ||
+        flatBooking.payment_type == ""
+      ) {
+        isError = false;
+        errorMessage = "Payment Type is require. Please select payment type";
+      } else if (
+        typeof flatBooking.cheque_image != "object" ||
+        flatBooking.cheque_image == ""
+      ) {
+        isError = false;
+        errorMessage = "Attachment is require. Please select image";
+      } else if (
+        flatBooking.flat_type == undefined ||
+        flatBooking.flat_type == ""
+      ) {
         isError = false;
         errorMessage = "Configuration is require. Please select configuration";
       } else if (flatBooking.floor == undefined || flatBooking.floor == 0) {
@@ -169,6 +190,12 @@ const BookingScreen = ({ navigation, route }: any) => {
       ) {
         isError = false;
         errorMessage = "Flat name is require. Please enter Flat name";
+      } else if (
+        flatBooking.description == undefined ||
+        flatBooking.description == ""
+      ) {
+        isError = false;
+        errorMessage = "Comment is require. Please enter description";
       }
     }
     if (errorMessage !== "") {
@@ -192,10 +219,24 @@ const BookingScreen = ({ navigation, route }: any) => {
             flat_name: "",
             saleable_area: 0,
             carpet_area: 0,
+            booking_amount: "",
+            payment_type: "",
+            cheque_image: "",
+            description: "",
           },
         ],
       }));
     }
+  };
+
+  const onDeleteBtnPress = (index: number) => {
+    dispatch({ type: START_LOADING });
+    setTimeout(() => {
+      setFlatBookingsMap((prevState: { flatBooking: any[] }) => ({
+        flatBooking: prevState.flatBooking.filter((_, i) => i !== index),
+      }));
+      dispatch({ type: STOP_LOADING });
+    }, 300);
   };
 
   const validation = () => {
@@ -205,25 +246,7 @@ const BookingScreen = ({ navigation, route }: any) => {
     }, 3000);
     let isError = true;
     let errorMessage: any = "";
-    if (
-      bookingData.booking_amount == undefined ||
-      bookingData.booking_amount == ""
-    ) {
-      isError = false;
-      errorMessage = "Booking Amount is require. Please enter Booking Amount";
-    } else if (
-      bookingData.payment_type == undefined ||
-      bookingData.payment_type == ""
-    ) {
-      isError = false;
-      errorMessage = "Payment Type is require. Please select payment type";
-    } else if (
-      typeof bookingData.cheque_image != "object" ||
-      bookingData.cheque_image == ""
-    ) {
-      isError = false;
-      errorMessage = "Attachment is require. Please select image";
-    } else if (!isFlatDetailsDataValid()) {
+    if (!isFlatDetailsDataValid()) {
       isError = false;
     }
     // else if (
@@ -239,13 +262,6 @@ const BookingScreen = ({ navigation, route }: any) => {
     //     bookingData.remaining
     //   }`;
     // }
-    else if (
-      bookingData.description == undefined ||
-      bookingData.description == ""
-    ) {
-      isError = false;
-      errorMessage = "Comment is require. Please enter description";
-    }
     // if (bookingData.payment_type === "Cheque") {
     //   if (
     //     bookingData.tranjection_upi_cheque_number === undefined ||
@@ -269,6 +285,7 @@ const BookingScreen = ({ navigation, route }: any) => {
     }
     return isError;
   };
+
   const handleInventoryPress = () => {
     navigation.navigate("PropertyInventory", {
       propName: getBookingData?.properties?.property_title,
@@ -290,8 +307,8 @@ const BookingScreen = ({ navigation, route }: any) => {
 
   const callApi = async (flatBooking: any) => {
     const newFormdata = new FormData();
-    if (typeof bookingData?.cheque_image === "object") {
-      newFormdata.append("cheque_image", bookingData.cheque_image);
+    if (typeof flatBooking?.cheque_image === "object") {
+      newFormdata.append("cheque_image", flatBooking.cheque_image);
     }
     if (type === "recovery") {
       newFormdata.append("receivery_status", 0);
@@ -302,12 +319,12 @@ const BookingScreen = ({ navigation, route }: any) => {
     // newFormdata.append("configuration", bookingData.configuration);
     // newFormdata.append("configuration_id", bookingData.configuration_id);
     // newFormdata.append("quantity", bookingData.quantity);
-    newFormdata.append("booking_amount", bookingData.booking_amount);
+    newFormdata.append("booking_amount", flatBooking.booking_amount);
     // newFormdata.append(
     //   "tranjection_upi_cheque_number",
     //   bookingData.tranjection_upi_cheque_number
     // );
-    newFormdata.append("payment_type", bookingData.payment_type);
+    newFormdata.append("payment_type", flatBooking.payment_type);
     newFormdata.append("flat_type", flatBooking.flat_type);
     newFormdata.append("floor", flatBooking.floor);
     newFormdata.append("flat_no", flatBooking.flat_name);
@@ -317,7 +334,7 @@ const BookingScreen = ({ navigation, route }: any) => {
     newFormdata.append("crm_person_email", getBookingData.crm_person_email);
     // newFormdata.append("lead_source", getBookingData?.lead_source?.length > 0 ? getBookingData?.lead_source[0] : "");
     // newFormdata.append("booking_date", bookingData.booking_date);
-    newFormdata.append("description", bookingData.description);
+    newFormdata.append("description", flatBooking.description);
     newFormdata.append("booking_status", 2);
     if (type === "readyToBook" || type === "recovery") {
       newFormdata.append("booking_id", bookingData?.booking_id);
@@ -325,6 +342,7 @@ const BookingScreen = ({ navigation, route }: any) => {
     } else {
       newFormdata.append("appointment_id", bookingData.appointment_id);
     }
+
     if (type === "readyToBook" || type === "recovery") {
       dispatch(updateBookingDetailStatus(newFormdata));
     } else {
@@ -344,7 +362,6 @@ const BookingScreen = ({ navigation, route }: any) => {
         getDropDownData={getDropDownData}
         propertyConfData={propertyConfData}
         masterDatas={masterDatas}
-        paymentTypes={paymentTypes}
         validQuantityChoose={validQuantityChoose}
         quantity={quantity}
         setQuantity={setQuantity}
@@ -355,6 +372,7 @@ const BookingScreen = ({ navigation, route }: any) => {
         onPressRightButton={onPressRightButton}
         disabled={disabled}
         flatBookingsMap={flatBookingsMap}
+        onDeleteBtnPress={onDeleteBtnPress}
         addMoreBtnPressed={addMoreBtnPressed}
       />
     </>
