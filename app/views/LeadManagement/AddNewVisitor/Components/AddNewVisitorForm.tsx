@@ -1,54 +1,48 @@
-import {
-  View,
-  Text,
-  ScrollView,
-  StatusBar,
-  TouchableOpacity,
-  TextInput,
-  Linking,
-  Keyboard,
-  Modal,
-  Image,
-  FlatList,
-  TouchableWithoutFeedback,
-} from "react-native";
-import React, { useEffect, useState } from "react";
-import { RadioButton } from "react-native-paper";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import images from "../../../../assets/images";
-import InputField from "../../../../components/InputField";
-import {
-  PRIMARY_THEME_COLOR,
-  BLACK_COLOR,
-  DATE_FORMAT,
-  AMOUNT_TYPE,
-  Isios,
-  ROLE_IDS,
-  Regexs,
-  CONST_IDS,
-  WHITE_COLOR,
-} from "../../../../components/utilities/constant";
-import strings from "../../../../components/utilities/Localization";
-import styles from "./Styles";
-import Styles from "../../../../components/Modals/styles";
-import Header from "../../../../components/Header";
-import Button from "../../../../components/Button";
-import moment from "moment";
-import InputCalender from "app/components/InputCalender";
-import DropdownInput from "app/components/DropDown";
-import { useSelector } from "react-redux";
-import usePermission from "app/components/utilities/UserPermissions";
 import CheckBox from "@react-native-community/checkbox";
-import VisitConfirmModal from "./VisitConfirmModal";
-import { CpType } from "app/components/utilities/DemoData";
+import DropdownInput from "app/components/DropDown";
+import InputCalender from "app/components/InputCalender";
+import CountryPickerModal from "app/components/Modals/CountryPickerModal";
+import JustForOkModal from "app/components/Modals/JustForOkModal";
 import {
   normalizeHeight,
   normalizeSpacing,
   normalizeWidth,
 } from "app/components/scaleFontSize";
+import { CpType } from "app/components/utilities/DemoData";
 import { RequiredStart } from "app/components/utilities/GlobalFuncations";
-import JustForOkModal from "app/components/Modals/JustForOkModal";
-import CountryPickerModal from "app/components/Modals/CountryPickerModal";
+import usePermission from "app/components/utilities/UserPermissions";
+import moment from "moment";
+import React, { useEffect } from "react";
+import {
+  Keyboard,
+  Linking,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { RadioButton } from "react-native-paper";
+import { useSelector } from "react-redux";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import Header from "../../../../components/Header";
+import InputField from "../../../../components/InputField";
+import Styles from "../../../../components/Modals/styles";
+import {
+  AMOUNT_TYPE,
+  BLACK_COLOR,
+  CONST_IDS,
+  DATE_FORMAT,
+  Isios,
+  PRIMARY_THEME_COLOR,
+  Regexs,
+  ROLE_IDS,
+  WHITE_COLOR,
+} from "../../../../components/utilities/constant";
+import strings from "../../../../components/utilities/Localization";
+import styles from "./Styles";
+import VisitConfirmModal from "./VisitConfirmModal";
 
 const AddNewVisitorForm = (props: any) => {
   const { masterDatas } = props;
@@ -118,6 +112,30 @@ const AddNewVisitorForm = (props: any) => {
       }
     }
   }, [response]);
+
+  function canShowProperty() {
+    if (
+      props?.formData?.mobile === "" ||
+      props?.formData?.mobile === undefined ||
+      props?.formData?.mobile === null
+    ) {
+      return false;
+    } else if (
+      props?.formData?.mobile &&
+      props?.formData?.country_code === "+91" &&
+      Regexs.mobilenumRegex.test(props?.formData?.mobile) === false
+    ) {
+      return false;
+    } else if (
+      props?.formData?.mobile &&
+      props?.formData?.country_code !== "+91" &&
+      props?.formData?.mobile?.length < 10
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   return (
     <View style={styles.mainContainer}>
@@ -206,6 +224,9 @@ const AddNewVisitorForm = (props: any) => {
                   props.setFormData({
                     ...props.formData,
                     mobile: data,
+                    property_id: "",
+                    property_type_title: "",
+                    property_title: "",
                   });
                   // if (Regexs.mobilenumRegex.test(data)) {
                   //   props.setEmailMobValidation({
@@ -282,6 +303,8 @@ const AddNewVisitorForm = (props: any) => {
                   cp_type: "",
                   cp_id: "",
                   cp_emp_id: "",
+                  referrer_name: "",
+                  referrer_contact: "",
                 });
 
                 if (
@@ -462,6 +485,44 @@ const AddNewVisitorForm = (props: any) => {
               ) : null}
             </>
           ) : null}
+          {props?.formData?.lead_source === CONST_IDS?.ref_lead_source_id ? (
+            <>
+              <View style={styles.inputWrap}>
+                <InputField
+                  require={true}
+                  disableSpecialCharacters={true}
+                  placeholderText={strings.referrerNumber}
+                  handleInputBtnPress={() => {}}
+                  onChangeText={(data: any) => {
+                    props.setFormData({
+                      ...props.formData,
+                      referrer_contact: data,
+                    });
+                  }}
+                  valueshow={props?.formData?.referrer_contact}
+                  headingText={strings.referrerNumber}
+                  keyboardtype={"number-pad"}
+                  maxLength={10}
+                />
+              </View>
+              <View style={styles.inputWrap}>
+                <InputField
+                  require={true}
+                  disableSpecialCharacters={true}
+                  placeholderText={strings.referrerName}
+                  headingText={strings.referrerName}
+                  handleInputBtnPress={() => {}}
+                  onChangeText={(data: any) => {
+                    props.setFormData({
+                      ...props.formData,
+                      referrer_name: data,
+                    });
+                  }}
+                  valueshow={props?.formData?.referrer_name}
+                />
+              </View>
+            </>
+          ) : null}
 
           <View style={[styles.inputWrap]}>
             <DropdownInput
@@ -486,21 +547,29 @@ const AddNewVisitorForm = (props: any) => {
               labelField="property_title"
               valueField={"_id"}
               value={props?.formData?.property_id}
+              onFocus={() => props.checkPhoneNumberIsValid()}
               onChange={(item: any) => {
-                props.setFormData({
-                  ...props.formData,
-                  property_id: item.property_id,
-                  property_type_title: item.property_type,
-                  property_title: item.property_title,
-                  // pickup: item?.pickup,
-                });
+                if (props?.allProperty?.length > 0) {
+                  props.setFormData({
+                    ...props.formData,
+                    property_id: item.property_id,
+                    property_type_title: item.property_type,
+                    property_title: item.property_title,
+                    // pickup: item?.pickup,
+                  });
+                  props.checkMobileExistWithSameProperty(item.property_id);
+                }
               }}
               newRenderItem={(item: any) => {
                 return (
                   <>
-                    <View style={Styles.item}>
-                      <Text style={Styles.textItem}>{item.property_title}</Text>
-                    </View>
+                    {canShowProperty() ? (
+                      <View style={Styles.item}>
+                        <Text style={Styles.textItem}>
+                          {item.property_title}
+                        </Text>
+                      </View>
+                    ) : null}
                   </>
                 );
               }}
@@ -917,6 +986,8 @@ const AddNewVisitorForm = (props: any) => {
               valueField={"_id"}
               value={props?.formData?.configuration_id}
               onChange={(item: any) => {
+                console.log(item);
+
                 props.setFormData({
                   ...props.formData,
                   configuration_id: item._id,

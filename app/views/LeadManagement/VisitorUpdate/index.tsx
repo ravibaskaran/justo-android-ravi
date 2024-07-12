@@ -103,6 +103,8 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
     cp_type: "",
     cp_id: "",
     cp_emp_id: "",
+    referrer_name: "",
+    referrer_contact: "",
   });
 
   const [allProperty, setAllProperty] = useState<any>([]);
@@ -293,6 +295,8 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
         cp_id: response?.data[0]?.cp_id,
         cp_emp_id: response?.data[0]?.cp_emp_id,
         cp_name: response?.data[0]?.cp_name,
+        referrer_name: response?.data[0]?.referrer_name,
+        referrer_contact: response?.data[0]?.referrer_contact,
       });
       setCountryCode(response?.data[0]?.customer_detail?.country_code);
     }
@@ -624,6 +628,34 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
             : "Please Enter CP Company Name";
       }
     }
+    if (updateForm?.lead_source_id === CONST_IDS?.ref_lead_source_id) {
+      if (
+        updateForm?.referrer_name?.trim() === "" ||
+        updateForm?.referrer_name?.trim() === undefined
+      ) {
+        isError = false;
+        errorMessage = "Please fill refferrer name";
+      } else if (
+        Regexs.oneSpaceRegex.test(updateForm?.referrer_name?.trim()) === false
+      ) {
+        isError = false;
+        errorMessage = "Please enter refferrer name Correctly";
+      } else if (
+        updateForm?.referrer_contact === "" ||
+        updateForm?.referrer_contact === undefined ||
+        updateForm?.referrer_contact === null
+      ) {
+        isError = false;
+        errorMessage = "Please fill refferrer mobile number";
+      } else if (
+        updateForm.referrer_contact &&
+        (updateForm.referrer_contact < 10 ||
+          Regexs.mobilenumRegex.test(updateForm?.referrer_contact) === false)
+      ) {
+        isError = false;
+        errorMessage = "Please Enter valid referrer mobile number";
+      }
+    }
     if (updateForm?.adhar_no) {
       if (Regexs.AadharRegex.test(updateForm?.adhar_no) === false) {
         isError = false;
@@ -810,6 +842,18 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
         edit_params = {
           ...edit_params,
           cp_id: updateForm?.cp_id,
+        };
+      }
+      if (updateForm?.referrer_name) {
+        edit_params = {
+          ...edit_params,
+          referrer_name: updateForm?.referrer_name,
+        };
+      }
+      if (updateForm?.referrer_contact) {
+        edit_params = {
+          ...edit_params,
+          referrer_contact: updateForm?.referrer_contact,
         };
       }
       dispatch(editVisitor(edit_params));

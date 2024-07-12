@@ -271,6 +271,8 @@ const VisitorUpdateView = (props: any) => {
                 cp_type: "",
                 cp_id: "",
                 cp_emp_id: "",
+                referrer_name: "",
+                referrer_contact: "",
               });
               if (
                 !(
@@ -470,6 +472,46 @@ const VisitorUpdateView = (props: any) => {
             ) : null}
           </>
         ) : null}
+
+        {props?.updateForm?.lead_source_id === CONST_IDS?.ref_lead_source_id ? (
+          <>
+            <View style={styles.inputWrap}>
+              <InputField
+                require={true}
+                disableSpecialCharacters={true}
+                placeholderText={strings.referrerNumber}
+                handleInputBtnPress={() => {}}
+                onChangeText={(data: any) => {
+                  props.setUpdateForm({
+                    ...props.updateForm,
+                    referrer_contact: data,
+                  });
+                }}
+                valueshow={props?.updateForm?.referrer_contact}
+                headingText={strings.referrerNumber}
+                keyboardtype={"number-pad"}
+                maxLength={10}
+              />
+            </View>
+            <View style={styles.inputWrap}>
+              <InputField
+                require={true}
+                disableSpecialCharacters={true}
+                placeholderText={strings.referrerName}
+                headingText={strings.referrerName}
+                handleInputBtnPress={() => {}}
+                onChangeText={(data: any) => {
+                  props.setUpdateForm({
+                    ...props.updateForm,
+                    referrer_name: data,
+                  });
+                }}
+                valueshow={props?.updateForm?.referrer_name}
+              />
+            </View>
+          </>
+        ) : null}
+
         <View style={styles.inputWrap}>
           <DropdownInput
             require={true}

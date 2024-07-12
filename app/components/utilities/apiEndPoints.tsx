@@ -136,6 +136,7 @@ export default {
   GET_VISITOR_DETAIL_: "/visit/getVisitDetails",
   VISITOR_STATUS_UPDATE: "/visit/updateVisitStatus",
   CHECK_VISIT_AVAILABLE: "/visit/customerCheckForMobile",
+  CHECK_VISIT_MOB_AVAILABLE: "/visit/nextVisitCheckMob",
   GET_CP_PROPERTY_FOR_SM: "/property/getCpPropertySM",
   ADD_VISITOR_: "/visit/addVisit",
   EDIT_VISITOR_: "/visit/editVisit",

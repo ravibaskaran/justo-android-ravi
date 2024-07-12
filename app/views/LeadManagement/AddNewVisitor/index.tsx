@@ -86,6 +86,8 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
     cp_type: "",
     cp_id: "",
     cp_emp_id: "",
+    referrer_name: "",
+    referrer_contact: "",
     country_code: "+91",
   });
   const [NavigationType, setNavigationType] = useState(0);
@@ -382,7 +384,7 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
   };
 
   const validation = () => {
-    setDisabled(true)
+    setDisabled(true);
     setTimeout(() => {
       setDisabled(false);
     }, 3000);
@@ -444,7 +446,7 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
       ) {
         isError = false;
         errorMessage = "Please enter Lead Source";
-      }  else if (
+      } else if (
         type != "edit" &&
         formData?.property_id === "" &&
         formData?.property_type_title === ""
@@ -512,6 +514,34 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
             formData.cp_type === 1
               ? "Please Enter CP Name"
               : "Please Enter CP Company Name";
+        }
+      }
+      if (formData?.lead_source === CONST_IDS?.ref_lead_source_id) {
+        if (
+          formData?.referrer_name?.trim() === "" ||
+          formData?.referrer_name?.trim() === undefined
+        ) {
+          isError = false;
+          errorMessage = "Please fill refferrer name";
+        } else if (
+          Regexs.oneSpaceRegex.test(formData?.referrer_name?.trim()) === false
+        ) {
+          isError = false;
+          errorMessage = "Please enter refferrer name Correctly";
+        } else if (
+          formData?.referrer_contact === "" ||
+          formData?.referrer_contact === undefined ||
+          formData?.referrer_contact === null
+        ) {
+          isError = false;
+          errorMessage = "Please fill refferrer mobile number";
+        } else if (
+          formData.referrer_contact &&
+          (formData.referrer_contact < 10 ||
+            Regexs.mobilenumRegex.test(formData?.referrer_contact) === false)
+        ) {
+          isError = false;
+          errorMessage = "Please Enter valid referrer mobile number";
         }
       }
       if (formData?.min_budget || formData.max_budget) {
@@ -653,6 +683,77 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
       }
     }
   }, [visitAVailableData]);
+
+  const checkPhoneNumberIsValid = async () => {
+    let isError = true;
+    let errorMessage = "";
+    if (
+      formData?.mobile === "" ||
+      formData?.mobile === undefined ||
+      formData?.mobile === null
+    ) {
+      isError = false;
+      errorMessage = "Please fill mobile number";
+    } else if (
+      formData?.mobile &&
+      countryCode === "+91" &&
+      Regexs.mobilenumRegex.test(formData?.mobile) === false
+    ) {
+      isError = false;
+      errorMessage = "Please Enter valid mobile number";
+    } else if (
+      formData?.mobile &&
+      countryCode !== "+91" &&
+      formData?.mobile?.length < 10
+    ) {
+      isError = false;
+      errorMessage = "Please Enter valid mobile number";
+    }
+    if (errorMessage !== "") {
+      ErrorMessage({
+        msg: errorMessage,
+        backgroundColor: RED_COLOR,
+      });
+    }
+  };
+
+  const checkMobileExistWithSameProperty = async (propertyId: string) => {
+    let params: any = {
+      mobile: formData?.mobile,
+      property_id: propertyId,
+    };
+    dispatch({ type: START_LOADING });
+
+    try {
+      const res = await apiCall(
+        "post",
+        apiEndPoints.CHECK_VISIT_MOB_AVAILABLE,
+        params
+      );
+
+      if (res?.data?.status === 200) {
+        dispatch({ type: STOP_LOADING });
+        return true;
+      } else if (res?.data?.status === 201) {
+        setMobileError(res?.data?.message);
+        setOkIsVisible(true);
+        setTimeout(() => {
+          setFormData({
+            ...formData,
+            property_id: "",
+            property_type_title: "",
+            property_title: "",
+          });
+        }, 500);
+        dispatch({ type: STOP_LOADING });
+        return false;
+      }
+    } catch (e) {
+      dispatch({
+        type: STOP_LOADING,
+      });
+    }
+  };
 
   const handleCheckEmailMobile = async () => {
     let params: any = {
@@ -831,10 +932,16 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
             cp_type: formData?.cp_type,
           };
         }
-        if (formData?.cp_id) {
+        if (formData?.referrer_name) {
           edit_params = {
             ...edit_params,
-            cp_id: formData?.cp_id,
+            referrer_name: formData?.referrer_name,
+          };
+        }
+        if (formData?.referrer_contact) {
+          edit_params = {
+            ...edit_params,
+            referrer_contact: formData?.referrer_contact,
           };
         }
         dispatch(editVisitor(edit_params));
@@ -918,6 +1025,18 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
             add_params = {
               ...add_params,
               cp_id: formData?.cp_id,
+            };
+          }
+          if (formData?.referrer_name) {
+            add_params = {
+              ...add_params,
+              referrer_name: formData?.referrer_name,
+            };
+          }
+          if (formData?.referrer_contact) {
+            add_params = {
+              ...add_params,
+              referrer_contact: formData?.referrer_contact,
             };
           }
 
@@ -1009,6 +1128,10 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
       handleCloseCountry={handleCloseCountry}
       disabled={disabled}
       handleLeadSourcePressWhenNoCp={getAllPropertyData}
+      checkPhoneNumberIsValid={checkPhoneNumberIsValid}
+      checkMobileExistWithSameProperty={(propertyId: string) =>
+        checkMobileExistWithSameProperty(propertyId)
+      }
     />
   );
 };

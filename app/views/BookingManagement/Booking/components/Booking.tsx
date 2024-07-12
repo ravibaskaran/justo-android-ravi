@@ -25,12 +25,13 @@ import styles from "./styles";
 import { RequiredStart } from "app/components/utilities/GlobalFuncations";
 import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
 import JustForOkModal from "app/components/Modals/JustForOkModal";
+import ConfigurationsItem from "./ConfigurationsItem";
 
 const BookingView = (props: any) => {
-  console.log(
-    "🚀 ~ file: Booking.tsx:417 ~ props?.getBookingData:",
-    props?.getBookingData
-  );
+  // console.log(
+  //   "🚀 ~ file: Booking.tsx:417 ~ props?.getBookingData:",
+  //   props?.getBookingData
+  // );
 
   return (
     <View style={styles.mainContainer}>
@@ -59,353 +60,6 @@ const BookingView = (props: any) => {
               editable={false}
               valueshow={props?.getBookingData?.customer_first_name}
               keyboardtype={"number-pad"}
-            />
-          </View>
-          <View style={styles.inputWrap}>
-            <InputField
-              disableSpecialCharacters={true}
-              require={true}
-              placeholderText={"Amount"}
-              onChangeText={(data: any) => {
-                props.setBookingData({
-                  ...props.bookingData,
-                  booking_amount: data,
-                });
-              }}
-              valueshow={props?.bookingData?.booking_amount}
-              keyboardtype={"number-pad"}
-              headingText={"Booking Amount"}
-            />
-          </View>
-          <View style={styles.inputWrap}>
-            <DropdownInput
-              require={true}
-              headingText={"Payment Type"}
-              data={Array.isArray(props?.masterDatas) ? props?.masterDatas : []}
-              inputWidth={"100%"}
-              paddingLeft={16}
-              maxHeight={300}
-              onFocus={() => props.getDropDownData(10)}
-              labelField={"title"}
-              valueField={"title"}
-              placeholder={
-                props?.bookingData?.payment_type
-                  ? props?.bookingData?.payment_type
-                  : ""
-              }
-              value={props?.bookingData?.payment_type}
-              onChange={(item: any) => {
-                props.setBookingData({
-                  ...props.bookingData,
-                  payment_type: item.title,
-                });
-              }}
-              newRenderItem={(item: any) => {
-                return (
-                  <>
-                    <View style={Styles.item}>
-                      <Text style={Styles.textItem}>{item.title}</Text>
-                    </View>
-                  </>
-                );
-              }}
-            />
-          </View>
-          {/* <View style={styles.inputWrap}>
-                <InputField
-                  disableSpecialCharacters={true}
-                  require={true}
-                  placeholderText={"Number"}
-                  handleInputBtnPress={() => {}}
-                  onChangeText={(data: any) => {
-                    props.setBookingData({
-                      ...props.bookingData,
-                      tranjection_upi_cheque_number: data,
-                    });
-                  }}
-                  valueshow={props?.bookingData?.tranjection_upi_cheque_number}
-                  headingText={"Cheque No."}
-                />
-              </View> */}
-          <View style={styles.straightVw}>
-            <View style={{ flexDirection: "row" }}>
-              <Text
-                style={[
-                  styles.titleTxt,
-                  {
-                    bottom:
-                      typeof props?.bookingData?.cheque_image === "object"
-                        ? 8
-                        : 0,
-                  },
-                ]}
-              >
-                Attach Photo :
-              </Text>
-              <RequiredStart />
-            </View>
-            <View>
-              <Button
-                width={130}
-                height={45}
-                buttonText={strings.browse}
-                bgcolor={PRIMARY_THEME_COLOR}
-                border={14}
-                handleBtnPress={() => props.setBrowse(true)}
-              />
-              {typeof props?.bookingData?.cheque_image === "object" ? (
-                <Text style={{ fontSize: 12, textAlign: "center" }}>
-                  {"Photo Added"}
-                </Text>
-              ) : null}
-            </View>
-          </View>
-          {/* <View style={styles.inputWrap}>
-                    <InputCalender
-                        mode={'date'}
-                        leftIcon={images.event}
-                        placeholderText={"Booking Date"}
-                        editable={false}
-                        dateData={(data: any) => {
-                            props.setBookingData({
-                                ...props.booking_date,
-                                booking_date: moment(data).format(DATE_FORMAT)
-                            })
-                        }}
-                        setDateshow={(data: any) => {
-                            props.setBookingData({
-                                ...props.bookingData,
-                                booking_date: moment(data).format(DATE_FORMAT)
-                            })
-                        }}
-                        value={props.bookingData?.booking_date}
-                    />
-                </View> */}
-
-          <View style={styles.inputWrap}>
-            <DropdownInput
-              require={true}
-              headingText={strings.configurations}
-              // onFocus={() => props.getDropDownData(0)}
-              placeholder={
-                props?.bookingData.flat_type
-                  ? props?.bookingData.flat_type
-                  : strings.configurations
-              }
-              data={Array.isArray(props?.flatTypes) ? props?.flatTypes : []}
-              inputWidth={"100%"}
-              paddingLeft={16}
-              maxHeight={300}
-              // labelField={"configuration_title"}
-              // valueField={"configuration_id"}
-              value={props?.bookingData.flat_type}
-              onChange={(item: any) => {
-                // props.setBookingData({
-                //   ...props.bookingData,
-                //   flat_type: item,
-                // });
-                props.setcofigdata(item);
-              }}
-              newRenderItem={(item: any) => {
-                return item ? (
-                  <>
-                    <View style={Styles.item}>
-                      <Text style={Styles.textItem}>{item}</Text>
-                    </View>
-                  </>
-                ) : null;
-              }}
-            />
-          </View>
-          <View style={[styles.inputWrap]}>
-            <DropdownInput
-              require={true}
-              headingText={strings.floor}
-              placeholder={
-                props.bookingData?.floor
-                  ? props.bookingData?.floor
-                  : strings.floor
-              }
-              data={Array.isArray(props.floors) ? props.floors : []}
-              inputWidth={"100%"}
-              // onFocus={() => handleGetConfigurations()}
-              paddingLeft={16}
-              maxHeight={300}
-              // labelField={"type"}
-              // valueField={"type"}
-              value={props.bookingData?.floor}
-              onChange={(item: any) => {
-                props.setBookingData({
-                  ...props.bookingData,
-                  floor: item,
-                  flat_name: "",
-                  saleable_area: "",
-                });
-              }}
-              newRenderItem={(item: any) => {
-                return (
-                  item.type !== "" && (
-                    <>
-                      <View style={Styles.item}>
-                        <Text style={Styles.textItem}>{item}</Text>
-                      </View>
-                    </>
-                  )
-                );
-              }}
-            />
-          </View>
-          <View style={styles.inputWrap}>
-            <DropdownInput
-              require={true}
-              headingText={strings.inventory}
-              // onFocus={() => props.getDropDownData(0)}
-              placeholder={
-                props?.bookingData.flat_name
-                  ? props?.bookingData.flat_name
-                  : strings.inventory
-              }
-              data={Array.isArray(props?.inventory) ? props?.inventory : []}
-              inputWidth={"100%"}
-              paddingLeft={16}
-              maxHeight={300}
-              // labelField={"configuration_title"}
-              // valueField={"configuration_id"}
-              value={props?.bookingData.flat_name}
-              onChange={(item: any) => {
-                props.setBookingData({
-                  ...props.bookingData,
-                  flat_name: item["Flat Name"],
-                  saleable_area: item["Saleable Area"],
-                  carpet_area: item["Carpet Area"],
-                });
-              }}
-              newRenderItem={(item: any) => {
-                return item["Flat Name"] ? (
-                  <>
-                    <View style={Styles.item}>
-                      <Text style={Styles.textItem}>{item["Flat Name"]}</Text>
-                    </View>
-                  </>
-                ) : null;
-              }}
-            />
-          </View>
-
-          {/* <View style={styles.inputWrap}>
-              <InputField
-                disableSpecialCharacters={true}
-                require={true}
-                placeholderText={"Qty"}
-                handleInputBtnPress={() => {}}
-                headingText={"Qty"}
-                maxLength={2}
-                keyboardtype={"number-pad"}
-                editable={props.quantity}
-                onChangeText={(data: any) => {
-                  if (props?.bookingData.remaining > 0) {
-                    props.setBookingData({
-                      ...props.bookingData,
-                      quantity: data,
-                    });
-                  } else {
-                    props.validQuantityChoose();
-                  }
-                }}
-                onFocus={() => props.validQuantityChoose()}
-                valueshow={props?.bookingData?.quantity}
-              />
-            </View> */}
-          {/*<View style={[styles.straightVw, { marginTop: normalize(20) }]}>
-           
-             <View style={{ width: "48%" }}>
-              <DropdownInput
-                require={true}
-                headingText={strings.configurations}
-                // onFocus={() => props.getDropDownData(0)}
-                placeholder={
-                  props?.bookingData?.configuration
-                    ? props?.bookingData?.configuration
-                    : strings.configurations
-                }
-                data={
-                  Array.isArray(props?.propertyConfData)
-                    ? props?.propertyConfData
-                    : []
-                }
-                inputWidth={"100%"}
-                paddingLeft={16}
-                maxHeight={300}
-                labelField={"configuration_title"}
-                valueField={"configuration_id"}
-                value={
-                  props?.bookingData?.configuration_id === ""
-                    ? ""
-                    : props?.bookingData?.configuration_id
-                }
-                onChange={(item: any) => {
-                  props.setQuantity(true);
-                  props.setBookingData({
-                    ...props.bookingData,
-                    quantity: "",
-                    remaining: item.remaining,
-                    configuration_id: item.configuration_id,
-                    configuration: item.configuration_title,
-                  });
-                }}
-                newRenderItem={(item: any) => {
-                  return item?.configuration_title ? (
-                    <>
-                      <View style={Styles.item}>
-                        <Text style={Styles.textItem}>
-                          {item.configuration_title}
-                        </Text>
-                      </View>
-                    </>
-                  ) : null;
-                }}
-              />
-            </View> 
-            
-          </View>*/}
-          {props?.bookingData?.saleable_area ? (
-            <View style={styles.inputWrap}>
-              {/* <InputField
-              // disableSpecialCharacters={true}
-              placeholderText={props?.bookingData?.saleable_area}
-              headingText={"Saleable Area"}
-              editable={false}
-              valueshow={props?.bookingData?.saleable_area}
-              // keyboardtype={"number-pad"}
-            /> */}
-              <View style={styles.IteamView}>
-                <View style={styles.Txtview}>
-                  <View style={styles.projectContainer}>
-                    <Text style={styles.projectTxt}>Carpet Area :</Text>
-                  </View>
-                  <View style={styles.nameContainer}>
-                    <Text style={styles.nameTxt}>
-                      {props?.bookingData?.carpet_area} Sq. ft.
-                    </Text>
-                  </View>
-                </View>
-              </View>
-            </View>
-          ) : null}
-          <View style={styles.inputWrap}>
-            <InputField
-              require={true}
-              headingText={"Comment"}
-              placeholderText={"Comment"}
-              multiline={true}
-              inputheight={80}
-              onChangeText={(data: any) => {
-                props.setBookingData({
-                  ...props.bookingData,
-                  description: data,
-                });
-              }}
-              valueshow={props?.bookingData?.description}
             />
           </View>
           <View style={styles.inputWrap}>
@@ -471,6 +125,153 @@ const BookingView = (props: any) => {
               )}
             </>
           )}
+          {props?.getBookingData?.lead_source_id?.[0] ===
+            CONST_IDS.ref_lead_source_id && (
+            <>
+              <View style={styles.inputWrap}>
+                <InputField
+                  editable={false}
+                  placeholderText={strings.referrerNumber}
+                  headingText={strings.referrerNumber}
+                  valueshow={props?.getBookingData.referrer_contact}
+                  keyboardtype={"number-pad"}
+                  maxLength={10}
+                />
+              </View>
+              <View style={styles.inputWrap}>
+                <InputField
+                  editable={false}
+                  headingText={strings.referrerName}
+                  placeholderText={strings.referrerName}
+                  valueshow={props?.getBookingData.referrer_name}
+                />
+              </View>
+            </>
+          )}
+
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View style={[styles.inputWrap, { flex: 1, marginRight: 20 }]}>
+              <InputField
+                disableSpecialCharacters={true}
+                require={true}
+                placeholderText={"Amount"}
+                onChangeText={(data: any) => {
+                  props.setBookingData({
+                    ...props.bookingData,
+                    booking_amount: data,
+                  });
+                }}
+                valueshow={props?.bookingData?.booking_amount}
+                keyboardtype={"number-pad"}
+                headingText={"Amount"}
+              />
+            </View>
+            <View style={[styles.inputWrap, { flex: 1 }]}>
+              <DropdownInput
+                require={true}
+                headingText={"Payment Type"}
+                data={
+                  Array.isArray(props?.masterDatas) ? props?.masterDatas : []
+                }
+                inputWidth={"100%"}
+                paddingLeft={16}
+                maxHeight={300}
+                onFocus={() => props.getDropDownData(10)}
+                labelField={"title"}
+                valueField={"title"}
+                placeholder={
+                  props?.bookingData?.payment_type
+                    ? props?.bookingData?.payment_type
+                    : ""
+                }
+                value={props?.bookingData?.payment_type}
+                onChange={(item: any) => {
+                  props.setBookingData({
+                    ...props.bookingData,
+                    payment_type: item.title,
+                  });
+                }}
+                newRenderItem={(item: any) => {
+                  return (
+                    <>
+                      <View style={Styles.item}>
+                        <Text style={Styles.textItem}>{item.title}</Text>
+                      </View>
+                    </>
+                  );
+                }}
+              />
+            </View>
+          </View>
+
+          <View style={styles.straightVw}>
+            <View style={{ flexDirection: "row" }}>
+              <Text
+                style={[
+                  styles.titleTxt,
+                  {
+                    bottom:
+                      typeof props?.bookingData?.cheque_image === "object"
+                        ? 8
+                        : 0,
+                  },
+                ]}
+              >
+                Attach Photo :
+              </Text>
+              <RequiredStart />
+            </View>
+            <View>
+              <Button
+                width={130}
+                height={45}
+                buttonText={strings.browse}
+                bgcolor={PRIMARY_THEME_COLOR}
+                border={14}
+                handleBtnPress={() => props.setBrowse(true)}
+              />
+              {typeof props?.bookingData?.cheque_image === "object" ? (
+                <Text style={{ fontSize: 12, textAlign: "center" }}>
+                  {"Photo Added"}
+                </Text>
+              ) : null}
+            </View>
+          </View>
+
+          {props.flatBookingsMap?.flatBooking.map(
+            (value: any, index: number) => {
+              return (
+                <ConfigurationsItem
+                  key={index}
+                  flatBooking={value}
+                  index={index}
+                  getBookingData={props?.getBookingData}
+                  flatBookingLength={props.flatBookingsMap?.flatBooking?.length}
+                  addMoreBtnPressed={() => {
+                    props?.addMoreBtnPressed();
+                  }}
+                />
+              );
+            }
+          )}
+
+          <View style={styles.inputWrap}>
+            <InputField
+              require={true}
+              headingText={"Comment"}
+              placeholderText={"Comment"}
+              multiline={true}
+              inputheight={80}
+              onChangeText={(data: any) => {
+                props.setBookingData({
+                  ...props.bookingData,
+                  description: data,
+                });
+              }}
+              valueshow={props?.bookingData?.description}
+            />
+          </View>
+
           <View style={{ marginVertical: normalize(30) }}>
             <Button
               buttonText={strings.bookNow}
