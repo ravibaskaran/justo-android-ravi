@@ -181,7 +181,7 @@ const AgencyListItem = (props: any) => {
       <View style={{alignItems: 'flex-start', marginBottom: 10, flexDirection: 'row'}}>
         <Button
           width={Isios ? 160 : 120}
-          height={30}
+          height={45}
           bgcolor={WHITE_COLOR}
           bordercolor={PURPLE_COLOR}
           borderWidth={1}
@@ -193,7 +193,7 @@ const AgencyListItem = (props: any) => {
         />
         {props?.items?.cp_type === 2 ? <Button
           width={Isios ? 140 : 110}
-          height={30}
+          height={45}
           bgcolor={WHITE_COLOR}
           bordercolor={PURPLE_COLOR}
           borderWidth={1}

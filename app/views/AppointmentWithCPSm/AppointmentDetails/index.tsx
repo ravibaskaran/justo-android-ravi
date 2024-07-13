@@ -21,7 +21,7 @@ const AppointmentDetails = ({navigation,route}: any) => {
     return () => backHandler.remove();
   }, []);
   return (
-   <AppointmentDetailsView handleBackPress={handleBackPress} status={status} />
+   <AppointmentDetailsView handleBackPress={handleBackPress} status={status} navigation={navigation} />
   )
 }
 

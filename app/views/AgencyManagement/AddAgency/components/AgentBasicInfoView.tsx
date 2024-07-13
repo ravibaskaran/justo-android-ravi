@@ -42,10 +42,7 @@ const AgentBasicInfoView = (props: any) => {
       working_location: array,
     });
   };
-  console.log(
-    "🚀 ~ file: AgentBasicInfoView.tsx:360 ~ props?.emailMobvalidation?.email:",
-    props?.emailMobvalidation?.email
-  );
+
   const [showReraValidationError, setShowReraValidationError] =
     useState<boolean>(false);
 
