@@ -1,12 +1,9 @@
-import React, { useState } from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
-import styles from "./styles";
-import strings from "../../../components/utilities/Localization";
 import {
-  normalize,
-  normalizeHeight,
-  normalizeSpacing,
+  normalizeHeight
 } from "app/components/scaleFontSize";
+import React from "react";
+import { Text, TouchableOpacity, View } from "react-native";
+import styles from "./styles";
 
 const SiteHeadView = (props: any) => {
   return (
@@ -21,8 +18,9 @@ const SiteHeadView = (props: any) => {
           <View style={styles.thirdPortionCardTextView}>
             <Text style={styles.thirdPortionCardText}>
               {/* Site Visit */}
-              Today's Leads
+              Today's
             </Text>
+            <Text style={styles.thirdPortionCardText}>Leads</Text>
           </View>
           <View style={styles.numberView}>
             <Text style={styles.thirdPortionNumberText}>
@@ -47,7 +45,7 @@ const SiteHeadView = (props: any) => {
           </View>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => props.onPressSiteVisit('todayComplete')}
+          onPress={() => props.onPressSiteVisit("todayComplete")}
           style={[
             styles.thirdPortioncardView,
             { height: normalizeHeight(120) },
@@ -63,12 +61,12 @@ const SiteHeadView = (props: any) => {
           </View>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => props.onpressBooking('request', 'today')}
+          onPress={() => props.onpressBooking("request", "today")}
           style={styles.thirdPortioncardView}
         >
           <View style={styles.thirdPortionCardTextView}>
             <Text style={styles.thirdPortionCardText} numberOfLines={2}>
-            Today's Booking
+              Today's Booking
             </Text>
           </View>
           <View style={styles.numberView}>
@@ -94,14 +92,16 @@ const SiteHeadView = (props: any) => {
           </View>
         </TouchableOpacity> */}
         <TouchableOpacity
-          onPress={() => props.onpressBooking('cancel', 'today')}
+          onPress={() => props.onpressBooking("cancel", "today")}
           style={[
             styles.thirdPortioncardView,
             // { height: normalizeHeight(130) },
           ]}
         >
           <View style={styles.thirdPortionCardTextView}>
-            <Text style={styles.thirdPortionCardText}>Today's Cancel Booking</Text>
+            <Text style={styles.thirdPortionCardText}>
+              Today's Cancel Booking
+            </Text>
           </View>
           <View style={styles.numberView}>
             <Text style={styles.thirdPortionNumberText}>

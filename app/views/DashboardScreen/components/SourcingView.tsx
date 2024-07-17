@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
-import styles from "./styles";
-import strings from "../../../components/utilities/Localization";
 import { ROLE_IDS } from "app/components/utilities/constant";
+import React from "react";
+import { Text, TouchableOpacity, View } from "react-native";
+import styles from "./styles";
 
 const SourcingDashboardView = (props: any) => {
   const targetData = props?.dashboardData?.target || {};
@@ -35,7 +34,8 @@ const SourcingDashboardView = (props: any) => {
           style={styles.thirdPortioncardView}
         >
           <View style={styles.thirdPortionCardTextView}>
-            <Text style={styles.thirdPortionCardText}>{strings.todayLead}</Text>
+            <Text style={styles.thirdPortionCardText}>Today's</Text>
+            <Text style={styles.thirdPortionCardText}>Leads</Text>
           </View>
           <View style={styles.numberView}>
             <Text style={styles.thirdPortionNumberText}>
@@ -67,8 +67,9 @@ const SourcingDashboardView = (props: any) => {
           style={styles.thirdPortioncardView}
         >
           <View style={styles.thirdPortionCardTextView}>
+            <Text style={styles.thirdPortionCardText}>Active</Text>
             <Text style={styles.thirdPortionCardText}>
-              {role === ROLE_IDS.sourcingtl_id ? "Active SM" : "Active CP"}
+              {role === ROLE_IDS.sourcingtl_id ? "SM" : "CP"}
             </Text>
           </View>
           <View style={styles.numberView}>

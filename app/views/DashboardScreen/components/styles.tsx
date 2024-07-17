@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   },
   thirdPortion: {
     backgroundColor: WHITE_COLOR,
-    paddingHorizontal: normalizeSpacing(20),
+    // paddingHorizontal: normalizeSpacing(20),
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
