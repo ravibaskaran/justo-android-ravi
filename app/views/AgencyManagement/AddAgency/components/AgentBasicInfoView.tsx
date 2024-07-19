@@ -1,17 +1,23 @@
+import InputCalender from "app/components/InputCalender";
+import AddEmployeeModal from "app/components/Modals/AddEmployeeModal";
+import MultiLocation from "app/components/MultiLocation";
+import { normalize } from "app/components/scaleFontSize";
+import { RequiredStart } from "app/components/utilities/GlobalFuncations";
+import { handleValues } from "app/components/utilities/handleValues";
+import moment from "moment";
+import React, { useState } from "react";
 import {
-  Alert,
   Image,
   ScrollView,
-  StatusBar,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
-import React, { useState } from "react";
 import { RadioButton } from "react-native-paper";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
 import Header from "../../../../components/Header";
-import strings from "../../../../components/utilities/Localization";
-import styles from "./styles";
+import InputField from "../../../../components/InputField";
 import {
   BLACK_COLOR,
   DATE_FORMAT,
@@ -22,16 +28,8 @@ import {
   Regexs,
   validateEmail,
 } from "../../../../components/utilities/constant";
-import InputField from "../../../../components/InputField";
-import images from "../../../../assets/images";
-import Button from "../../../../components/Button";
-import InputCalender from "app/components/InputCalender";
-import moment from "moment";
-import MultiLocation from "app/components/MultiLocation";
-import { RequiredStart } from "app/components/utilities/GlobalFuncations";
-import { handleValues } from "app/components/utilities/handleValues";
-import { normalize } from "app/components/scaleFontSize";
-import AddEmployeeModal from "app/components/Modals/AddEmployeeModal";
+import strings from "../../../../components/utilities/Localization";
+import styles from "./styles";
 
 const AgentBasicInfoView = (props: any) => {
   const handleDelete = (item: any, index: any) => {
@@ -414,7 +412,12 @@ const AgentBasicInfoView = (props: any) => {
               if (
                 Regexs.reraRegex.test(props.agencyData?.rera_certificate_no)
               ) {
-                props.handleCheckEmailMobile(2);
+                if (
+                  props.agencyData?.setrera_certificate_no?.toString() !==
+                  props.agencyData?.rera_certificate_no?.toString()
+                ) {
+                  props.handleCheckEmailMobile(2);
+                }
                 props.setEmailMobileChng({
                   ...props.emailMobileChng,
                   onrera: "",

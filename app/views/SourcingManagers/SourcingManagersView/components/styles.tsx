@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
     color: WHITE_COLOR,
     textAlign: 'center'
   },
+  count: { alignSelf: "flex-end", marginRight: 4 }
 
 })
 export default styles

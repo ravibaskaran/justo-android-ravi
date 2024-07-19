@@ -1,11 +1,16 @@
+import { useFocusEffect } from "@react-navigation/native";
 import ErrorMessage from "app/components/ErrorMessage";
+import ConfirmModal from "app/components/Modals/ConfirmModal";
+import apiEndPoints from "app/components/utilities/apiEndPoints";
 import {
   GREEN_COLOR,
   RED_COLOR,
   Regexs,
+  ROLE_IDS,
   validateEmail,
 } from "app/components/utilities/constant";
 import { handleValues } from "app/components/utilities/handleValues";
+import { apiCall } from "app/components/utilities/httpClient";
 import strings from "app/components/utilities/Localization";
 import {
   AgencyCreateFormRemove,
@@ -16,6 +21,12 @@ import {
   getAgencyDetail,
   removeAgency,
 } from "app/Redux/Actions/AgencyActions";
+import { getAllProperty } from "app/Redux/Actions/propertyActions";
+import {
+  assignCPSM,
+  getAssignCPList,
+} from "app/Redux/Actions/SourcingManagerActions";
+import { START_LOADING, STOP_LOADING } from "app/Redux/types";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Keyboard } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,10 +34,6 @@ import PicturePickerModal from "../../../components/Modals/PicturePicker";
 import AgentBankInfo from "./components/AgentBankInfo";
 import AgentBasicInfoView from "./components/AgentBasicInfoView";
 import CompanyDetails from "./components/CompanyDetails";
-import CompanyBasicInfoView from "./components/CompanyBasicInfoView";
-import CompanyBankInfo from "./components/CompanyBankInfo";
-import { getAllProperty } from "app/Redux/Actions/propertyActions";
-import { START_LOADING, STOP_LOADING } from "app/Redux/types";
 
 const AgentBasicInfo = ({ navigation, route }: any) => {
   const { type, data } = route.params || {};
@@ -55,6 +62,7 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
   const [selectedProperty, setSelectedProperty] = useState<any>([]);
   const [selectedPropertyIds, setSelectedPropertyIds] = useState<any>([]);
   const [finalPropertyList, setFinalPropertyList] = useState<any>([]);
+  const [cpId, setcpId] = useState<any>("");
 
   const [agencyData, setAgencyData] = useState({
     profile_picture: type === "edit" ? "" : "",
@@ -108,6 +116,7 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
     norera_register: null,
     setprimary_mobile: "",
     setemail: "",
+    setrera_certificate_no: "",
   });
 
   const [imagePicker, setImagePicker] = useState(false);
@@ -120,8 +129,12 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
   const registrationData = useSelector((state: any) => state.agencyForm);
   const { response = {}, detail } =
     useSelector((state: any) => state.agency) || [];
-
+  const [isVisible, setIsVisible] = useState(false);
+  const getLoginType = useSelector((state: any) => state.login);
   const addEditAgency = useSelector((state: any) => state.addEditAgency) || [];
+  const SmCpList = useSelector((state: any) => state.SourcingManager) || [];
+  const [agentList, setAgentList] = useState<any>([]);
+  const [cplgId, setCplgId] = useState("");
 
   const handleClearData = (type: any) => {
     setAgencyData({
@@ -174,6 +187,7 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
       property_tag: [],
       norera_register: null,
       setprimary_mobile: "",
+      setrera_certificate_no: "",
       setemail: "",
     });
     setEmailMobValidation({
@@ -244,6 +258,7 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
                 : "",
             setprimary_mobile: response?.data[0]?.primary_mobile,
             setemail: response?.data[0]?.email,
+            setrera_certificate_no: response?.data[0]?.rera_certificate_no,
           });
           if (allDatas?.create_by_id === userData?.data?.user_id) {
             setEmailMobileChng({
@@ -265,6 +280,38 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
       // setAgencyData({ ...registrationData.response, sourcing_manager: userData?.data?._id })
     }
   }, [response]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (SmCpList?.response?.message == "CP allocate successfull.") {
+        getAgencyList(0, {});
+      }
+      return () => {};
+    }, [navigation, , type, SmCpList])
+  );
+
+  const getAgencyList = (offset: any, filterData: any) => {
+    dispatch(
+      getAssignCPList({
+        user_id: userData?.data?.user_id,
+        startdate: "",
+        enddate: "",
+        search_by_name: "",
+        mobile_no: "",
+        rera_no: "",
+        search_by_location: "",
+        status: "",
+      })
+    );
+  };
+
+  useEffect(() => {
+    if (SmCpList?.response?.status === 200) {
+      setAgentList(SmCpList?.response?.data);
+    } else {
+      setAgentList([]);
+    }
+  }, [SmCpList]);
 
   const propertyData = useSelector((state: any) => state.propertyData) || {};
 
@@ -299,6 +346,7 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
     newArray?.splice(index, 1);
     setEmployees(newArray);
   };
+
   useLayoutEffect(() => {
     const { data = {} } = route?.params;
     if (data.cp_id) {
@@ -903,11 +951,16 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
                 ...emailMobvalidation,
                 rera_certificate_no: "wrongReraNumber",
               });
-              let errorMessage = strings.reraNumberAlreadyValidReqVal;
-              ErrorMessage({
-                msg: errorMessage,
-                backgroundColor: RED_COLOR,
-              });
+              if (userData?.data?.role_id === ROLE_IDS.sourcingmanager_id) {
+                setCplgId(emailAndMobileData?.response?.cp_lg_id);
+                setIsVisible(true);
+              } else {
+                let errorMessage = strings.reraNumberAlreadyValidReqVal;
+                ErrorMessage({
+                  msg: errorMessage,
+                  backgroundColor: RED_COLOR,
+                });
+              }
               break;
             default:
               break;
@@ -1182,6 +1235,69 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
     setSelectedPropertyIds(arr);
     setIsPropertyVisible(false);
   };
+
+  const handleAllocateSMPropertyToCP = async () => {
+    setIsVisible(false);
+    dispatch({ type: START_LOADING });
+    const transformedArray = propertyList.map(
+      (item: {
+        _id: string;
+        active_status: boolean;
+        property_id: string;
+        property_title: string;
+        property_type: string;
+      }) => ({
+        property_id: item.property_id,
+        active_status: item.active_status,
+        _id: item?._id,
+        property_title: item?.property_title,
+        property_type: item?.property_type,
+      })
+    );
+
+    let cpIds = [];
+    for (let data of agentList) {
+      cpIds.push(data?._id);
+    }
+    cpIds.push(cplgId);
+
+    const params = {
+      cp_id: cplgId,
+      property_tag: JSON.stringify(transformedArray),
+    };
+
+    const res = await apiCall(
+      "post",
+      apiEndPoints.UPDATE_CP_PROPERTY_SM,
+      params
+    );
+    const response: any = res?.data;
+    console.log(response);
+    if (response?.status === 200) {
+      setTimeout(() => {
+        dispatch(
+          assignCPSM({
+            user_id: userData?.data?.user_id,
+            cp_id: cpIds,
+          })
+        );
+        setTimeout(() => {
+          ErrorMessage({
+            msg: response?.message,
+            backgroundColor: GREEN_COLOR,
+          });
+          onPressBack();
+        }, 1000);
+      }, 500);
+    } else {
+      dispatch({ type: STOP_LOADING });
+      ErrorMessage({
+        msg: response?.message,
+        backgroundColor: RED_COLOR,
+      });
+    }
+  };
+
   return (
     <>
       {formType === 0 ? (
@@ -1290,6 +1406,20 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
             profile_picture: data,
           });
         }}
+      />
+      <ConfirmModal
+        Visible={isVisible}
+        setIsVisible={setIsVisible}
+        stringshow={strings.allocateProperty}
+        textshow={strings.allocateCpToProperty}
+        confirmtype={"CONFIRMATION"}
+        setStatusChange={() => {
+          setAgencyData({
+            ...agencyData,
+            rera_certificate_no: "",
+          });
+        }}
+        handleYesResponse={() => handleAllocateSMPropertyToCP()}
       />
     </>
   );

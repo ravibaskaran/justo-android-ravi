@@ -376,7 +376,9 @@ const strings = new LocalizedStrings({
     registration: "Registration",
     followup: "Follow-Up",
     enterCompPropertyName: "Please enter competetor Property name",
-
+    allocateCpToProperty:
+      "CP is already registered. Do you want to allocate your property?",
+      
     // common strings
     search: "Search",
     searchByName: "Search by Name",

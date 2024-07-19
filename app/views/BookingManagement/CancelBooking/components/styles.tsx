@@ -67,5 +67,7 @@ const styles = StyleSheet.create({
         width: normalizeWidth(30),
         height: normalizeHeight(30)
     },
+  count: { alignSelf: "flex-end", marginRight: 4 }
+
 })
 export default styles

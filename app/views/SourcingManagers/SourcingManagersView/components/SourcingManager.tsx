@@ -29,6 +29,12 @@ const SourcingDetailsView = (props: any) => {
         statusBarColor={PRIMARY_THEME_COLOR}
         barStyle={"light-content"}
       />
+      <Text style={styles.count}>
+        Count :{" "}
+        {props?.sourcingManagers?.length > 0
+          ? props?.sourcingManagers?.length
+          : 0}
+      </Text>
       {create && (
         <View style={{ alignItems: "flex-end", paddingVertical: 10 }}>
           <Button

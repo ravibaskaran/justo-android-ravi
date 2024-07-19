@@ -69,13 +69,15 @@ const AgencyListing = ({ navigation, route }: any) => {
         status: "",
         mobile_no: "",
         rera_no: "",
-      })
+      });
     }, [navigation])
   );
 
   useEffect(() => {
     if (SmCpList?.response?.status === 200) {
-      setAgentList(SmCpList?.response?.data);
+      if (SmCpList?.response?.message != "CP allocate successfull.") {
+        setAgentList(SmCpList?.response?.data);
+      }  
     } else {
       setAgentList([]);
     }
@@ -208,7 +210,7 @@ const AgencyListing = ({ navigation, route }: any) => {
       })
     );
     dispatch({ type: START_LOADING });
-   
+
     setCP_ID(id);
     const params = {
       cp_id: id,
@@ -226,13 +228,11 @@ const AgencyListing = ({ navigation, route }: any) => {
         //setPropertyList(response?.data);
         setSelectedProperty(response?.data);
         // setFinalPropertyList(response?.data);
-        
       } else {
         dispatch({ type: STOP_LOADING });
         setPropertyList([]);
         setSelectedProperty([]);
-        
-        
+
         // setFinalPropertyList([]);
       }
     } else {
@@ -243,7 +243,7 @@ const AgencyListing = ({ navigation, route }: any) => {
       //   backgroundColor: RED_COLOR,
       // });
       setSelectedProperty([]);
-     
+
       // setFinalPropertyList([]);
     }
     // setIsPropertyVisible(true);
@@ -266,7 +266,7 @@ const AgencyListing = ({ navigation, route }: any) => {
     }
   };
   const onPressSeeEmployee = (data: any) => {
-    navigation.navigate('EmployeeListing', {ID: data})
+    navigation.navigate("EmployeeListing", { ID: data });
   };
   const onPressDeactivates = (data: any, type: any) => {
     dispatch(

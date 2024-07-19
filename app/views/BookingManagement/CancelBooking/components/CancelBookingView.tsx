@@ -10,18 +10,18 @@ import CancelBookingItems from "./CancelBookingItems";
 import BookingFilterModal from "../../BookingList/components/BookingFilterModal";
 
 const CancelBookingView = (props: any) => {
-    const [isVisable, setisVisable] = useState(false);
+  const [isVisable, setisVisable] = useState(false);
 
-    const onReset = () => {
-      props.getBookingLits(0, []);
-      setisVisable(false);
-      props.setFilterData({
-        start_date: "",
-        end_date: "",
-        status: "",
-        customer_name: ""
-      });
-    };
+  const onReset = () => {
+    props.getBookingLits(0, []);
+    setisVisable(false);
+    props.setFilterData({
+      start_date: "",
+      end_date: "",
+      status: "",
+      customer_name: "",
+    });
+  };
   return (
     <View style={styles.mainContainer}>
       <Header
@@ -36,6 +36,10 @@ const CancelBookingView = (props: any) => {
         barStyle={"light-content"}
         handleOnRightFirstIconPress={() => setisVisable(true)}
       />
+      <Text style={styles.count}>
+        {" "}
+        Count : {props?.moreData ? props?.moreData : 0}
+      </Text>
       <View style={styles.listView}>
         <FlatList
           data={Array.isArray(props.DATA) ? props.DATA : []}
@@ -66,7 +70,7 @@ const CancelBookingView = (props: any) => {
               start_date: "",
               end_date: "",
               status: "",
-              customer_name: ""
+              customer_name: "",
             });
           }}
         />
@@ -76,7 +80,7 @@ const CancelBookingView = (props: any) => {
         Visible={isVisable}
         filterData={props.filterData}
         setFilterData={props.setFilterData}
-        type={'cancel'}
+        type={"cancel"}
         getBookingLits={props.getBookingLits}
         onReset={onReset}
       />

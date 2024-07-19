@@ -41,9 +41,10 @@ export const ONE_MONTH_DATES = new Date(
   new Date().setDate(new Date().getDate() + 31)
 );
 
-export const GLOBAL_URL = "http://192.168.1.48:3001"; // localhost server
-
+// export const GLOBAL_URL = "http://192.168.1.48:3001"; // localhost server
 // export const  GLOBAL_URL = 'https://prodapi.justoverse.com:3002' //prod
+
+export const GLOBAL_URL = "https://demoapi.inexoftworld.com"; // localhost server
 
 export const MAP_KEY = "AIzaSyCbDx7Lk4eTMzptrQKXZvOPYgEMggrq8o4";
 
