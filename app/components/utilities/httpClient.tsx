@@ -6,11 +6,15 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const httpClient = axios.create({
   baseURL: `${GLOBAL_URL}/api/`,
 });
+// const httpClientJW = axios.create({
+//   baseURL: `https://justoworks.co.in/`,
+// });
+
 const httpClientJW = axios.create({
-  baseURL: `https://justoworks.co.in/`,
+  baseURL: `http://demoapi.justoworks.co.in/`,
 });
 const httpClientJWDemo = axios.create({
-  baseURL: `https://demoapi.justoworks.co.in/`,
+  baseURL: `http://demoapi.justoworks.co.in/`,
 });
 
 
