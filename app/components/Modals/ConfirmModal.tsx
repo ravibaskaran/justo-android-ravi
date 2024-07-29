@@ -32,51 +32,78 @@ const ConfirmModal = (props: any) => {
         <View style={styles.mainContainer}>
           <View style={styles.topContainer}>
             <View />
-            <Text style={styles.topTxt}>{props.stringshow ? props.stringshow : strings.confirmation}</Text>
+            <Text style={styles.topTxt}>
+              {props.stringshow ? props.stringshow : strings.confirmation}
+            </Text>
             <View>
-              <TouchableOpacity onPress={() => {
-                props.setIsVisible(false)
-                props.setStatusChange ? props.setStatusChange({}) : null
-              }}>
+              <TouchableOpacity
+                onPress={() => {
+                  props.setIsVisible(false);
+                  props.setStatusChange ? props.setStatusChange({}) : null;
+                }}
+              >
                 <Image source={images.close} style={styles.closeIcon} />
               </TouchableOpacity>
             </View>
           </View>
 
-          {(props.confirmtype === 'CONFIRMATION') ?
+          {props.confirmtype === "CONFIRMATION" ? (
             <>
               <View style={styles.borderView} />
               <View style={styles.conteconfirm}>
                 <View style={styles.MiddleContainer}>
                   <Text style={styles.bottomTxt}>{props.textshow}</Text>
                 </View>
-                <View style={{ marginVertical: 10, flexDirection: 'row' }}>
+                <View
+                  style={{
+                    marginVertical: 10,
+                    flexDirection: "row",
+                    justifyContent: "center",
+                  }}
+                >
+                  {!props?.hideNoBtn ? (
+                    <View style={styles.btnview}>
+                      <Button
+                        buttonText={strings.no}
+                        width={120}
+                        height={40}
+                        handleBtnPress={() => {
+                          props.setIsVisible(false);
+                          props.setStatusChange
+                            ? props.setStatusChange({})
+                            : null;
+                        }}
+                      />
+                    </View>
+                  ) : null}
+
                   <View style={styles.btnview}>
                     <Button
-                      buttonText={strings.no}
-                      width={120} height={40}
+                      buttonText={
+                        props?.yesBtnTitle ? props?.yesBtnTitle : strings.yes
+                      }
+                      width={120}
+                      height={40}
                       handleBtnPress={() => {
-                        props.setIsVisible(false)
-                        props.setStatusChange ? props.setStatusChange({}) : null
-                      }} />
-                  </View>
-                  <View style={styles.btnview}>
-                    <Button
-                      buttonText={strings.yes}
-                      width={120} height={40}
-                      handleBtnPress={() => {
-                        props?.handleYesResponse ? props.handleYesResponse() : null
-                        props.setIsVisible(false)
-                      }} />
+                        props?.handleYesResponse
+                          ? props.handleYesResponse()
+                          : null;
+                        props.setIsVisible(false);
+                      }}
+                    />
                   </View>
                 </View>
               </View>
             </>
-            :
+          ) : (
             <>
               <View style={styles.borderView} />
               <View style={styles.MiddleContainer}>
-                <Text style={styles.bottomTxt}>{props.middleTxt ? props.middleTxt : strings.ConfirmationModalTxt}</Text>
+                <Text style={styles.bottomTxt}>
+                  {props.middleTxt
+                    ? props.middleTxt
+                    : strings.ConfirmationModalTxt}
+                </Text>
               </View>
               <View>
                 <Dropdown
@@ -88,7 +115,9 @@ const ConfirmModal = (props: any) => {
                   maxHeight={300}
                   labelField="label"
                   valueField="value"
-                  placeholder={props.placeholder ? props.placeholder : strings.selectReason}
+                  placeholder={
+                    props.placeholder ? props.placeholder : strings.selectReason
+                  }
                   value={value}
                   onChange={(item: any) => {
                     setValue(item.value);
@@ -99,10 +128,13 @@ const ConfirmModal = (props: any) => {
               <View style={{ marginVertical: 10 }}>
                 <Button
                   handleBtnPress={() => props.setIsVisible(false)}
-                  buttonText={props.doneBttnTxt ? props.doneBttnTxt : strings.Confirm} />
+                  buttonText={
+                    props.doneBttnTxt ? props.doneBttnTxt : strings.Confirm
+                  }
+                />
               </View>
             </>
-          }
+          )}
         </View>
       </Modal>
     </View>

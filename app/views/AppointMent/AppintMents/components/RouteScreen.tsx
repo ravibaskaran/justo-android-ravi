@@ -9,7 +9,7 @@ const RouteScreen = (props: any) => {
   return (
     <View>
       <Text style={styles.count}>
-        Count : {props?.moreData ? props?.moreData : 0}
+        Count : {props?.DATA?.length}
       </Text>
       <FlatList
         data={Array.isArray(props.DATA) ? props.DATA : []}

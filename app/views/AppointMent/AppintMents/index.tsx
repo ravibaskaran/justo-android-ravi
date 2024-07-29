@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from "react";
-import AppointmentView from "./components/Appointments";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
-import { getAllAppointmentList } from "app/Redux/Actions/AppointmentWithCpActions";
-import { useDispatch, useSelector } from "react-redux";
-import { getClosingManagerList } from "app/Redux/Actions/ClosingManager";
 import { AllocateCM } from "app/Redux/Actions/AppointmentCLAction";
-import { getAllPickupList } from "app/Redux/Actions/PickUpActions";
+import { getAllAppointmentList } from "app/Redux/Actions/AppointmentWithCpActions";
+import { getClosingManagerList } from "app/Redux/Actions/ClosingManager";
+import { removeMasters } from "app/Redux/Actions/MasterActions";
+import ConfirmModal from "app/components/Modals/ConfirmModal";
 import {
   handlePermission,
   openPermissionSetting,
 } from "app/components/utilities/GlobalFuncations";
 import strings from "app/components/utilities/Localization";
-import moment from "moment";
 import { DATE_FORMAT } from "app/components/utilities/constant";
-import { removeMasters } from "app/Redux/Actions/MasterActions";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import AppointmentView from "./components/Appointments";
 
 const AppointmentsScreen = ({ navigation, route }: any) => {
   const [dropLocisVisible, setDropLocisVisible] = useState(false);
@@ -30,6 +29,8 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
   const appointMentList = useSelector((state: any) => state.Pickup) || {};
   const getLoginType = useSelector((state: any) => state.login);
   const [type, settype] = useState("");
+  const [isVisible, setIsVisible] = useState(false);
+  const [visitedUser, setVisitedUser] = useState<any>({});
 
   const [filterData, setFilterData] = useState({
     start_date: "",
@@ -118,7 +119,9 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
         limit: 10,
         start_date: data?.start_date ? data?.start_date : "",
         end_date: data?.end_date ? data?.end_date : "",
-        customer_name: data?.customer_name?.trim() ? data?.customer_name?.trim() : "",
+        customer_name: data?.customer_name?.trim()
+          ? data?.customer_name?.trim()
+          : "",
         status: data?.status ? data?.status : "",
         appointment_type: 2,
       })
@@ -126,8 +129,23 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
     // }
   };
 
-  const onPressView = (items: any) => {
-    navigation.navigate("AppointmentDetailMain", items);
+  const onPressView = async (items: any) => {
+    let array = [];
+    for (let data of response?.data) {
+      if (data.status == 1 && data?.checkin_status?.length > 0) {
+        array.push(data);
+      }
+    }
+    if (items?.status == 1 && array.length > 0) {
+      if (array[array.length - 1]?._id == items?._id) {
+        navigation.navigate("AppointmentDetailMain", items);
+      } else {
+        setVisitedUser(array[array.length - 1]);
+        setIsVisible(true);
+      }
+    } else {
+      navigation.navigate("AppointmentDetailMain", items);
+    }
   };
   const handleScanQr = async (items: any) => {
     dispatch(removeMasters());
@@ -186,6 +204,21 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
         getLoginType={getLoginType}
         type={type}
         settype={settype}
+      />
+      <ConfirmModal
+        Visible={isVisible}
+        setIsVisible={setIsVisible}
+        stringshow={strings.recoveryUpdate}
+        textshow={
+          strings.txt_update_status + " " + visitedUser?.customer_first_name
+        }
+        yesBtnTitle={"Update"}
+        confirmtype={"CONFIRMATION"}
+        hideNoBtn={true}
+        setStatusChange={() => {}}
+        handleYesResponse={() => {
+          navigation.navigate("AppointmentDetailMain", visitedUser);
+        }}
       />
     </>
   );

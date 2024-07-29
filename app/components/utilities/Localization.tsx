@@ -378,7 +378,7 @@ const strings = new LocalizedStrings({
     enterCompPropertyName: "Please enter competetor Property name",
     allocateCpToProperty:
       "CP is already registered. Do you want to allocate your property?",
-      
+
     // common strings
     search: "Search",
     searchByName: "Search by Name",
@@ -586,7 +586,7 @@ const strings = new LocalizedStrings({
       "Justo does not have access to your contact. To enable access, tap on Settings and turn on Contacts.",
     txt_setting_Location:
       "Justo does not have access to your Location. To enable access, tap on Settings and turn on Location.",
-
+    txt_update_status: "Please update the status of",
     notSelectedLocation: "Not Selected Location",
     searchYourlocation: "Search your location here",
     notfount: "NA",
