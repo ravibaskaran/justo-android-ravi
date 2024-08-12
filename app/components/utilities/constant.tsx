@@ -49,7 +49,8 @@ export const GLOBAL_URL = "https://demoapi.inexoftworld.com:3002"; // localhost 
 export const MAP_KEY = "AIzaSyCbDx7Lk4eTMzptrQKXZvOPYgEMggrq8o4";
 
 export const JW_LOGIN = "api";
-export const JW_PASSWORD = "8a09b13792174b21ef6b6d2302ac420f9ac5688b";
+// export const JW_PASSWORD = "8a09b13792174b21ef6b6d2302ac420f9ac5688b";
+export const JW_PASSWORD = "c519013b5310cab0a07d0976411827ca937431ef";
 
 export const ROLE_IDS = {
   suadminrole_id: "6344049eb4f40996bcf1265a",
@@ -107,3 +108,8 @@ export function getAge(dateString: any) {
   }
   return age;
 }
+
+export const INVENTORY_STATUS = {
+  rtb: "RTB",
+  rts: "RTS",
+};

@@ -106,7 +106,7 @@ const BookingDetailsView = (props: any) => {
                         : null
                     }
                     {/* Cancel Booking */}
-                    {approve &&
+                    {/* {approve &&
                         ((props?.type !== 'register' && detailData?.leads?.lead_status !== 5) &&
                             detailData?.booking_status !== 4 ?
                             <View style={styles.buttonVw}>
@@ -121,7 +121,7 @@ const BookingDetailsView = (props: any) => {
                                     handleBtnPress={() => props.setCancelBookingModel(true)}
                                 />
                             </View> : null)
-                    }
+                    } */}
                 </View>
                 <View style={styles.btnContainer}>
                     {/* RE-Allocate */}

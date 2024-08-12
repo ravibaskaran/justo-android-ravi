@@ -53,6 +53,40 @@ const AllocateCPView = (props: any) => {
     props.setSelectedLoginIdCp(ordersData);
   }, [props.selectedCp]);
 
+  const renderItem = (item: any, index: any) => {
+    const getSelected =
+      props?.selectedCp?.length === 0
+        ? ""
+        : props?.selectedCp?.map(({ user_name }: any) => user_name);
+    return (
+      <View key={index} style={styles.innerBoxVwlist}>
+        <Text style={styles.innerBoxVwlistfont}>{item.user_name}</Text>
+        <TouchableOpacity
+          onPress={() =>
+            !getSelected?.toString()?.includes(item.user_name)
+              ? props.handleSelects(item)
+              : console.log("")
+          }
+          style={styles.checkBoxVw}
+        >
+          {/* <Image
+          style={styles.checksVw}
+          source={
+            getSelected?.toString()?.includes(item.user_name)
+              ? images.check
+              : null
+          }
+        /> */}
+          {getSelected?.toString()?.includes(item.user_name) ? (
+            <Image style={styles.checksVw} source={images.check} />
+          ) : (
+            <View style={styles.checksVw}></View>
+          )}
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.mainContainer}>
       <Header
@@ -87,7 +121,7 @@ const AllocateCPView = (props: any) => {
                       { justifyContent: "flex-start" },
                     ]}
                   >
-                    <Text style={{maxWidth: '90%'}}>{item.user_name}</Text>
+                    <Text style={{ maxWidth: "90%" }}>{item.user_name}</Text>
                     <TouchableOpacity
                       onPress={() => props.handleDelete(item, index)}
                     >
@@ -109,51 +143,19 @@ const AllocateCPView = (props: any) => {
           onChangeText={(text: any) => props.handleSearch(text)}
         />
         {props.allList ? (
-          <FlatList
-            data={props.cpList}
-            renderItem={({ item, index }: any) => {
-              const getSelected =
-                props?.selectedCp?.length === 0
-                  ? ""
-                  : props?.selectedCp?.map(({ user_name }: any) => user_name);
-              return (
-                <View style={styles.innerBoxVwlist}>
-                  <Text style={styles.innerBoxVwlistfont}>
-                    {item.user_name}
-                  </Text>
-                  <TouchableOpacity
-                    onPress={() =>
-                      !getSelected?.toString()?.includes(item.user_name)
-                        ? props.handleSelects(item)
-                        : console.log("")
-                    }
-                    style={styles.checkBoxVw}
-                  >
-                    {/* <Image
-                      style={styles.checksVw}
-                      source={
-                        getSelected?.toString()?.includes(item.user_name)
-                          ? images.check
-                          : null
-                      }
-                    /> */}
-                    {getSelected?.toString()?.includes(item.user_name) ? (
-                      <Image style={styles.checksVw} source={images.check} />
-                    ) : (
-                      <View style={styles.checksVw}></View>
-                    )}
-                  </TouchableOpacity>
-                </View>
-              );
-            }}
-            ListEmptyComponent={() => {
-              return (
-                <View style={{alignItems: 'center', marginTop: 20}}>
-                  <Text style={styles.noSelectedTxt}>{strings.noCpFound}</Text>
-                </View>
-              );
-            }}
-          />
+          props.cpList?.length > 0 ? (
+            <View style={{ flex: 1 ,marginBottom:10}}>
+              {props.cpList?.map((item: any, index: any) =>
+                renderItem(item, index)
+              )}
+            </View>
+          ) : (
+            <View style={{ flex: 1 }}>
+              <Text style={[styles.noSelectedTxt, { textAlign: "center" }]}>
+                {strings.noCpFound}
+              </Text>
+            </View>
+          )
         ) : null}
       </ScrollView>
       <View style={styles.btncontener}>

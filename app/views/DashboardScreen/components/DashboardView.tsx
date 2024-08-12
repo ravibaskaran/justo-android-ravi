@@ -35,51 +35,61 @@ const DashboardView = (props: any) => {
   const [refreshing, setRefreshing] = React.useState(false);
   const onRefresh = () => {
     setRefreshing(true);
-    props.getDashboard()
+    props.getDashboard();
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
-  }
+  };
 
-
-  const renderItem = ({ item, index }: any) => {
+  const renderItem = (item: any, index: any) => {
     return (
-      <>
-        {index <= 4 &&
+      <View key={index}>
+        {index <= 4 && (
           <TouchableOpacity
             onPress={() => {
               roleType === ROLE_IDS.sourcingtl_id
                 ? props.onPressSMList("details", item)
-                : roleType === ROLE_IDS.closingtl_id ?
-                  props.onPressCMLIST("details", item) :
-                  props.onPressCPList("details", item)
+                : roleType === ROLE_IDS.closingtl_id
+                ? props.onPressCMLIST("details", item)
+                : props.onPressCPList("details", item);
             }}
             style={styles.headingView}
           >
             <Text style={styles.itemText}>
-              {roleType === ROLE_IDS.sourcingtl_id || roleType === ROLE_IDS.closingtl_id
+              {roleType === ROLE_IDS.sourcingtl_id ||
+              roleType === ROLE_IDS.closingtl_id
                 ? item.user_name
                 : roleType === ROLE_IDS.sourcingmanager_id
-                  ? item.agent_name
-                  : strings.notfount}
+                ? item.agent_name
+                : strings.notfount}
             </Text>
-            <Text style={[styles.itemText, {
-              marginLeft: roleType === ROLE_IDS.closingtl_id ?
-                normalizeSpacing(14) : 0
-            }]}>{
-                roleType === ROLE_IDS.closingtl_id ?
-                  item.status ? strings.active : strings.deactive :
-                  item.total_visit}</Text>
-            <Text style={styles.itemText}>{
-              roleType === ROLE_IDS.closingtl_id ?
-                item?.today_appoinment?.toString() :
-                item.total_site_visit}</Text>
+            <Text
+              style={[
+                styles.itemText,
+                {
+                  marginLeft:
+                    roleType === ROLE_IDS.closingtl_id
+                      ? normalizeSpacing(14)
+                      : 0,
+                },
+              ]}
+            >
+              {roleType === ROLE_IDS.closingtl_id
+                ? item.status
+                  ? strings.active
+                  : strings.deactive
+                : item.total_visit}
+            </Text>
+            <Text style={styles.itemText}>
+              {roleType === ROLE_IDS.closingtl_id
+                ? item?.today_appoinment?.toString()
+                : item.total_site_visit}
+            </Text>
             {/* <Text style={styles.itemText}>{item.total_closing_lead}</Text> */}
             <Image source={images.rightArrow} style={styles.rightArrowImage} />
           </TouchableOpacity>
-        }
-      </>
-
+        )}
+      </View>
     );
   };
 
@@ -137,7 +147,7 @@ const DashboardView = (props: any) => {
             ) : (
               <View style={styles.qrCodeView}>
                 {props?.dashboardData?.qrcode != "" ||
-                  props?.dashboardData?.qr_code ? (
+                props?.dashboardData?.qr_code ? (
                   <Image
                     source={{
                       uri:
@@ -156,7 +166,7 @@ const DashboardView = (props: any) => {
             )}
           </View>
           {roleType === ROLE_IDS.sourcingtl_id ||
-            roleType === ROLE_IDS.sourcingmanager_id ? (
+          roleType === ROLE_IDS.sourcingmanager_id ? (
             <SourcingDashboardView
               dashboardData={props?.dashboardData}
               getLoginType={props.getLoginType}
@@ -170,13 +180,15 @@ const DashboardView = (props: any) => {
           ) : (
             <>
               {roleType === ROLE_IDS.closingtl_id ||
-                roleType === ROLE_IDS.closingmanager_id ? (
+              roleType === ROLE_IDS.closingmanager_id ? (
                 <ClosingDashboardView
                   dashboardData={props?.dashboardData}
                   getLoginType={props.getLoginType}
                   onPressSiteVisit={props.onPressSiteVisit}
                   onpressBooking={props.onpressBooking}
                   onpressSMList={props.onpressSMList}
+                  appointmentList={props.appointmentList}
+                  onPressAppointmentItem={props.onPressAppointmentItem}
                 />
               ) : (
                 <>
@@ -195,8 +207,8 @@ const DashboardView = (props: any) => {
                       ) : (
                         <>
                           {roleType === ROLE_IDS.sitehead_id ||
-                            roleType === ROLE_IDS.clusterhead_id ||
-                            roleType === ROLE_IDS.businesshead_id ? (
+                          roleType === ROLE_IDS.clusterhead_id ||
+                          roleType === ROLE_IDS.businesshead_id ? (
                             <SiteHeadView
                               dashboardData={props?.dashboardData}
                               onpressBooking={props.onpressBooking}
@@ -218,9 +230,14 @@ const DashboardView = (props: any) => {
           )}
           {props?.listData?.length > 0 ? (
             <View style={styles.bottomSection}>
-              <View style={[styles.headingView, {
-                backgroundColor: PRIMARY_THEME_COLOR_DARK,
-              }]}>
+              <View
+                style={[
+                  styles.headingView,
+                  {
+                    backgroundColor: PRIMARY_THEME_COLOR_DARK,
+                  },
+                ]}
+              >
                 {roleType === ROLE_IDS.sourcingtl_id ? (
                   <>
                     <Text style={styles.headingText}>SM Name</Text>
@@ -228,42 +245,43 @@ const DashboardView = (props: any) => {
                     <Text style={styles.headingText}>Site Visit</Text>
                     {/* <Text style={styles.headingText}>CLOSE LEAD</Text> */}
                   </>
+                ) : roleType === ROLE_IDS.closingtl_id ? (
+                  <>
+                    <Text style={styles.headingText}>CM Name</Text>
+                    <Text style={styles.headingText}>Status</Text>
+                    <Text style={styles.headingText}>Appointment</Text>
+                    {/* <Text style={styles.headingText}>CLOSE LEAD</Text> */}
+                  </>
                 ) : (
-                  roleType === ROLE_IDS.closingtl_id ? (
-                    <>
-                      <Text style={styles.headingText}>CM Name</Text>
-                      <Text style={styles.headingText}>Status</Text>
-                      <Text style={styles.headingText}>Appointment</Text>
-                      {/* <Text style={styles.headingText}>CLOSE LEAD</Text> */}
-                    </>
-                  )
-                    :
-                    <>
-                      {roleType === ROLE_IDS.sourcingmanager_id && (
-                        <>
-                          <Text style={styles.headingText}>CP Name</Text>
-                          <Text style={styles.headingText}>Visitor</Text>
-                          <Text style={styles.headingText}>Site Visit</Text>
-                          {/* <Text style={styles.headingText}>CLOSE LEAD</Text> */}
-                        </>
-                      )}
-                    </>
+                  <>
+                    {roleType === ROLE_IDS.sourcingmanager_id && (
+                      <>
+                        <Text style={styles.headingText}>CP Name</Text>
+                        <Text style={styles.headingText}>Visitor</Text>
+                        <Text style={styles.headingText}>Site Visit</Text>
+                        {/* <Text style={styles.headingText}>CLOSE LEAD</Text> */}
+                      </>
+                    )}
+                  </>
                 )}
               </View>
               <View>
-                <FlatList data={props?.listData} renderItem={renderItem} />
+                {props?.listData?.map((item: any, index: any) =>
+                  renderItem(item, index)
+                )}
+
                 {(roleType === ROLE_IDS.sourcingtl_id ||
                   roleType === ROLE_IDS.sourcingmanager_id ||
                   roleType === ROLE_IDS.closingtl_id) &&
-                  props?.listData?.length > 5 ? (
+                props?.listData?.length > 5 ? (
                   <TouchableOpacity
                     style={styles.headingView}
                     onPress={() => {
                       roleType === ROLE_IDS.sourcingtl_id
-                        ? props.onPressSMList() :
-                        roleType === ROLE_IDS.closingtl_id ?
-                          props.onPressCMLIST() :
-                          props.onPressCPList();
+                        ? props.onPressSMList()
+                        : roleType === ROLE_IDS.closingtl_id
+                        ? props.onPressCMLIST()
+                        : props.onPressCPList();
                     }}
                   >
                     <Text style={[styles.headingText, styles.knowMoreText]}>
@@ -275,7 +293,7 @@ const DashboardView = (props: any) => {
             </View>
           ) : null}
         </ScrollView>
-      </View >
+      </View>
     </>
   );
 };

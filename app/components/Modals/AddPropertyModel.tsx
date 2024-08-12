@@ -42,6 +42,32 @@ const AddPropertyModel = (props: any) => {
     );
     return property ? true : false;
   }
+
+  const renderItem = (item: any, index: any) => {
+    const getSelected = checkActiveStatus(item?.property_id);
+    return (
+      <View key={index} style={[styles.innerBoxVwlist]}>
+        <Text style={styles.innerBoxVwlistfont}>{item.property_title}</Text>
+        <TouchableOpacity
+          onPress={() =>
+            !getSelected ? props.handleSelects(item) : console.log("")
+          }
+          style={styles.checkBoxVw}
+        >
+          {/* <Image
+            style={styles.checksVw}
+            source={getSelected ? images.check : null}
+          /> */}
+          {getSelected ? (
+            <Image style={styles.checksVw} source={images.check} />
+          ) : (
+            <View style={styles.checksVw}></View>
+          )}
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   return (
     <Modal isVisible={props.isVisible}>
       <SafeAreaView style={{ flex: 1 }}>
@@ -104,52 +130,19 @@ const AddPropertyModel = (props: any) => {
               onChangeText={(text: any) => props.handleSearch(text)}
             />
 
-            <FlatList
-              contentContainerStyle={{}}
-              data={props.finalPropertyList}
-              // data={response?.data}
-              renderItem={({ item, index }: any) => {
-                /* const getSelected =
-                props?.selectedProperty?.length === 0
-                  ? ""
-                  : props?.selectedProperty?.map(
-                      ({ property_title }: any) => property_title
-                    ); */
-                const getSelected = checkActiveStatus(item?.property_id);
-                return (
-                  <View key={item?._id} style={styles.innerBoxVwlist}>
-                    <Text style={styles.innerBoxVwlistfont}>
-                      {item.property_title}
-                    </Text>
-                    <TouchableOpacity
-                      onPress={() =>
-                        !getSelected
-                          ? props.handleSelects(item)
-                          : console.log("")
-                      }
-                      style={styles.checkBoxVw}
-                    >
-                      {/* <Image
-                        style={styles.checksVw}
-                        source={getSelected ? images.check : null}
-                      /> */}
-                      {getSelected ? <Image
-                        style={styles.checksVw}
-                        source={images.check}
-                      /> :
-                       <View style={styles.checksVw}></View>}
-                    </TouchableOpacity>
-                  </View>
-                );
-              }}
-              ListEmptyComponent={() => {
-                return (
-                  <Text style={[styles.noSelectedTxt, { textAlign: "center" }]}>
-                    {strings.propertyNotFount}
-                  </Text>
-                );
-              }}
-            />
+            {props.finalPropertyList?.length > 0 ? (
+              <View style={{ flex: 1 }}>
+                {props.finalPropertyList?.map((item: any, index: any) =>
+                  renderItem(item, index)
+                )}
+              </View>
+            ) : (
+              <View style={{ flex: 1, justifyContent: "center" }}>
+                <Text style={[styles.noSelectedTxt, { textAlign: "center" }]}>
+                  {strings.propertyNotFount}
+                </Text>
+              </View>
+            )}
           </ScrollView>
           <View style={{ marginVertical: 20 }}>
             <View style={{ flexDirection: "row", justifyContent: "center" }}>

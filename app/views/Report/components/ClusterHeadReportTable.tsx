@@ -36,9 +36,11 @@ import RNFS from "react-native-fs";
 import XLSX from "xlsx";
 import SMReportTable from "./SMReportTable";
 import { useSelector } from "react-redux";
+import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
 
 const ClusterHeadReportTable = (props: any) => {
-  const { data, onReset, handleCpDetailPress, handleCTANavigation, fileName } = props;
+  const { data, onReset, handleCpDetailPress, handleCTANavigation, fileName } =
+    props;
   const { userData = {} } = useSelector((state: any) => state.userData);
 
   const { width, height } = Dimensions.get("window");
@@ -166,8 +168,9 @@ const ClusterHeadReportTable = (props: any) => {
               ]);
             });
 
-            XLSX.utils.sheet_add_aoa(worksheet, rowData, { origin: `A${currentRow}` });
-
+            XLSX.utils.sheet_add_aoa(worksheet, rowData, {
+              origin: `A${currentRow}`,
+            });
           });
 
           // Add the worksheet to the workbook
@@ -218,6 +221,7 @@ const ClusterHeadReportTable = (props: any) => {
           height: height - normalize(55),
         }}
         contentContainerStyle={{
+          flexGrow: 1,
           margin: normalize(10),
         }}
         refreshControl={
@@ -249,7 +253,7 @@ const ClusterHeadReportTable = (props: any) => {
         <View>
           {data.map((item: any, index: any) => {
             return (
-              <View>
+              <View key={index}>
                 {!(
                   item?.CTLDetails?.length == 0 && item?.StlDetails?.length == 0
                 ) ? (
@@ -380,6 +384,10 @@ const ClusterHeadReportTable = (props: any) => {
               </View>
             );
           })}
+
+          {data?.length == 0 ? (
+            <EmptyListScreen message={strings.reportHeader} />
+          ) : null}
         </View>
       </ScrollView>
     </SafeAreaView>

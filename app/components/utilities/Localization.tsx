@@ -121,6 +121,7 @@ const strings = new LocalizedStrings({
     todayApp: "Today",
     referrerName: "Referrer Name",
     referrerNumber: "Referrer Mobile No.",
+    alert:"Alert",
 
     //validations
     reasonSelectVal: "Please select the Reason",
@@ -378,6 +379,8 @@ const strings = new LocalizedStrings({
     enterCompPropertyName: "Please enter competetor Property name",
     allocateCpToProperty:
       "CP is already registered. Do you want to allocate your property?",
+    checkCpInMaharera:
+      "Did you verify this RERA number in the Maharera Website?",
 
     // common strings
     search: "Search",

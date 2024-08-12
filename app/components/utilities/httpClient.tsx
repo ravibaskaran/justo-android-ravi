@@ -32,7 +32,7 @@ export async function apiCall(
   // console.log('url: ', url);
   // console.log('data: ', data);
   // console.log('method: ', method);
-  console.log("server running on", GLOBAL_URL);
+  console.log("API URL : ", url);
   const { response } = configureStore().store.getState().login;
   const generatedToken = await AsyncStorage.getItem("token");
   let headers = {

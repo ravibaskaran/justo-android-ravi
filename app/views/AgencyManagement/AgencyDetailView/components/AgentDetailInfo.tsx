@@ -24,7 +24,7 @@ import { useNavigation } from "@react-navigation/native";
 
 const PropertyDetailItem = (props: any) => {
   const item = props?.items || {};
-  const navigation: any = useNavigation()
+  const navigation: any = useNavigation();
   const [isVisible, setIsVisible] = useState(false);
   const [onPressData, setOnPressData] = useState<any>({});
   const reraType = props?.items?.rera_certificate?.substring(
@@ -66,7 +66,7 @@ const PropertyDetailItem = (props: any) => {
         });
       });
   };
-  console.log("🚀 ~ file: AgentDetailInfo.tsx:82 ~ item?.active_status:",item)
+  console.log("🚀 ~ file: AgentDetailInfo.tsx:82 ~ item?.active_status:", item);
 
   return (
     <ScrollView>
@@ -132,7 +132,9 @@ const PropertyDetailItem = (props: any) => {
           <Text>:</Text>
         </View>
         <View style={styles.nameContainer}>
-          <Text style={styles.nameTxt}>{item?.Mobileno ? item?.Mobileno : strings.notfount}</Text>
+          <Text style={styles.nameTxt}>
+            {item?.Mobileno ? item?.Mobileno : strings.notfount}
+          </Text>
         </View>
       </View>
       <View style={styles.Txtview}>
@@ -143,7 +145,9 @@ const PropertyDetailItem = (props: any) => {
           <Text>:</Text>
         </View>
         <View style={styles.nameContainer}>
-          <Text style={styles.nameTxt}>{item?.Email ? item?.Email : strings.notfount}</Text>
+          <Text style={styles.nameTxt}>
+            {item?.Email ? item?.Email : strings.notfount}
+          </Text>
         </View>
       </View>
       <View style={styles.Txtview}>
@@ -154,7 +158,9 @@ const PropertyDetailItem = (props: any) => {
           <Text>:</Text>
         </View>
         <View style={styles.nameContainer}>
-          <Text style={styles.nameTxt}>{item?.whatsappno ? item?.whatsappno : strings.notfount}</Text>
+          <Text style={styles.nameTxt}>
+            {item?.whatsappno ? item?.whatsappno : strings.notfount}
+          </Text>
         </View>
       </View>
       <View style={styles.Txtview}>
@@ -167,7 +173,9 @@ const PropertyDetailItem = (props: any) => {
           <Text>:</Text>
         </View>
         <View style={styles.nameContainer}>
-          <Text style={styles.nameTxt}>{item?.rerano ? item?.rerano : strings.notfount}</Text>
+          <Text style={styles.nameTxt}>
+            {item?.rerano ? item?.rerano : strings.notfount}
+          </Text>
         </View>
       </View>
       {/* <View style={styles.Txtview}>
@@ -223,7 +231,9 @@ const PropertyDetailItem = (props: any) => {
                 );
               })}
             </>
-          ) : <Text style={styles.nameTxt}>{strings.notfount}</Text>}
+          ) : (
+            <Text style={styles.nameTxt}>{strings.notfount}</Text>
+          )}
         </View>
       </View>
       {/* {item?.cp_type === 2 ? <View style={styles.Txtview}>
@@ -247,7 +257,9 @@ const PropertyDetailItem = (props: any) => {
           <Text>:</Text>
         </View>
         <View style={styles.nameContainer}>
-          <Text style={styles.nameTxt}>{item?.location ? item?.location : strings.notfount}</Text>
+          <Text style={styles.nameTxt}>
+            {item?.location ? item?.location : strings.notfount}
+          </Text>
         </View>
       </View>
       <View style={styles.Txtview}>
@@ -258,7 +270,9 @@ const PropertyDetailItem = (props: any) => {
           <Text>:</Text>
         </View>
         <View style={styles.nameContainer}>
-          <Text style={styles.nameTxt}>{item?.workingfrom ? item?.workingfrom : strings.notfount}</Text>
+          <Text style={styles.nameTxt}>
+            {item?.workingfrom ? item?.workingfrom : strings.notfount}
+          </Text>
         </View>
       </View>
       <View style={styles.Txtview}>
@@ -271,10 +285,10 @@ const PropertyDetailItem = (props: any) => {
         <View style={styles.nameContainer}>
           {props?.items?.workinglocation?.length > 0 ? (
             <>
-              {props?.items?.workinglocation.map((item: any) => {
+              {props?.items?.workinglocation.map((item: any, index: any) => {
                 return (
                   <Text
-                    key={item?._id}
+                    key={index}
                     style={[
                       styles.nameTxt,
                       {
@@ -290,7 +304,9 @@ const PropertyDetailItem = (props: any) => {
                 );
               })}
             </>
-          ) : <Text style={styles.nameTxt}>{strings.notfount}</Text>}
+          ) : (
+            <Text style={styles.nameTxt}>{strings.notfount}</Text>
+          )}
         </View>
       </View>
       <View style={styles.Txtview}>
@@ -308,9 +324,7 @@ const PropertyDetailItem = (props: any) => {
               } else {
                 // setIsVisible(true);
                 // setOnPressData(props.items.rera_certificate);
-                OpenDoc(
-                    props.items.rera_certificate
-                );
+                OpenDoc(props.items.rera_certificate);
               }
             }}
           >
@@ -355,9 +369,7 @@ const PropertyDetailItem = (props: any) => {
               } else {
                 // setIsVisible(true);
                 // setOnPressData(props.items.propidership_declaration_letter);
-                OpenDoc(
-                    props.items.propidership_declaration_letter
-                );
+                OpenDoc(props.items.propidership_declaration_letter);
               }
             }}
           >
@@ -389,7 +401,9 @@ const PropertyDetailItem = (props: any) => {
       </View>
       <View style={styles.headingView}>
         <Text style={styles.headingTxt}>
-          {(item?.cp_type === 1 ? strings.user : strings.companyText) + " " + strings.bankDetail}
+          {(item?.cp_type === 1 ? strings.user : strings.companyText) +
+            " " +
+            strings.bankDetail}
         </Text>
       </View>
       <View style={styles.Txtview}>
@@ -426,7 +440,9 @@ const PropertyDetailItem = (props: any) => {
           <Text>:</Text>
         </View>
         <View style={styles.nameContainer}>
-          <Text style={styles.nameTxt}>{item?.branch_name ? item?.branch_name : strings.notfount}</Text>
+          <Text style={styles.nameTxt}>
+            {item?.branch_name ? item?.branch_name : strings.notfount}
+          </Text>
         </View>
       </View>
       <View style={styles.Txtview}>
@@ -437,7 +453,9 @@ const PropertyDetailItem = (props: any) => {
           <Text>:</Text>
         </View>
         <View style={styles.nameContainer}>
-          <Text style={styles.nameTxt}>{item?.ifsc_code ? item?.ifsc_code : strings.notfount}</Text>
+          <Text style={styles.nameTxt}>
+            {item?.ifsc_code ? item?.ifsc_code : strings.notfount}
+          </Text>
         </View>
       </View>
       <View style={styles.Txtview}>
@@ -457,10 +475,7 @@ const PropertyDetailItem = (props: any) => {
                 // setOnPressData(
                 //   props?.items?.base_url + props.items.cancel_cheaque
                 // );
-                OpenDoc(
-                  props?.items?.base_url +
-                    props.items.cancel_cheaque
-                );
+                OpenDoc(props?.items?.base_url + props.items.cancel_cheaque);
               }
             }}
           >
@@ -543,37 +558,36 @@ const PropertyDetailItem = (props: any) => {
           <Text style={styles.nameTxt}>{item?.comp_ifsc_code ? item?.comp_ifsc_code : strings.notfount}</Text>
         </View>
       </View> */}
-      {item?.cp_type === 2 ? <View style={styles.Txtview}>
-        <View style={styles.projectContainer}>
-          <Text style={styles.projectTxt}>{strings.pancard} </Text>
-        </View>
-        <View style={{ height: "100%" }}>
-          <Text>:</Text>
-        </View>
-        <View style={[styles.nameContainer, { alignItems: "center" }]}>
-          <TouchableOpacity
-            onPress={() => {
-              // setIsVisible(true);
-              // setOnPressData(props?.items?.base_url + props.items.pancard);
-              OpenDoc(
-                props?.items?.base_url +
-                  props.items.pancard
-              );
-            }}
-          >
-            <FastImages
-              source={{ uri: props.items.pancard }}
-              style={{
-                width: normalizeWidth(80),
-                height: normalizeHeight(80),
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: normalize(10),
+      {item?.cp_type === 2 ? (
+        <View style={styles.Txtview}>
+          <View style={styles.projectContainer}>
+            <Text style={styles.projectTxt}>{strings.pancard} </Text>
+          </View>
+          <View style={{ height: "100%" }}>
+            <Text>:</Text>
+          </View>
+          <View style={[styles.nameContainer, { alignItems: "center" }]}>
+            <TouchableOpacity
+              onPress={() => {
+                // setIsVisible(true);
+                // setOnPressData(props?.items?.base_url + props.items.pancard);
+                OpenDoc(props?.items?.base_url + props.items.pancard);
               }}
-            />
-          </TouchableOpacity>
+            >
+              <FastImages
+                source={{ uri: props.items.pancard }}
+                style={{
+                  width: normalizeWidth(80),
+                  height: normalizeHeight(80),
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: normalize(10),
+                }}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
-      </View> : null}
+      ) : null}
       {/* <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
           <Text style={styles.projectTxt}>{strings.declrLttrCom} </Text>

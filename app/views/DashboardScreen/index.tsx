@@ -1,8 +1,9 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import ErrorMessage from "app/components/ErrorMessage";
+import apiEndPoints from "app/components/utilities/apiEndPoints";
 import { GREEN_COLOR, ROLE_IDS } from "app/components/utilities/constant";
-import { getAllAgentList } from "app/Redux/Actions/AgencyActions";
+import { apiCall } from "app/components/utilities/httpClient";
+import { userLogout } from "app/Redux/Actions/AuthActions";
 import { getClosingManagerList } from "app/Redux/Actions/ClosingManager";
 import {
   dashboardClosingData,
@@ -18,15 +19,11 @@ import {
   getAssignCPList,
   getSourcingManagerList,
 } from "app/Redux/Actions/SourcingManagerActions";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Alert, BackHandler } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import DashboardView from "./components/DashboardView";
-import { userLogout } from "app/Redux/Actions/AuthActions";
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import { apiCall } from "app/components/utilities/httpClient";
-import moment from "moment";
-import { handleApiError } from "app/components/ErrorMessage/HandleApiErrors";
 
 const DashboardScreen = ({ navigation }: any) => {
   const dispatch: any = useDispatch();
@@ -39,6 +36,8 @@ const DashboardScreen = ({ navigation }: any) => {
   const [listData, setListData] = useState<any>([]);
   const [isEnabled, setIsEnabled] = useState<any>();
   const [todayAppointmentWithCp, setTodayAppointmentWithCp] = useState(0);
+  const [appointmentList, setAppointmentList] = useState<any>([]);
+
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
@@ -62,6 +61,8 @@ const DashboardScreen = ({ navigation }: any) => {
       getDashboard();
       if (getLoginType?.response?.data?.role_id === ROLE_IDS.sourcingmanager_id)
         getAppointmentData();
+      if (getLoginType?.response?.data?.role_id === ROLE_IDS.closingmanager_id)
+        getAllAppointment();
       return () => {};
     }, [navigation, isEnabled, getLoginType])
   );
@@ -88,7 +89,27 @@ const DashboardScreen = ({ navigation }: any) => {
     );
     if (res.data.status == 200)
       setTodayAppointmentWithCp(res?.data?.data?.length);
-    else handleApiError(res?.data);
+  }
+
+  async function getAllAppointment() {
+    let params = {
+      appointment_type: 2,
+      customer_name: "",
+      end_date: moment(new Date()).format("YYYY-MM-DD"),
+      start_date: moment(new Date()).format("YYYY-MM-DD"),
+      limit: 10,
+      offset: 0,
+      status: "",
+    };
+
+    const res = await apiCall(
+      "post",
+      apiEndPoints.GET_APPOINTMENT_LIST,
+      params
+    );
+    if (res.data.status == 200) {
+      setAppointmentList(res?.data?.data);
+    }
   }
 
   useEffect(() => {
@@ -245,6 +266,10 @@ const DashboardScreen = ({ navigation }: any) => {
     navigation.navigate("AppointmentScreenCPSM", {});
   };
 
+  const onPressAppointmentItem = (item: any) => {
+    navigation.navigate("AppointmentDetailMain", item);
+  };
+
   return (
     <DashboardView
       dashboardData={dashboardData}
@@ -263,6 +288,8 @@ const DashboardScreen = ({ navigation }: any) => {
       getDashboard={getDashboard}
       onpressAppointmentWithCP={onpressAppointmentWithCP}
       todayAppointmentWithCp={todayAppointmentWithCp}
+      appointmentList={Array.isArray(appointmentList) ? appointmentList : []}
+      onPressAppointmentItem={onPressAppointmentItem}
     />
   );
 };

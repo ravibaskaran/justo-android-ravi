@@ -16,7 +16,7 @@ import FileViewer from "react-native-file-viewer";
 import RNFS from "react-native-fs";
 
 const OS: any = Platform
-const OsVer = OS.constants['Release'];
+const OsVer = parseInt(OS.constants['Release'], 10); 
 
 export const handlePermission = async (
   permission: any,

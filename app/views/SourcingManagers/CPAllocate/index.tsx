@@ -25,10 +25,12 @@ const AllocateCPScreen = ({ navigation, route }: any) => {
     response = {},
     list,
     target,
-    allocate
+    allocate,
   } = useSelector((state: any) => state.SourcingManager) || [];
   const AddTargetForCp = useSelector((state: any) => state.addTargetForCpData);
-  const removeAllocateproperty = useSelector((state: any) => state.removeAllocateproperty)
+  const removeAllocateproperty = useSelector(
+    (state: any) => state.removeAllocateproperty
+  );
   const [cpList, setCpList] = useState<any>([]);
   const [searchcpList, setSearchcpList] = useState<any>([]);
   const dispatch: any = useDispatch();
@@ -67,20 +69,20 @@ const AllocateCPScreen = ({ navigation, route }: any) => {
     }, [navigation])
   );
   useEffect(() => {
-    if (response?.data?.length > 0) {
+    if (response?.data?.length > 0 && response?.data[0]?.rera_certificate_no) {
       setCpList(response?.data);
       setSearchcpList(response?.data);
       setSelected(
         response?.data?.filter((item: any) => item?.parent_id === id)
       );
-    } 
+    }
     if (allocate) {
       // setIsVisible(true);
       navigation.navigate("SourcingManager");
       ErrorMessage({
         msg: response?.message,
-        backgroundColor: GREEN_COLOR
-      })
+        backgroundColor: GREEN_COLOR,
+      });
     }
   }, [response]);
   useEffect(() => {
@@ -115,7 +117,7 @@ const AllocateCPScreen = ({ navigation, route }: any) => {
         return item?.user_name?.toLowerCase()?.match(lowerCased);
       });
       // setCpList(list);
-      setSearchcpList(list)
+      setSearchcpList(list);
     } else {
       setSearchcpList(cpList);
     }

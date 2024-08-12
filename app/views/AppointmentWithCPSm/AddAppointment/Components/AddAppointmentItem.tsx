@@ -14,7 +14,11 @@ import moment from "moment";
 import Styles from "app/components/DropDown/styles";
 
 const AddAppointmentItem = (props: any) => {
-  const getAheadTime = new Date(Date.now() + 3600 * 2000 * 25);
+  const millisecondsInTwoHours = 2 * 60 * 60 * 1000;
+  const millisecondsInFiveMinutes = 5 * 60 * 1000;
+  const totalMillisecondsToAdd =
+    millisecondsInTwoHours + millisecondsInFiveMinutes;
+  const getAheadTime = new Date(Date.now() + totalMillisecondsToAdd);
   return (
     <ScrollView>
       <View style={styles.wrap}>
@@ -81,6 +85,7 @@ const AddAppointmentItem = (props: any) => {
                 ? new Date(moment(getAheadTime).format())
                 : null
             }
+            AppintmentWithCpPage={true}
           />
         </View>
         <View style={styles.inputWrap}>

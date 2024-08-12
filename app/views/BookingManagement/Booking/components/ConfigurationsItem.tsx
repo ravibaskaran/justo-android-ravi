@@ -8,10 +8,13 @@ import { RequiredStart } from "app/components/utilities/GlobalFuncations";
 import strings from "app/components/utilities/Localization";
 import apiEndPoints from "app/components/utilities/apiEndPoints";
 import {
+  GREEN_COLOR,
+  INVENTORY_STATUS,
   JW_LOGIN,
   JW_PASSWORD,
   PRIMARY_THEME_COLOR,
-  RED_COLOR,
+  PRIMARY_THEME_COLOR_DARK,
+  RED_COLOR
 } from "app/components/utilities/constant";
 import { apiCallJW } from "app/components/utilities/httpClient";
 import React, { useEffect, useState } from "react";
@@ -271,7 +274,22 @@ const ConfigurationsItem = (props: any) => {
               return item["Flat Name"] ? (
                 <>
                   <View style={Styles.item}>
-                    <Text style={Styles.textItem}>{item["Flat Name"]}</Text>
+                    <Text style={Styles.textItem}>
+                      {item["Flat Name"]}
+                      {item["Status"] ? (
+                        <Text
+                          style={{
+                            fontWeight: "bold",
+                            color:
+                              item["Status"] == INVENTORY_STATUS.rtb
+                                ? PRIMARY_THEME_COLOR_DARK 
+                                : GREEN_COLOR,
+                          }}
+                        >
+                          {"  "}({item["Status"]})
+                        </Text>
+                      ) : null}
+                    </Text>
                   </View>
                 </>
               ) : null;

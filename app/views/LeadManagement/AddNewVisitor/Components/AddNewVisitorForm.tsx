@@ -221,13 +221,27 @@ const AddNewVisitorForm = (props: any) => {
                 placeholderText={strings.mobileNo}
                 handleInputBtnPress={() => {}}
                 onChangeText={(data: any) => {
-                  props.setFormData({
-                    ...props.formData,
-                    mobile: data,
-                    property_id: "",
-                    property_type_title: "",
-                    property_title: "",
-                  });
+                  if (
+                    props.type == "edit" ||
+                    (props.type == "propertySelect" &&
+                      props?.formData?.lead_source !==
+                        CONST_IDS?.cp_lead_source_id)
+                      ? true
+                      : false
+                  ) {
+                    props.setFormData({
+                      ...props.formData,
+                      mobile: data,
+                    });
+                  } else {
+                    props.setFormData({
+                      ...props.formData,
+                      mobile: data,
+                      property_id: "",
+                      property_type_title: "",
+                      property_title: "",
+                    });
+                  }
                   // if (Regexs.mobilenumRegex.test(data)) {
                   //   props.setEmailMobValidation({
                   //     ...props.emailMobvalidation,

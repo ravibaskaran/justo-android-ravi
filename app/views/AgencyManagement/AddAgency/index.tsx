@@ -135,6 +135,7 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
   const SmCpList = useSelector((state: any) => state.SourcingManager) || [];
   const [agentList, setAgentList] = useState<any>([]);
   const [cplgId, setCplgId] = useState("");
+  const [reraExist, setReraExist] = useState(false);
 
   const handleClearData = (type: any) => {
     setAgencyData({
@@ -866,6 +867,8 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
       emailAndMobileData?.response?.status === 201
     ) {
       dispatch(emailCheckRemove());
+      console.log(emailAndMobileData);
+
       if (emailAndMobileData?.response?.status === 200) {
         switch (emailAndMobileData?.check_type) {
           case "mobile":
@@ -895,10 +898,15 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
             }
             break;
           case "rera_certificate_no":
-            setEmailMobValidation({
-              ...emailMobvalidation,
-              rera_certificate_no: emailAndMobileData?.check_type,
-            });
+            if (userData?.data?.role_id === ROLE_IDS.sourcingmanager_id) {
+              setReraExist(false);
+              setIsVisible(true);
+            } else {
+              setEmailMobValidation({
+                ...emailMobvalidation,
+                rera_certificate_no: emailAndMobileData?.check_type,
+              });
+            }
             break;
           default:
             break;
@@ -953,6 +961,7 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
               });
               if (userData?.data?.role_id === ROLE_IDS.sourcingmanager_id) {
                 setCplgId(emailAndMobileData?.response?.cp_lg_id);
+                setReraExist(true);
                 setIsVisible(true);
               } else {
                 let errorMessage = strings.reraNumberAlreadyValidReqVal;
@@ -1238,6 +1247,7 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
 
   const handleAllocateSMPropertyToCP = async () => {
     setIsVisible(false);
+    setReraExist(false);
     dispatch({ type: START_LOADING });
     const transformedArray = propertyList.map(
       (item: {
@@ -1296,6 +1306,15 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
         backgroundColor: RED_COLOR,
       });
     }
+  };
+  
+  const addNewReraNumber = async () => {
+    setIsVisible(false);
+    setReraExist(false);
+    setEmailMobValidation({
+      ...emailMobvalidation,
+      rera_certificate_no: emailAndMobileData?.check_type,
+    });
   };
 
   return (
@@ -1410,8 +1429,8 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
       <ConfirmModal
         Visible={isVisible}
         setIsVisible={setIsVisible}
-        stringshow={strings.allocateProperty}
-        textshow={strings.allocateCpToProperty}
+        stringshow={reraExist ? strings.allocateProperty :strings.alert}
+        textshow={reraExist ? strings.allocateCpToProperty : strings.checkCpInMaharera}
         confirmtype={"CONFIRMATION"}
         setStatusChange={() => {
           setAgencyData({
@@ -1419,7 +1438,9 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
             rera_certificate_no: "",
           });
         }}
-        handleYesResponse={() => handleAllocateSMPropertyToCP()}
+        handleYesResponse={() => {
+          reraExist ? handleAllocateSMPropertyToCP() : addNewReraNumber();
+        }}
       />
     </>
   );

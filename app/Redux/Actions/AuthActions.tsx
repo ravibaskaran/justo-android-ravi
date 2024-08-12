@@ -197,6 +197,7 @@ export const userLogout = () => async (dispatch: any) => {
             await AsyncStorage.removeItem("AuthToken");
             await AsyncStorage.removeItem('userData')
             await AsyncStorage.removeItem('firebase_id')
+            await AsyncStorage.removeItem('loginData')
             dispatch({
                 type: USER_LOGOUT,
                 payload: null
