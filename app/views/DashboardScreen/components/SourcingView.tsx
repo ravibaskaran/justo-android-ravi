@@ -92,7 +92,7 @@ const SourcingDashboardView = (props: any) => {
             </View>
             <View style={styles.numberView}>
               <Text style={styles.thirdPortionNumberText}>
-                {props?.todayAppointmentWithCp}
+                {props?.dashboardData?.today_Apointment_Cp}
               </Text>
             </View>
           </TouchableOpacity>

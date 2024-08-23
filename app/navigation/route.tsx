@@ -104,7 +104,10 @@ import UserManagementScreen from "app/views/UserManager/UserManagement";
 import AddNewUserScreen from "app/views/UserManager/AddNewUser";
 import UserDetailsScreen from "app/views/UserManager/UserDetails";
 import EscalateScreen from "app/views/SupportScreen/Escalate";
-import { navigate, navigationRef } from "app/components/utilities/GlobalFuncations";
+import {
+  navigate,
+  navigationRef,
+} from "app/components/utilities/GlobalFuncations";
 import PropertyInventory from "app/views/PropertyMangement/PropertyInventory";
 import CloseAppointment from "app/views/AppointMent/CloseAppointment";
 import EmployeeListing from "app/views/AgencyManagement/EmployeeListing";
@@ -246,7 +249,10 @@ const AppComponent = () => {
       {/* BookingDetails */}
       <AppStack.Screen name="BookingDetails" component={BookingDetailsScreen} />
       <AppStack.Screen name="Booking" component={BookingScreen} />
-      <AppStack.Screen name="BookingRegistration" component={BookingRegistration} />
+      <AppStack.Screen
+        name="BookingRegistration"
+        component={BookingRegistration}
+      />
 
       {/* Appointment  */}
       <AppStack.Screen
@@ -279,20 +285,28 @@ const AppComponent = () => {
       <AppStack.Screen name="notification" component={Notification} />
 
       {/* Support Forum */}
-      <AppStack.Screen name="SupportForumDetail" component={SupportForumDetail} />
+      <AppStack.Screen
+        name="SupportForumDetail"
+        component={SupportForumDetail}
+      />
 
       {/* Raise Ticket (Support) */}
-      <AppStack.Screen name="SupportScreenDetails" component={SupportScreenDetails} />
+      <AppStack.Screen
+        name="SupportScreenDetails"
+        component={SupportScreenDetails}
+      />
       <AppStack.Screen name="AddTicket" component={AddTicketScreen} />
       <AppStack.Screen name="ShowReply" component={ShowReply} />
-      <AppStack.Screen name="TicketStatusUpdate" component={TicketStatusUpdate} />
+      <AppStack.Screen
+        name="TicketStatusUpdate"
+        component={TicketStatusUpdate}
+      />
       <AppStack.Screen name="Escalate" component={EscalateScreen} />
 
       {/* Report */}
       <AppStack.Screen component={CpDetailForReport} name="CpDetailForReport" />
       <AppStack.Screen component={AppointmentCTA} name="AppointmentCTA" />
       <AppStack.Screen component={BookingCTA} name="BookingCTA" />
-
     </AppStack.Navigator>
   );
 };
@@ -332,34 +346,46 @@ const AuthLoadingComponent = () => {
     if (response && authToken) {
       // console.log('response: IN LOGIN ', response);
       if (response.status === 200) {
+        await setDefaultHeader("token", response.token);
+        await AsyncStorage.setItem("loginData", JSON.stringify(response));
         if (
-          typeof response?.data?.firebase_id === "undefined" || response?.data?.firebase_id === null || response?.data?.firebase_id === ""
+          typeof response?.data?.firebase_id === "undefined" ||
+          response?.data?.firebase_id === null ||
+          response?.data?.firebase_id === ""
         ) {
-          console.log('if = = = = = = =>>')
+          console.log("if = = = = = = =>>");
           auth()
             .createUserWithEmailAndPassword(response?.data?.email, "123456")
             .then(async (res: any) => {
               // console.log("User account created & signed in!");
-              await setDefaultHeader("token", response.token);
-              await AsyncStorage.setItem("loginData", JSON.stringify(response));
-              await AsyncStorage.setItem("firebase_id", JSON.stringify(res.user.uid));
+              // await setDefaultHeader("token", response.token);
+              // await AsyncStorage.setItem("loginData", JSON.stringify(response));
+              await AsyncStorage.setItem(
+                "firebase_id",
+                JSON.stringify(res.user.uid)
+              );
               dispatch(updateFirebase({ firebase_id: res.user.uid }));
               // checklogin()
-            }).catch((e) => {
-              console.log('error in USER CREATE: ', e);
             })
+            .catch((e) => {
+              console.log("error in USER CREATE: ", e);
+            });
         } else {
-          console.log('else = = = = = = =>>')
+          console.log("else = = = = = = =>>");
           auth()
             .signInWithEmailAndPassword(response?.data?.email, "123456")
             .then(async (res: any) => {
               // console.log("User signed in!");
-              await setDefaultHeader("token", response.token);
-              await AsyncStorage.setItem("loginData", JSON.stringify(response));
-              await AsyncStorage.setItem("firebase_id", JSON.stringify(res.user.uid));
-            }).catch((e) => {
-              console.log('e IN USER LOGIN: ', e);
+              // await setDefaultHeader("token", response.token);
+              // await AsyncStorage.setItem("loginData", JSON.stringify(response));
+              await AsyncStorage.setItem(
+                "firebase_id",
+                JSON.stringify(res.user.uid)
+              );
             })
+            .catch((e) => {
+              console.log("e IN USER LOGIN: ", e);
+            });
         }
       } else {
         ErrorMessage({

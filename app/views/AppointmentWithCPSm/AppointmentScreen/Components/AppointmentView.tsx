@@ -47,14 +47,14 @@ const AppointmentView = (props: any) => {
         title:
           roleId === ROLE_IDS.sourcingtl_id
             ? "My Appointment"
-            : "My Appointment with CP",
+            : "Today Appointment",
       },
       {
         key: "second",
         title:
           roleId === ROLE_IDS.sourcingtl_id
             ? "SM Appointment With CP"
-            : "Appointment with TL",
+            : "All Appointment",
       },
     ],
   });
@@ -117,9 +117,20 @@ const AppointmentView = (props: any) => {
         status: "",
       });
       if (indexData?.index == 1) {
-        props.getAppointmentList(roleId === ROLE_IDS.sourcingtl_id ? 3 : 1, {});
+        if (roleId === ROLE_IDS.sourcingtl_id) {
+          props.getAppointmentList(
+            roleId === ROLE_IDS.sourcingtl_id ? 3 : 1,
+            {}
+          );
+        } else {
+          props.getAppointmentList(2, {});
+        }
       } else {
-        props.getAppointmentList(2, {});
+        if (roleId === ROLE_IDS.sourcingtl_id) {
+          props.getAppointmentList(2, {});
+        } else {
+          props.getAppointmentList(2, todayDate);
+        }
       }
       return () => {};
     }, [navigation, indexData, userEditAppointmentData, props.list, props.edit])
@@ -134,14 +145,14 @@ const AppointmentView = (props: any) => {
           title:
             roleId === ROLE_IDS.sourcingtl_id
               ? "My Appointment"
-              : "My Appointment with CP",
+              : "Today Appointment",
         },
         {
           key: "second",
           title:
             roleId === ROLE_IDS.sourcingtl_id
               ? "SM Appointment With CP"
-              : "Appointment with TL",
+              : "All Appointment",
         },
       ],
     });
@@ -172,10 +183,14 @@ const AppointmentView = (props: any) => {
       }
     } else {
       if (indexData?.index == 1) {
-        props.getAppointmentList(
-          roleId === ROLE_IDS.sourcingtl_id ? 3 : 1,
-          props.filterData
-        );
+        if (roleId === ROLE_IDS.sourcingtl_id) {
+          props.getAppointmentList(
+            roleId === ROLE_IDS.sourcingtl_id ? 3 : 1,
+            props.filterData
+          );
+        } else {
+          props.getAppointmentList(2, props.filterData);
+        }
       } else {
         props.getAppointmentList(2, props.filterData);
       }
@@ -255,9 +270,7 @@ const AppointmentView = (props: any) => {
             roleId={roleId}
           />
         )}
-        ListEmptyComponent={
-          <EmptyListScreen message={"My Appointment with CP"} />
-        }
+        ListEmptyComponent={<EmptyListScreen message={"Today Appointment"} />}
         onRefresh={() => {
           props.setFilterData({
             start_date: "",
@@ -265,14 +278,9 @@ const AppointmentView = (props: any) => {
             customer_name: "",
             status: "",
           });
-          props.getAppointmentList(2);
+          props.getAppointmentList(2, todayDate);
         }}
         refreshing={loadingref}
-        // onEndReached={() => {
-        //     if (props.appointmentList?.length < response?.total_data) {
-        //         props.getAppointmentList(2)
-        //     }
-        // }}
       />
     </View>
   );
@@ -282,36 +290,57 @@ const AppointmentView = (props: any) => {
         Count :{" "}
         {props.appointmentList?.length ? props.appointmentList?.length : 0}
       </Text>
-      <FlatList
-        data={props.appointmentList}
-        renderItem={({ item }) => (
-          <SmAppointment
-            items={item}
-            onPressView={onPressView}
-            handleOptionPress={handleOptionPress}
-            role={props.role}
-            roleId={roleId}
-          />
-        )}
-        ListEmptyComponent={
-          <EmptyListScreen message={"SM Appointment With CP"} />
-        }
-        onRefresh={() => {
-          props.setFilterData({
-            start_date: "",
-            end_date: "",
-            customer_name: "",
-            status: "",
-          });
-          props.getAppointmentList(roleId === ROLE_IDS.sourcingtl_id ? 3 : 1);
-        }}
-        refreshing={loadingref}
-        // onEndReached={() => {
-        //     if (props.appointmentList?.length < response?.total_data) {
-        //         props.getAppointmentList(1)
-        //     }
-        // }}
-      />
+      {roleId === ROLE_IDS.sourcingtl_id ? (
+        <FlatList
+          data={props.appointmentList}
+          renderItem={({ item }) => (
+            <SmAppointment
+              items={item}
+              onPressView={onPressView}
+              handleOptionPress={handleOptionPress}
+              role={props.role}
+              roleId={roleId}
+            />
+          )}
+          ListEmptyComponent={
+            <EmptyListScreen message={"SM Appointment With CP"} />
+          }
+          onRefresh={() => {
+            props.setFilterData({
+              start_date: "",
+              end_date: "",
+              customer_name: "",
+              status: "",
+            });
+            props.getAppointmentList(roleId === ROLE_IDS.sourcingtl_id ? 3 : 1);
+          }}
+          refreshing={loadingref}
+        />
+      ) : (
+        <FlatList
+          data={props.appointmentList}
+          renderItem={({ item }) => (
+            <MyAppointment
+              items={item}
+              onPressView={(items: any) => onPressView(item)}
+              onPressEdit={(items: any) => onPressEdit(item)}
+              handleOptionPress={handleOptionPress}
+              roleId={roleId}
+            />
+          )}
+          ListEmptyComponent={<EmptyListScreen message={"Appointment"} />}
+          onRefresh={() => {
+            props.setFilterData({
+              start_date: "",
+              end_date: "",
+              customer_name: "",
+              status: "",
+            });
+            props.getAppointmentList(2);
+          }}
+          refreshing={loadingref}
+        />
+      )}
     </View>
   );
   const renderScene = ({ index, route }: any) => {
@@ -333,7 +362,7 @@ const AppointmentView = (props: any) => {
     <View style={styles.mainContainer}>
       <Header
         leftImageSrc={images.menu}
-        rightFirstImageScr={images.filter}
+        rightFirstImageScr={indexData?.index == 1 ? images.filter : null}
         rightSecondImageScr={images.notification}
         headerText={
           roleId === ROLE_IDS.sourcingtl_id
@@ -351,26 +380,30 @@ const AppointmentView = (props: any) => {
         style={{
           marginVertical: 10,
           flexDirection: "row",
-          justifyContent: "space-between",
+          justifyContent:
+            roleId === ROLE_IDS.sourcingtl_id ? "space-between" : "center",
         }}
       >
-        <Button
-          width={120}
-          height={30}
-          buttonText={
-            props?.filterData?.start_date === "" ||
-            props?.filterData?.end_date === ""
-              ? strings.todayApp
-              : strings.reset
-          }
-          btnTxtsize={14}
-          handleBtnPress={() => {
-            props?.filterData?.start_date === "" ||
-            props?.filterData?.end_date === ""
-              ? onPressReset(0)
-              : onPressReset(1);
-          }}
-        />
+        {roleId === ROLE_IDS.sourcingtl_id ? (
+          <Button
+            width={120}
+            height={30}
+            buttonText={
+              props?.filterData?.start_date === "" ||
+              props?.filterData?.end_date === ""
+                ? strings.todayApp
+                : strings.reset
+            }
+            btnTxtsize={14}
+            handleBtnPress={() => {
+              props?.filterData?.start_date === "" ||
+              props?.filterData?.end_date === ""
+                ? onPressReset(0)
+                : onPressReset(1);
+            }}
+          />
+        ) : null}
+
         {create && (
           <Button
             width={200}

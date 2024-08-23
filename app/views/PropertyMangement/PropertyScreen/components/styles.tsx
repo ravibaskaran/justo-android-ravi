@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
   },
-  count: { alignSelf: "flex-end", marginRight: 2, marginBottom: 2 },
+  count: { alignSelf: "flex-end", marginRight: 10,marginVertical:2,fontWeight:'700' },
 });
 
 export default styles;

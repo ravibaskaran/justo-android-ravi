@@ -898,7 +898,10 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
             }
             break;
           case "rera_certificate_no":
-            if (userData?.data?.role_id === ROLE_IDS.sourcingmanager_id) {
+            if (
+              userData?.data?.role_id === ROLE_IDS.sourcingmanager_id ||
+              userData?.data?.role_id === ROLE_IDS.sourcingtl_id
+            ) {
               setReraExist(false);
               setIsVisible(true);
             } else {
@@ -959,7 +962,10 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
                 ...emailMobvalidation,
                 rera_certificate_no: "wrongReraNumber",
               });
-              if (userData?.data?.role_id === ROLE_IDS.sourcingmanager_id) {
+              if (
+                userData?.data?.role_id === ROLE_IDS.sourcingmanager_id ||
+                userData?.data?.role_id === ROLE_IDS.sourcingtl_id
+              ) {
                 setCplgId(emailAndMobileData?.response?.cp_lg_id);
                 setReraExist(true);
                 setIsVisible(true);
@@ -1307,7 +1313,7 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
       });
     }
   };
-  
+
   const addNewReraNumber = async () => {
     setIsVisible(false);
     setReraExist(false);
@@ -1429,8 +1435,10 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
       <ConfirmModal
         Visible={isVisible}
         setIsVisible={setIsVisible}
-        stringshow={reraExist ? strings.allocateProperty :strings.alert}
-        textshow={reraExist ? strings.allocateCpToProperty : strings.checkCpInMaharera}
+        stringshow={reraExist ? strings.allocateProperty : strings.alert}
+        textshow={
+          reraExist ? strings.allocateCpToProperty : strings.checkCpInMaharera
+        }
         confirmtype={"CONFIRMATION"}
         setStatusChange={() => {
           setAgencyData({

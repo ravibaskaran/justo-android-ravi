@@ -115,7 +115,7 @@ const PropertyDetailView = (props: any) => {
             {allocate &&
               (roleType === ROLE_IDS.sitehead_id ? (
                 <></>
-              ) : (
+              ) : roleType != ROLE_IDS.closingtl_id ? (
                 <Button
                   handleBtnPress={() => props.handleAllocatePress()}
                   buttonText={strings.allocate}
@@ -126,7 +126,7 @@ const PropertyDetailView = (props: any) => {
                   btnTxtsize={15}
                   textTransform={"uppercase"}
                 />
-              ))}
+              ) : null)}
             {create && (
               <Button
                 handleBtnPress={() => onPressCreatevisit()}

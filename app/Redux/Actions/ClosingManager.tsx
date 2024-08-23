@@ -9,7 +9,7 @@ import {
 export const getClosingManagerList = (params: any) => async (dispatch: any) => {
     dispatch({ type: START_LOADING });
     try {
-        const res = await apiCall("post", apiEndPoints.GET_CLOSINGMANAGER, {});
+        const res = await apiCall("post", apiEndPoints.GET_CLOSINGMANAGER, params);
         if (res.data.status == 200) {
             dispatch({
                 type: GET_CLOSINGMANAGER_LIST,

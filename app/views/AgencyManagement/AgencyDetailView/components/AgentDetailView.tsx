@@ -24,10 +24,10 @@ const PropertyDetailView = (props: any) => {
       { key: 'second', title: strings.stats },
     ],
   });
-  console.log("🚀 ~ file: AgentDetailView.tsx:30 ~ data?.active_status:", data)
+  // console.log("🚀 ~ file: AgentDetailView.tsx:30 ~ data?.active_status:", data)
   const DATAINFO: any =
   {
-    active_status: data?.active_status ? data?.active_status : false,
+    active_status: data?.active ? data?.active : false,
     AgentName: data?.agent_name ? data?.agent_name : '',
     agency_name: data?.agency_name ? data?.agency_name : '',
     Mobileno: data?.primary_mobile ? data?.primary_mobile : '',

@@ -51,7 +51,7 @@ const AgencyListing = ({ navigation, route }: any) => {
       setAgentList([]);
       if (type === "active") {
         getAgencyList(0, {
-          status: "",
+          status: 2,
         });
       } else {
         getAgencyList(0, {});
@@ -77,7 +77,7 @@ const AgencyListing = ({ navigation, route }: any) => {
     if (SmCpList?.response?.status === 200) {
       if (SmCpList?.response?.message != "CP allocate successfull.") {
         setAgentList(SmCpList?.response?.data);
-      }  
+      }
     } else {
       setAgentList([]);
     }
@@ -253,6 +253,7 @@ const AgencyListing = ({ navigation, route }: any) => {
       updateAssignCP({
         user_id: item?._id,
         status: 2,
+        active_status: item?.active_status,
       })
     );
   };
@@ -272,6 +273,7 @@ const AgencyListing = ({ navigation, route }: any) => {
     dispatch(
       transferVisitList({
         user_id: data?._id,
+        active_status: data?.active_status,
       })
     );
     getAgencyList(0, {});

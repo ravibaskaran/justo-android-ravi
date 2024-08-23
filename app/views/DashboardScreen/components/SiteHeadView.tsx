@@ -1,11 +1,14 @@
-import {
-  normalizeHeight
-} from "app/components/scaleFontSize";
+import { normalizeHeight } from "app/components/scaleFontSize";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import styles from "./styles";
+import { ROLE_IDS } from "app/components/utilities/constant";
 
 const SiteHeadView = (props: any) => {
+  const role = props?.getLoginType?.response?.data?.role_id || null;
+  let today_followup = props?.appointmentList?.filter(
+    (item: any) => item?.status == 10
+  );
   return (
     <View style={styles.mainContainerWrap}>
       <View style={styles.secondPortion}></View>
@@ -91,24 +94,41 @@ const SiteHeadView = (props: any) => {
             </Text>
           </View>
         </TouchableOpacity> */}
+        {/* <TouchableOpacity
+            onPress={() => props.onpressBooking("cancel", "today")}
+            style={[
+              styles.thirdPortioncardView,
+              // { height: normalizeHeight(130) },
+            ]}
+          >
+            <View style={styles.thirdPortionCardTextView}>
+              <Text style={styles.thirdPortionCardText}>
+                Today's Cancel Booking
+              </Text>
+            </View>
+            <View style={styles.numberView}>
+              <Text style={styles.thirdPortionNumberText}>
+                {props?.dashboardData?.cancel_booking}
+              </Text>
+            </View>
+          </TouchableOpacity> */}
+
         <TouchableOpacity
-          onPress={() => props.onpressBooking("cancel", "today")}
-          style={[
-            styles.thirdPortioncardView,
-            // { height: normalizeHeight(130) },
-          ]}
+          onPress={() => props.onPressSiteVisit("followup")}
+          style={styles.thirdPortioncardView}
         >
           <View style={styles.thirdPortionCardTextView}>
             <Text style={styles.thirdPortionCardText}>
-              Today's Cancel Booking
+              {"Today's Follow-Up"}
             </Text>
           </View>
           <View style={styles.numberView}>
             <Text style={styles.thirdPortionNumberText}>
-              {props?.dashboardData?.cancel_booking}
+              {today_followup?.length}
             </Text>
           </View>
         </TouchableOpacity>
+
         {/* <TouchableOpacity
           onPress={() => props.onpressBooking("register")}
           style={[

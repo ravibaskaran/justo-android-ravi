@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     // backgroundColor: RED_COLOR
+    marginBottom: normalizeSpacing(10),
   },
   headerStyle: {
     backgroundColor: PRIMARY_THEME_COLOR,
@@ -114,6 +115,11 @@ const styles = StyleSheet.create({
     marginTop: normalizeSpacing(20),
     width: "100%",
   },
-  count: { alignSelf: "flex-end", marginRight: 2, marginBottom: 2 },
+  count: {
+    alignSelf: "flex-end",
+    marginRight: 10,
+    marginVertical: 2,
+    fontWeight: "700",
+  },
 });
 export default styles;

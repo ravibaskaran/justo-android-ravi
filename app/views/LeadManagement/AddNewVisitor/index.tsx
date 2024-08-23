@@ -208,7 +208,9 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
   };
   const handleCpNameDropdownPress = () => {
     const tempArr = agentList.filter(
-      (el: any) => el?.cp_type !== 2 || el?.cp_type === undefined
+      (el: any) =>
+        (el?.cp_type !== 2 || el?.cp_type === undefined) &&
+        el?.active_status == true
     );
     setDropdownAgentList(tempArr);
   };

@@ -8,6 +8,7 @@ import {
   DATE_FORMAT,
   DATE_TIME_FORMAT,
   GREEN_COLOR,
+  PRIMARY_THEME_COLOR,
   YELLOW_COLOR,
 } from "app/components/utilities/constant";
 import moment from "moment";
@@ -226,6 +227,8 @@ const AppointmentDtailsItem = (props: any) => {
                     ? bookingStatus === 4 ? "red" : GREEN_COLOR
                     : props?.detail?.status == 5 || props?.detail?.status === 6
                     ? "red"
+                    : props?.detail?.status === 10
+                    ? PRIMARY_THEME_COLOR
                     : props?.detail?.status === 4
                     ? "red"
                     : BLACK_COLOR,
@@ -238,6 +241,8 @@ const AppointmentDtailsItem = (props: any) => {
                 : "Upcoming"
               : props?.detail?.status === 2
               ? "Revisit"
+              : props?.detail?.status === 10
+              ? "Follow-Up"
               : props?.detail?.status == 5
               ? "Reschedule"
               : props?.detail?.status === 4

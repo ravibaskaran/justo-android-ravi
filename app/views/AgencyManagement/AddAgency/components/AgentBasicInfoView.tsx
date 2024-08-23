@@ -6,13 +6,7 @@ import { RequiredStart } from "app/components/utilities/GlobalFuncations";
 import { handleValues } from "app/components/utilities/handleValues";
 import moment from "moment";
 import React, { useState } from "react";
-import {
-  Image,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View
-} from "react-native";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { RadioButton } from "react-native-paper";
 import images from "../../../../assets/images";
 import Button from "../../../../components/Button";
@@ -687,7 +681,22 @@ const AgentBasicInfoView = (props: any) => {
               />
             </View>
 
-            <View style={styles.workingView}>
+            <View style={styles.inputWrap}>
+              <InputField
+                placeholderText={strings.addLocation}
+                handleInputBtnPress={() => {}}
+                headingText={strings.workingLocation}
+                valueshow={props.agencyData?.working_location[0]?.location}
+                onChangeText={(val: any) => {
+                  props.setAgencyData({
+                    ...props.agencyData,
+                    working_location: [{ location: val }],
+                  });
+                }}
+              />
+            </View>
+
+            {/* <View style={styles.workingView}>
               <View
                 style={{
                   top: props.agencyData?.working_location?.length > 0 ? 5 : 0,
@@ -696,7 +705,6 @@ const AgentBasicInfoView = (props: any) => {
                 }}
               >
                 <Text style={styles.workTxt}>{strings.workingLocation}</Text>
-                {/* <RequiredStart /> */}
               </View>
               <TouchableOpacity
                 onPress={() => props.setLocationModel(true)}
@@ -704,8 +712,8 @@ const AgentBasicInfoView = (props: any) => {
               >
                 <Text style={styles.addTxt}>+ {strings.addLocation}</Text>
               </TouchableOpacity>
-            </View>
-            {props.agencyData?.working_location?.length > 0 ? (
+            </View> */}
+            {/* {props.agencyData?.working_location?.length > 0 ? (
               <View style={styles.inputBoxVw}>
                 {props.agencyData?.working_location?.map(
                   (item: any, index: any) => {
@@ -736,7 +744,7 @@ const AgentBasicInfoView = (props: any) => {
                   }
                 )}
               </View>
-            ) : null}
+            ) : null} */}
           </>
         ) : (
           <>

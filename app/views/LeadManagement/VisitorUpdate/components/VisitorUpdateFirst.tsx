@@ -19,6 +19,7 @@ import {
   DATE_FORMAT,
   Isios,
   PRIMARY_THEME_COLOR,
+  Regexs,
   ROLE_IDS,
   WHITE_COLOR,
 } from "../../../../components/utilities/constant";
@@ -36,6 +37,7 @@ import Styles from "../../../../components/Modals/styles";
 import { useSelector } from "react-redux";
 import { CpType } from "app/components/utilities/DemoData";
 import CountryPickerModal from "app/components/Modals/CountryPickerModal";
+import JustForOkModal from "app/components/Modals/JustForOkModal";
 
 const VisitorUpdateView = (props: any) => {
   const { userData = {} } = useSelector((state: any) => state.userData);
@@ -222,6 +224,20 @@ const VisitorUpdateView = (props: any) => {
               headingText={"Mobile No."}
               keyboardtype={"number-pad"}
               maxLength={props?.updateForm?.country_code === "+91" ? 10 : 15}
+              onBlur={(val: any) => {
+                if (
+                  props?.updateForm?.mobile_number != props?.updateForm?.mobile
+                ) {
+                  if (
+                    Regexs.mobilenumRegex.test(props?.updateForm?.mobile) &&
+                    props?.updateForm?.property_id
+                  ) {
+                    props.checkMobileExistWithSameProperty(
+                      props?.updateForm?.property_id
+                    );
+                  }
+                }
+              }}
             />
           </View>
         </View>
@@ -1496,6 +1512,13 @@ const VisitorUpdateView = (props: any) => {
           />
         </View>
       </ScrollView>
+      <JustForOkModal
+        headertitle="Message"
+        message={props.mobileerror}
+        onPressRightButton={props.onPressRightButton}
+        Visible={props.okIsVisible}
+        setIsVisible={props.setOkIsVisible}
+      />
       <CountryPickerModal
         countyPicker={props.countyPicker}
         setCountyPicker={props.setCountyPicker}

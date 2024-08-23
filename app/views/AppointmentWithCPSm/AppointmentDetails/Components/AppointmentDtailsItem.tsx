@@ -121,6 +121,21 @@ const AppointmentDtailsItem = (props: any) => {
           </Text>
         </View>
       </View>
+      <View style={styles.Txtview}>
+        <View style={styles.projectContainer}>
+          <Text style={styles.projectTxt}>Location</Text>
+        </View>
+        <View>
+          <Text>:</Text>
+        </View>
+        <View style={styles.nameContainer}>
+          <Text style={styles.nameTxt}>
+            {appdetail?.cp_location?.length > 0
+              ? appdetail?.cp_location[0]?.location
+              : strings.notfount}
+          </Text>
+        </View>
+      </View>
       {(appdetail.appointment_status === 2 ||
         appdetail.appointment_status === 3 ||
         appdetail.appointment_status === 4) && (
@@ -145,7 +160,8 @@ const AppointmentDtailsItem = (props: any) => {
               </View>
             </View>
           )}
-          {(appdetail.appointment_status === 3 ||
+
+          {/* {(appdetail.appointment_status === 3 ||
             appdetail.appointment_status === 4) &&
           location !== "" ? (
             <View style={styles.Txtview}>
@@ -161,7 +177,7 @@ const AppointmentDtailsItem = (props: any) => {
                 </Text>
               </View>
             </View>
-          ) : null}
+          ) : null} */}
           {appdetail?.confirm_remark !== null ? (
             <View style={styles.Txtview}>
               <View style={styles.projectContainer}>

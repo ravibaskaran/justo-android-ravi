@@ -48,7 +48,11 @@ const AppointmentListView = (props: any) => {
                 // Nested coditions for filter data with types
                 if (props.type === 'todayComplete') {
                     props.getAppointmentList(0, { ...props.todayAppointment, status: 3 })
-                } else if (props.type === 'today') {
+                }
+                else if (props.type === 'followup') {
+                    props.getAppointmentList(0, { ...props.todayAppointment, status: 10 })
+                } 
+                else if (props.type === 'today') {
                     props.getAppointmentList(0, props.todayAppointment)
                 } else {
                     props.getAppointmentList(0, props.todayAppointment)
@@ -148,6 +152,7 @@ const AppointmentListView = (props: any) => {
                     setAllocateModel={setAllocateModel}
                     setLocationModel={setLocationModel}
                     setAllocatedCM={props.setAllocatedCM}
+                    setPropertyId={props.setPropertyId}
                     allocatedCM={props.allocatedCM}
                     getAppointmentList={props.getAppointmentList}
                     setFilterData={props.setFilterData}
@@ -167,6 +172,7 @@ const AppointmentListView = (props: any) => {
                     setAllocateModel={setAllocateModel}
                     setLocationModel={setLocationModel}
                     setAllocatedCM={props.setAllocatedCM}
+                    setPropertyId={props.setPropertyId}
                     allocatedCM={props.allocatedCM}
                     getAppointmentList={props.getAppointmentList}
                     setFilterData={props.setFilterData}

@@ -148,6 +148,8 @@ const AppointmentDetails = ({ navigation, route }: any) => {
 
   const onPressFollowUp = () => {
     data.fromAppointmentPage = true;
+    data.appointment_id = detailsData[0]?._id;
+    data.update_type = 10;
     navigation.navigate("FollUpAdd", data);
   };
 

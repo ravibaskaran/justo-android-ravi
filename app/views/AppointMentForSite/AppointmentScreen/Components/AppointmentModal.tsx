@@ -27,6 +27,7 @@ const FilterModal = (props: any) => {
     { type_name: 'Visit Cancelled', value: 4 },
     { type_name: 'Reschedule', value: 5 },
     { type_name: 'Not Fit for Sale', value: 6 },
+    { type_name: strings.followup, value: 10 }
   ]
   const dispatch: any = useDispatch()
 

@@ -94,6 +94,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: GRAY_LIGHT_COLOR,
   },
-  count: { alignSelf: "flex-end", marginRight: 2 },
+  count: {
+    alignSelf: "flex-end",
+    marginRight: 10,
+    marginVertical: 2,
+    fontWeight: "700",
+  },
 });
 export default styles;

@@ -35,16 +35,14 @@ const AgencyListItem = (props: any) => {
       </View>
       <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
-          <Text style={styles.projectTxt}>
-            {strings.cpType} :
-          </Text>
+          <Text style={styles.projectTxt}>{strings.cpType} :</Text>
         </View>
         <View style={styles.nameContainer}>
-          <Text style={styles.nameTxt}>{props?.items?.cp_type
-                ? `${
-                    props?.items?.cp_type === 2 ? "Company" : "Individual"
-                  }`
-                : strings.notfount}</Text>
+          <Text style={styles.nameTxt}>
+            {props?.items?.cp_type
+              ? `${props?.items?.cp_type === 2 ? "Company" : "Individual"}`
+              : strings.notfount}
+          </Text>
         </View>
       </View>
       <View style={styles.Txtview}>
@@ -145,30 +143,32 @@ const AgencyListItem = (props: any) => {
             handleBtnPress={() => props.onPressView(props.items, "edit")}
           />
         )}
-         {status && (
+        {status && (
           <Button
-            width={78}
+            width={90}
             height={30}
             bgcolor={WHITE_COLOR}
             bordercolor={props.items.active_status ? RED_COLOR : GREEN_COLOR}
             borderWidth={1}
             btnTxtcolor={props.items.active_status ? RED_COLOR : GREEN_COLOR}
             buttonText={
-              props.items.active_status ? strings.deactive : strings.active
+              props.items.active_status ? strings.deactivate : strings.activate
             }
             btnTxtsize={14}
             border={10}
             handleBtnPress={() => {
               if (props.items.total_visit === 0) {
                 props.setIsVisible(true);
+                props.setStatus(props.items.active_status);
                 props?.setChangeStatus(props.items);
               } else {
                 props.setNewVisitor(true);
+                props.setStatus(props.items.active_status);
                 props?.setChangeStatus(props.items);
               }
             }}
           />
-        )} 
+        )}
         {view && (
           <TouchableOpacity
             style={styles.Viewbutton}
@@ -178,31 +178,44 @@ const AgencyListItem = (props: any) => {
           </TouchableOpacity>
         )}
       </View>
-      <View style={{alignItems: 'flex-start', marginBottom: 10, flexDirection: 'row'}}>
-        <Button
-          width={Isios ? 160 : 120}
-          height={45}
-          bgcolor={WHITE_COLOR}
-          bordercolor={PURPLE_COLOR}
-          borderWidth={1}
-          btnTxtcolor={PURPLE_COLOR}
-          buttonText={strings.allocateProperty}
-          btnTxtsize={14}
-          border={10}
-          handleBtnPress={() => props.openAllocatePropertyModal(props.items?._id)}
-        />
-        {props?.items?.cp_type === 2 ? <Button
-          width={Isios ? 140 : 110}
-          height={45}
-          bgcolor={WHITE_COLOR}
-          bordercolor={PURPLE_COLOR}
-          borderWidth={1}
-          btnTxtcolor={PURPLE_COLOR}
-          buttonText={"See Employees"}
-          btnTxtsize={14}
-          border={10}
-          handleBtnPress={() => props.onPressSeeEmployee(props.items?._id)}
-        /> : null}
+
+      <View
+        style={{
+          alignItems: "flex-start",
+          marginBottom: 10,
+          flexDirection: "row",
+        }}
+      >
+        {props.items.active_status ? (
+          <Button
+            width={Isios ? 160 : 120}
+            height={45}
+            bgcolor={WHITE_COLOR}
+            bordercolor={PURPLE_COLOR}
+            borderWidth={1}
+            btnTxtcolor={PURPLE_COLOR}
+            buttonText={strings.allocateProperty}
+            btnTxtsize={14}
+            border={10}
+            handleBtnPress={() =>
+              props.openAllocatePropertyModal(props.items?._id)
+            }
+          />
+        ) : null}
+        {props?.items?.cp_type === 2 ? (
+          <Button
+            width={Isios ? 140 : 110}
+            height={45}
+            bgcolor={WHITE_COLOR}
+            bordercolor={PURPLE_COLOR}
+            borderWidth={1}
+            btnTxtcolor={PURPLE_COLOR}
+            buttonText={"See Employees"}
+            btnTxtsize={14}
+            border={10}
+            handleBtnPress={() => props.onPressSeeEmployee(props.items?._id)}
+          />
+        ) : null}
       </View>
     </View>
   );

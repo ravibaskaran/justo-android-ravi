@@ -66,7 +66,7 @@ const PropertyDetailItem = (props: any) => {
         });
       });
   };
-  console.log("🚀 ~ file: AgentDetailInfo.tsx:82 ~ item?.active_status:", item);
+  // console.log("🚀 ~ file: AgentDetailInfo.tsx:82 ~ item?.active_status:", item);
 
   return (
     <ScrollView>

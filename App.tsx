@@ -38,6 +38,12 @@ export async function onDisplayNotification(title: any, body: any, data: any) {
 }
 
 const App = () => {
+  const Text: React.FC<{ allowFontScaling?: boolean }> = ({
+    allowFontScaling = false,
+    ...props
+  }) => {
+    return <Text {...props} allowFontScaling={allowFontScaling} />;
+  };
   Text.defaultProps = Text.defaultProps || {};
   Text.defaultProps.allowFontScaling = false;
   const { persistor, store } = configureStore();

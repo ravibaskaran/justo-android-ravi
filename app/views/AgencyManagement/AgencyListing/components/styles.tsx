@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     color: WHITE_COLOR,
     textAlign: "center",
   },
-  count: { alignSelf: "flex-end", marginRight: 2 },
+  count: { alignSelf: "flex-end", marginRight: 10,marginVertical:2,fontWeight:'700'},
 });
 
 export default styles;

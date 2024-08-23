@@ -14,6 +14,9 @@ const ClosingDashboardView = (props: any) => {
   const achieveTargetData = props?.dashboardData?.achievetargetdata || {};
   const role = props?.getLoginType?.response?.data?.role_id || null;
 
+  let today_followup = props?.appointmentList?.filter(
+    (item: any) => item?.status == 10
+  );
   const renderItem = (item: any, index: any) => {
     return (
       <View key={index}>
@@ -118,7 +121,7 @@ const ClosingDashboardView = (props: any) => {
                             {props?.dashboardData?.total_ready_booking}</Text>
                     </View>
                 </TouchableOpacity> */}
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => props.onpressBooking("cancel", "today")}
             style={styles.thirdPortioncardView}
           >
@@ -132,7 +135,23 @@ const ClosingDashboardView = (props: any) => {
                 {props?.dashboardData?.cancel_booking}
               </Text>
             </View>
+          </TouchableOpacity> */}
+          <TouchableOpacity
+            onPress={() => props.onPressSiteVisit("followup")}
+            style={styles.thirdPortioncardView}
+          >
+            <View style={styles.thirdPortionCardTextView}>
+              <Text style={styles.thirdPortionCardText}>
+                {"Today's Follow-Up"}
+              </Text>
+            </View>
+            <View style={styles.numberView}>
+              <Text style={styles.thirdPortionNumberText}>
+                {today_followup?.length}
+              </Text>
+            </View>
           </TouchableOpacity>
+
           {role === ROLE_IDS.closingtl_id ? (
             <TouchableOpacity
               onPress={() => props.onpressSMList()}

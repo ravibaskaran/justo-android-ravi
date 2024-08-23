@@ -91,6 +91,7 @@ const EmployeeView = (props: any) => {
                   setIsVisible={setIsVisible}
                   onPressView={props.onPressView}
                   setChangeStatus={props.setChangeStatus}
+                  userData={props.userData}
                 />
               )}
               onEndReached={() => {

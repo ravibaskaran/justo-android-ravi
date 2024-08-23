@@ -29,6 +29,7 @@ const AgencyView = (props: any) => {
   const [newVisitor, setNewVisitor] = useState(false);
   const [FilterisVisible, setFilterisVisible] = useState(false);
   const { userData = {} } = useSelector((state: any) => state.userData);
+  const [status, setStatus] = useState(false);
   const navigation: any = useNavigation();
   const onPressView = () => {
     navigation.navigate("AgencyDetails");
@@ -204,6 +205,7 @@ const AgencyView = (props: any) => {
               <AgencyListItem
                 items={item}
                 setIsVisible={setIsVisible}
+                setStatus={setStatus}
                 onPressView={props.onPressView}
                 setChangeStatus={props.setChangeStatus}
                 setNewVisitor={setNewVisitor}
@@ -225,11 +227,16 @@ const AgencyView = (props: any) => {
           />
         </View>
       </View>
+      {/* NO LEAD CP */}
       <ConfirmModal
         Visible={isVisible}
         setIsVisible={setIsVisible}
         stringshow={strings.confirmation}
-        textshow={`${strings.deactivconfirmation} ${strings.cpCapital}?`}
+        textshow={
+          status
+            ? `${strings.deactivconfirmation} ${strings.cpCapital}?`
+            : `${strings.activeconfirmation} ${strings.cpCapital}?`
+        }
         confirmtype={"CONFIRMATION"}
         setStatusChange={props.setChangeStatus}
         handleYesResponse={() => props.handleStatusChange(props.changeStatus)}
@@ -238,7 +245,11 @@ const AgencyView = (props: any) => {
         Visible={newVisitor}
         setIsVisible={setNewVisitor}
         stringshow={strings.confirmation}
-        textshow={`${strings.deactivconfirmation} ${strings.cpCapital}?`}
+        textshow={
+          status
+            ? `${strings.deactivconfirmation} ${strings.cpCapital}?`
+            : `${strings.activeconfirmation} ${strings.cpCapital}?`
+        }
         confirmtype={"CONFIRMATION"}
         setStatusChange={props.setChangeStatus}
         handleYesResponse={() => props.onPressDeactivates(props.changeStatus)}

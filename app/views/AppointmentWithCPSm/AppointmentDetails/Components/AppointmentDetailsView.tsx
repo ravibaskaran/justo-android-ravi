@@ -65,15 +65,6 @@ const AppointmentDetailsView = (props: any) => {
         <AppointmentDtailsItem status={props.status} />
       </View>
 
-      {props?.status?.appointment_status === 2 ? (
-        <View style={styles.bntView}>
-          <Button
-            buttonText={strings.doneappointment}
-            handleBtnPress={() => handleOptionPress(props.status._id, 3)}
-          />
-        </View>
-      ) : null}
-
       <AppointmentModal
         Visible={isVisible}
         setIsVisible={setIsVisible}

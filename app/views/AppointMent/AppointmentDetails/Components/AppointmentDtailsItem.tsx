@@ -160,6 +160,8 @@ const AppointmentDtailsItem = (props: any) => {
                       : "red"
                     : item?.status === 2
                     ? GREEN_COLOR
+                    : item?.status === 10
+                    ? PRIMARY_THEME_COLOR
                     : item?.status == 3
                     ? bookingStatus === 4
                       ? "red"
@@ -178,6 +180,8 @@ const AppointmentDtailsItem = (props: any) => {
                 : strings.STSUpComing
               : item?.status === 2
               ? "Revisit"
+              : item?.status === 10
+              ? "Follow-Up"
               : item?.status == 5
               ? "Reschedule"
               : item?.status === 4

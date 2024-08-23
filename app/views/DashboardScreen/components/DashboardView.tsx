@@ -175,7 +175,6 @@ const DashboardView = (props: any) => {
               onPressSMList={props.onPressSMList}
               onPressCPList={props.onPressCPList}
               onpressAppointmentWithCP={props.onpressAppointmentWithCP}
-              todayAppointmentWithCp={props?.todayAppointmentWithCp}
             />
           ) : (
             <>
@@ -214,6 +213,8 @@ const DashboardView = (props: any) => {
                               onpressBooking={props.onpressBooking}
                               onPressTodayVisit={props.onPressTodayVisit}
                               onPressSiteVisit={props.onPressSiteVisit}
+                              getLoginType={props.getLoginType}
+                              appointmentList={props.appointmentList}
                             />
                           ) : (
                             <View style={styles.secondPortion}>

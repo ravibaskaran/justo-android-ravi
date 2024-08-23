@@ -8,6 +8,7 @@ import {
   DATE_FORMAT,
   DATE_TIME_FORMAT,
   GREEN_COLOR,
+  PRIMARY_THEME_COLOR,
   PURPLE_COLOR,
   ROLE_IDS,
   WHITE_COLOR,
@@ -21,9 +22,9 @@ import usePermission from "app/components/utilities/UserPermissions";
 
 const AppointmentListItem = (props: any) => {
   const bookingStatus =
-  props?.items?.booking_status?.length > 0
-    ? props?.items?.booking_status[0]
-    : "";
+    props?.items?.booking_status?.length > 0
+      ? props?.items?.booking_status[0]
+      : "";
 
   const currentDate = `${moment(new Date()).format(
     DATE_FORMAT
@@ -78,6 +79,8 @@ const AppointmentListItem = (props: any) => {
                       : GREEN_COLOR
                     : props?.items?.status == 5 || props?.items?.status == 6
                     ? "red"
+                    : props?.items?.status === 10
+                    ? PRIMARY_THEME_COLOR
                     : props?.items?.status === 4
                     ? "red"
                     : BLACK_COLOR,
@@ -90,6 +93,8 @@ const AppointmentListItem = (props: any) => {
                 : strings.STSUpComing
               : props?.items?.status === 2
               ? "Revisit"
+              : props?.items?.status === 10
+              ? "Follow-Up"
               : props?.items?.status === 5
               ? "Reschedule"
               : props?.items?.status === 4

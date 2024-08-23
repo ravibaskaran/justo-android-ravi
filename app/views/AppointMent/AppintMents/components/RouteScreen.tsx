@@ -25,6 +25,7 @@ const RouteScreen = (props: any) => {
             setAllocateModel={props.setAllocateModel}
             setLocationModel={props.setLocationModel}
             setAllocatedCM={props.setAllocatedCM}
+            setPropertyId={props.setPropertyId}
             allocatedCM={props.allocatedCM}
           />
         )}

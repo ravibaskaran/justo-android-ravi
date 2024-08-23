@@ -6,7 +6,7 @@ import styles from "./Styles";
 
 const FirstRoute = (props: any) => {
   return (
-    <View>
+    <View style={{marginBottom:15}}>
       <Text style={styles.count}>
         Count : {props?.moreData ? props?.moreData : 0}
       </Text>

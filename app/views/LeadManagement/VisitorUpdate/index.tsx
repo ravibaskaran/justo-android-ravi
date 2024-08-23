@@ -51,6 +51,8 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
   const [countryData, setCountryData] = useState(CountryArray);
   const [countryCode, setCountryCode] = useState("+91");
   const [countyPicker, setCountyPicker] = useState(false);
+  const [okIsVisible, setOkIsVisible] = useState(false);
+  const [mobileerror, setMobileError] = useState<any>("");
   const [updateForm, setUpdateForm] = React.useState<any>({
     lead_id: "",
     first_name: "",
@@ -297,6 +299,7 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
         cp_name: response?.data[0]?.cp_name,
         referrer_name: response?.data[0]?.referrer_name,
         referrer_contact: response?.data[0]?.referrer_contact,
+        mobile_number: response?.data[0]?.customer_detail?.mobile,
       });
       setCountryCode(response?.data[0]?.customer_detail?.country_code);
     }
@@ -859,6 +862,46 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
       dispatch(editVisitor(edit_params));
     }
   };
+  const checkMobileExistWithSameProperty = async (propertyId: string) => {
+    let params: any = {
+      mobile: updateForm?.mobile,
+      property_id: propertyId,
+    };
+    dispatch({ type: START_LOADING });
+
+    try {
+      const res = await apiCall(
+        "post",
+        apiEndPoints.CHECK_VISIT_MOB_AVAILABLE,
+        params
+      );
+
+      if (res?.data?.status === 200) {
+        dispatch({ type: STOP_LOADING });
+        return true;
+      } else if (res?.data?.status === 201) {
+        setMobileError(res?.data?.message);
+        setOkIsVisible(true);
+        setTimeout(() => {
+          setUpdateForm({
+            ...updateForm,
+            mobile: "",
+          });
+        }, 500);
+        dispatch({ type: STOP_LOADING });
+        return false;
+      }
+    } catch (e) {
+      dispatch({
+        type: STOP_LOADING,
+      });
+    }
+  };
+
+  const onPressRightButton = () => {
+    setOkIsVisible(false);
+  };
+
   return (
     <>
       {/* {screenType === 0 ?
@@ -932,6 +975,12 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
         setCountyPicker={setCountyPicker}
         handleCountryCode={handleCountryCode}
         handleLeadSourcePressWhenNoCp={getAllPropertyData}
+        checkMobileExistWithSameProperty={(propertyId: string) =>
+          checkMobileExistWithSameProperty(propertyId)
+        }
+        okIsVisible={okIsVisible}
+        mobileerror={mobileerror}
+        onPressRightButton={onPressRightButton}
       />
     </>
   );

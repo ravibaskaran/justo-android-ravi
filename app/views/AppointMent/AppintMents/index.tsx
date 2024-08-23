@@ -31,6 +31,7 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
   const [type, settype] = useState("");
   const [isVisible, setIsVisible] = useState(false);
   const [visitedUser, setVisitedUser] = useState<any>({});
+  const [propertyId, setPropertyId] = useState("");
 
   const [filterData, setFilterData] = useState({
     start_date: "",
@@ -166,7 +167,7 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
   };
 
   const getCMList = () => {
-    dispatch(getClosingManagerList({}));
+    dispatch(getClosingManagerList({ property_id: propertyId }));
   };
 
   const handleAllocateCM = () => {
@@ -188,6 +189,7 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
         getCMList={getCMList}
         ClosingMList={ClosingMList}
         setAllocatedCM={setAllocatedCM}
+        setPropertyId={setPropertyId}
         allocatedCM={allocatedCM}
         handleAllocateCM={handleAllocateCM}
         offSET={offSET}

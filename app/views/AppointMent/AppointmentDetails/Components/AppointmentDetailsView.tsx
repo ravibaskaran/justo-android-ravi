@@ -114,7 +114,7 @@ const AppointmentDetailsView = (props: any) => {
       ) : ( */}
       {data?.checkin_status === true ? (
         <View style={styles.bntView}>
-          {data?.status === 1 ? (
+          {data?.status === 1 || data?.status === 10 ? (
             <>
               <View
                 style={{
@@ -163,12 +163,12 @@ const AppointmentDetailsView = (props: any) => {
                       width={150}
                     />
                   ) : null)}
-                
-                    <Button
-                      buttonText={strings.followup}
-                      handleBtnPress={() => props.onPressFollowUp()}
-                      width={150}
-                    />
+                <Button
+                  buttonText={strings.followup}
+                  handleBtnPress={() => props.onPressFollowUp()}
+                  width={150}
+                />
+
                 {/* {approve && (
                   <Button
                     buttonText={strings.readytoBookHeader}
@@ -199,7 +199,7 @@ const AppointmentDetailsView = (props: any) => {
             />
             {/* Checked In */}
             <Button
-              buttonText={strings.appointmentDone}
+              buttonText={strings.visitorCheckin}
               handleBtnPress={() => setCpChecking(true)}
               width={Isios ? 180 : 160}
             />

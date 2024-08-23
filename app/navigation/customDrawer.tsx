@@ -11,7 +11,7 @@ import styles from "./styles";
 import images from "../assets/images";
 import strings from "../components/utilities/Localization";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo from "react-native-device-info";
 import {
   DrawerContentScrollView,
   useDrawerStatus,
@@ -31,7 +31,7 @@ import { normalize } from "app/components/scaleFontSize";
 const customDrawer = ({ navigation }: any) => {
   const dispatch: any = useDispatch();
   const { response = {} } = useSelector((state: any) => state.userDetail);
-  const notification = useSelector((state: any) => state.notificationCount)
+  const notification = useSelector((state: any) => state.notificationCount);
 
   const permissionResponse = useSelector((state: any) => state.permissions);
   const isDrawerOpen = useDrawerStatus() === "open";
@@ -47,18 +47,20 @@ const customDrawer = ({ navigation }: any) => {
   useEffect(() => {
     if (isDrawerOpen) {
       getDetail();
-      dispatch(getPermission({}))
+      dispatch(getPermission({}));
     }
   }, [isDrawerOpen]);
- 
+
   const getDetail = async () => {
     const userData: any = await AsyncStorage.getItem("loginData");
-    
+
     if (JSON.parse(userData)?.data?._id) {
-     console.log("🚀 ~ file: customDrawer.tsx:65 ~ getDetail ~ JSON.parse(userData)?.data:", JSON.parse(userData)?.data
-     )
-     setUserData(JSON.parse(userData)?.data)
-     /*  dispatch(
+      console.log(
+        "🚀 ~ file: customDrawer.tsx:65 ~ getDetail ~ JSON.parse(userData)?.data:",
+        JSON.parse(userData)?.data
+      );
+      setUserData(JSON.parse(userData)?.data);
+      /*  dispatch(
         getUserDetails({
           user_id: JSON.parse(userData).data?._id,
         })
@@ -97,16 +99,22 @@ const customDrawer = ({ navigation }: any) => {
                 style={[styles.UserNameText, { width: 120 }]}
               >
                 {
-                   userData?.user_name ? userData?.user_name : "User Name"
-                /* userData?.user_name
+                  userData?.user_name ? userData?.user_name : "User Name"
+                  /* userData?.user_name
                   ? userData?.user_name
                   : `${userData?.firstname} ${userData?.lastname}`} */
                 }
               </Text>
-              <Text numberOfLines={2} style={[styles.UserAddress, { width: 140 }]}>
+              <Text
+                numberOfLines={2}
+                style={[styles.UserAddress, { width: 140 }]}
+              >
                 {userData?.city ?? ""}
               </Text>
-              <Text numberOfLines={2} style={[styles.UserAddress, { width: 140 }]}>
+              <Text
+                numberOfLines={2}
+                style={[styles.UserAddress, { width: 140 }]}
+              >
                 {userData?.role_title ?? ""}
               </Text>
             </View>
@@ -137,15 +145,15 @@ const customDrawer = ({ navigation }: any) => {
             <Image source={props.iconSource} style={styles.drawerIconStyle} />
             <View>
               <Text style={styles.drawerText}>{props.tabTitle}</Text>
-              {props.tabTitle === 'Chat Management' && notification?.response?.chat_message > 0 ?
-                (<Badge
+              {props.tabTitle === "Chat Management" &&
+              notification?.response?.chat_message > 0 ? (
+                <Badge
                   status="error"
-                  containerStyle={{ position: 'absolute', top: 0, right: -6 }}
+                  containerStyle={{ position: "absolute", top: 0, right: -6 }}
                   badgeStyle={styles.badget}
                   textStyle={{ fontSize: normalize(10) }}
-                />)
-                : null
-              }
+                />
+              ) : null}
             </View>
           </TouchableOpacity>
         ) : null}
@@ -169,19 +177,21 @@ const customDrawer = ({ navigation }: any) => {
           }}
         />
         {permissionResponse?.response?.data?.map((item: any, index: any) => {
-          
-          return item.permission && item.path && (
-            <DrawerTabSection
-              key={index}
-              type={"all"}
-              iconSource={item.icon}
-              tabTitle={item?.title}
-              handleDrawerNavigation={() => {
-                console.log(item?.path);
-                navigation.navigate(item.path, { type: item.type });
-              }}
-            />
-          )
+          return (
+            item.permission &&
+            item.path && (
+              <DrawerTabSection
+                key={index}
+                type={"all"}
+                iconSource={item.icon}
+                tabTitle={item?.title}
+                handleDrawerNavigation={() => {
+                  console.log(item?.path);
+                  navigation.navigate(item.path, { type: item.type });
+                }}
+              />
+            )
+          );
         })}
         {/* <DrawerTabSection
           type={"all"}
@@ -444,11 +454,9 @@ const customDrawer = ({ navigation }: any) => {
         />
       </DrawerContentScrollView>
       <View style={styles.versionView}>
-        <View style={[styles.drawerTouch, { justifyContent: 'center' }]}>
+        <View style={[styles.drawerTouch, { justifyContent: "center" }]}>
           <Text style={styles.drawerText}>
-            {strings.versionText}
-            {"ST-"}
-            {DeviceInfo.getVersion()}
+            {strings.versionText}-{DeviceInfo.getVersion()}
           </Text>
         </View>
       </View>

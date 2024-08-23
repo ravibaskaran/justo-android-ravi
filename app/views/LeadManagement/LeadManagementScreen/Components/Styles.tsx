@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     color: BLACK_COLOR,
     fontSize: normalize(18),
   },
-  count: { alignSelf: "flex-end", marginRight: 2 },
+  count: { alignSelf: "flex-end", marginRight: 10,marginVertical:2,fontWeight:'700' },
 });
 
 export default styles;

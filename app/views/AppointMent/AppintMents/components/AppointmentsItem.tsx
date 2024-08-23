@@ -243,6 +243,8 @@ const AppointmentItem = (props: any) => {
                       : "red"
                     : props?.items?.status === 2
                     ? GREEN_COLOR
+                    : props?.items?.status === 10
+                    ? PRIMARY_THEME_COLOR
                     : props?.items?.status == 3
                     ? bookingStatus === 4
                       ? "red"
@@ -261,6 +263,8 @@ const AppointmentItem = (props: any) => {
                 : strings.STSUpComing
               : props?.items?.status === 2
               ? "Revisit"
+              : props?.items?.status === 10
+              ? "Follow-Up"
               : props?.items?.status === 5
               ? "Reschedule"
               : props?.items?.status === 4
@@ -321,8 +325,11 @@ const AppointmentItem = (props: any) => {
                     }]}>{props?.items?.visit_status ? props?.items?.visit_status : strings.notfount}</Text>
                 </View>
             </View> */}
+      {/* props.items.status === 10 FOLLOW-UP */}
       <View style={styles.buttonContainer}>
-        {props.items.status === 1 || props.items.status === 2 ? (
+        {props.items.status === 1 ||
+        props.items.status === 2 ||
+        props.items.status === 10 ? (
           <Button
             width={80}
             height={30}
@@ -350,7 +357,7 @@ const AppointmentItem = (props: any) => {
         )}
       </View>
       {userData?.data?.role_title === "Closing TL" &&
-      props.items.status === 1 ? (
+     ( props.items.status === 1 || props.items.status === 10) ? (
         <View style={[styles.buttonContainer, { justifyContent: "center" }]}>
           {props.items.pickup === "Yes" && !checkinStaus ? (
             <Button
@@ -386,6 +393,7 @@ const AppointmentItem = (props: any) => {
                   ...props.allocatedCM,
                   appointment_id: props.items?._id,
                 });
+                props.setPropertyId(props.items?.property_id)
                 props.setAllocateModel(true);
               }}
               textTransform={"uppercase"}

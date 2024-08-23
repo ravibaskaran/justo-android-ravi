@@ -21,6 +21,7 @@ const FollowUpAddScreen = ({ navigation, route }: any) => {
     appointment_id: followUpId?.appointment_id
       ? followUpId?.appointment_id
       : "",
+    update_type: followUpId?.update_type ? followUpId?.update_type : "",
     followup_status: "",
     next_followup_date: "",
     remark: "",
@@ -41,7 +42,12 @@ const FollowUpAddScreen = ({ navigation, route }: any) => {
   }, [masterData]);
   useEffect(() => {
     if (AddfollowUp?.response?.status === 200) {
-      navigation.navigate("FollowUpScreen");
+      if (followUpId?.fromAppointmentPage) {
+        navigation.goBack();
+        navigation.goBack();
+      } else {
+        navigation.navigate("FollowUpScreen");
+      }
       dispatch(allfollowupRemove());
       ErrorMessage({
         msg: AddfollowUp?.response?.message,

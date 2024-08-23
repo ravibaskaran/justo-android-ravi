@@ -30,6 +30,7 @@ const AgentDetail = ({ navigation, route }: any) => {
   const handleBackPress = () => {
     navigation.goBack();
   };
+  console.log(allDetails)
   return (
     <AgentDetailView
       allDetails={allDetails}

@@ -15,6 +15,7 @@ import {
   YELLOW_COLOR,
   DATE_TIME_FORMAT,
   RED_COLOR,
+  PRIMARY_THEME_COLOR,
 } from "../../../../components/utilities/constant";
 import Button from "../../../../components/Button";
 import moment from "moment";
@@ -241,6 +242,8 @@ const AppointMentForSiteList = (props: any) => {
                     ? bookingStatus === 4 ? "red" : GREEN_COLOR
                     : props?.items?.status == 5 || props?.items?.status === 6
                     ? "red"
+                    : props?.items?.status === 10
+                    ? PRIMARY_THEME_COLOR
                     : props?.items?.status === 4
                     ? "red"
                     : BLACK_COLOR,
@@ -253,6 +256,8 @@ const AppointMentForSiteList = (props: any) => {
                 : "Upcoming"
               : props?.items?.status === 2
               ? "Revisit"
+              : props?.items?.status === 10
+              ? "Follow-Up"
               : props?.items?.status == 5
               ? "Reschedule"
               : props?.items?.status === 4
@@ -316,7 +321,7 @@ const AppointMentForSiteList = (props: any) => {
       </View>
       <View style={styles.buttonContainer}>
         <View style={{ flexDirection: "row", alignItems: "center", top: 8 }}>
-          {edit && props?.items?.status === 1 ? (
+          {edit && props?.items?.status === 1  || props?.items?.status === 10? (
             <Button
               width={80}
               height={30}

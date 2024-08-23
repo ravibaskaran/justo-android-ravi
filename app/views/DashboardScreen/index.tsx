@@ -35,7 +35,6 @@ const DashboardScreen = ({ navigation }: any) => {
   const [dashboardData, setDashboardData] = useState<any>({});
   const [listData, setListData] = useState<any>([]);
   const [isEnabled, setIsEnabled] = useState<any>();
-  const [todayAppointmentWithCp, setTodayAppointmentWithCp] = useState(0);
   const [appointmentList, setAppointmentList] = useState<any>([]);
 
   useFocusEffect(
@@ -59,10 +58,15 @@ const DashboardScreen = ({ navigation }: any) => {
   useFocusEffect(
     React.useCallback(() => {
       getDashboard();
-      if (getLoginType?.response?.data?.role_id === ROLE_IDS.sourcingmanager_id)
-        getAppointmentData();
-      if (getLoginType?.response?.data?.role_id === ROLE_IDS.closingmanager_id)
+      if (
+        getLoginType?.response?.data?.role_id === ROLE_IDS.closingmanager_id ||
+        getLoginType?.response?.data?.role_id === ROLE_IDS.closingtl_id ||
+        getLoginType?.response?.data?.role_id === ROLE_IDS.sitehead_id ||
+        getLoginType?.response?.data?.role_id === ROLE_IDS.clusterhead_id ||
+        getLoginType?.response?.data?.role_id === ROLE_IDS.businesshead_id
+      ) {
         getAllAppointment();
+      }
       return () => {};
     }, [navigation, isEnabled, getLoginType])
   );
@@ -72,24 +76,6 @@ const DashboardScreen = ({ navigation }: any) => {
       return () => {};
     }, [navigation])
   );
-
-  async function getAppointmentData() {
-    let params = {
-      appoiment: 2,
-      customer_name: "",
-      end_date: moment(new Date()).format("YYYY-MM-DD"),
-      start_date: moment(new Date()).format("YYYY-MM-DD"),
-      status: "",
-    };
-
-    const res = await apiCall(
-      "post",
-      apiEndPoints.GET_USER_APPOINTMENT_LIST,
-      params
-    );
-    if (res.data.status == 200)
-      setTodayAppointmentWithCp(res?.data?.data?.length);
-  }
 
   async function getAllAppointment() {
     let params = {
@@ -269,7 +255,6 @@ const DashboardScreen = ({ navigation }: any) => {
   const onPressAppointmentItem = (item: any) => {
     navigation.navigate("AppointmentDetailMain", item);
   };
-
   return (
     <DashboardView
       dashboardData={dashboardData}
@@ -287,7 +272,6 @@ const DashboardScreen = ({ navigation }: any) => {
       onpressSMList={onpressSMList}
       getDashboard={getDashboard}
       onpressAppointmentWithCP={onpressAppointmentWithCP}
-      todayAppointmentWithCp={todayAppointmentWithCp}
       appointmentList={Array.isArray(appointmentList) ? appointmentList : []}
       onPressAppointmentItem={onPressAppointmentItem}
     />

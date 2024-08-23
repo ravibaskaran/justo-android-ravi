@@ -121,7 +121,7 @@ const strings = new LocalizedStrings({
     todayApp: "Today",
     referrerName: "Referrer Name",
     referrerNumber: "Referrer Mobile No.",
-    alert:"Alert",
+    alert: "Alert",
 
     //validations
     reasonSelectVal: "Please select the Reason",
@@ -472,6 +472,8 @@ const strings = new LocalizedStrings({
     add: "Add",
     confirm: "Confirm",
     deactive: "Deactive",
+    activate: "Activate",
+    deactivate: "Deactivate",
     Agencydetail: "CP Details",
     userbankinfo: "User Bank Info",
     cpInformation: "CP Information",
@@ -491,8 +493,8 @@ const strings = new LocalizedStrings({
     createAgent: "Create Agent",
     editAgent: "Edit Agent",
     updatepassword: "Update Password",
-    deactivconfirmation: "Are You sure you want to Deactive this",
-    activeconfirmation: "Are you sure you want to Active this",
+    deactivconfirmation: "Are You sure you want to Deactivate this",
+    activeconfirmation: "Are you sure you want to Activate this",
 
     // All Leads
     visitor: "Visitor",
@@ -510,6 +512,7 @@ const strings = new LocalizedStrings({
     Statusupdate: "Status Update",
     noShow: "No Show",
     appointmentDone: "Appointment completed",
+    visitorCheckin: "Visitor Check in",
     cancelBooking: "Cancel Booking",
     ScheduleSitevisite: "Schedule Site Visit",
     createandschedule: "Create & schedule",

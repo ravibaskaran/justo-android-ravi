@@ -107,6 +107,7 @@ const EmployeeListing = ({ navigation, route }: any) => {
       setAgentList={setAgentList}
       onPressView={onPressView}
       onAddEmployeeButtonPress={onAddEmployeeButtonPress}
+      userData={userData}
     />
   );
 };

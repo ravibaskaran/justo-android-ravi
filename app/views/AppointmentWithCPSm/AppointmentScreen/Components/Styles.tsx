@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     marginBottom: normalizeSpacing(20),
   },
-  count: { alignSelf: "flex-end", marginRight: 2 },
+  count: {alignSelf: "flex-end", marginRight: 10,marginVertical:2,fontWeight:'700'},
 });
 
 export default styles;

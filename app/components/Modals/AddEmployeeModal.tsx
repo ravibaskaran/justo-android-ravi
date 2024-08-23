@@ -154,7 +154,7 @@ const AddEmployeeModal = (props: any) => {
                       ...props.employeeFormData,
                       employeeGender: 1,
                     });
-                    props.handleCheckEmailMobileforEmployee();
+                  //  props.handleCheckEmailMobileforEmployee();
                   }}
                   color={PRIMARY_THEME_COLOR}
                 />

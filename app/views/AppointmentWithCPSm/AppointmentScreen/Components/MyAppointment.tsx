@@ -34,15 +34,21 @@ const MyAppointment = (props: any) => {
   });
 
   const getConfirmButton = () => {
-    const appointmentdateTime = `${moment(props?.items?.appointment_date).format(DATE_FORMAT)}, ${moment(props?.items?.appointment_time?.toString(), 'hh:mm A').format('HH:mm')}` || ""
-    const currentDate = `${moment(new Date).format(DATE_FORMAT)}`
-    const getAheadTime = new Date(Date.now() + (3600 * 2000 * 25))
-    const getCorrectTime = `${currentDate}, ${moment(getAheadTime).format("HH:mm")}`
-    let response = false
+    const appointmentdateTime =
+      `${moment(props?.items?.appointment_date).format(DATE_FORMAT)}, ${moment(
+        props?.items?.appointment_time?.toString(),
+        "hh:mm A"
+      ).format("HH:mm")}` || "";
+    const currentDate = `${moment(new Date()).format(DATE_FORMAT)}`;
+    const getAheadTime = new Date(Date.now() + 3600 * 2000 * 25);
+    const getCorrectTime = `${currentDate}, ${moment(getAheadTime).format(
+      "HH:mm"
+    )}`;
+    let response = false;
     if (appointmentdateTime > getCorrectTime) {
-      response = true
+      response = true;
     }
-    return response
+    return response;
   };
 
   return (
@@ -170,7 +176,7 @@ const MyAppointment = (props: any) => {
                 />
               )}
 
-              {status && getConfirmButton() ? (
+              {/* {status && getConfirmButton() ? (
                 <Button
                   width={80}
                   height={30}
@@ -185,7 +191,24 @@ const MyAppointment = (props: any) => {
                     props.handleOptionPress(props.items._id, 2)
                   }
                 />
-              ) : null}
+              ) : null} */}
+
+              {status && (
+                <Button
+                  width={80}
+                  height={30}
+                  bgcolor={null}
+                  bordercolor={GREEN_COLOR}
+                  borderWidth={1}
+                  btnTxtcolor={GREEN_COLOR}
+                  buttonText={strings.done}
+                  btnTxtsize={14}
+                  border={10}
+                  handleBtnPress={() =>
+                    props.handleOptionPress(props.items._id, 3)
+                  }
+                />
+              )}
             </>
           ) : props.items.appointment_status === 2 ? (
             <>

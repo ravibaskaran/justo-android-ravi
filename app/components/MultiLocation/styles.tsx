@@ -97,6 +97,9 @@ const styles = StyleSheet.create({
         marginLeft: normalize(5),
         color: PRIMARY_THEME_COLOR_DARK,
         marginTop: normalize(15)
-    }
+    },
+    inputWrap: {
+        marginTop: normalizeSpacing(30),
+      }
 })
 export default styles

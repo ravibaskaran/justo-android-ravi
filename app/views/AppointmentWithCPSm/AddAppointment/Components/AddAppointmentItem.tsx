@@ -78,14 +78,7 @@ const AddAppointmentItem = (props: any) => {
               });
             }}
             value={props.addAppointmentForm?.appointment_time}
-            minimumDate={
-              moment(props.addAppointmentForm?.appointment_date).format(
-                DATE_FORMAT
-              ) === moment(new Date()).format(DATE_FORMAT)
-                ? new Date(moment(getAheadTime).format())
-                : null
-            }
-            AppintmentWithCpPage={true}
+            appointmentWithCpPage={true}
           />
         </View>
         <View style={styles.inputWrap}>
@@ -145,7 +138,7 @@ const AddAppointmentItem = (props: any) => {
                 ? props?.addAppointmentForm?.appointment_with
                 : strings.appointmentWith
             }
-            data={props.listData}
+            data={props.listData.filter((item: any) => item?.active_status == true)}
             inputWidth={"100%"}
             paddingLeft={16}
             maxHeight={300}
