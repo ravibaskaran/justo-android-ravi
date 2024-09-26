@@ -137,7 +137,7 @@ const FilterModal = (props: any) => {
             </View>
             <View style={[styles.inputWrap, { top: normalizeSpacing(10) }]}>
               <InputField
-                disableSpecialCharacters={true}
+                // disableSpecialCharacters={true}
                 headingText={strings.searchBy + " " + strings.name}
                 placeholderText={strings.searchBy + " " + strings.name}
                 onChangeText={(data: any) => {

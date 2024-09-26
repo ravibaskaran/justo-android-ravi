@@ -60,7 +60,7 @@ export const GetCTReport = (item: any) => async (dispatch: any) => {
 export const GetSMReport = (item: any) => async (dispatch: any) => {
   dispatch({ type: START_LOADING });
   try {
-    const res = await apiCall("post", apiEndPoints.GET_ST_REPORT, item);
+    const res = await apiCall("post", apiEndPoints.GET_SM_REPORT, item);
     if (res?.data?.status == 200) {
       dispatch({
         type: GET_REPORT_DETAILS,

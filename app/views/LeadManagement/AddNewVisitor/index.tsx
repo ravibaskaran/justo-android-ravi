@@ -178,12 +178,18 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
         limit: "",
       })
     );
-    dispatch(
-      getAssignCPList({
-        user_id: userData?.data?.user_id,
-        status: "",
-      })
-    );
+
+    if (
+      userData?.data?.role_id != ROLE_IDS.closingtl_id &&
+      userData?.data?.role_id != ROLE_IDS.closingmanager_id
+    ) {
+      dispatch(
+        getAssignCPList({
+          user_id: userData?.data?.user_id,
+          status: "",
+        })
+      );
+    }
   }, [navigation]);
 
   useEffect(() => {

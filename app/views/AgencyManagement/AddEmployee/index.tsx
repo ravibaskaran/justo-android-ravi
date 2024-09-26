@@ -282,6 +282,25 @@ const AddEmployee = ({ navigation, route }: any) => {
       //   msg: emailAndMobileData?.response?.message,
       //   backgroundColor: GREEN_COLOR
       // })
+    } else {
+      if (emailAndMobileData?.response?.status === 201) {
+        switch (emailAndMobileData?.check_type) {
+          case "mobile":
+            ErrorMessage({
+              msg: strings.mobileAlreadyValidReqVal,
+              backgroundColor: RED_COLOR,
+            });
+            break;
+          case "email":
+            ErrorMessage({
+              msg: strings.emailAlreadyReqVal,
+              backgroundColor: RED_COLOR,
+            });
+            break;
+          default:
+            break;
+        }
+      }
     }
   }, [emailAndMobileData]);
   const handleCheckEmailMobile = (type: any) => {

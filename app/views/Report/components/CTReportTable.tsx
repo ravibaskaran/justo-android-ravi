@@ -5,6 +5,7 @@ import {
 } from "app/components/scaleFontSize";
 import {
   BLACK_COLOR,
+  FONT_FAMILY_SEMIBOLD,
   GREEN_COLOR,
   Isios,
   PRIMARY_THEME_COLOR,
@@ -34,11 +35,10 @@ import strings from "app/components/utilities/Localization";
 import ErrorMessage from "app/components/ErrorMessage";
 
 const CTReportTable = (props: any) => {
-  const { data, fileName } = props;
+  const { data, fileName, userData } = props;
   const { width, height } = Dimensions.get("window"),
     vw = width / 100,
     vh = height / 100;
-  console.log("🚀 ~ file: CTReportTable.tsx:37 ~ CTReportTable ~ data:", data);
   const [refreshing, setRefreshing] = React.useState(false);
   const onRefresh = () => {
     setRefreshing(true);
@@ -65,6 +65,9 @@ const CTReportTable = (props: any) => {
     "Conversion %",
     // "No. of (follow-ups scheduled)",
   ];
+
+  const headerData = ["Walk-ins", "Total Leads", "Total Booking"];
+
   const onPressDownload = async () => {
     let array = data.map((item: any) => {
       return {
@@ -168,7 +171,7 @@ const CTReportTable = (props: any) => {
           height: height - normalize(55),
           margin: normalize(10),
         }}
-        horizontal
+        // horizontal
         contentContainerStyle={{
           // margin: normalize(10),
           paddingBottom: normalize(15),
@@ -178,7 +181,116 @@ const CTReportTable = (props: any) => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        <View
+       <View style={[styles.container, { flexDirection: "column" }]}>
+          <View style={[styles.imageContainer, { width: "100%" }]}>
+            <Image
+              style={{ height: 80, width: 80, borderRadius: 100 }}
+              source={require("./../../../assets/images/userimage.png")}
+            />
+            <Text style={[styles.nameText, { paddingVertical: 10 }]}>
+              {userData?.data?.user_name}
+            </Text>
+          </View>
+
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "center",
+            }}
+          >
+            <View style={styles.childContainer}>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                {data[0]?.walkin}
+              </Text>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                Walk-ins
+              </Text>
+            </View>
+
+            <View style={styles.childContainer}>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                {data[0]?.total_leades}
+              </Text>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                Total Leads
+              </Text>
+            </View>
+
+            <View style={styles.childContainer}>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                {data[0]?.total_booking}
+              </Text>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                Total Booking
+              </Text>
+            </View>
+          </View>
+        </View>
+
+        {data[0]?.sm_list?.length > 0 ? (
+          <>
+            <Text
+              style={{
+                ...styles.boxText,
+                color: PRIMARY_THEME_COLOR,
+                paddingVertical: 10,
+              }}
+            >
+              Closing Managers
+            </Text>
+
+            {data[0]?.sm_list?.map((item: any, index: any) => {
+              return (
+                <View key={index} style={styles.container}>
+                  <View style={styles.imageContainer}>
+                    <Image
+                      style={{ height: 80, width: 80, borderRadius: 100 }}
+                      source={require("./../../../assets/images/userimage.png")}
+                    />
+                  </View>
+
+                  <View style={{ justifyContent: "center", flex: 1 }}>
+                    <Text style={styles.nameText}>{item?.user_name}</Text>
+                    <View style={{ flexDirection: "row" }}>
+                      <Text style={[styles.cardText, { minWidth: 50 }]}>
+                        {item?.walkin}
+                      </Text>
+                      <Text style={styles.cardText}>Walk-ins</Text>
+                    </View>
+                    <View style={{ flexDirection: "row" }}>
+                      <Text style={[styles.cardText, { minWidth: 50 }]}>
+                        {item?.total_leades}
+                      </Text>
+                      <Text style={styles.cardText}>Total Leads</Text>
+                    </View>
+                    <View style={{ flexDirection: "row" }}>
+                      <Text style={[styles.cardText, { minWidth: 50 }]}>
+                        {item?.total_booking}
+                      </Text>
+                      <Text style={styles.cardText}>Total Booking</Text>
+                    </View>
+                  </View>
+                </View>
+              );
+            })}
+          </>
+        ) : null}
+
+        {/* <View
           style={{
             flexDirection: "row",
           }}
@@ -244,7 +356,7 @@ const CTReportTable = (props: any) => {
                         }}
                       >
                         {item?.VisitorAttended}
-                        {/* {item?.TotalAppointments} */}
+                      
                       </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -322,16 +434,7 @@ const CTReportTable = (props: any) => {
                         {item.TotalNotInterested}
                       </Text>
                     </TouchableOpacity>
-                    {/* <TouchableOpacity style={styles.cTDataItems}>
-                      <Text
-                        style={{
-                          ...styles.boxText,
-                          color: BLACK_COLOR,
-                        }}
-                      >
-                        {item.TotalCancelation}
-                      </Text>
-                    </TouchableOpacity> */}
+                  
                     <TouchableOpacity
                       onPress={() => props.handleCTANavigation("BookingCTA")}
                       style={styles.cTDataItems}
@@ -345,36 +448,7 @@ const CTReportTable = (props: any) => {
                         {item.Booking}
                       </Text>
                     </TouchableOpacity>
-                    {/* <TouchableOpacity style={styles.cTDataItems}>
-                      <Text
-                        style={{
-                          ...styles.boxText,
-                          color: BLACK_COLOR,
-                        }}
-                      >
-                        {item.ReadytoBook}
-                      </Text>
-                    </TouchableOpacity> */}
-                    {/* <TouchableOpacity style={styles.cTDataItems}>
-                      <Text
-                        style={{
-                          ...styles.boxText,
-                          color: BLACK_COLOR,
-                        }}
-                      >
-                        {item.Registration}
-                      </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.cTDataItems}>
-                      <Text
-                        style={{
-                          ...styles.boxText,
-                          color: BLACK_COLOR,
-                        }}
-                      >
-                        {item.CancelBooking}
-                      </Text>
-                    </TouchableOpacity> */}
+                   
                     <TouchableOpacity style={styles.cTDataItems}>
                       <Text
                         style={{
@@ -385,22 +459,13 @@ const CTReportTable = (props: any) => {
                         {item.Conversion}
                       </Text>
                     </TouchableOpacity>
-                    {/* <TouchableOpacity style={styles.cTDataItems}>
-                      <Text
-                        style={{
-                          ...styles.boxText,
-                          color: BLACK_COLOR,
-                        }}
-                      >
-                        {item.followschedule}
-                      </Text>
-                    </TouchableOpacity> */}
+                 
                   </View>
                 );
               })}
             </View>
           </ScrollView>
-        </View>
+        </View> */}
       </ScrollView>
     </SafeAreaView>
   );

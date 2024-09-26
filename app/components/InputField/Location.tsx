@@ -66,6 +66,7 @@ const LocationInput = (props: any) => {
                     // types: '(cities)', //<=== use this to only show country cities
                     components: 'country:in', // <=== use this to restrict to country
                 }}
+                // textInputHide={true}
             />
         </View>
     );

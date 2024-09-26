@@ -20,6 +20,9 @@ import moment from "moment";
 import { leadTypes } from "app/components/utilities/DemoData";
 
 const FollowUpAddView = (props: any) => {
+  const today = new Date();
+  const nextDay = new Date(today);
+  nextDay.setDate(today.getDate() + 1)
   return (
     <View style={styles.mainContainer}>
       <Header
@@ -105,7 +108,8 @@ const FollowUpAddView = (props: any) => {
                   headingText={"Date"}
                   mode={"date"}
                   leftIcon={images.event}
-                  minimumDate={new Date()}
+                  // minimumDate={new Date()}
+                  minimumDate={nextDay}
                   placeholderText={"Date"} //can edit
                   editable={false}
                   // onChangeText={() => { }}

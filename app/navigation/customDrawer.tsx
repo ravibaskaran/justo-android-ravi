@@ -55,10 +55,6 @@ const customDrawer = ({ navigation }: any) => {
     const userData: any = await AsyncStorage.getItem("loginData");
 
     if (JSON.parse(userData)?.data?._id) {
-      console.log(
-        "🚀 ~ file: customDrawer.tsx:65 ~ getDetail ~ JSON.parse(userData)?.data:",
-        JSON.parse(userData)?.data
-      );
       setUserData(JSON.parse(userData)?.data);
       /*  dispatch(
         getUserDetails({
@@ -144,7 +140,15 @@ const customDrawer = ({ navigation }: any) => {
           >
             <Image source={props.iconSource} style={styles.drawerIconStyle} />
             <View>
-              <Text style={styles.drawerText}>{props.tabTitle}</Text>
+              <Text style={styles.drawerText}>
+                {userData?.role_id === ROLE_IDS.clusterhead_id
+                  ? props.tabTitle == "Sourcing Manager"
+                    ? strings.SourcingTLHeader
+                    : props.tabTitle == "Closing Manager"
+                    ? strings.closingTL
+                    : props.tabTitle
+                  : props.tabTitle}
+              </Text>
               {props.tabTitle === "Chat Management" &&
               notification?.response?.chat_message > 0 ? (
                 <Badge
@@ -456,7 +460,7 @@ const customDrawer = ({ navigation }: any) => {
       <View style={styles.versionView}>
         <View style={[styles.drawerTouch, { justifyContent: "center" }]}>
           <Text style={styles.drawerText}>
-            {strings.versionText}-{DeviceInfo.getVersion()}
+            {strings.versionText}ST-{DeviceInfo.getVersion()}
           </Text>
         </View>
       </View>

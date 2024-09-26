@@ -41,7 +41,7 @@ const PendingAgencyListing = ({ navigation }: any) => {
     const userData: any = await AsyncStorage.getItem("loginData");
     if (JSON.parse(userData)?.data?.user_id) {
       dispatch(getAssignCPList({
-        // user_id: JSON.parse(userData)?.data?.user_id,
+        user_id: JSON.parse(userData)?.data?.user_id,
         status: 1
       }))
     }

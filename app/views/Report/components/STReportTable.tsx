@@ -5,6 +5,7 @@ import {
 } from "app/components/scaleFontSize";
 import {
   BLACK_COLOR,
+  FONT_FAMILY_SEMIBOLD,
   GREEN_COLOR,
   Isios,
   PRIMARY_THEME_COLOR,
@@ -34,7 +35,7 @@ import XLSX from "xlsx";
 import RNFS from "react-native-fs";
 
 const STReportTable = (props: any) => {
-  const { data, handleCpDetailPress, fileName } = props;
+  const { data, handleCpDetailPress, fileName, userData } = props;
   const { width, height } = Dimensions.get("window"),
     vw = width / 100,
     vh = height / 100;
@@ -160,6 +161,121 @@ const STReportTable = (props: any) => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
+        <View style={[styles.container, { flexDirection: "column" }]}>
+          <View style={[styles.imageContainer, { width: "100%" }]}>
+            <Image
+              style={{ height: 80, width: 80, borderRadius: 100 }}
+              source={require("./../../../assets/images/userimage.png")}
+            />
+            <Text style={[styles.nameText, { paddingVertical: 10 }]}>
+              {userData?.data?.user_name}
+            </Text>
+          </View>
+
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "center",
+            }}
+          >
+            <View style={styles.childContainer}>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                {data[0]?.walkin}
+              </Text>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                Walk-ins
+              </Text>
+            </View>
+
+            <View style={styles.childContainer}>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                {data[0]?.total_leades}
+              </Text>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                Total Leads
+              </Text>
+            </View>
+
+            <View style={styles.childContainer}>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                {data[0]?.total_booking}
+              </Text>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                Total Booking
+              </Text>
+            </View>
+          </View>
+        </View>
+
+        {data[0]?.sm_list?.length > 0 ? (
+          <>
+            <Text
+              style={{
+                ...styles.boxText,
+                color: PRIMARY_THEME_COLOR,
+                paddingVertical: 10,
+              }}
+            >
+              Sourcing Managers
+            </Text>
+
+            {data[0]?.sm_list?.map((item: any, index: any) => {
+              return (
+                <View key={index} style={styles.container}>
+                  <View style={styles.imageContainer}>
+                    <Image
+                      style={{ height: 80, width: 80, borderRadius: 100 }}
+                       source={require("./../../../assets/images/userimage.png")}
+                    />
+                  </View>
+
+                  <View style={{ justifyContent: "center", flex: 1 }}>
+                    <Text style={styles.nameText}>{item?.user_name}</Text>
+                    <View style={{ flexDirection: "row" }}>
+                      <Text style={[styles.cardText, { minWidth: 50 }]}>
+                        {item?.walkin}
+                      </Text>
+                      <Text style={styles.cardText}>Walk-ins</Text>
+                    </View>
+                    <View style={{ flexDirection: "row" }}>
+                      <Text style={[styles.cardText, { minWidth: 50 }]}>
+                        {item?.total_leades}
+                      </Text>
+                      <Text style={styles.cardText}>Total Leads</Text>
+                    </View>
+                    <View style={{ flexDirection: "row" }}>
+                      <Text style={[styles.cardText, { minWidth: 50 }]}>
+                        {item?.total_booking}
+                      </Text>
+                      <Text style={styles.cardText}>Total Booking</Text>
+                    </View>
+                    <View style={{ flexDirection: "row" }}>
+                      <Text style={[styles.cardText, { minWidth: 50 }]}>
+                        {item?.appointmentwithCp}
+                      </Text>
+                      <Text style={styles.cardText}>CP Appointments</Text>
+                    </View>
+                  </View>
+                </View>
+              );
+            })}
+          </>
+        ) : null}
+
         {/* <View
           style={{
             alignItems: "flex-end",
@@ -182,7 +298,7 @@ const STReportTable = (props: any) => {
             />
           </TouchableOpacity>
         </View> */}
-        <ScrollView horizontal>
+        {/* <ScrollView horizontal>
           <View>
             {data.map((item: any, index: any) => {
               return (
@@ -273,7 +389,12 @@ const STReportTable = (props: any) => {
                                       {item?.username}
                                     </Text>
                                   </View>
-                                  <TouchableOpacity onPress={() => handleCpDetailPress(item?.CPInfo, "Demo")}  style={styles.cTDataItems}>
+                                  <TouchableOpacity
+                                    onPress={() =>
+                                      handleCpDetailPress(item?.CPInfo, "Demo")
+                                    }
+                                    style={styles.cTDataItems}
+                                  >
                                     <Text
                                       style={{
                                         ...styles.boxText,
@@ -283,7 +404,12 @@ const STReportTable = (props: any) => {
                                       {item?.cpcount}
                                     </Text>
                                   </TouchableOpacity>
-                                  <TouchableOpacity onPress={() => handleCpDetailPress(item?.CPInfo, "Demo")} style={styles.cTDataItems}>
+                                  <TouchableOpacity
+                                    onPress={() =>
+                                      handleCpDetailPress(item?.CPInfo, "Demo")
+                                    }
+                                    style={styles.cTDataItems}
+                                  >
                                     <Text
                                       style={{
                                         ...styles.boxText,
@@ -295,7 +421,12 @@ const STReportTable = (props: any) => {
                                         : 0}
                                     </Text>
                                   </TouchableOpacity>
-                                  <TouchableOpacity onPress={() => handleCpDetailPress(item?.CPInfo, "Demo")} style={styles.cTDataItems}>
+                                  <TouchableOpacity
+                                    onPress={() =>
+                                      handleCpDetailPress(item?.CPInfo, "Demo")
+                                    }
+                                    style={styles.cTDataItems}
+                                  >
                                     <Text
                                       style={{
                                         ...styles.boxText,
@@ -305,18 +436,27 @@ const STReportTable = (props: any) => {
                                       {item?.activeCP}
                                     </Text>
                                   </TouchableOpacity>
-                                  <TouchableOpacity onPress={() => handleCpDetailPress(item?.CPInfo, "Demo")} style={styles.cTDataItems}>
+                                  <TouchableOpacity
+                                    onPress={() =>
+                                      handleCpDetailPress(item?.CPInfo, "Demo")
+                                    }
+                                    style={styles.cTDataItems}
+                                  >
                                     <Text
                                       style={{
                                         ...styles.boxText,
                                         color: BLACK_COLOR,
                                       }}
                                     >
-                                      {/* {item?.BookingCountTotal} */}
                                       {item?.TransactionalCPtotal}
                                     </Text>
                                   </TouchableOpacity>
-                                  <TouchableOpacity onPress={() => handleCpDetailPress(item?.CPInfo, "Demo")} style={styles.cTDataItems}>
+                                  <TouchableOpacity
+                                    onPress={() =>
+                                      handleCpDetailPress(item?.CPInfo, "Demo")
+                                    }
+                                    style={styles.cTDataItems}
+                                  >
                                     <Text
                                       style={{
                                         ...styles.boxText,
@@ -327,28 +467,31 @@ const STReportTable = (props: any) => {
                                     </Text>
                                   </TouchableOpacity>
 
-                                  {/* <TouchableOpacity style={styles.cTDataItems}>
-                                  <Text
-                                    style={{
-                                      ...styles.boxText,
-                                      color: BLACK_COLOR,
-                                    }}
+                                  <TouchableOpacity
+                                    onPress={() =>
+                                      props.handleCTANavigation(
+                                        "AppointmentCTA"
+                                      )
+                                    }
+                                    style={styles.cTDataItems}
                                   >
-                                    {item?.leadcount}
-                                  </Text>
-                                </TouchableOpacity> */}
-                                  <TouchableOpacity onPress={() => props.handleCTANavigation("AppointmentCTA")} style={styles.cTDataItems}>
                                     <Text
                                       style={{
                                         ...styles.boxText,
                                         color: BLACK_COLOR,
                                       }}
                                     >
-                                      {/* {item.SitevisitCountTotal} */}
                                       {item.Appdonecounttotal}
                                     </Text>
                                   </TouchableOpacity>
-                                  <TouchableOpacity onPress={() => props.handleCTANavigation("AppointmentCTA")} style={styles.cTDataItems}>
+                                  <TouchableOpacity
+                                    onPress={() =>
+                                      props.handleCTANavigation(
+                                        "AppointmentCTA"
+                                      )
+                                    }
+                                    style={styles.cTDataItems}
+                                  >
                                     <Text
                                       style={{
                                         ...styles.boxText,
@@ -358,7 +501,12 @@ const STReportTable = (props: any) => {
                                       {item.NoshowAppintment}
                                     </Text>
                                   </TouchableOpacity>
-                                  <TouchableOpacity  onPress={() => props.handleCTANavigation("BookingCTA")}  style={styles.cTDataItems}>
+                                  <TouchableOpacity
+                                    onPress={() =>
+                                      props.handleCTANavigation("BookingCTA")
+                                    }
+                                    style={styles.cTDataItems}
+                                  >
                                     <Text
                                       style={{
                                         ...styles.boxText,
@@ -368,57 +516,7 @@ const STReportTable = (props: any) => {
                                       {item.confirmBooking}
                                     </Text>
                                   </TouchableOpacity>
-                                  {/* <View style={styles.cTDataItems}>
-                                  <Text
-                                    style={{
-                                      ...styles.boxText,
-                                      color: BLACK_COLOR,
-                                    }}
-                                  >
-                                    {item.CancelAppintment}
-                                  </Text>
-                                </View> */}
-                                  {/* <View style={styles.cTDataItems}>
-                                  <Text
-                                    style={{
-                                      ...styles.boxText,
-                                      color: BLACK_COLOR,
-                                    }}
-                                  >
-                                    {item.RevisitAppintment}
-                                  </Text>
-                                </View> */}
-                                  {/* <View style={styles.cTDataItems}>
-                                  <Text
-                                    style={{
-                                      ...styles.boxText,
-                                      color: BLACK_COLOR,
-                                    }}
-                                  >
-                                    {item.RescheduleApp}
-                                  </Text>
-                                </View> */}
-                                  {/* <View style={styles.cTDataItems}>
-                                  <Text
-                                    style={{
-                                      ...styles.boxText,
-                                      color: BLACK_COLOR,
-                                    }}
-                                  >
-                                    {item.CustomerlostAppintment}
-                                  </Text>
-                                </View> */}
-
-                                  {/* <View style={styles.cTDataItems}>
-                                  <Text
-                                    style={{
-                                      ...styles.boxText,
-                                      color: BLACK_COLOR,
-                                    }}
-                                  >
-                                    {item?.CancelBooking}
-                                  </Text>
-                                </View> */}
+                                
                                   <TouchableOpacity
                                     onPress={() =>
                                       handleCpDetailPress(
@@ -449,7 +547,7 @@ const STReportTable = (props: any) => {
               );
             })}
           </View>
-        </ScrollView>
+        </ScrollView> */}
       </ScrollView>
     </SafeAreaView>
   );

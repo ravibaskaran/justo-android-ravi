@@ -230,23 +230,21 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
             ifsc_code: response?.data[0]?.cp_bank_detail?.ifsc_code ?? "",
             cancel_cheaque:
               response?.data[0]?.cp_bank_detail?.cancel_cheaque ?? "",
-            gst: response?.data[0]?.agencies?.gst ?? "",
-            agency_name: response?.data[0]?.agencies?.agency_name ?? "",
-            rera_registration:
-              response?.data[0]?.agencies?.rera_registration ?? "",
+            gst: response?.data[0]?.gst ?? "",
+            agency_name: response?.data[0]?.agency_name ?? "",
+            rera_registration: response?.data[0]?.rera_registration ?? "",
             company_bank_name:
-              response?.data[0]?.agencies?.agency_bank_detail?.bank_name ?? "",
+              response?.data[0]?.agency_bank_detail?.bank_name ?? "",
             company_branch_name:
-              response?.data[0]?.agencies?.agency_bank_detail?.branch_name ??
-              "",
+              response?.data[0]?.agency_bank_detail?.branch_name ?? "",
             company_account_no:
-              response?.data[0]?.agencies?.agency_bank_detail?.account_no ?? "",
+              response?.data[0]?.agency_bank_detail?.account_no ?? "",
             company_ifsc_code:
-              response?.data[0]?.agencies?.agency_bank_detail?.ifsc_code ?? "",
+              response?.data[0]?.agency_bank_detail?.ifsc_code ?? "",
             rera_certificate: response?.data[0]?.rera_certificate ?? "",
             pancard: response?.data[0]?.pancard ?? "",
             declaration_letter_of_company:
-              response?.data[0]?.agencies?.declaration_letter_of_company ?? "",
+              response?.data[0]?.declaration_letter_of_company ?? "",
             location: response?.data[0]?.location ?? "",
             // state_code: response?.data[0]?.state_code ?? "",
             // country_code: response?.data[0]?.country_code ?? "",
@@ -399,16 +397,18 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
         if (agencyData?.cp_type === 1) {
           if (
             agencyData.owner_name == undefined ||
-            agencyData.owner_name == ""
+            agencyData.owner_name?.trim() == ""
           ) {
             isError = false;
             errorMessage = strings.agentNameReqVal;
-          } else if (
-            Regexs.oneSpaceRegex.test(agencyData.owner_name?.trim()) === false
-          ) {
-            isError = false;
-            errorMessage = strings.NameCorrectlyVal;
-          } else if (
+          }
+          // else if (
+          //   Regexs.oneSpaceRegex.test(agencyData.owner_name?.trim()) === false
+          // ) {
+          //   isError = false;
+          //   errorMessage = strings.NameCorrectlyVal;
+          // }
+          else if (
             agencyData.primary_mobile == undefined ||
             agencyData.primary_mobile == ""
           ) {
@@ -503,16 +503,18 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
         } else if (agencyData?.cp_type === 2) {
           if (
             agencyData.owner_name == undefined ||
-            agencyData.owner_name == ""
+            agencyData.owner_name?.trim() == ""
           ) {
             isError = false;
             errorMessage = strings.agentNameReqVal;
-          } else if (
-            Regexs.oneSpaceRegex.test(agencyData.owner_name?.trim()) === false
-          ) {
-            isError = false;
-            errorMessage = strings.NameCorrectlyVal;
-          } else if (
+          }
+          //  else if (
+          //   Regexs.oneSpaceRegex.test(agencyData.owner_name?.trim()) === false
+          // ) {
+          //   isError = false;
+          //   errorMessage = strings.NameCorrectlyVal;
+          // }
+           else if (
             agencyData.primary_mobile == undefined ||
             agencyData.primary_mobile == ""
           ) {
@@ -950,10 +952,20 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
                   ...emailMobvalidation,
                   email: "wrongEmployeeEmail",
                 });
+                let errorMessage = strings.emailAlreadyReqVal;
+                ErrorMessage({
+                  msg: errorMessage,
+                  backgroundColor: RED_COLOR,
+                });
               } else {
                 setEmailMobValidation({
                   ...emailMobvalidation,
                   email: "wrongEmail",
+                });
+                let errorMessage = strings.emailAlreadyReqVal;
+                ErrorMessage({
+                  msg: errorMessage,
+                  backgroundColor: RED_COLOR,
                 });
               }
               break;

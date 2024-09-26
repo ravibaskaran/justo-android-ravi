@@ -5,6 +5,7 @@ import {
 } from "app/components/scaleFontSize";
 import {
   BLACK_COLOR,
+  FONT_FAMILY_SEMIBOLD,
   GREEN_COLOR,
   Isios,
   PRIMARY_THEME_COLOR,
@@ -34,7 +35,7 @@ import XLSX from "xlsx";
 import RNFS from "react-native-fs";
 
 const SMReportTable = (props: any) => {
-  const { data, handleCpDetailPress, fileName } = props;
+  const { data, handleCpDetailPress, fileName, userData } = props;
   const headerData = [
     "CP Mapped",
     "New CP Registered",
@@ -136,6 +137,13 @@ const SMReportTable = (props: any) => {
     }
   };
 
+  const headderData = [
+    "Walk-ins",
+    "Total Leads",
+    "Total Booking",
+    "Appointment With Cp",
+  ];
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView
@@ -172,7 +180,79 @@ const SMReportTable = (props: any) => {
             />
           </TouchableOpacity>
         </View> */}
-        <View>
+        <View style={[styles.container, { flexDirection: "column" }]}>
+          <View style={[styles.imageContainer, { width: "100%" }]}>
+            <Image
+              style={{ height: 80, width: 80, borderRadius: 100 }}
+              source={require("./../../../assets/images/userimage.png")}
+            />
+            <Text style={[styles.nameText, { paddingVertical: 10 }]}>
+              {userData?.data?.user_name}
+            </Text>
+          </View>
+
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "center",
+            }}
+          >
+            <View style={styles.childContainer}>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                {data[0]?.walkin}
+              </Text>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                Walk-ins
+              </Text>
+            </View>
+
+            <View style={styles.childContainer}>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                {data[0]?.total_leades}
+              </Text>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                Total Leads
+              </Text>
+            </View>
+
+            <View style={styles.childContainer}>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                {data[0]?.total_booking}
+              </Text>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                Total Booking
+              </Text>
+            </View>
+            <View style={styles.childContainer}>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                {data[0]?.appointmentwithCp}
+              </Text>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                CP Appointments
+              </Text>
+            </View>
+          </View>
+        </View>
+
+        {/* <View>
           {data?.map((item: any, index: any) => {
             return (
               <>
@@ -242,7 +322,12 @@ const SMReportTable = (props: any) => {
                             width: "30%",
                           }}
                         >
-                          <TouchableOpacity onPress={() => handleCpDetailPress(item?.CPInfo, "Demo")} style={styles.dataItems}>
+                          <TouchableOpacity
+                            onPress={() =>
+                              handleCpDetailPress(item?.CPInfo, "Demo")
+                            }
+                            style={styles.dataItems}
+                          >
                             <Text
                               style={{
                                 ...styles.boxText,
@@ -252,7 +337,12 @@ const SMReportTable = (props: any) => {
                               {item?.cpcount}
                             </Text>
                           </TouchableOpacity>
-                          <TouchableOpacity onPress={() => handleCpDetailPress(item?.CPInfo, "Demo")} style={styles.dataItems}>
+                          <TouchableOpacity
+                            onPress={() =>
+                              handleCpDetailPress(item?.CPInfo, "Demo")
+                            }
+                            style={styles.dataItems}
+                          >
                             <Text
                               style={{
                                 ...styles.boxText,
@@ -264,7 +354,12 @@ const SMReportTable = (props: any) => {
                                 : 0}
                             </Text>
                           </TouchableOpacity>
-                          <TouchableOpacity onPress={() => handleCpDetailPress(item?.CPInfo, "Demo")} style={styles.dataItems}>
+                          <TouchableOpacity
+                            onPress={() =>
+                              handleCpDetailPress(item?.CPInfo, "Demo")
+                            }
+                            style={styles.dataItems}
+                          >
                             <Text
                               style={{
                                 ...styles.boxText,
@@ -274,18 +369,27 @@ const SMReportTable = (props: any) => {
                               {item?.activeCP}
                             </Text>
                           </TouchableOpacity>
-                          <TouchableOpacity onPress={() => handleCpDetailPress(item?.CPInfo, "Demo")} style={styles.dataItems}>
+                          <TouchableOpacity
+                            onPress={() =>
+                              handleCpDetailPress(item?.CPInfo, "Demo")
+                            }
+                            style={styles.dataItems}
+                          >
                             <Text
                               style={{
                                 ...styles.boxText,
                                 color: BLACK_COLOR,
                               }}
                             >
-                              {/* {item?.BookingCountTotal} */}
                               {item?.TransactionalCPtotal}
                             </Text>
                           </TouchableOpacity>
-                          <TouchableOpacity onPress={() => handleCpDetailPress(item?.CPInfo, "Demo")} style={styles.dataItems}>
+                          <TouchableOpacity
+                            onPress={() =>
+                              handleCpDetailPress(item?.CPInfo, "Demo")
+                            }
+                            style={styles.dataItems}
+                          >
                             <Text
                               style={{
                                 ...styles.boxText,
@@ -295,18 +399,27 @@ const SMReportTable = (props: any) => {
                               {item?.inactiveCP}
                             </Text>
                           </TouchableOpacity>
-                          <TouchableOpacity onPress={() => props.handleCTANavigation("AppointmentCTA")} style={styles.dataItems}>
+                          <TouchableOpacity
+                            onPress={() =>
+                              props.handleCTANavigation("AppointmentCTA")
+                            }
+                            style={styles.dataItems}
+                          >
                             <Text
                               style={{
                                 ...styles.boxText,
                                 color: BLACK_COLOR,
                               }}
                             >
-                              {/* {item?.SitevisitCountTotal} */}
                               {item?.Appdonecounttotal}
                             </Text>
                           </TouchableOpacity>
-                          <TouchableOpacity onPress={() => props.handleCTANavigation("AppointmentCTA")} style={styles.dataItems}>
+                          <TouchableOpacity
+                            onPress={() =>
+                              props.handleCTANavigation("AppointmentCTA")
+                            }
+                            style={styles.dataItems}
+                          >
                             <Text
                               style={{
                                 ...styles.boxText,
@@ -316,7 +429,12 @@ const SMReportTable = (props: any) => {
                               {item?.NoshowAppintment}
                             </Text>
                           </TouchableOpacity>
-                          <TouchableOpacity onPress={() => props.handleCTANavigation("BookingCTA")} style={styles.dataItems}>
+                          <TouchableOpacity
+                            onPress={() =>
+                              props.handleCTANavigation("BookingCTA")
+                            }
+                            style={styles.dataItems}
+                          >
                             <Text
                               style={{
                                 ...styles.boxText,
@@ -345,22 +463,12 @@ const SMReportTable = (props: any) => {
                       );
                     })}
                   </View>
-                  {/* <View
-                    style={{
-                      ...styles.ThemeColorBox,
-                      width: "100%",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Text style={{ ...styles.boxText, color: WHITE_COLOR }}>
-                      CP Details
-                    </Text>
-                  </View> */}
+                
                 </View>
               </>
             );
           })}
-        </View>
+        </View> */}
       </ScrollView>
     </SafeAreaView>
   );

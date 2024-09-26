@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllProperty, statusUpdate } from '../../../Redux/Actions/propertyActions';
 import PropertyView from './components/PropertyView';
-import usePermission from 'app/components/utilities/UserPermissions';
 
 const PropertyScreen = ({ navigation }: any) => {
   const dispatch: any = useDispatch()

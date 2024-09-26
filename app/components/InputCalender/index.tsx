@@ -130,10 +130,10 @@ const InputCalender = (props: any) => {
   };
 
   const OpenCalender = () => {
-    setOpen(true);
+    if (!props.disabled) setOpen(true);
   };
   return (
-    <Pressable onPress={() => setOpen(true)}>
+    <Pressable onPress={() => OpenCalender()}>
       <View style={styles.inputHeadinView}>
         <Text style={styles.inputHeadingText}>{props.headingText}</Text>
         {props.require ? <RequiredStart /> : null}
@@ -189,7 +189,7 @@ const InputCalender = (props: any) => {
             props.headingText === strings.dateOfBirth ||
             props.placeholderText === strings.dateOfBirth
               ? new Date(moment(minDate).format())
-              : new Date()
+              : props.minimumDate ?? new Date()
           }
           onDateChange={(date) => {
             props.setDateshow(date);

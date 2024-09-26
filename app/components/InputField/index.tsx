@@ -80,13 +80,13 @@ const InputField = (props: any) => {
           inputheight={inputheight}
           keyboardtype={keyboardtype}
           topping={topping}
+          autoCapitalize={props.autoCapitalize ? props.autoCapitalize : "none"}
           inputType={props.inputType}
           headingText={props.headingText}
           headingTextWidth={props.headingTextWidth}
           onChangeText={props.onChangeText}
           placeholderText={props.placeholderText}
           isSecureText={props.isSecureText}
-          autoCapitalize={"none"}
           valueshow={
             props.valueshow == "null" || props.valueshow == "undefined"
               ? ""

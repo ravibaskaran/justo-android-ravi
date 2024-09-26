@@ -547,7 +547,7 @@ const AddNewVisitorForm = (props: any) => {
                   ? props.formData?.property_title
                   : "Property"
               }
-              data={props?.allProperty}
+              data={props?.allProperty.filter((item: any) => item.status == true)}
               disable={
                 props.type == "edit" ||
                 (props.type == "propertySelect" &&

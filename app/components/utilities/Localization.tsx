@@ -403,6 +403,7 @@ const strings = new LocalizedStrings({
 
     /*** Sourcing Managers ***/
     SourcingManagersHeader: "Sourcing Managers",
+    SourcingTLHeader: "Sourcing TL",
     addNewSM: "Add New SM",
     allocateCp: "Allocate CP",
     createSM: "Create SM",
@@ -434,6 +435,7 @@ const strings = new LocalizedStrings({
     addTarget: "Add target",
     registrationTarget: "Registration Target",
     SMDetails: "SM Details",
+    STLDetails: "STL Details",
     selectSM: "Select SM",
     transferToAllVisitor: "for transfer to all visitors of",
     sourcingTeam: "Sourcing Team",
@@ -455,6 +457,8 @@ const strings = new LocalizedStrings({
     CMDetails: "CM Details",
     selectCM: "Select CM",
     closingTeam: "Closing Team",
+    closingTL: "Closing TL",
+    CTLDetails: "CTL Details",
 
     /*** User Manager ***/
     addNewUser: "Add New User",

@@ -72,7 +72,7 @@ const CommonInput = (props: any) => {
           }
           placeholderTextColor={GRAY_COLOR}
           secureTextEntry={props.isSecureText}
-          autoCapitalize={"none"}
+          autoCapitalize={props.autoCapitalize ? props.autoCapitalize : "none"}
           editable={props.editable}
           multiline={props.multiline}
           keyboardType={props.keyboardtype}

@@ -138,66 +138,96 @@ const AgentBasicInfoView = (props: any) => {
             />
           </View>
         </TouchableOpacity>
-        <View style={styles.TypeView}>
-          {/* <RequiredStart /> */}
-          <View style={styles.radioView}>
-            <RadioButton.Android
-              value={props.agencyData?.cp_type}
-              status={props.agencyData.cp_type === 1 ? "checked" : "unchecked"}
-              onPress={() => {
-                props.setAgencyData({
-                  ...props.agencyData,
-                  cp_type: 1,
-                });
-                props.handleClearData(1);
-              }}
-              color={PRIMARY_THEME_COLOR}
-            />
-            <Text
-              style={[
-                styles.radioTxt,
-                {
-                  color:
-                    props.agencyData.cp_type === 1
-                      ? PRIMARY_THEME_COLOR
-                      : BLACK_COLOR,
-                },
-              ]}
-            >
-              {strings.individualText}
-            </Text>
+
+        {props.type == "edit" ? (
+          <View style={styles.TypeView}>
+            <View style={styles.radioView}>
+              <RadioButton.Android
+                value={props.agencyData?.cp_type}
+                status={"checked"}
+                color={PRIMARY_THEME_COLOR}
+              />
+              <Text
+                style={[
+                  styles.radioTxt,
+                  {
+                    color: PRIMARY_THEME_COLOR,
+                  },
+                ]}
+              >
+                {props.agencyData.cp_type === 2
+                  ? strings.companyText
+                  : strings.individualText}
+              </Text>
+            </View>
           </View>
-          <View style={styles.radioView}>
-            <RadioButton.Android
-              value={props.agencyData?.cp_type}
-              status={props.agencyData.cp_type === 2 ? "checked" : "unchecked"}
-              onPress={() => {
-                props.setAgencyData({
-                  ...props.agencyData,
-                  cp_type: 2,
-                });
-                props.handleClearData(2);
-              }}
-              color={PRIMARY_THEME_COLOR}
-            />
-            <Text
-              style={[
-                styles.radioTxt,
-                {
-                  color:
-                    props.agencyData.cp_type === 2
-                      ? PRIMARY_THEME_COLOR
-                      : BLACK_COLOR,
-                },
-              ]}
-            >
-              {strings.companyText}
-            </Text>
+        ) : (
+          <View style={styles.TypeView}>
+            {/* <RequiredStart /> */}
+            <View style={styles.radioView}>
+              <RadioButton.Android
+                value={props.agencyData?.cp_type}
+                status={
+                  props.agencyData.cp_type === 1 ? "checked" : "unchecked"
+                }
+                onPress={() => {
+                  props.setAgencyData({
+                    ...props.agencyData,
+                    cp_type: 1,
+                  });
+                  props.handleClearData(1);
+                }}
+                color={PRIMARY_THEME_COLOR}
+              />
+              <Text
+                style={[
+                  styles.radioTxt,
+                  {
+                    color:
+                      props.agencyData.cp_type === 1
+                        ? PRIMARY_THEME_COLOR
+                        : BLACK_COLOR,
+                  },
+                ]}
+              >
+                {strings.individualText}
+              </Text>
+            </View>
+            <View style={styles.radioView}>
+              <RadioButton.Android
+                value={props.agencyData?.cp_type}
+                status={
+                  props.agencyData.cp_type === 2 ? "checked" : "unchecked"
+                }
+                onPress={() => {
+                  props.setAgencyData({
+                    ...props.agencyData,
+                    cp_type: 2,
+                  });
+                  props.handleClearData(2);
+                }}
+                color={PRIMARY_THEME_COLOR}
+              />
+              <Text
+                style={[
+                  styles.radioTxt,
+                  {
+                    color:
+                      props.agencyData.cp_type === 2
+                        ? PRIMARY_THEME_COLOR
+                        : BLACK_COLOR,
+                  },
+                ]}
+              >
+                {strings.companyText}
+              </Text>
+            </View>
           </View>
-        </View>
+        )}
+
         <View style={styles.inputWrap}>
           <InputField
-            disableSpecialCharacters={true}
+            // disableSpecialCharacters={true}
             require={true}
             placeholderText={
               props?.agencyData?.cp_type === 1
@@ -385,6 +415,7 @@ const AgentBasicInfoView = (props: any) => {
                 ? strings.channelParnterReraNo
                 : strings.cpCompReraNo
             }
+            autoCapitalize="words"
             handleInputBtnPress={() => {}}
             headingText={
               props?.agencyData?.cp_type === 1

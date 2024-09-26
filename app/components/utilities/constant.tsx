@@ -92,7 +92,7 @@ export const Regexs = {
   alphaNumeric: new RegExp(/^[A-Za-z0-9\s]*$/),
   gstRegex: new RegExp(/\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}/),
   oneSpaceRegex: new RegExp(/^([a-zA-Z0-9]+\s)*[a-zA-Z0-9]+$/),
-  reraRegex: new RegExp(/^[A-Za-z][0-9]{11}$/),
+  reraRegex: new RegExp(/^[A-Z]\d{11}$/),
 };
 
 export const todayDate = {

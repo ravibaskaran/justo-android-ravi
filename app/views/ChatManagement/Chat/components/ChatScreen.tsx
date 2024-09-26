@@ -385,7 +385,7 @@ const ChatScreen = ({ navigation, route }: any) => {
             data.currentMessage.image
               ? data.currentMessage.image
               : messages.image
-          )
+          );
         }}
       >
         {data?.currentMessage?.type !== "doc" ? (
@@ -429,42 +429,42 @@ const ChatScreen = ({ navigation, route }: any) => {
   const renderVideoMessage = (data: any) => {
     return (
       <TouchableOpacity
-      onPress={() => {
-        OpenDoc(
-          data.currentMessage.video
-            ? data.currentMessage.video
-            : messages.video
-        )
-      }}
-    >
-      {data.currentMessage.user._id === senderID ? (
-        <View style={styles.recieverpdfMessageView}>
-          <Image
+        onPress={() => {
+          OpenDoc(
+            data.currentMessage.video
+              ? data.currentMessage.video
+              : messages.video
+          );
+        }}
+      >
+        {data.currentMessage.user._id === senderID ? (
+          <View style={styles.recieverpdfMessageView}>
+            <Image
               source={images.media}
               resizeMode={"contain"}
-              style={[styles.downloadImage, {tintColor: WHITE_COLOR}]}
+              style={[styles.downloadImage, { tintColor: WHITE_COLOR }]}
             />
-          <View style={{ width: "80%" }}>
-            <Text style={styles.pdfnameTxt} numberOfLines={1}>
-              {data.currentMessage.filename}
-            </Text>
+            <View style={{ width: "80%" }}>
+              <Text style={styles.pdfnameTxt} numberOfLines={1}>
+                {data.currentMessage.filename}
+              </Text>
+            </View>
           </View>
-        </View>
-      ) : (
-        <View style={styles.recieverpdfMessageView}>
-          <View style={{ width: "80%" }}>
-            <Text style={styles.pdfRecievednameTxt} numberOfLines={1}>
-              {data.currentMessage.filename}
-            </Text>
-          </View>
-          <Image
+        ) : (
+          <View style={styles.recieverpdfMessageView}>
+            <View style={{ width: "80%" }}>
+              <Text style={styles.pdfRecievednameTxt} numberOfLines={1}>
+                {data.currentMessage.filename}
+              </Text>
+            </View>
+            <Image
               source={images.media}
               resizeMode={"contain"}
               style={styles.downloadImage}
             />
-        </View>
-      )}
-    </TouchableOpacity>
+          </View>
+        )}
+      </TouchableOpacity>
     );
   };
 
@@ -485,6 +485,7 @@ const ChatScreen = ({ navigation, route }: any) => {
         barStyle={"light-content"}
       />
       <GiftedChat
+        wrapInSafeArea={false}
         messages={messages}
         onSend={(messages: any) => onSend(messages)}
         user={{

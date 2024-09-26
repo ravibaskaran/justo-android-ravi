@@ -1,13 +1,9 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
-import React, { useEffect, useState } from "react";
+import Button from "app/components/Button";
+import { WHITE_COLOR } from "app/components/utilities/constant";
+import React from "react";
+import { Text, View } from "react-native";
 import Modal from "react-native-modal";
 import styles from "./styles";
-import Button from "app/components/Button";
-import { useSelector } from "react-redux";
-import images from "app/assets/images";
-import moment from "moment";
-import { DATE_FORMAT, WHITE_COLOR } from "app/components/utilities/constant";
-import strings from "../utilities/Localization";
 
 const JustForOkModal = (props: any) => {
     

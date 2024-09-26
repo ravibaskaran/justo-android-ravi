@@ -37,7 +37,7 @@ import strings from "app/components/utilities/Localization";
 import ErrorMessage from "app/components/ErrorMessage";
 
 const CMReportTable = (props: any) => {
-  const { data, userData,fileName } = props;
+  const { data, userData, fileName } = props;
   const { width, height } = Dimensions.get("window"),
     vw = width / 100,
     vh = height / 100;
@@ -49,20 +49,21 @@ const CMReportTable = (props: any) => {
       setRefreshing(false);
     }, 2000);
   };
-  const headerData = [
-    "Visitor Attended",
-    "Direct Walk-ins",
-    "CP(Walk-ins) Appointments",
-    "No Shows",
-    "Total Revisit",
-    "Total Not Interested",
-    "Total Booking",
-    // "No. of (follow-ups scheduled)",
-    "Conversion %",
-    // "Grand Total",
-    // "Total Registration",
-    // "Total Cancelation",
-  ];
+  // const headerData = [
+  //   "Visitor Attended",
+  //   "Direct Walk-ins",
+  //   "CP(Walk-ins) Appointments",
+  //   "No Shows",
+  //   "Total Revisit",
+  //   "Total Not Interested",
+  //   "Total Booking",
+  //   // "No. of (follow-ups scheduled)",
+  //   "Conversion %",
+  //   // "Grand Total",
+  //   // "Total Registration",
+  //   // "Total Cancelation",
+  // ];
+  const headerData = ["Walk-ins", "Total Leads", "Total Booking"];
 
   const onPressDownload = async () => {
     let array = data.map((item: any) => {
@@ -140,434 +141,65 @@ const CMReportTable = (props: any) => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        {/* <View> */}
-        <View
-          style={{
-            width: "100%",
-          }}
-        >
-          {/* <View
-              style={{
-                alignItems: "flex-end",
-                marginBottom: normalize(10),
-              }}
-            >
-              <TouchableOpacity
-                onPress={() => onPressDownload()}
-                style={{
-                  backgroundColor: PRIMARY_THEME_COLOR,
-                  width: normalizeWidth(50),
-                  alignItems: "center",
-                  borderRadius: 10,
-                }}
-              >
-                <Image
-                  source={images.whiteDownload}
-                  resizeMode={"contain"}
-                  style={styles.downloadImg}
-                />
-              </TouchableOpacity>
-            </View> */}
+        <View style={[styles.container, { flexDirection: "column" }]}>
+          <View style={[styles.imageContainer, { width: "100%" }]}>
+            <Image
+              style={{ height: 80, width: 80, borderRadius: 100 }}
+              source={require("./../../../assets/images/userimage.png")}
+            />
+            <Text style={[styles.nameText, { paddingVertical: 10 }]}>
+              {userData?.data?.user_name}
+            </Text>
+          </View>
+
           <View
             style={{
-              width: "100%",
-              borderWidth: normalize(Isios ? 1.2 : 2),
-              padding: normalize(12),
+              flex: 1,
+              flexDirection: "row",
+              flexWrap: "wrap",
               justifyContent: "center",
             }}
           >
-            <Text
-              style={{
-                fontFamily: FONT_FAMILY_SEMIBOLD,
-                color: BLACK_COLOR,
-                fontSize: normalize(Isios ? 14 : 16),
-              }}
-            >
-              CM Name: {userData?.data?.user_name}
-            </Text>
-          </View>
-          {/* <View
-              style={{
-                flexDirection: "row",
-              }}
-            >
-              <View
-                style={{
-                  width: "50%",
-                  height: normalizeHeight(80),
-                  borderWidth: normalize(2),
-                  padding: normalize(12),
-                  backgroundColor: PRIMARY_THEME_COLOR,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
+            <View style={styles.childContainer}>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
               >
-                <Text
-                  style={{
-                    fontFamily: FONT_FAMILY_SEMIBOLD,
-                    color: WHITE_COLOR,
-                    fontSize: normalize(Isios ? 14 : 16),
-                  }}
-                >
-                  Status
-                </Text>
-              </View>
-              <View
-                style={{
-                  width: "25%",
-                  height: normalizeHeight(80),
-                  borderWidth: normalize(Isios ? 1.2 : 2),
-                  padding: normalize(12),
-                  backgroundColor: PRIMARY_THEME_COLOR,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
+                {data[0]?.walkin}
+              </Text>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
               >
-                <Text
-                  style={{
-                    fontFamily: FONT_FAMILY_SEMIBOLD,
-                    color: WHITE_COLOR,
-                    fontSize: normalize(Isios ? 14 : 16),
-                  }}
-                >
-                  FTD
-                </Text>
-              </View>
-              <View
-                style={{
-                  width: "25%",
-                  height: normalizeHeight(80),
-                  borderWidth: normalize(Isios ? 1.2 : 2),
-                  padding: normalize(12),
-                  backgroundColor: PRIMARY_THEME_COLOR,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Text
-                  style={{
-                    fontFamily: FONT_FAMILY_SEMIBOLD,
-                    color: WHITE_COLOR,
-                    fontSize: normalize(Isios ? 14 : 16),
-                  }}
-                >
-                  {" "}
-                  FTM
-                </Text>
-              </View>
-            </View> */}
-          <ScrollView
-            contentContainerStyle={{ flex: 1 }}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-          >
-            <View
-              style={{
-                flexDirection: "row",
-                // width: "100%",
-                flex: 1,
-              }}
-            >
-              <View
-                style={{
-                  flexDirection: "column",
-                  // width: "70%",
-                  flex: 5,
-                }}
-              >
-                {headerData.map((item: any, index: any) => {
-                  return (
-                    <View
-                      key={index}
-                      style={{
-                        // width: normalizeWidth(140),
-                        // width: "100%",
-                        // height: normalizeHeight(90),
-                        borderWidth: normalize(Isios ? 1.2 : 2),
-                        padding: normalize(12),
-                        backgroundColor: PRIMARY_THEME_COLOR,
-                      }}
-                    >
-                      <Text
-                        style={{
-                          ...styles.boxText,
-                          color: WHITE_COLOR,
-                        }}
-                      >
-                        {item}
-                      </Text>
-                    </View>
-                  );
-                })}
-              </View>
-              {data?.map((item: any, index: any) => {
-                return (
-                  <View
-                    style={{
-                      flexDirection: "column",
-                      // width: "100%",
-                      flex: 2,
-                    }}
-                  >
-                    <TouchableOpacity
-                      onPress={() =>
-                        props.handleCTANavigation("AppointmentCTA")
-                      }
-                      style={styles.dataItems}
-                    >
-                      <Text
-                        style={{
-                          ...styles.boxText,
-                          color: BLACK_COLOR,
-                        }}
-                      >
-                        {item?.VisitorAttended}
-                        {/* {item?.TotalAppointments} */}
-                      </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() =>
-                        props.handleCTANavigation("AppointmentCTA")
-                      }
-                      style={styles.dataItems}
-                    >
-                      <Text
-                        style={{
-                          ...styles.boxText,
-                          color: BLACK_COLOR,
-                        }}
-                      >
-                        {item?.DirectWalkins}
-                      </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() =>
-                        props.handleCTANavigation("AppointmentCTA")
-                      }
-                      style={styles.dataItems}
-                    >
-                      <Text
-                        style={{
-                          ...styles.boxText,
-                          color: BLACK_COLOR,
-                        }}
-                      >
-                        {item?.CPWalkins}
-                      </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() =>
-                        props.handleCTANavigation("AppointmentCTA")
-                      }
-                      style={styles.dataItems}
-                    >
-                      <Text
-                        style={{
-                          ...styles.boxText,
-                          color: BLACK_COLOR,
-                        }}
-                      >
-                        {item?.Noshow}
-                      </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() =>
-                        props.handleCTANavigation("AppointmentCTA")
-                      }
-                      style={styles.dataItems}
-                    >
-                      <Text
-                        style={{
-                          ...styles.boxText,
-                          color: BLACK_COLOR,
-                        }}
-                      >
-                        {item?.TotalAppointmentsrevisit}
-                      </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() =>
-                        props.handleCTANavigation("AppointmentCTA")
-                      }
-                      style={styles.dataItems}
-                    >
-                      <Text
-                        style={{
-                          ...styles.boxText,
-                          color: BLACK_COLOR,
-                        }}
-                      >
-                        {item?.TotalNotInterested}
-                      </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() =>
-                        props.handleCTANavigation("BookingCTA")
-                      }
-                      style={styles.dataItems}
-                    >
-                      <Text
-                        style={{
-                          ...styles.boxText,
-                          color: BLACK_COLOR,
-                        }}
-                      >
-                        {item?.Booking}
-                      </Text>
-                    </TouchableOpacity>
-                    {/* <TouchableOpacity style={styles.dataItems}>
-                        <Text
-                          style={{
-                            ...styles.boxText,
-                            color: BLACK_COLOR,
-                          }}
-                        >
-                          {item?.ReadytoBook}
-                        </Text>
-                      </TouchableOpacity> */}
-                    {/* <TouchableOpacity style={styles.dataItems}>
-                      <Text
-                        style={{
-                          ...styles.boxText,
-                          color: BLACK_COLOR,
-                        }}
-                      >
-                        {item?.followschedule}
-                      </Text>
-                    </TouchableOpacity> */}
-
-                    <TouchableOpacity style={styles.dataItems}>
-                      <Text
-                        style={{
-                          ...styles.boxText,
-                          color: BLACK_COLOR,
-                        }}
-                      >
-                        {item?.Conversion}
-                      </Text>
-                    </TouchableOpacity>
-                    {/* <TouchableOpacity style={styles.dataItems}>
-                      <Text
-                        style={{
-                          ...styles.boxText,
-                          color: BLACK_COLOR,
-                        }}
-                      >
-                        {item?.GrandTotal}
-                      </Text>
-                    </TouchableOpacity> */}
-                    {/* <TouchableOpacity style={styles.dataItems}>
-                      <Text
-                        style={{
-                          ...styles.boxText,
-                          color: BLACK_COLOR,
-                        }}
-                      >
-                        {item?.Registration}
-                      </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.dataItems}>
-                      <Text
-                        style={{
-                          ...styles.boxText,
-                          color: BLACK_COLOR,
-                        }}
-                      >
-                        {item?.TotalCancelation}
-                      </Text>
-                    </TouchableOpacity> */}
-                  </View>
-                );
-              })}
+                Walk-ins
+              </Text>
             </View>
-          </ScrollView>
-          {/* <View
-                        style={{
-                          width: "50%",
-                          borderWidth: normalize(Isios ? 1.2 : 2),
-                          padding: normalize(12),
-                          backgroundColor: PRIMARY_THEME_COLOR,
-                        }}
-                      >
-                        <Text
-                          style={{
-                            fontFamily: FONT_FAMILY_SEMIBOLD,
-                            color: WHITE_COLOR,
-                            fontSize: normalize(Isios ? 14 : 16),
-                          }}
-                        >
-                          {item.header}
-                        </Text>
-                      </View>
-                      {item?.data.map((item: any, index: any) => {
-                        return (
-                          <View
-                            key={index}
-                            style={{
-                              width: "25%",
-                              borderWidth: normalize(Isios ? 1.2 : 2),
-                              padding: normalize(12),
-                            }}
-                          >
-                            <Text
-                              style={{
-                                fontFamily: FONT_FAMILY_SEMIBOLD,
-                                color: BLACK_COLOR,
-                                fontSize: normalize(Isios ? 14 : 16),
-                              }}
-                            >
-                              {item}
-                            </Text>
-                          </View>
-                        );
-                      })} */}
-        </View>
-        {/* <View
-              style={{
-                flexDirection: "row",
-              }}
-            >
-              <View
-                style={{
-                  width: "50%",
-                  height: normalizeHeight(60),
-                  borderWidth: normalize(Isios ? 1.2 : 2),
-                  padding: normalize(12),
-                  backgroundColor: PRIMARY_THEME_COLOR,
-                }}
+
+            <View style={styles.childContainer}>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
               >
-                <Text
-                  style={{
-                    fontFamily: FONT_FAMILY_SEMIBOLD,
-                    color: WHITE_COLOR,
-                    fontSize: normalize(Isios ? 14 : 16),
-                  }}
-                >
-                  Grand Total
-                </Text>
-              </View>
-              <View style={styles.smViewBox}>
-                <Text
-                  style={{
-                    fontFamily: FONT_FAMILY_SEMIBOLD,
-                    color: WHITE_COLOR,
-                    fontSize: normalize(Isios ? 14 : 16),
-                  }}
-                >
-                  24313
-                </Text>
-              </View>
-              <View style={styles.smViewBox}>
-                <Text
-                  style={{
-                    fontFamily: FONT_FAMILY_SEMIBOLD,
-                    color: WHITE_COLOR,
-                    fontSize: normalize(Isios ? 14 : 16),
-                  }}
-                ></Text>
-              </View>
-            </View> */}
-        {/* </View> */}
+                {data[0]?.total_leades}
+              </Text>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                Total Leads
+              </Text>
+            </View>
+
+            <View style={styles.childContainer}>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                {data[0]?.total_booking}
+              </Text>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                Total Booking
+              </Text>
+            </View>
+          </View>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

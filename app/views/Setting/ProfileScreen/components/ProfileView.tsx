@@ -15,7 +15,6 @@ const ProfileView = (props: any) => {
   const { data, HandleBackPress, handleEditProfilePress } = props;
   const allDetailsall = useSelector((state: any) => state.agentData);
   const [allDetails, setAllDetails] = useState<any>({});
-  console.log("allDetails: ", allDetails);
 
   useEffect(() => {
     checkprofile();
@@ -61,12 +60,12 @@ const ProfileView = (props: any) => {
                 allDetails?.lastname?.toUpperCase()}
             </Text>
           </View>
-          {/* <TouchableOpacity
+          <TouchableOpacity
             style={styles.editImageWrap}
             onPress={handleEditProfilePress}
           >
             <Image style={styles.editIconImage} source={images.editIcon} />
-          </TouchableOpacity> */}
+          </TouchableOpacity>
         </View>
         <View style={styles.InformationView}>
           <View style={styles.fieldView}>

@@ -1,30 +1,20 @@
-import {
-  View,
-  Text,
-  StatusBar,
-  FlatList,
-  ActivityIndicator,
-} from "react-native";
-import React, { useState, useEffect } from "react";
-import styles from "./styles";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import PropertyListItem from "./PropertyListItem";
 import { useNavigation } from "@react-navigation/native";
-import Header from "../../../../components/Header";
-import images from "../../../../assets/images";
-import strings from "../../../../components/utilities/Localization";
-import ConfirmModal from "../../../../components/Modals/ConfirmModal";
-import {
-  PRIMARY_THEME_COLOR_DARK,
-  PRIMARY_THEME_COLOR,
-  GREEN_COLOR,
-  RED_COLOR,
-} from "../../../../components/utilities/constant";
-import FilterModal from "./FilterModel";
-import { useSelector, useDispatch } from "react-redux";
-import { getAllMaster } from "../../../../Redux/Actions/MasterActions";
-import ErrorMessage from "app/components/ErrorMessage";
 import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
+import React, { useEffect, useState } from "react";
+import {
+  FlatList,
+  Text,
+  View
+} from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useDispatch, useSelector } from "react-redux";
+import images from "../../../../assets/images";
+import Header from "../../../../components/Header";
+import strings from "../../../../components/utilities/Localization";
+import { getAllMaster } from "../../../../Redux/Actions/MasterActions";
+import FilterModal from "./FilterModel";
+import PropertyListItem from "./PropertyListItem";
+import styles from "./styles";
 
 const PropertyView = (props: any) => {
   const dispatch: any = useDispatch();

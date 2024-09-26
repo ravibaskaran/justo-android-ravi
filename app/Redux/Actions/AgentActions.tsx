@@ -45,7 +45,6 @@ export const getAgentDetail = (params: any) => async (dispatch: any) => {
 dispatch({ type: START_LOADING });
     try {
         const res = await apiCall("post", apiEndPoints.GETUSERDETAIL, params);
-        console.log("🚀 ~ file: AgentActions.tsx:49 ~ res.data:", res.data)
         if (res.data.status === 200) {
             dispatch({
                 type: GET_AGENT_DETAIL,

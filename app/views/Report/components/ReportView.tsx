@@ -36,7 +36,7 @@ const ReportView = (props: any) => {
     handleCTANavigation,
     fileName
   } = props;
-  console.log("🚀 ~ file: ReportView.tsx:39 ~ reportData:", reportData);
+  
   return (
     <>
       <View style={styles.mainContainer}>
@@ -59,6 +59,7 @@ const ReportView = (props: any) => {
             handleCpDetailPress={handleCpDetailPress}
             handleCTANavigation={handleCTANavigation}
             fileName={fileName}
+            userData={userData}
           />
         ) : roleId === ROLE_IDS.closingmanager_id ? (
           <CMReportTable
@@ -72,6 +73,7 @@ const ReportView = (props: any) => {
           <STReportTable
             data={reportData}
             onReset={onReset}
+            userData={userData}
             handleCpDetailPress={handleCpDetailPress}
             handleCTANavigation={handleCTANavigation}
             fileName={fileName}
@@ -80,6 +82,7 @@ const ReportView = (props: any) => {
           <CTReportTable
             data={reportData}
             onReset={onReset}
+            userData={userData}
             handleCTANavigation={handleCTANavigation}
             fileName={fileName}
           />

@@ -87,6 +87,7 @@ const EditProfileView = (props: any) => {
           </View>} */}
           <View style={styles.inputWrap}>
             <InputField
+              editable={false}
               disableSpecialCharacters={true}
               valueshow={editData?.firstname}
               handleInputBtnPress={() => {}}
@@ -101,6 +102,7 @@ const EditProfileView = (props: any) => {
           </View>
           <View style={styles.inputWrap}>
             <InputField
+              editable={false}
               disableSpecialCharacters={true}
               valueshow={editData?.lastname}
               handleInputBtnPress={() => {}}
@@ -115,6 +117,7 @@ const EditProfileView = (props: any) => {
           </View>
           <View style={styles.inputWrap}>
             <InputField
+              editable={false}
               valueshow={editData?.adhar_no}
               handleInputBtnPress={() => {}}
               onChangeText={(e: any) => {
@@ -125,17 +128,18 @@ const EditProfileView = (props: any) => {
               }}
               inputType={"aadhaar"}
               headingText={"Aadhaar No."}
-              placeholderText={"3675 9834 6012"}
+              placeholderText={"Aadhaar No."}
               maxLength={14}
               keyboardtype={"number-pad"}
             />
           </View>
           <View style={styles.inputWrap}>
             <InputField
+              editable={false}
               disableSpecialCharacters={true}
               valueshow={editData?.pancard_no}
               handleInputBtnPress={() => {}}
-              placeholderText={"BNZAA2318JM"}
+              placeholderText={"Pancard No."}
               onChangeText={(e: any) => {
                 setEditData({
                   ...editData,
@@ -150,6 +154,7 @@ const EditProfileView = (props: any) => {
             <Text style={styles.genderTxt}>{strings.gender}</Text>
             <View style={styles.radioView}>
               <RadioButton.Android
+                disabled={true}
                 value={editData?.gender}
                 status={editData?.gender === 1 ? "checked" : "unchecked"}
                 onPress={() =>
@@ -176,6 +181,7 @@ const EditProfileView = (props: any) => {
             </View>
             <View style={styles.radioView}>
               <RadioButton.Android
+                disabled={true}
                 value={editData?.gender}
                 status={editData?.gender === 2 ? "checked" : "unchecked"}
                 onPress={() =>
@@ -220,6 +226,7 @@ const EditProfileView = (props: any) => {
             leftIcon={images.event}
             placeholderText={strings.dateOfBirth} //can edit
             editable={false}
+            disabled={true}
             headingText={strings.dateOfBirth}
             // onChangeText={() => { }}
             dateData={(data: any) => {
@@ -256,8 +263,9 @@ const EditProfileView = (props: any) => {
               editable={false}
             />
           </View>
-          <View style={styles.inputWrap}>
+          {/* <View style={styles.inputWrap}>
             <InputField
+              editable={false}
               disableSpecialCharacters={true}
               valueshow={editData?.whatsapp_no}
               keyboardtype={"number-pad"}
@@ -270,9 +278,10 @@ const EditProfileView = (props: any) => {
               headingText={strings.whatsappNo}
               maxLength={10}
             />
-          </View>
+          </View> */}
           <View style={styles.inputWrap}>
             <InputField
+              editable={false}
               valueshow={editData?.email}
               handleInputBtnPress={() => {}}
               onChangeText={(e: any) => {
@@ -284,8 +293,9 @@ const EditProfileView = (props: any) => {
               headingText={strings.email + " " + strings.address}
             />
           </View>
-          <View style={[styles.inputWrap, {width: "100%"}]}>
+          {/* <View style={[styles.inputWrap, { width: "100%" }]}>
             <InputField
+              editable={false}
               placeholderText={"Area"}
               handleInputBtnPress={() => {}}
               onChangeText={(data: any) => {
@@ -306,9 +316,10 @@ const EditProfileView = (props: any) => {
                 });
               }}
             />
-          </View>
+          </View> */}
           <View style={styles.inputWrap}>
             <InputField
+              editable={false}
               placeholderText={"Address"}
               handleInputBtnPress={() => {}}
               onChangeText={(text: any) => {
@@ -324,6 +335,7 @@ const EditProfileView = (props: any) => {
           <View style={styles.inputWrap}>
             <TouchableOpacity
               activeOpacity={1}
+              disabled={true}
               onPress={() => setShowCity(true)}
             >
               <InputField

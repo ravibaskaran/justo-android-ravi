@@ -2,7 +2,10 @@ import { FlatList, Text, View } from "react-native";
 import images from "../../../../assets/images";
 import Button from "../../../../components/Button";
 import Header from "../../../../components/Header";
-import { PRIMARY_THEME_COLOR } from "../../../../components/utilities/constant";
+import {
+  PRIMARY_THEME_COLOR,
+  ROLE_IDS,
+} from "../../../../components/utilities/constant";
 import styles from "./styles";
 import SourcingManagersItem from "./SourcingManagersItem";
 import strings from "../../../../components/utilities/Localization";
@@ -11,18 +14,25 @@ import FilterModal from "../../../../components/Modals/FilterModal";
 import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
 import usePermission from "app/components/utilities/UserPermissions";
 import AddTargetModal from "app/components/Modals/AddTargetModal";
+import { useSelector } from "react-redux";
 
 const SourcingDetailsView = (props: any) => {
   const loadingref = false;
   const { create } = usePermission({
     create: "add_new_manager",
   });
+  const { userData = {} } = useSelector((state: any) => state.userData);
+
   return (
     <View style={styles.mainContainer}>
       <Header
         leftImageSrc={images.menu}
         rightSecondImageScr={images.notification}
-        headerText={strings.SourcingManagersHeader}
+        headerText={
+          userData?.data?.role_id === ROLE_IDS.clusterhead_id
+            ? strings.SourcingTLHeader
+            : strings.SourcingManagersHeader
+        }
         handleOnLeftIconPress={props.handleDrawerPress}
         headerStyle={styles.headerStyle}
         RightFirstIconStyle={styles.RightFirstIconStyle}
@@ -64,7 +74,13 @@ const SourcingDetailsView = (props: any) => {
           refreshing={loadingref}
           onRefresh={() => props.onRefresh()}
           ListEmptyComponent={
-            <EmptyListScreen message={strings.SourcingManagersHeader} />
+            <EmptyListScreen
+              message={
+                userData?.data?.role_id === ROLE_IDS.clusterhead_id
+                  ? strings.SourcingTLHeader
+                  : strings.SourcingManagersHeader
+              }
+            />
           }
         />
       </View>

@@ -4,6 +4,7 @@ import {
   normalizeWidth,
 } from "app/components/scaleFontSize";
 import {
+  BLACK_COLOR,
   FONT_FAMILY_SEMIBOLD,
   Isios,
   PRIMARY_THEME_COLOR,
@@ -72,8 +73,60 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     marginVertical: 2,
-    fontFamily:FONT_FAMILY_SEMIBOLD,
-    color:PRIMARY_THEME_COLOR
+    fontFamily: FONT_FAMILY_SEMIBOLD,
+    color: PRIMARY_THEME_COLOR,
+  },
+  text: {
+    color: BLACK_COLOR,
+    padding: normalize(12),
+    borderWidth: normalize(Isios ? 1.2 : 2),
+    fontFamily: FONT_FAMILY_SEMIBOLD,
+    fontSize: normalize(Isios ? 14 : 16),
+    minWidth: normalize(120),
+    maxWidth: normalize(150),
+  },
+  itemBox: {
+    flex: 1,
+    borderWidth: normalize(Isios ? 1.2 : 2),
+    padding: normalize(12),
+    backgroundColor: PRIMARY_THEME_COLOR,
+    color: WHITE_COLOR,
+    fontFamily: FONT_FAMILY_SEMIBOLD,
+    fontSize: normalize(Isios ? 14 : 16),
+  },
+  cardText: {
+    color: WHITE_COLOR,
+    fontFamily: FONT_FAMILY_SEMIBOLD,
+    fontSize: normalize(Isios ? 14 : 14),
+    paddingVertical: 2,
+  },
+  imageContainer: {
+    width: "34%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  nameText: {
+    color: WHITE_COLOR,
+    fontWeight: "900",
+    fontFamily: FONT_FAMILY_SEMIBOLD,
+    fontSize: normalize(Isios ? 14 : 16),
+    paddingBottom: 10,
+  },
+  container: {
+    flexDirection: "row",
+    backgroundColor: PRIMARY_THEME_COLOR,
+    borderRadius: 20,
+    marginVertical: 10,
+    paddingVertical: 20,
+  },
+
+  childContainer: {
+    width: "40%",
+    backgroundColor: "#fff",
+    borderRadius: 5,
+    alignItems: "center",
+    padding: 10,
+    margin: 10,
   },
 });
 export default styles;

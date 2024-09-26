@@ -69,7 +69,7 @@ const ReportScreen = ({ navigation }: any) => {
 
   useLayoutEffect(() => {
     if (!filterModalVisible) {
-      getData(firstdDate, todayDate);
+      getData("", "");
     }
   }, [isFocused, filterData, navigation]);
   useEffect(() => {
@@ -213,18 +213,18 @@ const ReportScreen = ({ navigation }: any) => {
 
   const getData = (startDate: any, endDate: any) => {
     if (roleId === ROLE_IDS.closingmanager_id) {
-      // dispatch(
-      //   GetCMReport({
-      //     start_date: startDate.toString(),
-      //     end_date: endDate.toString(),
-      //   })
-      // );
       dispatch(
-        GetCTReport({
+        GetCMReport({
           start_date: startDate.toString(),
           end_date: endDate.toString(),
         })
       );
+      // dispatch(
+      //   GetCTReport({
+      //     start_date: startDate.toString(),
+      //     end_date: endDate.toString(),
+      //   })
+      // );
     } else if (roleId === ROLE_IDS.closingtl_id) {
       dispatch(
         GetCTReport({
@@ -287,7 +287,7 @@ const ReportScreen = ({ navigation }: any) => {
       user_id: "",
       parent_id: "",
     });
-    getData(firstdDate, todayDate);
+    getData("", "");
   };
 
   const handleFilter = () => {

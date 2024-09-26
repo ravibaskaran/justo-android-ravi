@@ -127,7 +127,7 @@ const PropertyDetailView = (props: any) => {
                   textTransform={"uppercase"}
                 />
               ) : null)}
-            {create && (
+            {create && propertydetail?.status && (
               <Button
                 handleBtnPress={() => onPressCreatevisit()}
                 buttonText={strings.createVisit}
