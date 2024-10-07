@@ -15,6 +15,7 @@ import { getAllProperty } from "app/Redux/Actions/propertyActions";
 import apiEndPoints from "app/components/utilities/apiEndPoints";
 import { START_LOADING, STOP_LOADING } from "app/Redux/types";
 import { apiCall } from "app/components/utilities/httpClient";
+import { handleApiError } from "app/components/ErrorMessage/HandleApiErrors";
 
 const AgencyListing = ({ navigation, route }: any) => {
   const { type } = route?.params || {};
@@ -279,6 +280,14 @@ const AgencyListing = ({ navigation, route }: any) => {
     getAgencyList(0, {});
     // navigation.navigate("DeactiveAgency", { data });
   };
+  
+  const onPressVerify = async (data: any, type: any) => {
+    let params = { cp_id: data?.cp_id };
+    const res = await apiCall("post", apiEndPoints.VERIFY_CP, params);
+    if (res?.data?.status == 200) getAgencyList(0, {});
+    else handleApiError(res.data);
+  };
+
   const Onreachedend = (offSet: any) => {
     setOffset(offSet);
     dispatch(
@@ -324,6 +333,7 @@ const AgencyListing = ({ navigation, route }: any) => {
       handleAllocateProperty={handleAllocateProperty}
       openAllocatePropertyModal={openAllocatePropertyModal}
       onPressSeeEmployee={onPressSeeEmployee}
+      onPressVerify={onPressVerify}
     />
   );
 };

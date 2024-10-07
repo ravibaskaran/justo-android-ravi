@@ -27,6 +27,7 @@ const AgencyView = (props: any) => {
   const loadingref = false;
   const [isVisible, setIsVisible] = useState(false);
   const [newVisitor, setNewVisitor] = useState(false);
+  const [isVerify, setIsVerify] = useState(false);
   const [FilterisVisible, setFilterisVisible] = useState(false);
   const { userData = {} } = useSelector((state: any) => state.userData);
   const [status, setStatus] = useState(false);
@@ -206,12 +207,14 @@ const AgencyView = (props: any) => {
                 items={item}
                 setIsVisible={setIsVisible}
                 setStatus={setStatus}
+                setIsVerify={setIsVerify}
                 onPressView={props.onPressView}
                 setChangeStatus={props.setChangeStatus}
                 setNewVisitor={setNewVisitor}
                 openAllocatePropertyModal={props.openAllocatePropertyModal}
                 onAddEmployeeButtonPress={props.onAddEmployeeButtonPress}
                 onPressSeeEmployee={props.onPressSeeEmployee}
+                userData={userData}
               />
             )}
             onEndReached={() => {
@@ -253,6 +256,16 @@ const AgencyView = (props: any) => {
         confirmtype={"CONFIRMATION"}
         setStatusChange={props.setChangeStatus}
         handleYesResponse={() => props.onPressDeactivates(props.changeStatus)}
+      />
+
+      <ConfirmModal
+        Visible={isVerify}
+        setIsVisible={setIsVerify}
+        stringshow={strings.confirmation}
+        textshow={`Are you sure you want to verify this ${strings.cpCapital}?`}
+        confirmtype={"CONFIRMATION"}
+        setStatusChange={props.setChangeStatus}
+        handleYesResponse={() => props.onPressVerify(props.changeStatus)}
       />
       <FilterModal
         getAgencyList={props.getAgencyList}

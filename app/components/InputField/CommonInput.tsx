@@ -80,6 +80,7 @@ const CommonInput = (props: any) => {
           maxLength={props.maxLength}
           onBlur={props.onBlur}
           onFocus={props.onFocus}
+        
         />
         <TouchableOpacity
           onPress={props.handleInputBtnPress}

@@ -5,6 +5,9 @@ import Header from "app/components/Header";
 import images from "app/assets/images";
 import strings from "app/components/utilities/Localization";
 import {
+  DATE_FORMAT,
+  FONT_FAMILY_SEMIBOLD,
+  Isios,
   PRIMARY_THEME_COLOR,
   ROLE_IDS,
 } from "app/components/utilities/constant";
@@ -16,6 +19,8 @@ import CTReportTable from "./CTReportTable";
 import ClusterHeadReportTable from "./ClusterHeadReportTable";
 import FilterModal from "./modal/ReportFilterModal";
 import BusinessHeadReportTable from "./BusinessHeadReportTable";
+import moment from "moment";
+import { normalize } from "app/components/scaleFontSize";
 
 const ReportView = (props: any) => {
   const {
@@ -34,9 +39,17 @@ const ReportView = (props: any) => {
     propertyListForFilter,
     clusterheadListForFilter,
     handleCTANavigation,
-    fileName
+    fileName,
+    selectedStartDate,
+    selectedEndDate,
   } = props;
-  
+
+  function formatDateString(dateString: any) {
+    const [year, month, day] = dateString.split("-");
+    const shortYear = year.slice(-2); // Get last two digits of the year
+    return `${day}/${month}/${shortYear}`;
+  }
+
   return (
     <>
       <View style={styles.mainContainer}>
@@ -44,7 +57,11 @@ const ReportView = (props: any) => {
           leftImageSrc={images.menu}
           rightFirstImageScr={images.filter}
           rightSecondImageScr={images.notification}
-          headerText={strings.reportHeader}
+          headerText={
+            selectedStartDate == moment(new Date()).format(DATE_FORMAT)
+              ? "Today " + strings.reportHeader
+              : strings.reportHeader
+          }
           handleOnLeftIconPress={handleDrawerPress}
           headerStyle={styles.headerStyle}
           handleOnRightFirstIconPress={handleOnFilterPress}
@@ -52,6 +69,22 @@ const ReportView = (props: any) => {
           statusBarColor={PRIMARY_THEME_COLOR}
           barStyle={"light-content"}
         />
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            paddingVertical: 2,
+            paddingHorizontal: 10,
+          }}
+        >
+          <Text style={styles.date}>
+            Start Date: {formatDateString(selectedStartDate)}
+          </Text>
+          <Text style={styles.date}>
+            End Date: {formatDateString(selectedEndDate)}
+          </Text>
+        </View>
         {roleId === ROLE_IDS.sourcingmanager_id ? (
           <SMReportTable
             data={reportData}

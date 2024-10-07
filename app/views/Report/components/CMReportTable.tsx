@@ -141,7 +141,7 @@ const CMReportTable = (props: any) => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        <View style={[styles.container, { flexDirection: "column" }]}>
+        <View  style={[styles.container, { flexDirection: "column", marginTop: 0 }]}>
           <View style={[styles.imageContainer, { width: "100%" }]}>
             <Image
               style={{ height: 80, width: 80, borderRadius: 100 }}

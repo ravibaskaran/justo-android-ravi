@@ -83,6 +83,7 @@ export default {
   GET_CP_ACTIVE_LEAD: "/channelPartner/getCpActiveLead",
   ADD_TARGET_FOR_CP: '/channelPartner/addTargetForChannelPartner',
   UPDATE_CP_PROPERTY_SM: '/channelPartner/updateCppropertySM',
+  VERIFY_CP:"channelPartner/verifyCp",
 
   // Appointment
   GET_APPOINTMENT_LIST: '/appointment/getAppointmentList',

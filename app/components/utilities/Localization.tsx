@@ -36,7 +36,7 @@ const strings = new LocalizedStrings({
     accountNo: "Account No",
     ifscCode: "IFSC Code",
     reraCertificate: "RERA Certificate",
-    compReraCertificate: "Company RERA Certificate",
+    compReraCertificate: "RERA Certificate",
     compPanCard: "Company Pan Card",
     CpreraCertificate: "CP RERA Certificate",
     channelParnterReraNo: "Channel Partner RERA No.",

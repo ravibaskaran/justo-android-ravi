@@ -1,6 +1,8 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import usePermission from "app/components/utilities/UserPermissions";
 import React from "react";
-import styles from "./styles";
+import { Image, Text, TouchableOpacity, View } from "react-native";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
 import strings from "../../../../components/utilities/Localization";
 import {
   BLACK_COLOR,
@@ -8,12 +10,10 @@ import {
   Isios,
   PURPLE_COLOR,
   RED_COLOR,
-  WHITE_COLOR,
-  YELLOW_COLOR,
+  ROLE_IDS,
+  WHITE_COLOR
 } from "../../../../components/utilities/constant";
-import images from "../../../../assets/images";
-import Button from "../../../../components/Button";
-import usePermission from "app/components/utilities/UserPermissions";
+import styles from "./styles";
 
 const AgencyListItem = (props: any) => {
   const { view, edit, status } = usePermission({
@@ -24,7 +24,16 @@ const AgencyListItem = (props: any) => {
   return (
     <View style={styles.IteamView}>
       <View style={styles.Txtview}>
-        <View style={styles.projectContainer}>
+        <View
+          style={[
+            props?.items?.cp_verify
+              ? styles.iconContainer
+              : styles.projectContainer,
+          ]}
+        >
+          {props?.items?.cp_verify ? (
+            <Image source={images.verify} style={styles.verify} />
+          ) : null}
           <Text style={styles.projectTxt}>
             {strings.cpCapital + " " + strings.name} :
           </Text>
@@ -128,6 +137,21 @@ const AgencyListItem = (props: any) => {
           </Text>
         </View>
       </View>
+      {props?.items?.cp_verify ? (
+        <View style={styles.Txtview}>
+          <View style={styles.projectContainer}>
+            <Text style={styles.projectTxt}>Verified by :</Text>
+          </View>
+          <View style={styles.nameContainer}>
+            <Text style={styles.nameTxt}>
+              {props?.items.cp_verified_by
+                ? props?.items.cp_verified_by
+                : strings.notfount}
+            </Text>
+          </View>
+        </View>
+      ) : null}
+
       <View style={styles.buttonContainer}>
         {edit && (
           <Button
@@ -169,6 +193,25 @@ const AgencyListItem = (props: any) => {
             }}
           />
         )}
+        {props?.userData?.data?.role_id === ROLE_IDS.sourcingtl_id &&
+        !props?.items?.cp_verify ? (
+          <Button
+            width={60}
+            height={30}
+            bgcolor={WHITE_COLOR}
+            bordercolor={GREEN_COLOR}
+            borderWidth={1}
+            btnTxtcolor={GREEN_COLOR}
+            buttonText={"Verify"}
+            btnTxtsize={14}
+            border={10}
+            handleBtnPress={() => {
+              props.setIsVerify(true);
+              props?.setChangeStatus(props.items);
+            }}
+          />
+        ) : null}
+
         {view && (
           <TouchableOpacity
             style={styles.Viewbutton}

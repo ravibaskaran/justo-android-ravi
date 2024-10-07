@@ -120,7 +120,19 @@ const styles = StyleSheet.create({
     color: WHITE_COLOR,
     textAlign: "center",
   },
-  count: { alignSelf: "flex-end", marginRight: 10,marginVertical:2,fontWeight:'700'},
+  count: {
+    alignSelf: "flex-end",
+    marginRight: 10,
+    marginVertical: 2,
+    fontWeight: "700",
+  },
+  verify: { width: normalizeWidth(30), height: normalizeHeight(30) },
+  iconContainer: {
+    flex: 2.5,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
 });
 
 export default styles;

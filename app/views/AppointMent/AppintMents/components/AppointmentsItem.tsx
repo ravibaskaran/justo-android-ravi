@@ -359,7 +359,7 @@ const AppointmentItem = (props: any) => {
       {userData?.data?.role_title === "Closing TL" &&
      ( props.items.status === 1 || props.items.status === 10) ? (
         <View style={[styles.buttonContainer, { justifyContent: "center" }]}>
-          {props.items.pickup === "Yes" && !checkinStaus ? (
+          {/* {props.items.pickup === "Yes" && !checkinStaus ? (
             <Button
               width={150}
               height={30}
@@ -376,7 +376,7 @@ const AppointmentItem = (props: any) => {
               }}
               textTransform={"uppercase"}
             />
-          ) : null}
+          ) : null} */}
           {allocate && (
             <Button
               width={100}

@@ -128,5 +128,10 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 10,
   },
+  date: {
+    fontWeight: "900",
+    fontFamily: FONT_FAMILY_SEMIBOLD,
+    fontSize: normalize(Isios ? 14 : 13),
+  },
 });
 export default styles;

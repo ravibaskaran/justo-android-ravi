@@ -66,13 +66,15 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
 
   const [agencyData, setAgencyData] = useState({
     profile_picture: type === "edit" ? "" : "",
-    cp_type: 1,
+    cp_type: 2,
     gstApplicable: 1,
     owner_name: "",
     adhar_no: "",
     pancard_no: "",
     gender: "",
     date_of_birth: "",
+    start_date: "",
+    end_date: "",
     primary_mobile: "",
     whatsapp_number: "",
     email: "",
@@ -146,6 +148,8 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
       pancard_no: "",
       gender: "",
       date_of_birth: "",
+      start_date: "",
+      end_date: "",
       primary_mobile: "",
       whatsapp_number: "",
       email: "",
@@ -246,10 +250,13 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
             declaration_letter_of_company:
               response?.data[0]?.declaration_letter_of_company ?? "",
             location: response?.data[0]?.location ?? "",
+            start_date: response?.data[0]?.rera_start_date?? "",
+            end_date: response?.data[0]?.rera_end_date?? "",
             // state_code: response?.data[0]?.state_code ?? "",
             // country_code: response?.data[0]?.country_code ?? "",
             // city: response?.data[0]?.city ?? "",
             // zip: response?.data[0]?.zip ?? "",
+            
             norera_register:
               handleValues(allDatas?.rera_certificate_no) &&
               handleValues(allDatas?.rera_certificate) === false
@@ -396,6 +403,13 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
       if (formType === 0) {
         if (agencyData?.cp_type === 1) {
           if (
+            agencyData.rera_certificate == null ||
+            agencyData.rera_certificate == "" ||
+            agencyData.rera_certificate == undefined
+          ) {
+            isError = false;
+            errorMessage = strings.reraCertImgReqVal;
+          } else if (
             agencyData.owner_name == undefined ||
             agencyData.owner_name?.trim() == ""
           ) {
@@ -458,6 +472,15 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
           ) {
             isError = false;
             errorMessage = strings.reraCertNoCheckValid;
+          } else if (agencyData?.start_date === "") {
+            isError = false;
+            errorMessage = "Invalid start date";
+          } else if (agencyData?.end_date === "") {
+            isError = false;
+            errorMessage = "Invalid end date";
+          } else if (!(agencyData?.start_date <= agencyData?.end_date)) {
+            isError = false;
+            errorMessage = "End date should not be less than start date ";
           }
           // else if (
           //   agencyData.location == undefined ||
@@ -502,6 +525,13 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
           // }
         } else if (agencyData?.cp_type === 2) {
           if (
+            agencyData.rera_certificate == null ||
+            agencyData.rera_certificate == "" ||
+            agencyData.rera_certificate == undefined
+          ) {
+            isError = false;
+            errorMessage = strings.reraCertImgReqVal;
+          } else if (
             agencyData.owner_name == undefined ||
             agencyData.owner_name?.trim() == ""
           ) {
@@ -514,7 +544,7 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
           //   isError = false;
           //   errorMessage = strings.NameCorrectlyVal;
           // }
-           else if (
+          else if (
             agencyData.primary_mobile == undefined ||
             agencyData.primary_mobile == ""
           ) {
@@ -564,6 +594,15 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
           ) {
             isError = false;
             errorMessage = strings.reraCertNoCheckValid;
+          } else if (agencyData?.start_date === "") {
+            isError = false;
+            errorMessage = "Invalid start date";
+          } else if (agencyData?.end_date === "") {
+            isError = false;
+            errorMessage = "Invalid end date";
+          } else if (!(agencyData?.start_date <= agencyData?.end_date)) {
+            isError = false;
+            errorMessage = "End date should not be less than start date ";
           }
           // else if (
           //   agencyData.location == undefined ||
@@ -996,11 +1035,13 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
       }
     }
   }, [emailAndMobileData]);
-  const handleCheckEmailMobile = (type: any) => {
+  const handleCheckEmailMobile = (type: any, rera: any) => {
     let params = {};
     if (type == 1) params = { mobile: agencyData?.primary_mobile };
     else if (type == 2)
-      params = { rera_certificate_no: agencyData?.rera_certificate_no };
+      params = {
+        rera_certificate_no: rera ? rera : agencyData?.rera_certificate_no,
+      };
     else params = { email: agencyData?.email };
 
     dispatch(checkEmailMobile(params));
@@ -1117,6 +1158,14 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
         formData.append(
           "date_of_birth",
           agencyData?.date_of_birth ? agencyData?.date_of_birth : ""
+        );
+        formData.append(
+          "rera_start_date",
+          agencyData?.start_date ? agencyData?.start_date : ""
+        );
+        formData.append(
+          "rera_end_date",
+          agencyData?.end_date ? agencyData?.end_date : ""
         );
         formData.append(
           "location",
@@ -1456,6 +1505,10 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
           setAgencyData({
             ...agencyData,
             rera_certificate_no: "",
+            owner_name: "",
+            rera_certificate: "",
+            start_date: "",
+            end_date: "",
           });
         }}
         handleYesResponse={() => {

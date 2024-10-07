@@ -51,6 +51,7 @@ const images = {
   pause: require('./pause.png'),
   deleteIcon: require('./deleteIcon.png'),
   media: require('./media.png'),
+  verify: require('./verify-icon.png'),
 };
 
 export default images;

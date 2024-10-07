@@ -130,7 +130,16 @@ const InputCalender = (props: any) => {
   };
 
   const OpenCalender = () => {
-    if (!props.disabled) setOpen(true);
+    if (!props.disabled) {
+      setOpen(true);
+    } else {
+      if (props?.message) {
+        ErrorMessage({
+          msg: props?.message,
+          backgroundColor: RED_COLOR,
+        });
+      }
+    }
   };
   return (
     <Pressable onPress={() => OpenCalender()}>

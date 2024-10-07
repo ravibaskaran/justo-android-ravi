@@ -28,9 +28,11 @@ const AgentBankInfo = (props: any) => {
     return (
       <View style={styles.innerBoxVw}>
         <Text style={styles.innerBoxTxt}>{item.property_title}</Text>
-        {props.type === "add" ?<TouchableOpacity onPress={() => props.handleDelete(item, index)}>
-          <Image source={images.close} style={styles.crossVw} />
-        </TouchableOpacity> : null}
+        {props.type === "add" ? (
+          <TouchableOpacity onPress={() => props.handleDelete(item, index)}>
+            <Image source={images.close} style={styles.crossVw} />
+          </TouchableOpacity>
+        ) : null}
       </View>
     );
   };
@@ -138,9 +140,7 @@ const AgentBankInfo = (props: any) => {
             <InputField
               disableSpecialCharacters={true}
               // require={true}
-              placeholderText={
-                "22AAAAA0000A1Z5"
-              }
+              placeholderText={"22AAAAA0000A1Z5"}
               maxLength={20}
               headingText={
                 props?.agencyData?.cp_type === 1 ? strings.gst : strings.compGst
@@ -212,7 +212,15 @@ const AgentBankInfo = (props: any) => {
             </View>
           </View>
         )}
-        <View
+
+        {/* <View
+          style={[
+            styles.inputWrap,
+            {
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+               {/* <View
           style={[
             styles.inputWrap,
             {
@@ -235,7 +243,6 @@ const AgentBankInfo = (props: any) => {
                 ? strings.CpreraCertificate
                 : strings.compReraCertificate}
             </Text>
-            {/* <RequiredStart /> */}
           </View>
           <View style={{ flex: 0.5 }}>
             <TouchableOpacity
@@ -266,7 +273,8 @@ const AgentBankInfo = (props: any) => {
               </Text>
             )}
           </View>
-        </View>
+        </View> */}
+
         {props?.agencyData?.cp_type === 2 ? (
           <View
             style={[
@@ -316,6 +324,7 @@ const AgentBankInfo = (props: any) => {
             </View>
           </View>
         ) : null}
+
         {props.type === "add" ? (
           <View
             style={[
@@ -358,12 +367,7 @@ const AgentBankInfo = (props: any) => {
             </View>
           </View>
         ) : (
-          <View
-            style={[
-              styles.inputWrap,
-              {  alignItems: "flex-start"},
-            ]}
-          >
+          <View style={[styles.inputWrap, { alignItems: "flex-start" }]}>
             <View
               style={{
                 flex: 1,
@@ -372,7 +376,9 @@ const AgentBankInfo = (props: any) => {
                 justifyContent: "center",
               }}
             >
-              <Text style={styles.headingText}>{strings.allocatedProperty}</Text>
+              <Text style={styles.headingText}>
+                {strings.allocatedProperty}
+              </Text>
             </View>
           </View>
         )}

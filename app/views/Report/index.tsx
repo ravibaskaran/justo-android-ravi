@@ -1,6 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import ReportView from "./components/ReportView";
-import { useDispatch, useSelector } from "react-redux";
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import {
   GetBMreport,
   GetCMReport,
@@ -9,17 +7,17 @@ import {
   GetSMReport,
   GetSTReport,
 } from "app/Redux/Actions/ReportActions";
+import ErrorMessage from "app/components/ErrorMessage";
 import {
-  BLACK_COLOR,
+  DATE_FORMAT,
   RED_COLOR,
   ROLE_IDS,
 } from "app/components/utilities/constant";
-import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import moment from "moment";
-import ErrorMessage from "app/components/ErrorMessage";
-import strings from "app/components/utilities/Localization";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Keyboard } from "react-native";
-import { START_LOADING, STOP_LOADING } from "app/Redux/types";
+import { useDispatch, useSelector } from "react-redux";
+import ReportView from "./components/ReportView";
 
 const ReportScreen = ({ navigation }: any) => {
   const [reportData, setReportData] = useState([]);
@@ -32,6 +30,8 @@ const ReportScreen = ({ navigation }: any) => {
     user_id: "",
     parent_id: "",
   });
+  const [selectedStartDate, setSelectedStartDate] = useState("");
+  const [selectedEndDate, setSelectedEndDate] = useState("");
   const [propertyListForFilter, setPropertyListForFilter] = useState([]);
   const [clusterheadListForFilter, setClusterheadListForFilter] = useState([]);
   const dispatch: any = useDispatch();
@@ -56,12 +56,13 @@ const ReportScreen = ({ navigation }: any) => {
   currentMonths = currentMonths <= 9 ? `0${currentMonths}` : currentMonths;
   var currentYears = currentDate.getFullYear();
   var todayDate = currentYears + "-" + currentMonths + "-" + currentDay;
+  var today = moment(new Date()).format(DATE_FORMAT);
 
   const today_Date = filterData?.startdate
     ? moment(filterData?.startdate).format("DD-MM-YYYY")
     : moment(new Date(date.getFullYear(), date.getMonth(), 1)).format(
-      "DD-MM-YYYY"
-    );
+        "DD-MM-YYYY"
+      );
   const lastDate = filterData?.enddate
     ? moment(filterData?.enddate).format("DD-MM-YYYY")
     : moment(new Date()).format("DD-MM-YYYY");
@@ -69,7 +70,7 @@ const ReportScreen = ({ navigation }: any) => {
 
   useLayoutEffect(() => {
     if (!filterModalVisible) {
-      getData("", "");
+      getData(today, today);
     }
   }, [isFocused, filterData, navigation]);
   useEffect(() => {
@@ -85,8 +86,8 @@ const ReportScreen = ({ navigation }: any) => {
   useFocusEffect(
     React.useCallback(() => {
       setFilterData({
-        startdate: "",
-        enddate: "",
+        startdate: today,
+        enddate: today,
         property_id: "",
         by_team: "",
         user_id: "",
@@ -209,9 +210,11 @@ const ReportScreen = ({ navigation }: any) => {
 
   const handleCTANavigation = (navigateTo: any) => {
     // navigation.navigate(navigateTo)
-  }
+  };
 
   const getData = (startDate: any, endDate: any) => {
+    setSelectedStartDate(startDate);
+    setSelectedEndDate(endDate);
     if (roleId === ROLE_IDS.closingmanager_id) {
       dispatch(
         GetCMReport({
@@ -280,14 +283,14 @@ const ReportScreen = ({ navigation }: any) => {
     setIsFilterModalVisible(false);
     setFilterData({
       ...filterData,
-      startdate: "",
-      enddate: "",
+      startdate: today,
+      enddate: today,
       property_id: "",
       by_team: "",
       user_id: "",
       parent_id: "",
     });
-    getData("", "");
+    getData(today, today);
   };
 
   const handleFilter = () => {
@@ -301,7 +304,7 @@ const ReportScreen = ({ navigation }: any) => {
   };
 
   const handleCpDetailPress = (list: any, name: any) => {
-    if(name !== "Demo"){
+    if (name !== "Demo") {
       navigation.navigate("CpDetailForReport", { cpList: list, smName: name });
     }
   };
@@ -325,6 +328,8 @@ const ReportScreen = ({ navigation }: any) => {
         setClusterheadListForFilter={setClusterheadListForFilter}
         handleCTANavigation={handleCTANavigation}
         fileName={fileName}
+        selectedStartDate={selectedStartDate}
+        selectedEndDate={selectedEndDate}
       />
     </>
   );
