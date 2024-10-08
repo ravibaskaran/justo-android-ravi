@@ -20,15 +20,18 @@ import { DATE_FORMAT } from "react-native-gifted-chat";
 const MyAppointment = (props: any) => {
   const { edit, view, status } = usePermission({
     edit:
-      props.roleId === ROLE_IDS.sourcingtl_id
+      props.roleId === ROLE_IDS.sourcingtl_id ||
+      props.roleId === ROLE_IDS.sourcing_head_id
         ? "edit_appointment_with_sm"
         : "edit_appointment_with_cp",
     view:
-      props.roleId === ROLE_IDS.sourcingtl_id
+      props.roleId === ROLE_IDS.sourcingtl_id ||
+      props.roleId === ROLE_IDS.sourcing_head_id
         ? "view_appointment_with_sm"
         : "view_appointment_with_cp",
     status:
-      props.roleId === ROLE_IDS.sourcingtl_id
+      props.roleId === ROLE_IDS.sourcingtl_id ||
+      props.roleId === ROLE_IDS.sourcing_head_id
         ? "status_appointment_with_sm"
         : "status_appointment_with_cp",
   });

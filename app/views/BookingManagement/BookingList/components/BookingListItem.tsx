@@ -107,6 +107,7 @@ const BookingListItem = (props: any) => {
         </View>
       </View>
       {(getLoginType?.response?.data?.role_id === ROLE_IDS.postsales_id ||
+        getLoginType?.response?.data?.role_id === ROLE_IDS.admin_id ||
         getLoginType?.response?.data?.role_id === ROLE_IDS.sitehead_id) &&
       props?.type !== "readyToBook" ? (
         <>
@@ -255,30 +256,32 @@ const BookingListItem = (props: any) => {
             </Text>
           </View>
         </View>
-        {props.items.lead_source === CONST_IDS.cp_lead_source_id ? <>
-          <View style={styles.Txtview}>
-            <View style={styles.projectContainer}>
-              <Text style={styles.projectTxt}>CP Name :</Text>
+        {props.items.lead_source === CONST_IDS.cp_lead_source_id ? (
+          <>
+            <View style={styles.Txtview}>
+              <View style={styles.projectContainer}>
+                <Text style={styles.projectTxt}>CP Name :</Text>
+              </View>
+              <View style={styles.nameContainer}>
+                <Text style={styles.nameTxt}>
+                  {props.items.cp_name ? props.items.cp_name : strings.notfount}
+                </Text>
+              </View>
             </View>
-            <View style={styles.nameContainer}>
-              <Text style={styles.nameTxt}>
-                {props.items.cp_name ? props.items.cp_name : strings.notfount}
-              </Text>
+            <View style={styles.Txtview}>
+              <View style={styles.projectContainer}>
+                <Text style={styles.projectTxt}>CP Employee Name </Text>
+              </View>
+              <View style={styles.nameContainer}>
+                <Text style={styles.nameTxt}>
+                  {props.items.cp_emp_name && props.items.cp_emp_name.length > 0
+                    ? props.items.cp_emp_name
+                    : strings.notfount}
+                </Text>
+              </View>
             </View>
-          </View>
-          <View style={styles.Txtview}>
-            <View style={styles.projectContainer}>
-              <Text style={styles.projectTxt}>CP Employee Name </Text>
-            </View>
-            <View style={styles.nameContainer}>
-              <Text style={styles.nameTxt}>
-                {props.items.cp_emp_name && props.items.cp_emp_name.length > 0
-                  ?  props.items.cp_emp_name
-                  : strings.notfount}
-              </Text>
-            </View>
-          </View>
-        </> : null}
+          </>
+        ) : null}
       </>
 
       <View style={styles.buttonContainer}>

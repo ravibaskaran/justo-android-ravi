@@ -46,13 +46,17 @@ const VisitorUpdateView = (props: any) => {
 
   const Cmteam =
     ROLE_IDS.closingtl_id === id || ROLE_IDS.closingmanager_id === id;
+  const CHteam =
+    ROLE_IDS.closing_head_id === id || ROLE_IDS.closingmanager_id === id;
   const SMteam =
     ROLE_IDS.sourcingtl_id === id || ROLE_IDS.sourcingmanager_id === id;
+  const SHteam =
+    ROLE_IDS.sourcing_head_id === id || ROLE_IDS.sourcingmanager_id === id;
 
   const leadsourcefilteredData: any = props.masterDatas.filter((obj: any) =>
-    Cmteam
+    Cmteam || CHteam
       ? obj.title !== "Channel Partner"
-      : SMteam
+      : SHteam || SMteam
       ? obj.title === "Channel Partner"
       : obj.title !== ""
   );
@@ -140,6 +144,7 @@ const VisitorUpdateView = (props: any) => {
             placeholderText={"Name"}
             editable={
               userData?.data?.role_id === ROLE_IDS.closingtl_id ||
+              userData?.data?.role_id === ROLE_IDS.closing_head_id ||
               userData?.data?.role_id === ROLE_IDS.closingmanager_id
                 ? false
                 : true
@@ -251,6 +256,7 @@ const VisitorUpdateView = (props: any) => {
             }
             disable={
               userData?.data?.role_id === ROLE_IDS.closingtl_id ||
+              userData?.data?.role_id === ROLE_IDS.closing_head_id ||
               userData?.data?.role_id === ROLE_IDS.closingmanager_id
                 ? true
                 : false
@@ -293,9 +299,11 @@ const VisitorUpdateView = (props: any) => {
               if (
                 !(
                   userData?.data?.role_id === ROLE_IDS.closingtl_id ||
+                  userData?.data?.role_id === ROLE_IDS.closing_head_id ||
                   userData?.data?.role_id === ROLE_IDS.closingmanager_id ||
                   userData?.data?.role_id === ROLE_IDS.clusterhead_id ||
                   userData?.data?.role_id === ROLE_IDS.sitehead_id ||
+                  userData?.data?.role_id === ROLE_IDS.admin_id ||
                   userData?.data?.role_id === ROLE_IDS.businesshead_id
                 )
               ) {
@@ -327,6 +335,7 @@ const VisitorUpdateView = (props: any) => {
                 require
                 disable={
                   userData?.data?.role_id === ROLE_IDS.closingtl_id ||
+                  userData?.data?.role_id === ROLE_IDS.closing_head_id ||
                   userData?.data?.role_id === ROLE_IDS.closingmanager_id
                     ? true
                     : false
@@ -373,6 +382,7 @@ const VisitorUpdateView = (props: any) => {
                   require
                   disable={
                     userData?.data?.role_id === ROLE_IDS.closingtl_id ||
+                    userData?.data?.role_id === ROLE_IDS.closing_head_id ||
                     userData?.data?.role_id === ROLE_IDS.closingmanager_id
                       ? true
                       : false
@@ -416,6 +426,7 @@ const VisitorUpdateView = (props: any) => {
                     require
                     disable={
                       userData?.data?.role_id === ROLE_IDS.closingtl_id ||
+                      userData?.data?.role_id === ROLE_IDS.closing_head_id ||
                       userData?.data?.role_id === ROLE_IDS.closingmanager_id
                         ? true
                         : false
@@ -458,6 +469,7 @@ const VisitorUpdateView = (props: any) => {
                       maxHeight={300}
                       disable={
                         userData?.data?.role_id === ROLE_IDS.closingtl_id ||
+                        userData?.data?.role_id === ROLE_IDS.closing_head_id ||
                         userData?.data?.role_id === ROLE_IDS.closingmanager_id
                           ? true
                           : false
@@ -533,6 +545,7 @@ const VisitorUpdateView = (props: any) => {
             require={true}
             disable={
               userData?.data?.role_id === ROLE_IDS.closingtl_id ||
+              userData?.data?.role_id === ROLE_IDS.closing_head_id ||
               userData?.data?.role_id === ROLE_IDS.closingmanager_id
                 ? true
                 : false

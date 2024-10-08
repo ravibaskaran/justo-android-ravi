@@ -11,7 +11,7 @@ import {
   PURPLE_COLOR,
   RED_COLOR,
   ROLE_IDS,
-  WHITE_COLOR
+  WHITE_COLOR,
 } from "../../../../components/utilities/constant";
 import styles from "./styles";
 
@@ -193,7 +193,8 @@ const AgencyListItem = (props: any) => {
             }}
           />
         )}
-        {props?.userData?.data?.role_id === ROLE_IDS.sourcingtl_id &&
+        {(props?.userData?.data?.role_id === ROLE_IDS.sourcingtl_id ||
+          props?.userData?.data?.role_id === ROLE_IDS.sourcing_head_id) &&
         !props?.items?.cp_verify ? (
           <Button
             width={60}

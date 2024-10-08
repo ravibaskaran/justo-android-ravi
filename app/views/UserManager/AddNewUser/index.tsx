@@ -63,7 +63,7 @@ const AddNewUserScreen = ({ navigation, route }: any) => {
       if (type === "edit") {
         dispatch(getClosingDetail({ user_id: data?._id }));
       }
-      return () => { };
+      return () => {};
     }, [navigation])
   );
   useFocusEffect(
@@ -75,7 +75,7 @@ const AddNewUserScreen = ({ navigation, route }: any) => {
           offset: 0,
         })
       );
-      return () => { };
+      return () => {};
     }, [navigation])
   );
 
@@ -85,8 +85,10 @@ const AddNewUserScreen = ({ navigation, route }: any) => {
         const final = Roleresponse?.data?.filter((el: any) => {
           return (
             ROLE_IDS.sourcingtl_id === el._id ||
+            ROLE_IDS.sourcing_head_id === el._id ||
             ROLE_IDS.sourcingmanager_id === el._id ||
             ROLE_IDS.closingtl_id === el._id ||
+            ROLE_IDS.closing_head_id === el._id ||
             ROLE_IDS.closingmanager_id === el._id ||
             ROLE_IDS.postsales_id === el._id ||
             ROLE_IDS.receptionist_id === el._id
@@ -95,8 +97,7 @@ const AddNewUserScreen = ({ navigation, route }: any) => {
         setRoleData(final);
       }
     }
-  }, [Roleresponse])
-
+  }, [Roleresponse]);
 
   useEffect(() => {
     if (type === "edit") {
@@ -306,7 +307,7 @@ const AddNewUserScreen = ({ navigation, route }: any) => {
       setCityData([]);
     }
   }, [response]);
-  const handlegetRoleList = () => { };
+  const handlegetRoleList = () => {};
   const handlegetPropertyList = () => {
     dispatch(
       getChatListForProperty({

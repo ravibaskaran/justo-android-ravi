@@ -3,6 +3,7 @@ import {
   GetBMreport,
   GetCMReport,
   GetCTReport,
+  GetSCMeport,
   GetSHCHreport,
   GetSMReport,
   GetSTReport,
@@ -102,7 +103,8 @@ const ReportScreen = ({ navigation }: any) => {
       if (propertyListForFilter.length === 0) {
         if (
           roleId === ROLE_IDS.clusterhead_id ||
-          roleId === ROLE_IDS.sitehead_id
+          roleId === ROLE_IDS.sitehead_id ||
+          roleId === ROLE_IDS.admin_id
         ) {
           reportData?.map((item: any, index: any) => {
             arrForProperty.push({
@@ -137,7 +139,8 @@ const ReportScreen = ({ navigation }: any) => {
       let arrForCluster: any = [];
       if (
         roleId === ROLE_IDS.clusterhead_id ||
-        roleId === ROLE_IDS.sitehead_id
+        roleId === ROLE_IDS.sitehead_id ||
+        roleId === ROLE_IDS.admin_id
       ) {
         // reportData?.map((item: any, index: any) => {
         //   arrForProperty.push({
@@ -228,7 +231,10 @@ const ReportScreen = ({ navigation }: any) => {
       //     end_date: endDate.toString(),
       //   })
       // );
-    } else if (roleId === ROLE_IDS.closingtl_id) {
+    } else if (
+      roleId === ROLE_IDS.closingtl_id ||
+      roleId === ROLE_IDS.closing_head_id
+    ) {
       dispatch(
         GetCTReport({
           start_date: startDate.toString(),
@@ -242,16 +248,27 @@ const ReportScreen = ({ navigation }: any) => {
           end_date: endDate.toString(),
         })
       );
-    } else if (roleId === ROLE_IDS.sourcingtl_id) {
+    } else if (
+      roleId === ROLE_IDS.sourcingtl_id ||
+      roleId === ROLE_IDS.sourcing_head_id
+    ) {
       dispatch(
         GetSTReport({
           start_date: startDate.toString(),
           end_date: endDate.toString(),
         })
       );
+    } else if (roleId === ROLE_IDS.scm_id) {
+      dispatch(
+        GetSCMeport({
+          start_date: startDate.toString(),
+          end_date: endDate.toString(),
+        })
+      );
     } else if (
       roleId === ROLE_IDS.sitehead_id ||
-      roleId === ROLE_IDS.clusterhead_id
+      roleId === ROLE_IDS.clusterhead_id ||
+      roleId === ROLE_IDS.admin_id
     ) {
       dispatch(
         GetSHCHreport({

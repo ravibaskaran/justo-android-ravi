@@ -38,8 +38,10 @@ const PropertyDetailItem = (props: any) => {
       </View> */}
       {props.userData?.data?.role_id === ROLE_IDS.closingmanager_id ||
       props.userData?.data?.role_id === ROLE_IDS.closingtl_id ||
-      props.userData?.data?.role_id === ROLE_IDS.clusterhead_id || 
+      props.userData?.data?.role_id === ROLE_IDS.closing_head_id ||
+      props.userData?.data?.role_id === ROLE_IDS.clusterhead_id ||
       props.userData?.data?.role_id === ROLE_IDS.sitehead_id ||
+      props.userData?.data?.role_id === ROLE_IDS.admin_id ||
       props.userData?.data?.role_id === ROLE_IDS.businesshead_id ? (
         <View style={styles.topBtnView}>
           <TouchableOpacity

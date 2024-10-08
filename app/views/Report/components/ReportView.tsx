@@ -21,6 +21,7 @@ import FilterModal from "./modal/ReportFilterModal";
 import BusinessHeadReportTable from "./BusinessHeadReportTable";
 import moment from "moment";
 import { normalize } from "app/components/scaleFontSize";
+import SCMReportTable from "./SCMReportTable";
 
 const ReportView = (props: any) => {
   const {
@@ -102,7 +103,16 @@ const ReportView = (props: any) => {
             handleCTANavigation={handleCTANavigation}
             fileName={fileName}
           />
-        ) : roleId === ROLE_IDS.sourcingtl_id ? (
+        ) : roleId === ROLE_IDS.scm_id ? (
+          <SCMReportTable
+            data={reportData}
+            onReset={onReset}
+            userData={userData}
+            handleCTANavigation={handleCTANavigation}
+            fileName={fileName}
+          />
+        ) : roleId === ROLE_IDS.sourcingtl_id ||
+          roleId === ROLE_IDS.sourcing_head_id ? (
           <STReportTable
             data={reportData}
             onReset={onReset}
@@ -111,7 +121,8 @@ const ReportView = (props: any) => {
             handleCTANavigation={handleCTANavigation}
             fileName={fileName}
           />
-        ) : roleId === ROLE_IDS.closingtl_id ? (
+        ) : roleId === ROLE_IDS.closingtl_id ||
+          roleId === ROLE_IDS.closing_head_id ? (
           <CTReportTable
             data={reportData}
             onReset={onReset}
@@ -120,7 +131,8 @@ const ReportView = (props: any) => {
             fileName={fileName}
           />
         ) : roleId === ROLE_IDS.clusterhead_id ||
-          roleId === ROLE_IDS.sitehead_id ? (
+          roleId === ROLE_IDS.sitehead_id ||
+          roleId === ROLE_IDS.admin_id ? (
           <ClusterHeadReportTable
             data={reportData}
             onReset={onReset}

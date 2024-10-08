@@ -45,14 +45,16 @@ const AppointmentView = (props: any) => {
       {
         key: "first",
         title:
-          roleId === ROLE_IDS.sourcingtl_id
+          roleId === ROLE_IDS.sourcingtl_id ||
+          roleId === ROLE_IDS.sourcing_head_id
             ? "My Appointment"
             : "Today Appointment",
       },
       {
         key: "second",
         title:
-          roleId === ROLE_IDS.sourcingtl_id
+          roleId === ROLE_IDS.sourcingtl_id ||
+          roleId === ROLE_IDS.sourcing_head_id
             ? "SM Appointment With CP"
             : "All Appointment",
       },
@@ -117,16 +119,25 @@ const AppointmentView = (props: any) => {
         status: "",
       });
       if (indexData?.index == 1) {
-        if (roleId === ROLE_IDS.sourcingtl_id) {
+        if (
+          roleId === ROLE_IDS.sourcingtl_id ||
+          roleId === ROLE_IDS.sourcing_head_id
+        ) {
           props.getAppointmentList(
-            roleId === ROLE_IDS.sourcingtl_id ? 3 : 1,
+            roleId === ROLE_IDS.sourcingtl_id ||
+              roleId === ROLE_IDS.sourcing_head_id
+              ? 3
+              : 1,
             {}
           );
         } else {
           props.getAppointmentList(2, {});
         }
       } else {
-        if (roleId === ROLE_IDS.sourcingtl_id) {
+        if (
+          roleId === ROLE_IDS.sourcingtl_id ||
+          roleId === ROLE_IDS.sourcing_head_id
+        ) {
           props.getAppointmentList(2, {});
         } else {
           props.getAppointmentList(2, todayDate);
@@ -143,14 +154,16 @@ const AppointmentView = (props: any) => {
         {
           key: "first",
           title:
-            roleId === ROLE_IDS.sourcingtl_id
+            roleId === ROLE_IDS.sourcingtl_id ||
+            roleId === ROLE_IDS.sourcing_head_id
               ? "My Appointment"
               : "Today Appointment",
         },
         {
           key: "second",
           title:
-            roleId === ROLE_IDS.sourcingtl_id
+            roleId === ROLE_IDS.sourcingtl_id ||
+            roleId === ROLE_IDS.sourcing_head_id
               ? "SM Appointment With CP"
               : "All Appointment",
         },
@@ -177,15 +190,27 @@ const AppointmentView = (props: any) => {
   const onPressApply = (type: any) => {
     if (type === "reset") {
       if (indexData?.index == 1) {
-        props.getAppointmentList(roleId === ROLE_IDS.sourcingtl_id ? 3 : 1, {});
+        props.getAppointmentList(
+          roleId === ROLE_IDS.sourcingtl_id ||
+            roleId === ROLE_IDS.sourcing_head_id
+            ? 3
+            : 1,
+          {}
+        );
       } else {
         props.getAppointmentList(2, {});
       }
     } else {
       if (indexData?.index == 1) {
-        if (roleId === ROLE_IDS.sourcingtl_id) {
+        if (
+          roleId === ROLE_IDS.sourcingtl_id ||
+          roleId === ROLE_IDS.sourcing_head_id
+        ) {
           props.getAppointmentList(
-            roleId === ROLE_IDS.sourcingtl_id ? 3 : 1,
+            roleId === ROLE_IDS.sourcingtl_id ||
+              roleId === ROLE_IDS.sourcing_head_id
+              ? 3
+              : 1,
             props.filterData
           );
         } else {
@@ -232,7 +257,10 @@ const AppointmentView = (props: any) => {
       props.setFilterData(todayDate);
       if (indexData?.index == 1) {
         props.getAppointmentList(
-          roleId === ROLE_IDS.sourcingtl_id ? 3 : 1,
+          roleId === ROLE_IDS.sourcingtl_id ||
+            roleId === ROLE_IDS.sourcing_head_id
+            ? 3
+            : 1,
           todayDate
         );
       } else {
@@ -246,7 +274,13 @@ const AppointmentView = (props: any) => {
         status: "",
       });
       if (indexData?.index == 1) {
-        props.getAppointmentList(roleId === ROLE_IDS.sourcingtl_id ? 3 : 1, {});
+        props.getAppointmentList(
+          roleId === ROLE_IDS.sourcingtl_id ||
+            roleId === ROLE_IDS.sourcing_head_id
+            ? 3
+            : 1,
+          {}
+        );
       } else {
         props.getAppointmentList(2, {});
       }
@@ -290,7 +324,8 @@ const AppointmentView = (props: any) => {
         Count :{" "}
         {props.appointmentList?.length ? props.appointmentList?.length : 0}
       </Text>
-      {roleId === ROLE_IDS.sourcingtl_id ? (
+      {roleId === ROLE_IDS.sourcingtl_id ||
+      roleId === ROLE_IDS.sourcing_head_id ? (
         <FlatList
           data={props.appointmentList}
           renderItem={({ item }) => (
@@ -312,7 +347,12 @@ const AppointmentView = (props: any) => {
               customer_name: "",
               status: "",
             });
-            props.getAppointmentList(roleId === ROLE_IDS.sourcingtl_id ? 3 : 1);
+            props.getAppointmentList(
+              roleId === ROLE_IDS.sourcingtl_id ||
+                roleId === ROLE_IDS.sourcing_head_id
+                ? 3
+                : 1
+            );
           }}
           refreshing={loadingref}
         />
@@ -353,7 +393,7 @@ const AppointmentView = (props: any) => {
   };
   const { create } = usePermission({
     create:
-      roleId === ROLE_IDS.sourcingtl_id
+      roleId === ROLE_IDS.sourcingtl_id || roleId === ROLE_IDS.sourcing_head_id
         ? "add_appointment_with_sm"
         : "add_appointment_with_cp",
   });
@@ -365,7 +405,8 @@ const AppointmentView = (props: any) => {
         rightFirstImageScr={indexData?.index == 1 ? images.filter : null}
         rightSecondImageScr={images.notification}
         headerText={
-          roleId === ROLE_IDS.sourcingtl_id
+          roleId === ROLE_IDS.sourcingtl_id ||
+          roleId === ROLE_IDS.sourcing_head_id
             ? strings.appointmentWithSMHeader
             : strings.appointmentWithCPHeader
         }
@@ -381,10 +422,14 @@ const AppointmentView = (props: any) => {
           marginVertical: 10,
           flexDirection: "row",
           justifyContent:
-            roleId === ROLE_IDS.sourcingtl_id ? "space-between" : "center",
+            roleId === ROLE_IDS.sourcingtl_id ||
+            roleId === ROLE_IDS.sourcing_head_id
+              ? "space-between"
+              : "center",
         }}
       >
-        {roleId === ROLE_IDS.sourcingtl_id ? (
+        {roleId === ROLE_IDS.sourcingtl_id ||
+        roleId === ROLE_IDS.sourcing_head_id ? (
           <Button
             width={120}
             height={30}

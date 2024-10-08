@@ -9,8 +9,6 @@ import {
   WHITE_COLOR,
 } from "app/components/utilities/constant";
 
-
-
 const EmployeeListItem = (props: any) => {
   return (
     <View style={styles.IteamView}>
@@ -68,7 +66,8 @@ const EmployeeListItem = (props: any) => {
           </Text>
         </View>
       </View>
-      {props?.userData?.data?.role_id === ROLE_IDS.sourcingtl_id ? (
+      {props?.userData?.data?.role_id === ROLE_IDS.sourcingtl_id ||
+      props?.userData?.data?.role_id === ROLE_IDS.sourcing_head_id ? (
         <View style={styles.buttonContainer}>
           <Button
             width={78}

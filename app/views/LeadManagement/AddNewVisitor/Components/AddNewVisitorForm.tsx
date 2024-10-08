@@ -55,20 +55,26 @@ const AddNewVisitorForm = (props: any) => {
 
   const Cmteam =
     ROLE_IDS.closingtl_id === id || ROLE_IDS.closingmanager_id === id;
+  const CHteam =
+    ROLE_IDS.closing_head_id === id || ROLE_IDS.closingmanager_id === id;
   const SMteam =
     ROLE_IDS.sourcingtl_id === id || ROLE_IDS.sourcingmanager_id === id;
+  const SHteam =
+    ROLE_IDS.sourcing_head_id === id || ROLE_IDS.sourcingmanager_id === id;
 
   const leadsourcefilteredData: any = masterDatas.filter((obj: any) =>
-    Cmteam
+    Cmteam || CHteam
       ? obj.title !== "Channel Partner"
-      : SMteam
+      : SHteam || SMteam
       ? obj.title === "Channel Partner"
       : obj.title !== ""
   );
 
   const { create } = usePermission({
     create:
-      ROLE_IDS.closingtl_id === id || ROLE_IDS.closingmanager_id === id
+      ROLE_IDS.closingtl_id === id ||
+      ROLE_IDS.closing_head_id == id ||
+      ROLE_IDS.closingmanager_id === id
         ? "add_appointment"
         : "add_appointment _site_visite",
   });
@@ -326,11 +332,14 @@ const AddNewVisitorForm = (props: any) => {
                     userData?.userData?.data?.role_id ===
                       ROLE_IDS.closingtl_id ||
                     userData?.userData?.data?.role_id ===
+                      ROLE_IDS.closing_head_id ||
+                    userData?.userData?.data?.role_id ===
                       ROLE_IDS.closingmanager_id ||
                     userData?.userData?.data?.role_id ===
                       ROLE_IDS.clusterhead_id ||
                     userData?.userData?.data?.role_id ===
                       ROLE_IDS.sitehead_id ||
+                    userData?.userData?.data?.role_id === ROLE_IDS.admin_id ||
                     userData?.userData?.data?.role_id ===
                       ROLE_IDS.businesshead_id
                   )
@@ -547,7 +556,9 @@ const AddNewVisitorForm = (props: any) => {
                   ? props.formData?.property_title
                   : "Property"
               }
-              data={props?.allProperty.filter((item: any) => item.status == true)}
+              data={props?.allProperty.filter(
+                (item: any) => item.status == true
+              )}
               disable={
                 props.type == "edit" ||
                 (props.type == "propertySelect" &&

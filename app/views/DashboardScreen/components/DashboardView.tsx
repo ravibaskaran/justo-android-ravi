@@ -29,6 +29,7 @@ import PostSaleDashboardView from "./PostSalesView";
 import ReceiptionistDashboardView from "./ReceptionistView";
 import SiteHeadView from "./SiteHeadView";
 import { normalizeSpacing } from "app/components/scaleFontSize";
+import SCMView from "./SCMView";
 
 const DashboardView = (props: any) => {
   const roleType = props?.getLoginType?.response?.data?.role_id || null;
@@ -47,9 +48,11 @@ const DashboardView = (props: any) => {
         {index <= 4 && (
           <TouchableOpacity
             onPress={() => {
-              roleType === ROLE_IDS.sourcingtl_id
+              roleType === ROLE_IDS.sourcingtl_id ||
+              roleType === ROLE_IDS.sourcing_head_id
                 ? props.onPressSMList("details", item)
-                : roleType === ROLE_IDS.closingtl_id
+                : roleType === ROLE_IDS.closingtl_id ||
+                  roleType === ROLE_IDS.closing_head_id
                 ? props.onPressCMLIST("details", item)
                 : props.onPressCPList("details", item);
             }}
@@ -57,7 +60,9 @@ const DashboardView = (props: any) => {
           >
             <Text style={styles.itemText}>
               {roleType === ROLE_IDS.sourcingtl_id ||
-              roleType === ROLE_IDS.closingtl_id
+              roleType === ROLE_IDS.sourcing_head_id ||
+              roleType === ROLE_IDS.closingtl_id ||
+              roleType === ROLE_IDS.closing_head_id
                 ? item.user_name
                 : roleType === ROLE_IDS.sourcingmanager_id
                 ? item.agent_name
@@ -68,20 +73,23 @@ const DashboardView = (props: any) => {
                 styles.itemText,
                 {
                   marginLeft:
-                    roleType === ROLE_IDS.closingtl_id
+                    roleType === ROLE_IDS.closingtl_id ||
+                    roleType === ROLE_IDS.closing_head_id
                       ? normalizeSpacing(14)
                       : 0,
                 },
               ]}
             >
-              {roleType === ROLE_IDS.closingtl_id
+              {roleType === ROLE_IDS.closingtl_id ||
+              roleType === ROLE_IDS.closing_head_id
                 ? item.status
                   ? strings.active
                   : strings.deactive
                 : item.total_visit}
             </Text>
             <Text style={styles.itemText}>
-              {roleType === ROLE_IDS.closingtl_id
+              {roleType === ROLE_IDS.closingtl_id ||
+              roleType === ROLE_IDS.closing_head_id
                 ? item?.today_appoinment?.toString()
                 : item.total_site_visit}
             </Text>
@@ -166,7 +174,8 @@ const DashboardView = (props: any) => {
             )}
           </View>
           {roleType === ROLE_IDS.sourcingtl_id ||
-          roleType === ROLE_IDS.sourcingmanager_id ? (
+          roleType === ROLE_IDS.sourcingmanager_id ||
+          roleType === ROLE_IDS.sourcing_head_id ? (
             <SourcingDashboardView
               dashboardData={props?.dashboardData}
               getLoginType={props.getLoginType}
@@ -179,6 +188,7 @@ const DashboardView = (props: any) => {
           ) : (
             <>
               {roleType === ROLE_IDS.closingtl_id ||
+              roleType === ROLE_IDS.closing_head_id ||
               roleType === ROLE_IDS.closingmanager_id ? (
                 <ClosingDashboardView
                   dashboardData={props?.dashboardData}
@@ -206,6 +216,7 @@ const DashboardView = (props: any) => {
                       ) : (
                         <>
                           {roleType === ROLE_IDS.sitehead_id ||
+                          roleType === ROLE_IDS.admin_id ||
                           roleType === ROLE_IDS.clusterhead_id ||
                           roleType === ROLE_IDS.businesshead_id ? (
                             <SiteHeadView
@@ -217,9 +228,30 @@ const DashboardView = (props: any) => {
                               appointmentList={props.appointmentList}
                             />
                           ) : (
-                            <View style={styles.secondPortion}>
-                              <ComingSoonScreen />
-                            </View>
+                            <>
+                              {roleType === ROLE_IDS.scm_id ? (
+                                <SCMView
+                                  dashboardData={props?.dashboardData}
+                                  getLoginType={props.getLoginType}
+                                  onPressTodayVisit={props.onPressTodayVisit}
+                                  onPressSiteVisit={props.onPressSiteVisit}
+                                  onPressSMList={props.onPressSMList}
+                                  onPressCPList={props.onPressCPList}
+                                  onpressAppointmentWithCP={
+                                    props.onpressAppointmentWithCP
+                                  }
+                                  onpressBooking={props.onpressBooking}
+                                  onpressSMList={props.onpressSMList}
+                                  onPressAppointmentItem={
+                                    props.onPressAppointmentItem
+                                  }
+                                />
+                              ) : (
+                                <View style={styles.secondPortion}>
+                                  <ComingSoonScreen />
+                                </View>
+                              )}
+                            </>
                           )}
                         </>
                       )}
@@ -239,14 +271,16 @@ const DashboardView = (props: any) => {
                   },
                 ]}
               >
-                {roleType === ROLE_IDS.sourcingtl_id ? (
+                {roleType === ROLE_IDS.sourcingtl_id ||
+                roleType === ROLE_IDS.sourcing_head_id ? (
                   <>
                     <Text style={styles.headingText}>SM Name</Text>
                     <Text style={styles.headingText}>Visitor</Text>
                     <Text style={styles.headingText}>Site Visit</Text>
                     {/* <Text style={styles.headingText}>CLOSE LEAD</Text> */}
                   </>
-                ) : roleType === ROLE_IDS.closingtl_id ? (
+                ) : roleType === ROLE_IDS.closingtl_id ||
+                  roleType === ROLE_IDS.closing_head_id ? (
                   <>
                     <Text style={styles.headingText}>CM Name</Text>
                     <Text style={styles.headingText}>Status</Text>
@@ -272,15 +306,19 @@ const DashboardView = (props: any) => {
                 )}
 
                 {(roleType === ROLE_IDS.sourcingtl_id ||
+                  roleType === ROLE_IDS.sourcing_head_id ||
                   roleType === ROLE_IDS.sourcingmanager_id ||
-                  roleType === ROLE_IDS.closingtl_id) &&
+                  roleType === ROLE_IDS.closingtl_id ||
+                  roleType === ROLE_IDS.closing_head_id) &&
                 props?.listData?.length > 5 ? (
                   <TouchableOpacity
                     style={styles.headingView}
                     onPress={() => {
-                      roleType === ROLE_IDS.sourcingtl_id
+                      roleType === ROLE_IDS.sourcingtl_id ||
+                      roleType === ROLE_IDS.sourcing_head_id
                         ? props.onPressSMList()
-                        : roleType === ROLE_IDS.closingtl_id
+                        : roleType === ROLE_IDS.closingtl_id ||
+                          roleType === ROLE_IDS.closing_head_id
                         ? props.onPressCMLIST()
                         : props.onPressCPList();
                     }}

@@ -4,7 +4,11 @@ import Modal from "react-native-modal";
 import { Dropdown } from "react-native-element-dropdown";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
-import { DATE_FORMAT, Isios, ROLE_IDS } from "app/components/utilities/constant";
+import {
+  DATE_FORMAT,
+  Isios,
+  ROLE_IDS,
+} from "app/components/utilities/constant";
 import DropdownInput from "app/components/DropDown";
 import { normalizeSpacing } from "app/components/scaleFontSize";
 import images from "app/assets/images";
@@ -83,7 +87,8 @@ const AddTargetModal = (props: any) => {
             </View>
             {props.type === "single" ? (
               props.roleIdForSelectedUser === ROLE_IDS.sourcingtl_id ||
-                props.roleIdForSelectedUser === ROLE_IDS.sourcingmanager_id ? (
+              props.roleIdForSelectedUser === ROLE_IDS.sourcing_head_id ||
+              props.roleIdForSelectedUser === ROLE_IDS.sourcingmanager_id ? (
                 <>
                   <View
                     style={[styles.inputWrap, { top: normalizeSpacing(8) }]}
@@ -123,6 +128,7 @@ const AddTargetModal = (props: any) => {
                   </View>
                 </>
               ) : props.roleIdForSelectedUser === ROLE_IDS.closingtl_id ||
+                props.roleIdForSelectedUser === ROLE_IDS.closing_head_id ||
                 props.roleIdForSelectedUser === ROLE_IDS.closingmanager_id ? (
                 <>
                   <View
@@ -142,12 +148,12 @@ const AddTargetModal = (props: any) => {
                           closing_target: data,
                         });
                       }}
-                    // onPressSelect={(data: any, detail: any) => {
-                    //   props.setTargetForm({
-                    //     ...props?.targetForm,
-                    //     closing_target: data?.description,
-                    //   });
-                    // }}
+                      // onPressSelect={(data: any, detail: any) => {
+                      //   props.setTargetForm({
+                      //     ...props?.targetForm,
+                      //     closing_target: data?.description,
+                      //   });
+                      // }}
                     />
                   </View>
                   <View
@@ -213,6 +219,7 @@ const AddTargetModal = (props: any) => {
                 <></>
               )
             ) : userData?.data?.role_id === ROLE_IDS.sourcingtl_id ||
+              props.roleIdForSelectedUser === ROLE_IDS.sourcing_head_id ||
               userData?.data?.role_id === ROLE_IDS.sourcingmanager_id ? (
               <>
                 <View style={[styles.inputWrap, { top: normalizeSpacing(8) }]}>
@@ -265,12 +272,12 @@ const AddTargetModal = (props: any) => {
                         closing_target: data,
                       });
                     }}
-                  // onPressSelect={(data: any, detail: any) => {
-                  //   props.setTargetForm({
-                  //     ...props?.targetForm,
-                  //     closing_target: data?.description,
-                  //   });
-                  // }}
+                    // onPressSelect={(data: any, detail: any) => {
+                    //   props.setTargetForm({
+                    //     ...props?.targetForm,
+                    //     closing_target: data?.description,
+                    //   });
+                    // }}
                   />
                 </View>
                 <View style={[styles.inputWrap, { top: normalizeSpacing(10) }]}>

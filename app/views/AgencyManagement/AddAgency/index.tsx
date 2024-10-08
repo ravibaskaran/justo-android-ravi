@@ -250,13 +250,13 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
             declaration_letter_of_company:
               response?.data[0]?.declaration_letter_of_company ?? "",
             location: response?.data[0]?.location ?? "",
-            start_date: response?.data[0]?.rera_start_date?? "",
-            end_date: response?.data[0]?.rera_end_date?? "",
+            start_date: response?.data[0]?.rera_start_date ?? "",
+            end_date: response?.data[0]?.rera_end_date ?? "",
             // state_code: response?.data[0]?.state_code ?? "",
             // country_code: response?.data[0]?.country_code ?? "",
             // city: response?.data[0]?.city ?? "",
             // zip: response?.data[0]?.zip ?? "",
-            
+
             norera_register:
               handleValues(allDatas?.rera_certificate_no) &&
               handleValues(allDatas?.rera_certificate) === false
@@ -941,7 +941,8 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
           case "rera_certificate_no":
             if (
               userData?.data?.role_id === ROLE_IDS.sourcingmanager_id ||
-              userData?.data?.role_id === ROLE_IDS.sourcingtl_id
+              userData?.data?.role_id === ROLE_IDS.sourcingtl_id ||
+              userData?.data?.role_id === ROLE_IDS.sourcing_head_id
             ) {
               setReraExist(false);
               setIsVisible(true);
@@ -1015,6 +1016,7 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
               });
               if (
                 userData?.data?.role_id === ROLE_IDS.sourcingmanager_id ||
+                userData?.data?.role_id === ROLE_IDS.sourcing_head_id ||
                 userData?.data?.role_id === ROLE_IDS.sourcingtl_id
               ) {
                 setCplgId(emailAndMobileData?.response?.cp_lg_id);

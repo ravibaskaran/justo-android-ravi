@@ -404,6 +404,7 @@ const strings = new LocalizedStrings({
     /*** Sourcing Managers ***/
     SourcingManagersHeader: "Sourcing Managers",
     SourcingTLHeader: "Sourcing TL",
+    SourcingHead:"Sourcing Head",
     addNewSM: "Add New SM",
     allocateCp: "Allocate CP",
     createSM: "Create SM",

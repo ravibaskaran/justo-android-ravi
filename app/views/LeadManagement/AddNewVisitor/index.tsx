@@ -181,6 +181,7 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
 
     if (
       userData?.data?.role_id != ROLE_IDS.closingtl_id &&
+      userData?.data?.role_id != ROLE_IDS.closing_head_id &&
       userData?.data?.role_id != ROLE_IDS.closingmanager_id
     ) {
       dispatch(
@@ -306,8 +307,11 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
         userData?.data?.role_id === ROLE_IDS.closingtl_id ||
         userData?.data?.role_id === ROLE_IDS.closingmanager_id ||
         userData?.data?.role_id === ROLE_IDS.sitehead_id ||
+        userData?.data?.role_id === ROLE_IDS.admin_id ||
         userData?.data?.role_id === ROLE_IDS.clusterhead_id ||
-        userData?.data?.role_id === ROLE_IDS.businesshead_id
+        userData?.data?.role_id === ROLE_IDS.businesshead_id ||
+        userData?.data?.role_id === ROLE_IDS.scm_id ||
+        userData?.data?.role_id === ROLE_IDS.closing_head_id
       ) {
         dispatch(
           getAllProperty({
@@ -346,6 +350,7 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
   //     userData?.data?.role_id === ROLE_IDS.closingtl_id ||
   //     userData?.data?.role_id === ROLE_IDS.closingmanager_id ||
   //     userData?.data?.role_id === ROLE_IDS.sitehead_id ||
+  //     userData?.data?.role_id === ROLE_IDS.admin_id ||
   //     userData?.data?.role_id === ROLE_IDS.clusterhead_id ||
   //     userData?.data?.role_id === ROLE_IDS.businesshead_id
   //   ) {
@@ -623,7 +628,8 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
 
         if (
           userData?.data?.role_id === ROLE_IDS.closingmanager_id ||
-          userData?.data?.role_id === ROLE_IDS.closingtl_id
+          userData?.data?.role_id === ROLE_IDS.closingtl_id ||
+          userData?.data?.role_id === ROLE_IDS.closing_head_id
         ) {
           navigation.navigate(
             "AppointmentDetailMain",

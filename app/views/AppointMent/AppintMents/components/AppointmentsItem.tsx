@@ -356,8 +356,9 @@ const AppointmentItem = (props: any) => {
           </TouchableOpacity>
         )}
       </View>
-      {userData?.data?.role_title === "Closing TL" &&
-     ( props.items.status === 1 || props.items.status === 10) ? (
+      {(userData?.data?.role_title === "Closing TL" ||
+        userData?.data?.role_title === "Closing Head") &&
+      (props.items.status === 1 || props.items.status === 10) ? (
         <View style={[styles.buttonContainer, { justifyContent: "center" }]}>
           {/* {props.items.pickup === "Yes" && !checkinStaus ? (
             <Button
@@ -393,7 +394,7 @@ const AppointmentItem = (props: any) => {
                   ...props.allocatedCM,
                   appointment_id: props.items?._id,
                 });
-                props.setPropertyId(props.items?.property_id)
+                props.setPropertyId(props.items?.property_id);
                 props.setAllocateModel(true);
               }}
               textTransform={"uppercase"}

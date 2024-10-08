@@ -60,7 +60,8 @@ const SourcingDashboardView = (props: any) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            role === ROLE_IDS.sourcingtl_id
+            role === ROLE_IDS.sourcingtl_id ||
+            role === ROLE_IDS.sourcing_head_id
               ? props.onPressSMList()
               : props.onPressCPList();
           }}
@@ -69,12 +70,16 @@ const SourcingDashboardView = (props: any) => {
           <View style={styles.thirdPortionCardTextView}>
             <Text style={styles.thirdPortionCardText}>Active</Text>
             <Text style={styles.thirdPortionCardText}>
-              {role === ROLE_IDS.sourcingtl_id ? "SM" : "CP"}
+              {role === ROLE_IDS.sourcingtl_id ||
+              role === ROLE_IDS.sourcing_head_id
+                ? "SM"
+                : "CP"}
             </Text>
           </View>
           <View style={styles.numberView}>
             <Text style={styles.thirdPortionNumberText}>
-              {role === ROLE_IDS.sourcingtl_id
+              {role === ROLE_IDS.sourcingtl_id ||
+              role === ROLE_IDS.sourcing_head_id
                 ? props?.dashboardData?.total_sorcing_manager
                 : props?.dashboardData?.active_cp}
             </Text>

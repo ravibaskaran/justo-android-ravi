@@ -179,9 +179,11 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
     React.useCallback(() => {
       if (
         userData?.data?.role_id === ROLE_IDS.closingtl_id ||
+        userData?.data?.role_id === ROLE_IDS.closing_head_id ||
         userData?.data?.role_id === ROLE_IDS.closingmanager_id ||
         userData?.data?.role_id === ROLE_IDS.clusterhead_id ||
         userData?.data?.role_id === ROLE_IDS.sitehead_id ||
+        userData?.data?.role_id === ROLE_IDS.admin_id ||
         userData?.data?.role_id === ROLE_IDS.businesshead_id
       ) {
         dispatch(

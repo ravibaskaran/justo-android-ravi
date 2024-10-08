@@ -21,7 +21,9 @@ const LeadDetailsView = (props: any) => {
   const id = userData?.data?.role_id || "";
   const { create, status } = usePermission({
     create:
-      id === ROLE_IDS.closingtl_id || id === ROLE_IDS.closingmanager_id
+      id === ROLE_IDS.closingtl_id ||
+      id === ROLE_IDS.closing_head_id ||
+      id === ROLE_IDS.closingmanager_id
         ? "add_appointment"
         : "add_appointment _site_visite",
     status: "add_followup",

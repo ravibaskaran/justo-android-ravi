@@ -50,10 +50,10 @@ const FilterModal = (props: any) => {
       TLarr = response?.data?.filter(
         (el: any) =>
           el.role_id === ROLE_IDS.sourcingtl_id ||
+          el.role_id === ROLE_IDS.sourcing_head_id ||
           el.role_id === ROLE_IDS.closingtl_id
       );
       setUsersList(arr);
-         
       if (props?.filterData?.by_team) {
         handleOnChangeByTeam(props?.filterData?.by_team);
       } else {
@@ -71,14 +71,18 @@ const FilterModal = (props: any) => {
         (el: any) => el.role_id === ROLE_IDS.sourcingmanager_id
       );
       TLarr = response?.data?.filter(
-        (el: any) => el.role_id === ROLE_IDS.sourcingtl_id
+        (el: any) =>
+          el.role_id === ROLE_IDS.sourcingtl_id ||
+          el.role_id === ROLE_IDS.sourcing_head_id
       );
     } else if (value === 2) {
       arr = response?.data?.filter(
         (el: any) => el.role_id === ROLE_IDS.closingmanager_id
       );
       TLarr = response?.data?.filter(
-        (el: any) => el.role_id === ROLE_IDS.closingtl_id
+        (el: any) =>
+          el.role_id === ROLE_IDS.closingtl_id ||
+          el.role_id === ROLE_IDS.closing_head_id
       );
     }
 
@@ -87,7 +91,6 @@ const FilterModal = (props: any) => {
     } else {
       setUsersList(arr);
     }
-    
     setTLUsersList(TLarr);
   };
   //   const handleFilter = () => {
@@ -95,10 +98,10 @@ const FilterModal = (props: any) => {
   //   };
 
   const handleParentList = (id: any) => {
-    console.log("🚀 ~ file: ReportFilterModal.tsx:97 ~ id:", id)
+    console.log("🚀 ~ file: ReportFilterModal.tsx:97 ~ id:", id);
     let arr = [];
     arr = response?.data?.filter((el: any) => el.parent_id[0] === id);
-    console.log("🚀 ~ file: ReportFilterModal.tsx:100 ~ arr:", arr)
+    console.log("🚀 ~ file: ReportFilterModal.tsx:100 ~ arr:", arr);
     setUsersList(arr);
   };
   return (
@@ -167,6 +170,7 @@ const FilterModal = (props: any) => {
             </View>
 
             {roleId === ROLE_IDS.sitehead_id ||
+            roleId === ROLE_IDS.admin_id ||
             roleId === ROLE_IDS.clusterhead_id ||
             roleId === ROLE_IDS.businesshead_id ? (
               <View style={[styles.inputWrap]}>
@@ -234,6 +238,7 @@ const FilterModal = (props: any) => {
               </View>
             ) : null}
             {roleId === ROLE_IDS.sitehead_id ||
+            roleId === ROLE_IDS.admin_id ||
             roleId === ROLE_IDS.clusterhead_id ? (
               <View style={styles.inputWrap}>
                 <DropdownInput
@@ -266,6 +271,7 @@ const FilterModal = (props: any) => {
               </View>
             ) : null}
             {roleId === ROLE_IDS.sitehead_id ||
+            roleId === ROLE_IDS.admin_id ||
             roleId === ROLE_IDS.clusterhead_id ? (
               <View style={styles.inputWrap}>
                 <DropdownInput
@@ -298,6 +304,7 @@ const FilterModal = (props: any) => {
               </View>
             ) : null}
             {roleId === ROLE_IDS.sitehead_id ||
+            roleId === ROLE_IDS.admin_id ||
             roleId === ROLE_IDS.clusterhead_id ? (
               <View style={styles.inputWrap}>
                 <DropdownInput

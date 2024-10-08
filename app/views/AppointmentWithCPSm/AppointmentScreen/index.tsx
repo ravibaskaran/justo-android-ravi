@@ -45,7 +45,10 @@ const AppointmentScreenCPSM = ({ navigation }: any) => {
     }
   }, [response, list, edit]);
   useEffect(() => {
-    if (getLoginType?.response?.data?.role_title === "Sourcing TL") {
+    if (
+      getLoginType?.response?.data?.role_title === "Sourcing TL" ||
+      getLoginType?.response?.data?.role_title === "Sourcing Head"
+    ) {
       setRole("TL");
     } else if (
       getLoginType?.response?.data?.role_title === "Sourcing Manager"

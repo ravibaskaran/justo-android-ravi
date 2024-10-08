@@ -14,9 +14,6 @@ const ClosingDashboardView = (props: any) => {
   const achieveTargetData = props?.dashboardData?.achievetargetdata || {};
   const role = props?.getLoginType?.response?.data?.role_id || null;
 
-  let today_followup = props?.appointmentList?.filter(
-    (item: any) => item?.status == 10
-  );
   const renderItem = (item: any, index: any) => {
     return (
       <View key={index}>
@@ -147,12 +144,13 @@ const ClosingDashboardView = (props: any) => {
             </View>
             <View style={styles.numberView}>
               <Text style={styles.thirdPortionNumberText}>
-                {today_followup?.length}
+                {props?.dashboardData?.today_followup}
               </Text>
             </View>
           </TouchableOpacity>
 
-          {role === ROLE_IDS.closingtl_id ? (
+          {role === ROLE_IDS.closingtl_id ||
+          role === ROLE_IDS.closing_head_id ? (
             <TouchableOpacity
               onPress={() => props.onpressSMList()}
               style={styles.thirdPortioncardView}

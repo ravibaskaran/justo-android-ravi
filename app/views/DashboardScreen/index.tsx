@@ -9,6 +9,7 @@ import {
   dashboardClosingData,
   dashboardPostSaleData,
   dashboardReceptionistData,
+  dashboardSCMData,
   dashboardSiteHeadData,
   dashboardSourcingData,
   userStatusUpdateData,
@@ -61,7 +62,9 @@ const DashboardScreen = ({ navigation }: any) => {
       if (
         getLoginType?.response?.data?.role_id === ROLE_IDS.closingmanager_id ||
         getLoginType?.response?.data?.role_id === ROLE_IDS.closingtl_id ||
+        getLoginType?.response?.data?.role_id === ROLE_IDS.closing_head_id ||
         getLoginType?.response?.data?.role_id === ROLE_IDS.sitehead_id ||
+        getLoginType?.response?.data?.role_id === ROLE_IDS.admin_id ||
         getLoginType?.response?.data?.role_id === ROLE_IDS.clusterhead_id ||
         getLoginType?.response?.data?.role_id === ROLE_IDS.businesshead_id
       ) {
@@ -113,6 +116,7 @@ const DashboardScreen = ({ navigation }: any) => {
     }
     if (
       getLoginType?.response?.data?.role_id === ROLE_IDS.sourcingtl_id ||
+      getLoginType?.response?.data?.role_id === ROLE_IDS.sourcing_head_id ||
       getLoginType?.response?.data?.role_id === ROLE_IDS.sourcingmanager_id
     ) {
       if (SMListData?.response?.status === 200) {
@@ -121,7 +125,10 @@ const DashboardScreen = ({ navigation }: any) => {
         setListData([]);
       }
     }
-    if (getLoginType?.response?.data?.role_id === ROLE_IDS.closingtl_id) {
+    if (
+      getLoginType?.response?.data?.role_id === ROLE_IDS.closingtl_id ||
+      getLoginType?.response?.data?.role_id === ROLE_IDS.closing_head_id
+    ) {
       if (CMListData?.response?.status === 200) {
         setListData(CMListData?.response?.data);
       } else {
@@ -130,12 +137,18 @@ const DashboardScreen = ({ navigation }: any) => {
     }
   }, [response, SMListData, CMListData]);
   const getDashboard = async () => {
+    console.log(getLoginType?.response?.data?.role_id);
+
     if (
       getLoginType?.response?.data?.role_id === ROLE_IDS.sourcingtl_id ||
+      getLoginType?.response?.data?.role_id === ROLE_IDS.sourcing_head_id ||
       getLoginType?.response?.data?.role_id === ROLE_IDS.sourcingmanager_id
     ) {
       dispatch(dashboardSourcingData({}));
-      if (getLoginType?.response?.data?.role_id === ROLE_IDS.sourcingtl_id) {
+      if (
+        getLoginType?.response?.data?.role_id === ROLE_IDS.sourcingtl_id ||
+        getLoginType?.response?.data?.role_id === ROLE_IDS.sourcing_head_id
+      ) {
         dispatch(getSourcingManagerList({}));
       } else if (
         getLoginType?.response?.data?.role_id === ROLE_IDS.sourcingmanager_id
@@ -150,10 +163,14 @@ const DashboardScreen = ({ navigation }: any) => {
       }
     } else if (
       getLoginType?.response?.data?.role_id === ROLE_IDS.closingtl_id ||
+      getLoginType?.response?.data?.role_id === ROLE_IDS.closing_head_id ||
       getLoginType?.response?.data?.role_id === ROLE_IDS.closingmanager_id
     ) {
       dispatch(dashboardClosingData({}));
-      if (getLoginType?.response?.data?.role_id === ROLE_IDS.closingtl_id) {
+      if (
+        getLoginType?.response?.data?.role_id === ROLE_IDS.closingtl_id ||
+        getLoginType?.response?.data?.role_id === ROLE_IDS.closing_head_id
+      ) {
         dispatch(getClosingManagerList({}));
       } else {
         setListData([]);
@@ -168,10 +185,13 @@ const DashboardScreen = ({ navigation }: any) => {
       dispatch(dashboardReceptionistData({}));
     } else if (
       getLoginType?.response?.data?.role_id === ROLE_IDS.sitehead_id ||
+      getLoginType?.response?.data?.role_id === ROLE_IDS.admin_id ||
       getLoginType?.response?.data?.role_id === ROLE_IDS.clusterhead_id ||
       getLoginType?.response?.data?.role_id === ROLE_IDS.businesshead_id
     ) {
       dispatch(dashboardSiteHeadData({}));
+    } else if (getLoginType?.response?.data?.role_id === ROLE_IDS.scm_id) {
+      dispatch(dashboardSCMData({}));
     } else {
       setDashboardData({});
       setIsEnabled(null);
@@ -204,7 +224,9 @@ const DashboardScreen = ({ navigation }: any) => {
   const onPressSiteVisit = (type: any) => {
     if (
       getLoginType?.response?.data?.role_id === ROLE_IDS.closingtl_id ||
-      getLoginType?.response?.data?.role_id === ROLE_IDS.closingmanager_id
+      getLoginType?.response?.data?.role_id === ROLE_IDS.closing_head_id ||
+      getLoginType?.response?.data?.role_id === ROLE_IDS.closingmanager_id ||
+      getLoginType?.response?.data?.role_id === ROLE_IDS.scm_id
     ) {
       navigation.navigate("Appointments", type);
     } else {

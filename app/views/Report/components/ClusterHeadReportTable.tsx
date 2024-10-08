@@ -186,7 +186,7 @@ const ClusterHeadReportTable = (props: any) => {
         // Create a temporary directory to store the file
         const tempDir = RNFS.DownloadDirectoryPath;
         let filePath: any;
-        if (roleId === ROLE_IDS.sitehead_id) {
+        if (roleId === ROLE_IDS.sitehead_id || roleId === ROLE_IDS.admin_id) {
           filePath = `${tempDir}/SiteHeadReport${fileName}.xlsx`;
         } else if (roleId === ROLE_IDS.clusterhead_id) {
           filePath = `${tempDir}/ClusterHeadReport.xlsx`;

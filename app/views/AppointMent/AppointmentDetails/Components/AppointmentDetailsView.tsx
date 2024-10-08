@@ -12,7 +12,7 @@ import ReadyToBookModal from "./ReadyToBookModal";
 import CancelModal from "./CancelBooking";
 import usePermission from "app/components/utilities/UserPermissions";
 import CheckedinModel from "./CheckedinModel";
-import { Isios } from "app/components/utilities/constant";
+import { Isios, ROLE_IDS } from "app/components/utilities/constant";
 import JustForOkModal from "app/components/Modals/JustForOkModal";
 
 const AppointmentDetailsView = (props: any) => {
@@ -152,11 +152,12 @@ const AppointmentDetailsView = (props: any) => {
               >
                 {/* Book Now */}
                 {create &&
-                  (userData?.data?.role_title === "Closing Manager" ||
-                  userData?.data?.role_title === "Closing TL" ||
-                  getLoginType?.response?.data?.role_title === "Site Head" ||
-                  getLoginType?.response?.data?.role_title ===
-                    "Cluster Head" ? (
+                  (userData?.data?.role_id === ROLE_IDS.closingmanager_id ||
+                  userData?.data?.role_id === ROLE_IDS.closingtl_id ||
+                  userData?.data?.role_id === ROLE_IDS.closing_head_id ||
+                  userData?.data?.role_id === ROLE_IDS.sourcing_head_id ||
+                  userData?.data?.role_id === ROLE_IDS.clusterhead_id ||
+                  userData?.data?.role_id === ROLE_IDS.scm_id ? (
                     <Button
                       buttonText={strings.bookNow}
                       handleBtnPress={() => props.onPressBookNow()}

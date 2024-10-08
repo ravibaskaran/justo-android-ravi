@@ -87,9 +87,11 @@ const AllocateCPView = (props: any) => {
       <ScrollView>
         <View style={styles.containerVw}>
           <Text style={styles.headerTxt}>
-            {userData?.data?.role_title === "Sourcing TL"
+            {userData?.data?.role_title === "Sourcing TL" ||
+            userData?.data?.role_title === "Sourcing Head"
               ? "Allocate to New SM"
-              : userData?.data?.role_title === "Closing TL"
+              : userData?.data?.role_title === "Closing TL" ||
+                userData?.data?.role_title === "Closing Head"
               ? "Allocate to New CM"
               : strings.newAllocateTxt}
           </Text>
@@ -123,9 +125,11 @@ const AllocateCPView = (props: any) => {
               </>
             ) : (
               <Text style={styles.noSelectedTxt}>
-                {userData?.data?.role_title === "Sourcing TL"
+                {userData?.data?.role_title === "Sourcing TL" ||
+                userData?.data?.role_title === "Sourcing Head"
                   ? "No SM Selected"
-                  : userData?.data?.role_title === "Closing TL"
+                  : userData?.data?.role_title === "Closing TL" ||
+                    userData?.data?.role_title === "Closing Head"
                   ? "Allocate to New CM"
                   : strings.noCpSelected}
               </Text>
@@ -148,9 +152,11 @@ const AllocateCPView = (props: any) => {
             ) : (
               <View style={{ flex: 1 }}>
                 <Text style={[styles.noSelectedTxt, { textAlign: "center" }]}>
-                  {userData?.data?.role_title === "Sourcing TL"
+                  {userData?.data?.role_title === "Sourcing TL" ||
+                  userData?.data?.role_title === "Sourcing Head"
                     ? "No SM Found"
-                    : userData?.data?.role_title === "Closing TL"
+                    : userData?.data?.role_title === "Closing TL" ||
+                      userData?.data?.role_title === "Closing Head"
                     ? "No CM Found"
                     : strings.noCpFound}
                 </Text>
@@ -165,9 +171,11 @@ const AllocateCPView = (props: any) => {
           height={40}
           btnTxtsize={16}
           buttonText={
-            userData?.data?.role_title === "Sourcing TL"
+            userData?.data?.role_title === "Sourcing TL" ||
+            userData?.data?.role_title === "Sourcing Head"
               ? "SM Allocation"
-              : userData?.data?.role_title === "Closing TL"
+              : userData?.data?.role_title === "Closing TL" ||
+                userData?.data?.role_title === "Closing Head"
               ? "CM Allocation"
               : strings.cpAllocation
           }

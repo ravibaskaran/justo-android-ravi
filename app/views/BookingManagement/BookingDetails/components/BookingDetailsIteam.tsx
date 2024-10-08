@@ -110,6 +110,7 @@ const BookingDetailsItem = (props: any) => {
           </>
         ) : null}
         {getLoginType?.response?.data?.role_id === ROLE_IDS.postsales_id ||
+        getLoginType?.response?.data?.role_id === ROLE_IDS.admin_id ||
         getLoginType?.response?.data?.role_id === ROLE_IDS.sitehead_id ? (
           <>
             <View style={[styles.Txtview, { alignItems: "flex-start" }]}>
@@ -184,6 +185,7 @@ const BookingDetailsItem = (props: any) => {
           </View>
         </View>
         {getLoginType?.response?.data?.role_id !== ROLE_IDS.postsales_id ||
+        getLoginType?.response?.data?.role_id !== ROLE_IDS.admin_id ||
         getLoginType?.response?.data?.role_id !== ROLE_IDS.sitehead_id ? (
           <View style={styles.Txtview}>
             <View style={styles.projectContainer}>
@@ -236,6 +238,7 @@ const BookingDetailsItem = (props: any) => {
         </View>
       </>
       {getLoginType?.response?.data?.role_id !== ROLE_IDS.postsales_id ||
+      getLoginType?.response?.data?.role_id !== ROLE_IDS.admin_id ||
       getLoginType?.response?.data?.role_id !== ROLE_IDS.sitehead_id ? (
         <>
           <View style={styles.Txtview}>

@@ -1,108 +1,140 @@
-import { View, Text } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import AddAppointmentView from './Components/AddAppointmentView'
-import { useDispatch, useSelector } from 'react-redux'
-import { getUserVisitList } from 'app/Redux/Actions/LeadsActions'
-import strings from 'app/components/utilities/Localization'
-import { getAllMaster } from 'app/Redux/Actions/MasterActions'
-import { getAssignCPList, getSourcingManagerList } from 'app/Redux/Actions/SourcingManagerActions'
-import { RemoveAppointment, addUserAppointment, editUserAppointment } from 'app/Redux/Actions/AppiontmentWithUserActions'
-import ErrorMessage from 'app/components/ErrorMessage'
-import { GREEN_COLOR } from 'app/components/utilities/constant'
+import { View, Text } from "react-native";
+import React, { useEffect, useState } from "react";
+import AddAppointmentView from "./Components/AddAppointmentView";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserVisitList } from "app/Redux/Actions/LeadsActions";
+import strings from "app/components/utilities/Localization";
+import { getAllMaster } from "app/Redux/Actions/MasterActions";
+import {
+  getAssignCPList,
+  getSourcingManagerList,
+} from "app/Redux/Actions/SourcingManagerActions";
+import {
+  RemoveAppointment,
+  addUserAppointment,
+  editUserAppointment,
+} from "app/Redux/Actions/AppiontmentWithUserActions";
+import ErrorMessage from "app/components/ErrorMessage";
+import { GREEN_COLOR } from "app/components/utilities/constant";
 
 const AddAppointmentScreen = ({ navigation, route }: any) => {
-  const { data, type } = route?.params || {}
-  const dispatch: any = useDispatch()
-  const { response = {}, list = "" } = useSelector((state: any) => state.visitorData)
-  const userAppointmentData = useSelector((state: any) => state.userAppointmentData)
-  const userEditAppointmentData = useSelector((state: any) => state.userEditAppointmentData)
-  const masterData = useSelector((state: any) => state.masterData) || {}
-  const getLoginType = useSelector((state: any) => state.login) || {}
-  const SMListData = useSelector((state: any) => state.SourcingManager)
-  const [visitorList, setVisiitorList] = useState<any>([])
-  const [masterDatas, setMasterDatas] = useState<any>([])
-  const [listData, setListData] = useState<any>([])
-  const [role, setRole] = useState<any>('')
+  const { data, type } = route?.params || {};
+  const dispatch: any = useDispatch();
+  const { response = {}, list = "" } = useSelector(
+    (state: any) => state.visitorData
+  );
+  const userAppointmentData = useSelector(
+    (state: any) => state.userAppointmentData
+  );
+  const userEditAppointmentData = useSelector(
+    (state: any) => state.userEditAppointmentData
+  );
+  const masterData = useSelector((state: any) => state.masterData) || {};
+  const getLoginType = useSelector((state: any) => state.login) || {};
+  const SMListData = useSelector((state: any) => state.SourcingManager);
+  const [visitorList, setVisiitorList] = useState<any>([]);
+  const [masterDatas, setMasterDatas] = useState<any>([]);
+  const [listData, setListData] = useState<any>([]);
+  const [role, setRole] = useState<any>("");
 
   useEffect(() => {
     if (list) {
-      setVisiitorList(response?.data)
+      setVisiitorList(response?.data);
     }
-  }, [response])
+  }, [response]);
   useEffect(() => {
     if (userEditAppointmentData?.response?.status === 200) {
-      dispatch(RemoveAppointment())
-      navigation.goBack()
+      dispatch(RemoveAppointment());
+      navigation.goBack();
       ErrorMessage({
         msg: userEditAppointmentData?.response?.message,
-        backgroundColor: GREEN_COLOR
-      })
+        backgroundColor: GREEN_COLOR,
+      });
     }
-  }, [userEditAppointmentData])
+  }, [userEditAppointmentData]);
 
   useEffect(() => {
-
-    if (getLoginType?.response?.data?.role_title === 'Sourcing TL' || getLoginType?.response?.data?.role_title === 'Cluster Head') {
-      setRole('TL')
-      dispatch(getSourcingManagerList({}))
+    if (
+      getLoginType?.response?.data?.role_title === "Sourcing TL" ||
+      getLoginType?.response?.data?.role_title === "Sourcing Head" ||
+      getLoginType?.response?.data?.role_title === "Cluster Head"
+    ) {
+      setRole("TL");
+      dispatch(getSourcingManagerList({}));
     } else {
-      if (getLoginType?.response?.data?.role_title === 'Sourcing Manager' || getLoginType?.response?.data?.role_title === 'Cluster Head') {
-        setRole('SM')
+      if (
+        getLoginType?.response?.data?.role_title === "Sourcing Manager" ||
+        getLoginType?.response?.data?.role_title === "Cluster Head"
+      ) {
+        setRole("SM");
         dispatch(
           getAssignCPList({
             user_id: getLoginType?.response?.data?.user_id,
           })
-        )
+        );
       } else {
-        setListData([])
+        setListData([]);
       }
     }
-  }, [getLoginType])
+  }, [getLoginType]);
 
   useEffect(() => {
     if (masterData?.response?.status === 200) {
       if (masterData?.response?.data?.length > 0) {
-        setMasterDatas(masterData?.response?.data?.length > 0 ? masterData?.response?.data : [])
+        setMasterDatas(
+          masterData?.response?.data?.length > 0
+            ? masterData?.response?.data
+            : []
+        );
       }
     }
-  }, [masterData])
+  }, [masterData]);
 
   useEffect(() => {
-
-    console.log("----",getLoginType?.response?.data?.role_title)
-    if (getLoginType?.response?.data?.role_title === 'Cluster Head' || getLoginType?.response?.data?.role_title === 'Sourcing TL' || getLoginType?.response?.data?.role_title === 'Sourcing Manager') {
+    console.log("----", getLoginType?.response?.data?.role_title);
+    if (
+      getLoginType?.response?.data?.role_title === "Cluster Head" ||
+      getLoginType?.response?.data?.role_title === "SCM" ||
+      getLoginType?.response?.data?.role_title === "Sourcing TL" ||
+      getLoginType?.response?.data?.role_title === "Sourcing Manager" ||
+      getLoginType?.response?.data?.role_title === "Sourcing Head"
+    ) {
       if (SMListData?.response?.status === 200) {
         if (SMListData?.response?.data?.length > 0) {
-          setListData(SMListData?.response?.data)
-        }else {
-          setListData([])
+          setListData(SMListData?.response?.data);
+        } else {
+          setListData([]);
         }
       }
     }
-  }, [SMListData])
+  }, [SMListData]);
 
   const handleMasterDatas = (data: any) => {
-    dispatch(getAllMaster({
-      type: data
-    }))
-  }
+    dispatch(
+      getAllMaster({
+        type: data,
+      })
+    );
+  };
 
   const getVisitorsList = (offset: any, array: any) => {
-    dispatch(getUserVisitList({
-      lead_status: 1
-    }))
-  }
+    dispatch(
+      getUserVisitList({
+        lead_status: 1,
+      })
+    );
+  };
 
   const handleAddAppointment = (params: any) => {
     if (type === strings.edit) {
-      dispatch(editUserAppointment({ ...params, appointment_id: data?._id }))
+      dispatch(editUserAppointment({ ...params, appointment_id: data?._id }));
     } else {
-      dispatch(addUserAppointment(params))
+      dispatch(addUserAppointment(params));
     }
-  }
+  };
   const handleBackPress = () => {
-    navigation.goBack()
-  }
+    navigation.goBack();
+  };
   return (
     <AddAppointmentView
       getVisitorsList={getVisitorsList}
@@ -116,7 +148,7 @@ const AddAppointmentScreen = ({ navigation, route }: any) => {
       type={type}
       data={data}
     />
-  )
-}
+  );
+};
 
-export default AddAppointmentScreen
+export default AddAppointmentScreen;

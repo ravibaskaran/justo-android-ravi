@@ -113,9 +113,11 @@ const PropertyDetailView = (props: any) => {
         {propertydetail?.status ? (
           <>
             {allocate &&
-              (roleType === ROLE_IDS.sitehead_id ? (
+              (roleType === ROLE_IDS.sitehead_id ||
+              roleType === ROLE_IDS.admin_id ? (
                 <></>
-              ) : roleType != ROLE_IDS.closingtl_id ? (
+              ) : roleType != ROLE_IDS.closing_head_id &&
+                roleType != ROLE_IDS.closingtl_id ? (
                 <Button
                   handleBtnPress={() => props.handleAllocatePress()}
                   buttonText={strings.allocate}

@@ -111,11 +111,14 @@ const PropertyListItem = (props: any) => {
       <View
         style={[
           styles.buttonContainer,
-          roleType === ROLE_IDS.sitehead_id || !(allocate && props.items.status)
+          roleType === ROLE_IDS.sitehead_id ||
+          roleType === ROLE_IDS.admin_id ||
+          !(allocate && props.items.status)
             ? {
                 justifyContent: "flex-end",
               }
-            : roleType == ROLE_IDS.closingtl_id
+            : roleType == ROLE_IDS.closingtl_id ||
+              roleType == ROLE_IDS.closing_head_id
             ? {
                 justifyContent: "flex-end",
               }
@@ -124,9 +127,11 @@ const PropertyListItem = (props: any) => {
       >
         {allocate &&
           props.items.status &&
-          (roleType === ROLE_IDS.sitehead_id ? (
+          (roleType === ROLE_IDS.sitehead_id ||
+          roleType === ROLE_IDS.admin_id ? (
             <></>
-          ) : roleType != ROLE_IDS.closingtl_id ? (
+          ) : roleType != ROLE_IDS.closingtl_id &&
+            roleType != ROLE_IDS.closing_head_id ? (
             <TouchableOpacity
               onPress={() => props.handleAllocatePress(props.items)}
               style={[
