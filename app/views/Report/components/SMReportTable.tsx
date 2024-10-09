@@ -241,6 +241,18 @@ const SMReportTable = (props: any) => {
               <Text
                 style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
               >
+                {data[0]?.site_visit_created}
+              </Text>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                Site Visit Created
+              </Text>
+            </View>
+            <View style={styles.childContainer}>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
                 {data[0]?.appointmentwithCp}
               </Text>
               <Text

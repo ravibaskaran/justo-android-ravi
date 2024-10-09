@@ -204,7 +204,7 @@ const STReportTable = (props: any) => {
               <Text
                 style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
               >
-                Total Leads
+                Leads
               </Text>
             </View>
 
@@ -217,7 +217,20 @@ const STReportTable = (props: any) => {
               <Text
                 style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
               >
-                Total Booking
+                Booking
+              </Text>
+            </View>
+
+            <View style={styles.childContainer}>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                {data[0]?.site_visit_created}
+              </Text>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                Site Visit Created
               </Text>
             </View>
           </View>
@@ -257,13 +270,19 @@ const STReportTable = (props: any) => {
                       <Text style={[styles.cardText, { minWidth: 50 }]}>
                         {item?.total_leades}
                       </Text>
-                      <Text style={styles.cardText}>Total Leads</Text>
+                      <Text style={styles.cardText}>Leads</Text>
                     </View>
                     <View style={{ flexDirection: "row" }}>
                       <Text style={[styles.cardText, { minWidth: 50 }]}>
                         {item?.total_booking}
                       </Text>
-                      <Text style={styles.cardText}>Total Booking</Text>
+                      <Text style={styles.cardText}>Booking</Text>
+                    </View>
+                    <View style={{ flexDirection: "row" }}>
+                      <Text style={[styles.cardText, { minWidth: 50 }]}>
+                        {item?.site_visit_created}
+                      </Text>
+                      <Text style={styles.cardText}>Site Visit Created</Text>
                     </View>
                     <View style={{ flexDirection: "row" }}>
                       <Text style={[styles.cardText, { minWidth: 50 }]}>

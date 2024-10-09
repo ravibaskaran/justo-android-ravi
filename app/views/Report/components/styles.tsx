@@ -1,10 +1,12 @@
 import {
   normalize,
   normalizeHeight,
+  normalizeSpacing,
   normalizeWidth,
 } from "app/components/scaleFontSize";
 import {
   BLACK_COLOR,
+  FONT_FAMILY_EXTRABOLD,
   FONT_FAMILY_SEMIBOLD,
   Isios,
   PRIMARY_THEME_COLOR,
@@ -110,7 +112,7 @@ const styles = StyleSheet.create({
     fontWeight: "900",
     fontFamily: FONT_FAMILY_SEMIBOLD,
     fontSize: normalize(Isios ? 14 : 16),
-    paddingBottom: 10,
+    paddingHorizontal:10
   },
   container: {
     flexDirection: "row",
@@ -133,5 +135,54 @@ const styles = StyleSheet.create({
     fontFamily: FONT_FAMILY_SEMIBOLD,
     fontSize: normalize(Isios ? 14 : 13),
   },
+
+  text1: {
+    color: BLACK_COLOR,
+    fontFamily: FONT_FAMILY_SEMIBOLD,
+    fontSize: normalize(Isios ? 14 : 14),
+    paddingVertical: 2,
+    fontWeight: "700",
+  },
+  smallContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 5,
+    paddingHorizontal: 6,
+  },
+  text2: {
+    flex: 0.5,
+    textAlign: "center",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  boxcontent: {
+    flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+  },
+
+  itemText: {
+    flex: 1,
+    paddingVertical: normalizeSpacing(5),
+    color: WHITE_COLOR,
+    fontSize: normalize(11),
+    fontFamily: FONT_FAMILY_EXTRABOLD,
+    textAlign: "center",
+  },
+
+  childContainer2: {
+    flexDirection: "row",
+    marginVertical: normalizeSpacing(2),
+    borderBottomColor: WHITE_COLOR,
+    borderBottomWidth: 2,
+    alignItems: "center",
+    flex: 1,
+  },
+  nameContainer:{
+    flexDirection: "row",
+    alignItems: "center",
+    paddingLeft: 15,
+  }
 });
 export default styles;

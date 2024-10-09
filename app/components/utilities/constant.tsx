@@ -106,14 +106,21 @@ export const todayDate = {
 };
 
 export function getAge(dateString: any) {
-  var today = new Date();
-  var birthDate = new Date(dateString);
-  var age = today.getFullYear() - birthDate.getFullYear();
-  var m = today.getMonth() - birthDate.getMonth();
-  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-    age--;
-  }
-  return age;
+  // var today = new Date();
+  // var birthDate = new Date(dateString);
+  // var age = today.getFullYear() - birthDate.getFullYear();
+  // var m = today.getMonth() - birthDate.getMonth();
+  // if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+  //   age--;
+  // }
+  // return age;
+  const [day, month, year] = dateString.split("/").map(Number);
+  const birthDate = new Date(year, month - 1, day);
+  const age = new Date().getFullYear() - birthDate.getFullYear();
+
+  return new Date() < new Date(new Date().getFullYear(), month - 1, day)
+    ? age - 1
+    : age;
 }
 
 export const INVENTORY_STATUS = {

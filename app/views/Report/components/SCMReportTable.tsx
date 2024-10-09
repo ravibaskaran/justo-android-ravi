@@ -23,6 +23,7 @@ import {
 import RNFS from "react-native-fs";
 import XLSX from "xlsx";
 import styles from "./styles";
+import ItemCard from "./ItemCard";
 
 const SCMReportTable = (props: any) => {
   const { data, userData, fileName } = props;
@@ -142,62 +143,41 @@ const SCMReportTable = (props: any) => {
             </Text>
           </View>
 
-          <View
-            style={{
-              flex: 1,
-              flexDirection: "row",
-              flexWrap: "wrap",
-              justifyContent: "center",
-            }}
-          >
+          <View style={styles.boxcontent}>
+            <ItemCard
+              title={"Walk-ins"}
+              byCp={data[0]?.walkin_cp}
+              byDirect={data[0]?.walkin_direct}
+              total={data[0]?.walkin}
+            />
+            <ItemCard
+              title={"Leads"}
+              byCp={data[0]?.leades_cp}
+              byDirect={data[0]?.leades_direct}
+              total={data[0]?.total_leades}
+            />
+            <ItemCard
+              title={"Booking"}
+              byCp={data[0]?.booking_cp}
+              byDirect={data[0]?.booking_direct}
+              total={data[0]?.total_booking}
+            />
+            <ItemCard
+              title={"Site Visit Created"}
+              byCp={data[0]?.site_visit_created_cp}
+              byDirect={data[0]?.site_visit_created_direct}
+              total={data[0]?.site_visit_created}
+            />
             <View style={styles.childContainer}>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
-                {data[0]?.walkin}
-              </Text>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
-                Walk-ins
-              </Text>
-            </View>
-
-            <View style={styles.childContainer}>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
-                {data[0]?.total_leades}
-              </Text>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
-                Total Leads
-              </Text>
-            </View>
-
-            <View style={styles.childContainer}>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
-                {data[0]?.total_booking}
-              </Text>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
-                Total Booking
-              </Text>
-            </View>
-            <View style={styles.childContainer}>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
-                {data[0]?.appointmentwithCp}
-              </Text>
               <Text
                 style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
               >
                 CP Appointments
+              </Text>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                {data[0]?.appointmentwithCp}
               </Text>
             </View>
           </View>

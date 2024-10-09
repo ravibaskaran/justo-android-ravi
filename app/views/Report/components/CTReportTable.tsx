@@ -1,6 +1,7 @@
 import {
   normalize,
   normalizeHeight,
+  normalizeSpacing,
   normalizeWidth,
 } from "app/components/scaleFontSize";
 import {
@@ -33,6 +34,7 @@ import {
 } from "app/components/utilities/GlobalFuncations";
 import strings from "app/components/utilities/Localization";
 import ErrorMessage from "app/components/ErrorMessage";
+import ItemCard from "./ItemCard";
 
 const CTReportTable = (props: any) => {
   const { data, fileName, userData } = props;
@@ -181,7 +183,9 @@ const CTReportTable = (props: any) => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-       <View  style={[styles.container, { flexDirection: "column", marginTop: 0 }]}>
+        <View
+          style={[styles.container, { flexDirection: "column", marginTop: 0 }]}
+        >
           <View style={[styles.imageContainer, { width: "100%" }]}>
             <Image
               style={{ height: 80, width: 80, borderRadius: 100 }}
@@ -191,53 +195,31 @@ const CTReportTable = (props: any) => {
               {userData?.data?.user_name}
             </Text>
           </View>
-
-          <View
-            style={{
-              flex: 1,
-              flexDirection: "row",
-              flexWrap: "wrap",
-              justifyContent: "center",
-            }}
-          >
-            <View style={styles.childContainer}>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
-                {data[0]?.walkin}
-              </Text>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
-                Walk-ins
-              </Text>
-            </View>
-
-            <View style={styles.childContainer}>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
-                {data[0]?.total_leades}
-              </Text>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
-                Total Leads
-              </Text>
-            </View>
-
-            <View style={styles.childContainer}>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
-                {data[0]?.total_booking}
-              </Text>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
-                Total Booking
-              </Text>
-            </View>
+          <View style={styles.boxcontent}>
+            <ItemCard
+              title={"Walk-ins"}
+              byCp={data[0]?.walkin_cp}
+              byDirect={data[0]?.walkin_direct}
+              total={data[0]?.walkin}
+            />
+            <ItemCard
+              title={"Leads"}
+              byCp={data[0]?.leades_cp}
+              byDirect={data[0]?.leades_direct}
+              total={data[0]?.total_leades}
+            />
+            <ItemCard
+              title={"Booking"}
+              byCp={data[0]?.booking_cp}
+              byDirect={data[0]?.booking_direct}
+              total={data[0]?.total_booking}
+            />
+            <ItemCard
+              title={"Site Visit Created"}
+              byCp={data[0]?.site_visit_created_cp}
+              byDirect={data[0]?.site_visit_created_direct}
+              total={data[0]?.site_visit_created}
+            />
           </View>
         </View>
 
@@ -255,34 +237,54 @@ const CTReportTable = (props: any) => {
 
             {data[0]?.sm_list?.map((item: any, index: any) => {
               return (
-                <View key={index} style={styles.container}>
-                  <View style={styles.imageContainer}>
+                <View
+                  key={index}
+                  style={[styles.container, { flexDirection: "column" }]}
+                >
+                  <View style={styles.nameContainer}>
                     <Image
-                      style={{ height: 80, width: 80, borderRadius: 100 }}
+                      style={{ height: 35, width: 35, borderRadius: 100 }}
                       source={require("./../../../assets/images/userimage.png")}
                     />
+                    <Text style={styles.nameText}>{item?.user_name}</Text>
                   </View>
 
-                  <View style={{ justifyContent: "center", flex: 1 }}>
-                    <Text style={styles.nameText}>{item?.user_name}</Text>
-                    <View style={{ flexDirection: "row" }}>
-                      <Text style={[styles.cardText, { minWidth: 50 }]}>
-                        {item?.walkin}
-                      </Text>
-                      <Text style={styles.cardText}>Walk-ins</Text>
-                    </View>
-                    <View style={{ flexDirection: "row" }}>
-                      <Text style={[styles.cardText, { minWidth: 50 }]}>
-                        {item?.total_leades}
-                      </Text>
-                      <Text style={styles.cardText}>Total Leads</Text>
-                    </View>
-                    <View style={{ flexDirection: "row" }}>
-                      <Text style={[styles.cardText, { minWidth: 50 }]}>
-                        {item?.total_booking}
-                      </Text>
-                      <Text style={styles.cardText}>Total Booking</Text>
-                    </View>
+                  <View style={styles.childContainer2}>
+                    <Text style={styles.itemText}></Text>
+                    <Text style={styles.itemText}>CP</Text>
+                    <Text style={styles.itemText}>Direct</Text>
+                    <Text style={styles.itemText}>Total</Text>
+                  </View>
+                  <View style={styles.childContainer2}>
+                    <Text style={styles.itemText}>Walk-ins</Text>
+                    <Text style={styles.itemText}>{item?.walkin_cp}</Text>
+                    <Text style={styles.itemText}>{item?.walkin_direct}</Text>
+                    <Text style={styles.itemText}>{item?.walkin}</Text>
+                  </View>
+                  <View style={styles.childContainer2}>
+                    <Text style={styles.itemText}>Leads</Text>
+                    <Text style={styles.itemText}>{item?.leades_cp}</Text>
+                    <Text style={styles.itemText}>{item?.leades_direct}</Text>
+                    <Text style={styles.itemText}>{item?.total_leades}</Text>
+                  </View>
+
+                  <View style={styles.childContainer2}>
+                    <Text style={styles.itemText}>Booking</Text>
+                    <Text style={styles.itemText}>{item?.booking_cp}</Text>
+                    <Text style={styles.itemText}>{item?.booking_direct}</Text>
+                    <Text style={styles.itemText}>{item?.total_booking}</Text>
+                  </View>
+                  <View style={styles.childContainer2}>
+                    <Text style={styles.itemText}>Site visit created</Text>
+                    <Text style={styles.itemText}>
+                      {item?.site_visit_created_cp}
+                    </Text>
+                    <Text style={styles.itemText}>
+                      {item?.site_visit_created_direct}
+                    </Text>
+                    <Text style={styles.itemText}>
+                      {item?.site_visit_created}
+                    </Text>
                   </View>
                 </View>
               );

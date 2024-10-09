@@ -74,19 +74,19 @@ const SCMView = (props: any) => {
             </Text>
           </View>
         </TouchableOpacity>
+
         <TouchableOpacity
-          onPress={() => {
-            props.onPressCPList();
-          }}
+          onPress={() => props.onPressSiteVisit("followup")}
           style={styles.thirdPortioncardView}
         >
           <View style={styles.thirdPortionCardTextView}>
-            <Text style={styles.thirdPortionCardText}>Active</Text>
-            <Text style={styles.thirdPortionCardText}>CP</Text>
+            <Text style={styles.thirdPortionCardText}>
+              {"Today's Follow-Up"}
+            </Text>
           </View>
           <View style={styles.numberView}>
             <Text style={styles.thirdPortionNumberText}>
-              {props?.dashboardData?.active_cp}
+              {props?.dashboardData?.today_followup}
             </Text>
           </View>
         </TouchableOpacity>
@@ -106,19 +106,19 @@ const SCMView = (props: any) => {
             </Text>
           </View>
         </TouchableOpacity>
-
         <TouchableOpacity
-          onPress={() => props.onPressSiteVisit("followup")}
+          onPress={() => {
+            props.onPressCPList();
+          }}
           style={styles.thirdPortioncardView}
         >
           <View style={styles.thirdPortionCardTextView}>
-            <Text style={styles.thirdPortionCardText}>
-              {"Today's Follow-Up"}
-            </Text>
+            <Text style={styles.thirdPortionCardText}>Active</Text>
+            <Text style={styles.thirdPortionCardText}>CP</Text>
           </View>
           <View style={styles.numberView}>
             <Text style={styles.thirdPortionNumberText}>
-              {props?.dashboardData?.today_followup}
+              {props?.dashboardData?.active_cp}
             </Text>
           </View>
         </TouchableOpacity>

@@ -1,18 +1,17 @@
+import ErrorMessage from "app/components/ErrorMessage";
 import {
-  normalize,
-  normalizeHeight,
-  normalizeWidth,
+  normalize
 } from "app/components/scaleFontSize";
 import {
   BLACK_COLOR,
-  BLUE_COLOR,
-  FONT_FAMILY_SEMIBOLD,
   GREEN_COLOR,
-  Isios,
-  PRIMARY_THEME_COLOR,
-  RED_COLOR,
-  WHITE_COLOR,
+  RED_COLOR
 } from "app/components/utilities/constant";
+import {
+  handlePermission,
+  openPermissionSetting,
+} from "app/components/utilities/GlobalFuncations";
+import strings from "app/components/utilities/Localization";
 import React from "react";
 import {
   Dimensions,
@@ -20,21 +19,13 @@ import {
   RefreshControl,
   SafeAreaView,
   ScrollView,
-  StyleSheet,
   Text,
-  TouchableOpacity,
-  View,
+  View
 } from "react-native";
-import styles from "./styles";
-import images from "app/assets/images";
-import XLSX from "xlsx";
 import RNFS from "react-native-fs";
-import {
-  handlePermission,
-  openPermissionSetting,
-} from "app/components/utilities/GlobalFuncations";
-import strings from "app/components/utilities/Localization";
-import ErrorMessage from "app/components/ErrorMessage";
+import XLSX from "xlsx";
+import styles from "./styles";
+import ItemCard from "./ItemCard";
 
 const CMReportTable = (props: any) => {
   const { data, userData, fileName } = props;
@@ -141,7 +132,9 @@ const CMReportTable = (props: any) => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        <View  style={[styles.container, { flexDirection: "column", marginTop: 0 }]}>
+        <View
+          style={[styles.container, { flexDirection: "column", marginTop: 0 }]}
+        >
           <View style={[styles.imageContainer, { width: "100%" }]}>
             <Image
               style={{ height: 80, width: 80, borderRadius: 100 }}
@@ -151,53 +144,31 @@ const CMReportTable = (props: any) => {
               {userData?.data?.user_name}
             </Text>
           </View>
-
-          <View
-            style={{
-              flex: 1,
-              flexDirection: "row",
-              flexWrap: "wrap",
-              justifyContent: "center",
-            }}
-          >
-            <View style={styles.childContainer}>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
-                {data[0]?.walkin}
-              </Text>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
-                Walk-ins
-              </Text>
-            </View>
-
-            <View style={styles.childContainer}>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
-                {data[0]?.total_leades}
-              </Text>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
-                Total Leads
-              </Text>
-            </View>
-
-            <View style={styles.childContainer}>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
-                {data[0]?.total_booking}
-              </Text>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
-                Total Booking
-              </Text>
-            </View>
+          <View style={styles.boxcontent}>
+            <ItemCard
+              title={"Walk-ins"}
+              byCp={data[0]?.walkin_cp}
+              byDirect={data[0]?.walkin_direct}
+              total={data[0]?.walkin}
+            />
+            <ItemCard
+              title={"Leads"}
+              byCp={data[0]?.leades_cp}
+              byDirect={data[0]?.leades_direct}
+              total={data[0]?.total_leades}
+            />
+            <ItemCard
+              title={"Booking"}
+              byCp={data[0]?.booking_cp}
+              byDirect={data[0]?.booking_direct}
+              total={data[0]?.total_booking}
+            />
+            <ItemCard
+              title={"Site Visit Created"}
+              byCp={data[0]?.site_visit_created_cp}
+              byDirect={data[0]?.site_visit_created_direct}
+              total={data[0]?.site_visit_created}
+            />
           </View>
         </View>
       </ScrollView>

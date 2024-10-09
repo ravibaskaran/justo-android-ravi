@@ -144,7 +144,7 @@ const ProfileView = (props: any) => {
               <Text style={styles.valueText}>
                 {allDetails?.dateofbirth &&
                 allDetails?.dateofbirth !== "Invalid date"
-                  ? moment(allDetails?.dateofbirth).format("DD/MM/YYYY")
+                  ? allDetails?.dateofbirth
                   : strings.notfount}
               </Text>
             </View>
