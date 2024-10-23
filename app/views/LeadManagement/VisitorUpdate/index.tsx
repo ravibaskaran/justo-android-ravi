@@ -46,7 +46,6 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
   const [employeeList, setEmployeeList] = useState<any>([]);
   const [sourcingPropertyList, setSourcingPropertyList] = useState<any>([]);
   const [dropdownAgentList, setDropdownAgentList] = useState<any>([]);
-  const [configuration, setConfiguration] = useState<any>([]);
   const [dropDownType, setDropDownType] = useState(0);
   const [countryData, setCountryData] = useState(CountryArray);
   const [countryCode, setCountryCode] = useState("+91");
