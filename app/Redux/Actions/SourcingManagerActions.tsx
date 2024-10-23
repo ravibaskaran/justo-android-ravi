@@ -30,6 +30,35 @@ export const getSourcingManagerList = (parmas: any) => async (dispatch: any) => 
         dispatch({ type: STOP_LOADING })
     }
 }
+
+export const getSourcingHeadSMList = (parmas: any) => async (dispatch: any) => {
+    dispatch({ type: START_LOADING })
+    try {
+        const res = await apiCall("post", apiEndPoints.GET_SOURCING_HEAD_SM_LIST, parmas);
+        if (res?.data?.status === 200) {
+            dispatch({
+                type: GET_SOURCINGMANAGER_LIST,
+                payload: res.data
+            })
+        } else {
+            handleApiError(res?.data)
+            dispatch({
+                type: GET_SOURCINGMANAGER_LIST_ERROR,
+                payload: [],
+            })
+        }
+    }
+    catch (e) {
+        dispatch({
+            type: GET_SOURCINGMANAGER_LIST_ERROR,
+            payload: console.log(e),
+        })
+    }
+    finally {
+        dispatch({ type: STOP_LOADING })
+    }
+}
+
 export const getSourcingManagerDetail = (parma: any) => async (dispatch: any) => {
     dispatch({ type: START_LOADING })
     try {
@@ -85,7 +114,7 @@ export const getAssignCPList = (parma: any) => async (dispatch: any) => {
     }
 }
 export const assignCPSM = (parma: any) => async (dispatch: any) => {
-    dispatch({ type: START_LOADING })
+    dispatch({ type: START_LOADING }) 
     try {
         const res = await apiCall("post", apiEndPoints.ASSIGNCP_SM, parma);
         if (res?.data?.status === 200) {

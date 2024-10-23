@@ -22,6 +22,7 @@ import BusinessHeadReportTable from "./BusinessHeadReportTable";
 import moment from "moment";
 import { normalize } from "app/components/scaleFontSize";
 import SCMReportTable from "./SCMReportTable";
+import Share from "react-native-share";
 
 const ReportView = (props: any) => {
   const {
@@ -51,6 +52,167 @@ const ReportView = (props: any) => {
     return `${day}/${month}/${shortYear}`;
   }
 
+  const getShareData = () => {
+    const user = userData?.data;
+    const report = reportData[0] || {};
+    let data = "";
+
+    if (roleId === ROLE_IDS.sourcingmanager_id) {
+      data =
+        `*Date:* ${formatDateString(selectedStartDate)} - ${formatDateString(
+          selectedEndDate
+        )}\n` +
+        `*Name:* ${user?.user_name}\n` +
+        `*Role:* ${userData?.data?.role_title}\n` +
+        `*Leads:* ${report.total_leades || 0}\n` +
+        `*Site Visit Created:* ${report.site_visit_created || 0}\n` +
+        `*Walk-ins:* ${report.walkin || 0}\n` +
+        `*Booking:* ${report.total_booking || 0}\n` +
+        `*CP Appointments:* ${report.appointmentwithCp || 0}\n`;
+    } else if (roleId === ROLE_IDS.closingmanager_id) {
+      data =
+        `*Date:* ${formatDateString(selectedStartDate)} - ${formatDateString(
+          selectedEndDate
+        )}\n` +
+        `*Name:* ${user?.user_name}\n` +
+        `*Role:* ${userData?.data?.role_title}\n` +
+        `*Leads:* ${report.total_leades || 0}\n` +
+        `*Site Visit Created:* ${report.site_visit_created || 0} (CP: ${
+          report.site_visit_created_cp || 0
+        }, Direct: ${report.site_visit_created_direct || 0})\n` +
+        `*Walk-ins:* ${report.walkin || 0} (CP: ${
+          report.walkin_cp || 0
+        }, Direct: ${report.walkin_direct || 0})\n` +
+        `*Booking:* ${report.total_booking || 0} (CP: ${
+          report.booking_cp || 0
+        }, Direct: ${report.booking_direct || 0})\n`;
+    } else if (roleId === ROLE_IDS.scm_id) {
+      data =
+        `*Date:* ${formatDateString(selectedStartDate)} - ${formatDateString(
+          selectedEndDate
+        )}\n` +
+        `*Name:* ${user?.user_name}\n` +
+        `*Role:* ${userData?.data?.role_title}\n` +
+        `*Leads:* ${report.total_leades || 0}\n` +
+        `*Site Visit Created:* ${report.site_visit_created || 0} (CP: ${
+          report.site_visit_created_cp || 0
+        }, Direct: ${report.site_visit_created_direct || 0})\n` +
+        `*Walk-ins:* ${report.walkin || 0} (CP: ${
+          report.walkin_cp || 0
+        }, Direct: ${report.walkin_direct || 0})\n` +
+        `*Booking:* ${report.total_booking || 0} (CP: ${
+          report.booking_cp || 0
+        }, Direct: ${report.booking_direct || 0})\n` +
+        `*CP Appointments:* ${report.appointmentwithCp || 0}\n`;
+    } else if (
+      roleId === ROLE_IDS.sourcingtl_id ||
+      roleId === ROLE_IDS.sourcing_head_id
+    ) {
+      data =
+        `*Date:* ${formatDateString(selectedStartDate)} - ${formatDateString(
+          selectedEndDate
+        )}\n` +
+        `*Name:* ${user?.user_name}\n` +
+        `*Role:* ${userData?.data?.role_title}\n` +
+        `*Leads:* ${report.total_leades || 0} \n` +
+        `*Site Visit Created:* ${report.site_visit_created || 0} \n` +
+        `*Walk-ins:* ${report.walkin || 0} \n` +
+        `*Booking:* ${report.total_booking || 0} \n\n`;
+
+      const teamMembers = report.sm_list || [];
+      if (teamMembers.length) {
+        data += "*Sourcing Managers:*\n\n";
+        teamMembers.forEach(
+          (member: {
+            user_name: any;
+            walkin: any;
+            total_leades: any;
+            total_booking: any;
+            site_visit_created: any;
+            appointmentwithCp: any;
+          }) => {
+            data +=
+              `*Name:* ${member.user_name}\n` +
+              `*Leads:* ${member.total_leades || 0} \n` +
+              `*Site Visit Created:* ${member.site_visit_created || 0} \n` +
+              `*Walk-ins:* ${member.walkin || 0} \n` +
+              `*Booking:* ${member.total_booking || 0} \n` +
+              `*CP Appointments:* ${member.appointmentwithCp || 0} \n\n`;
+          }
+        );
+      }
+    } else if (
+      roleId === ROLE_IDS.closingtl_id ||
+      roleId === ROLE_IDS.closing_head_id
+    ) {
+      data =
+        `*Date:* ${formatDateString(selectedStartDate)} - ${formatDateString(
+          selectedEndDate
+        )}\n` +
+        `*Name:* ${user?.user_name}\n` +
+        `*Role:* ${userData?.data?.role_title}\n` +
+        `*Leads:* ${report.total_leades || 0}\n` +
+        `*Site Visit Created:* ${report.site_visit_created || 0} (CP: ${
+          report.site_visit_created_cp || 0
+        }, Direct: ${report.site_visit_created_direct || 0})\n` +
+        `*Walk-ins:* ${report.walkin || 0} (CP: ${
+          report.walkin_cp || 0
+        }, Direct: ${report.walkin_direct || 0})\n` +
+        `*Booking:* ${report.total_booking || 0} (CP: ${
+          report.booking_cp || 0
+        }, Direct: ${report.booking_direct || 0})\n\n`;
+
+      // Include team members if available
+      const teamMembers = report.sm_list || [];
+      if (teamMembers.length) {
+        data += "*Closing Managers:*\n\n";
+        teamMembers.forEach(
+          (member: {
+            user_name: any;
+            walkin: any;
+            walkin_cp: any;
+            walkin_direct: any;
+            total_leades: any;
+            total_booking: any;
+            booking_cp: any;
+            booking_direct: any;
+            site_visit_created: any;
+            site_visit_created_cp: any;
+            site_visit_created_direct: any;
+          }) => {
+            data +=
+              `*Name:* ${member.user_name}\n` +
+              `*Leads:* ${member.total_leades || 0}\n` +
+              `*Site Visit Created:* ${member.site_visit_created || 0} (CP: ${
+                member.site_visit_created_cp || 0
+              }, Direct: ${member.site_visit_created_direct || 0})\n` +
+              `*Walk-ins:* ${member.walkin || 0} (CP: ${
+                member.walkin_cp || 0
+              }, Direct: ${member.walkin_direct || 0})\n` +
+              `*Booking:* ${member.total_booking || 0} (CP: ${
+                member.booking_cp || 0
+              }, Direct: ${member.booking_direct || 0})\n\n`;
+          }
+        );
+      }
+    }
+    return data;
+  };
+
+  const onPressShare = async () => {
+    const shareOptions = {
+      title: "Share via",
+      message: getShareData(),
+      subject: "Report", //  for email
+    };
+    try {
+      const result = await Share.open(shareOptions);
+      console.log(result);
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <>
       <View style={styles.mainContainer}>
@@ -66,7 +228,17 @@ const ReportView = (props: any) => {
           handleOnLeftIconPress={handleDrawerPress}
           headerStyle={styles.headerStyle}
           handleOnRightFirstIconPress={handleOnFilterPress}
+          onPressShare={onPressShare}
           RightFirstIconStyle={styles.RightFirstIconStyle}
+          shareImage={
+            roleId === ROLE_IDS.sourcingmanager_id ||
+            roleId === ROLE_IDS.closingmanager_id ||
+            roleId === ROLE_IDS.scm_id ||
+            roleId === ROLE_IDS.sourcingtl_id ||
+            roleId === ROLE_IDS.sourcing_head_id ||
+            roleId === ROLE_IDS.closingtl_id ||
+            roleId === ROLE_IDS.closing_head_id
+          }
           statusBarColor={PRIMARY_THEME_COLOR}
           barStyle={"light-content"}
         />

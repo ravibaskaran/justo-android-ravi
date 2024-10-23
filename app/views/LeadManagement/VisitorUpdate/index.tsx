@@ -1,15 +1,6 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import VisitorUpdateFirstView from "./components/VisitorUpdateFirst";
-import VisitorUpdateSecondView from "./components/VisitorUpdateSecond";
-import VisitorUpdateThirdView from "./components/VisitorUpdateThird";
-import {
-  addVisitorRemove,
-  editVisitor,
-  getVisitorDetail,
-} from "app/Redux/Actions/LeadsActions";
-import { getAllMaster } from "app/Redux/Actions/MasterActions";
+import { useFocusEffect } from "@react-navigation/native";
 import ErrorMessage from "app/components/ErrorMessage";
+import apiEndPoints from "app/components/utilities/apiEndPoints";
 import {
   CONST_IDS,
   GREEN_COLOR,
@@ -17,15 +8,22 @@ import {
   ROLE_IDS,
   Regexs,
 } from "app/components/utilities/constant";
+import { CountryArray } from "app/components/utilities/countryData";
+import { apiCall } from "app/components/utilities/httpClient";
+import { getEmployeeList } from "app/Redux/Actions/CompanyActions";
+import {
+  addVisitorRemove,
+  editVisitor,
+  getVisitorDetail,
+} from "app/Redux/Actions/LeadsActions";
+import { getAllMaster } from "app/Redux/Actions/MasterActions";
 import { getAllProperty } from "app/Redux/Actions/propertyActions";
 import { getAssignCPList } from "app/Redux/Actions/SourcingManagerActions";
-import { getEmployeeList } from "app/Redux/Actions/CompanyActions";
 import { START_LOADING, STOP_LOADING } from "app/Redux/types";
-import { apiCall } from "app/components/utilities/httpClient";
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import { CountryArray } from "app/components/utilities/countryData";
-import { useFocusEffect } from "@react-navigation/native";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Keyboard } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import VisitorUpdateFirstView from "./components/VisitorUpdateFirst";
 
 const VisitorUpdateScreen = ({ navigation, route }: any) => {
   const data = route?.params || 0;
@@ -52,6 +50,7 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
   const [countyPicker, setCountyPicker] = useState(false);
   const [okIsVisible, setOkIsVisible] = useState(false);
   const [mobileerror, setMobileError] = useState<any>("");
+  const [configuration, setConfiguration] = useState<any>([]);
   const [updateForm, setUpdateForm] = React.useState<any>({
     lead_id: "",
     first_name: "",
@@ -302,6 +301,7 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
         referrer_contact: response?.data[0]?.referrer_contact,
         mobile_number: response?.data[0]?.customer_detail?.mobile,
       });
+      setConfiguration(response?.data[0]?.configurations)
       setCountryCode(response?.data[0]?.customer_detail?.country_code);
     }
   }, [response]);
@@ -403,15 +403,12 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
   useEffect(() => {
     if (masterData?.response?.status === 200) {
       if (masterData?.response?.data?.length > 0) {
-        if (dropDownType === 2) {
-          setConfiguration(masterData?.response?.data);
-        } else {
+        if (dropDownType != 2) {
           setMasterDatas(masterData?.response?.data);
         }
       }
     } else {
       setMasterDatas([]);
-      setConfiguration([]);
     }
   }, [masterData, dropDownType]);
 
@@ -967,6 +964,7 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
         handleGetProperty={handleGetProperty}
         setAllProperty={setAllProperty}
         configuration={configuration}
+        setConfiguration={setConfiguration}
         selectCountryData={selectCountryData}
         handleCloseCountry={handleCloseCountry}
         countryData={countryData}

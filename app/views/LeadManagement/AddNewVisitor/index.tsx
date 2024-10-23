@@ -98,7 +98,6 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
   const [emailMobvalidation, setEmailMobValidation] = useState({
     mobile: null,
   });
-  const [configuration, setConfiguration] = useState<any>([]);
   const masterData = useSelector((state: any) => state.masterData) || {};
   const propertyData = useSelector((state: any) => state.propertyData) || {};
   const companyData = useSelector((state: any) => state.companyData) || {};
@@ -232,15 +231,12 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
   useEffect(() => {
     if (masterData?.response?.status === 200) {
       if (masterData?.response?.data?.length > 0) {
-        if (dropDownType === 2) {
-          setConfiguration(masterData?.response?.data);
-        } else {
+        if (dropDownType != 2) {
           setMasterDatas(masterData?.response?.data);
         }
       }
     } else {
       setMasterDatas([]);
-      setConfiguration([]);
     }
   }, [masterData, dropDownType]);
 
@@ -608,6 +604,29 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
         if (tempMinVal >= tempMaxVal) {
           isError = false;
           errorMessage = "Maximum Emi should more than Minimum Emi";
+        }
+      }
+      if (formData?.max_budget !== "" && formData?.max_emi_budget !== "") {
+        let tempMaxBudgetVal: any;
+        formData?.max_budget_type === "K"
+          ? (tempMaxBudgetVal = formData?.max_budget * 1000)
+          : formData?.max_budget_type === "L"
+          ? (tempMaxBudgetVal = formData?.max_budget * 100000)
+          : formData?.max_budget_type === "Cr"
+          ? (tempMaxBudgetVal = formData?.max_budget * 10000000)
+          : null;
+
+        let tempMaxEmiVal: any;
+        formData?.max_emi_budget_type === "K"
+          ? (tempMaxEmiVal = formData?.max_emi_budget * 1000)
+          : formData?.max_emi_budget_type === "L"
+          ? (tempMaxEmiVal = formData?.max_emi_budget * 100000)
+          : formData?.max_emi_budget_type === "Cr"
+          ? (tempMaxEmiVal = formData?.max_emi_budget * 10000000)
+          : null;
+        if (tempMaxEmiVal >= tempMaxBudgetVal) {
+          isError = false;
+          errorMessage = "Maximum Emi should less than maximum budget";
         }
       }
       if (errorMessage !== "") {
@@ -1110,7 +1129,6 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
       setFormData={setFormData}
       // handleMasterDatas={handleMasterDatas}
       masterDatas={masterDatas}
-      configuration={configuration}
       // handleProperty={handleProperty}
       allProperty={allProperty}
       setNavigationType={setNavigationType}

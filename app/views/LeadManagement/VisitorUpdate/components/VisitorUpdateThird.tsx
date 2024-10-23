@@ -1,17 +1,13 @@
 import React from "react";
-import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
-import styles from "./styles";
-import TopScreensViewer from './TopScreensViewer'
-import Header from "../../../../components/Header";
-import images from "../../../../assets/images";
-import strings from "../../../../components/utilities/Localization";
-import { BLACK_COLOR, Isios, PRIMARY_THEME_COLOR } from "../../../../components/utilities/constant";
-import InputField from "../../../../components/InputField";
-import Button from "../../../../components/Button";
-import { normalize, normalizeSpacing } from "../../../../components/scaleFontSize";
+import { ScrollView, Text, View } from 'react-native';
 import { RadioButton } from "react-native-paper";
-import DropdownInput from "app/components/DropDown";
-import Styles from '../../../../components/Modals/styles'
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import Header from "../../../../components/Header";
+import InputField from "../../../../components/InputField";
+import { Isios, PRIMARY_THEME_COLOR } from "../../../../components/utilities/constant";
+import strings from "../../../../components/utilities/Localization";
+import styles from "./styles";
 
 const VisitorUpdateView = (props: any) => {
     return (
@@ -78,7 +74,7 @@ const VisitorUpdateView = (props: any) => {
                 </View>
                 <View style={styles.inputWrap}>
                     <InputField
-                        disableSpecialCharacters={true}
+                        disableSpecialCharacters={false}
                         placeholderText={"Company Name"}
                         handleInputBtnPress={() => { }}
                         onChangeText={(text: any) => {

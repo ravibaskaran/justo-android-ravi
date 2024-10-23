@@ -403,13 +403,6 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
       if (formType === 0) {
         if (agencyData?.cp_type === 1) {
           if (
-            agencyData.rera_certificate == null ||
-            agencyData.rera_certificate == "" ||
-            agencyData.rera_certificate == undefined
-          ) {
-            isError = false;
-            errorMessage = strings.reraCertImgReqVal;
-          } else if (
             agencyData.owner_name == undefined ||
             agencyData.owner_name?.trim() == ""
           ) {
@@ -525,13 +518,6 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
           // }
         } else if (agencyData?.cp_type === 2) {
           if (
-            agencyData.rera_certificate == null ||
-            agencyData.rera_certificate == "" ||
-            agencyData.rera_certificate == undefined
-          ) {
-            isError = false;
-            errorMessage = strings.reraCertImgReqVal;
-          } else if (
             agencyData.owner_name == undefined ||
             agencyData.owner_name?.trim() == ""
           ) {
@@ -872,6 +858,12 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
     } else if (emailMobvalidation.primary_mobile === "wrongEmployeeMobile") {
       isError = false;
       errorMessage = strings.mobileAlreadyValidReqVal;
+    } else if (emailMobvalidation.email === "emailAlreadyAdded") {
+      isError = false;
+      errorMessage = strings.alreadyAddedEmail;
+    } else if (emailMobvalidation.primary_mobile === "numberAlreadyAdded") {
+      isError = false;
+      errorMessage = strings.alreadyAddedNumber;
     } else if (
       employeeFormData.employeeEmail == undefined ||
       employeeFormData.employeeEmail == ""
@@ -913,28 +905,68 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
       if (emailAndMobileData?.response?.status === 200) {
         switch (emailAndMobileData?.check_type) {
           case "mobile":
-            if (isVisibleAddEmployee) {
+            let numberArray = isVisibleAddEmployee
+              ? [agencyData?.primary_mobile]
+              : [];
+
+            for (let employee of employees) {
+              numberArray.push(employee?.employeeMobile);
+            }
+
+            const currentMobile = isVisibleAddEmployee
+              ? employeeFormData?.employeeMobile
+              : agencyData?.primary_mobile;
+
+            if (numberArray.includes(currentMobile)) {
+              const errorMessage = strings.alreadyAddedNumber;
               setEmailMobValidation({
                 ...emailMobvalidation,
-                primary_mobile: "employeeMobile",
+                primary_mobile: isVisibleAddEmployee
+                  ? "numberAlreadyAdded"
+                  : "wrongMobile",
+              });
+              ErrorMessage({
+                msg: errorMessage,
+                backgroundColor: RED_COLOR,
               });
             } else {
               setEmailMobValidation({
                 ...emailMobvalidation,
-                primary_mobile: emailAndMobileData?.check_type,
+                primary_mobile: isVisibleAddEmployee
+                  ? "employeeMobile"
+                  : emailAndMobileData?.check_type,
               });
             }
             break;
           case "email":
-            if (isVisibleAddEmployee) {
+            const emailArray = isVisibleAddEmployee ? [agencyData?.email] : [];
+
+            for (let employee of employees) {
+              emailArray.push(employee?.employeeEmail);
+            }
+
+            const currentEmail = isVisibleAddEmployee
+              ? employeeFormData.employeeEmail
+              : agencyData?.email;
+
+            if (emailArray.includes(currentEmail)) {
+              const errorMessage = strings.alreadyAddedEmail;
               setEmailMobValidation({
                 ...emailMobvalidation,
-                email: "employeeEmail",
+                email: isVisibleAddEmployee
+                  ? "emailAlreadyAdded"
+                  : "wrongEmail",
+              });
+              ErrorMessage({
+                msg: errorMessage,
+                backgroundColor: RED_COLOR,
               });
             } else {
               setEmailMobValidation({
                 ...emailMobvalidation,
-                email: emailAndMobileData?.check_type,
+                email: isVisibleAddEmployee
+                  ? "employeeEmail"
+                  : emailAndMobileData?.check_type,
               });
             }
             break;

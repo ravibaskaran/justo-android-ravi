@@ -1,11 +1,9 @@
 import ErrorMessage from "app/components/ErrorMessage";
-import {
-  normalize
-} from "app/components/scaleFontSize";
+import { normalize } from "app/components/scaleFontSize";
 import {
   BLACK_COLOR,
   GREEN_COLOR,
-  RED_COLOR
+  RED_COLOR,
 } from "app/components/utilities/constant";
 import {
   handlePermission,
@@ -20,7 +18,7 @@ import {
   SafeAreaView,
   ScrollView,
   Text,
-  View
+  View,
 } from "react-native";
 import RNFS from "react-native-fs";
 import XLSX from "xlsx";
@@ -145,6 +143,32 @@ const CMReportTable = (props: any) => {
             </Text>
           </View>
           <View style={styles.boxcontent}>
+            <View style={styles.childContainer}>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                Leads
+              </Text>
+              <Text
+                style={[
+                  styles.cardText,
+                  {
+                    fontSize: 18,
+                    color: "#000",
+                    fontWeight: "700",
+                    paddingTop: 12,
+                  },
+                ]}
+              >
+                {data[0]?.total_leades}
+              </Text>
+            </View>
+            <ItemCard
+              title={"Site Visit Created"}
+              byCp={data[0]?.site_visit_created_cp}
+              byDirect={data[0]?.site_visit_created_direct}
+              total={data[0]?.site_visit_created}
+            />
             <ItemCard
               title={"Walk-ins"}
               byCp={data[0]?.walkin_cp}
@@ -152,22 +176,10 @@ const CMReportTable = (props: any) => {
               total={data[0]?.walkin}
             />
             <ItemCard
-              title={"Leads"}
-              byCp={data[0]?.leades_cp}
-              byDirect={data[0]?.leades_direct}
-              total={data[0]?.total_leades}
-            />
-            <ItemCard
               title={"Booking"}
               byCp={data[0]?.booking_cp}
               byDirect={data[0]?.booking_direct}
               total={data[0]?.total_booking}
-            />
-            <ItemCard
-              title={"Site Visit Created"}
-              byCp={data[0]?.site_visit_created_cp}
-              byDirect={data[0]?.site_visit_created_direct}
-              total={data[0]?.site_visit_created}
             />
           </View>
         </View>

@@ -112,26 +112,29 @@ const AgentBasicInfoView = (props: any) => {
         dispatch({ type: STOP_LOADING });
       }, 2000);
       let text = result?.text;
-      
+
       // let text =
-      //   'HI 1:50 00\nCorazon Homes P..\nMaharashtra Real Estate Regulatory Authority\nREGISTRATION CERTIFICATE OF REAL ESTATE AGENT FORM\nFORM "H\n[See rule 12(1Xb)]\n1. This registration is granted under section 9 with registration certificate bearing No. A52100028952 to -\nCorazon Homes Private Limited having its registered office I principal place of business at Tehsil: Pune City District:\nPune, Pin: 411021. to act as a real estate agent to facilitate the sale or purchasse of any plot, apartment or building, as the\ncase may be, in real estate projects registered in the State of Maharashtra in terms and the rules and regulations made there\nunder.\n2. This registration is granted subject to the following conditions, namely:-\n0) The real estate agent shall not facilitate the sale or purchase of any plot, apartment or building, as the case may be,\nin a real estate project or part of it, being sold by the promoter which is required but not registered with the regulatory\nauthority,\n41\n() The real estate agent shall maintain and preserve such books of account, records and documents as provided\nunder rule 16)\n(iil) The real estate agent shall not involve himself in any unfair trade practices as specified under clause (c) of section\n10 read with Rule 17:\n(iv) The real estate agent shall provide assistance to enable the allottee and promoter to exercise their respective\nrights and fulfil their respective obligations at the time of booking and sale of any plot, apartment or building, as the\ncase may be.\n(v) The real estate agent shall comply with the provisions and the rules and regulations made there under,\nDated: 12/04/2021\nPlace: Mumbai\n(vi) The real estate agent shall discharge such other functions as may be specified by the regulatory authority by\nregulations;\n3. The registration is valid for a period of five years commencing from 12/04/2021 and ending with 12/04/2026 unless\nrenewed by the regulatory authority in accordance with the provisions or the rules and regulations made there under.\n4. If the above mentioned conditions are not fulfilled by the real estate agent, the regulatory authority may take necessary\naction against the real estate agent including revoking the registration granted herein, as per the Act and the rules and\nregulations made there under.\nSignature valid\nDigitally Sighed by\nhand Prabhu\neMahaRERA)\nDate:12-4-2021 12:51:00\nSignature and seal of the Authorized Officer\nMaharashtra Real Estate Regulatory Authority';
+      //   'HI 1:50 00\nCorazon Homes P..\nMaharashtra Real Estate Regulatory Authority\nREGISTRATION CERTIFICATE OF REAL ESTATE AGENT FORM\nFORM "H\n[See rule 12(1Xb)]\n1. This registration is granted under section 9 with registration certificate bearing No. A52100000952 to -\nCarmandu Limited having its registered office I principal place of business at Tehsil: Pune City District:\nPune, Pin: 411021. to act as a real estate agent to facilitate the sale or purchasse of any plot, apartment or building, as the\ncase may be, in real estate projects registered in the State of Maharashtra in terms and the rules and regulations made there\nunder.\n2. This registration is granted subject to the following conditions, namely:-\n0) The real estate agent shall not facilitate the sale or purchase of any plot, apartment or building, as the case may be,\nin a real estate project or part of it, being sold by the promoter which is required but not registered with the regulatory\nauthority,\n41\n() The real estate agent shall maintain and preserve such books of account, records and documents as provided\nunder rule 16)\n(iil) The real estate agent shall not involve himself in any unfair trade practices as specified under clause (c) of section\n10 read with Rule 17:\n(iv) The real estate agent shall provide assistance to enable the allottee and promoter to exercise their respective\nrights and fulfil their respective obligations at the time of booking and sale of any plot, apartment or building, as the\ncase may be.\n(v) The real estate agent shall comply with the provisions and the rules and regulations made there under,\nDated: 12/04/2021\nPlace: Mumbai\n(vi) The real estate agent shall discharge such other functions as may be specified by the regulatory authority by\nregulations;\n3. The registration is valid for a period of five years commencing from 12/04/2021 and ending with 12/04/2026 unless\nrenewed by the regulatory authority in accordance with the provisions or the rules and regulations made there under.\n4. If the above mentioned conditions are not fulfilled by the real estate agent, the regulatory authority may take necessary\naction against the real estate agent including revoking the registration granted herein, as per the Act and the rules and\nregulations made there under.\nSignature valid\nDigitally Sighed by\nhand Prabhu\neMahaRERA)\nDate:12-4-2021 12:51:00\nSignature and seal of the Authorized Officer\nMaharashtra Real Estate Regulatory Authority';
 
       const registrationNumberPattern = /No\.\s*(\w+)/;
-      const companyNamePattern = /to\s*-\s*([^ ]+(?:\s+[^ ]+)*?)\s+having/;
+      const companyNamePattern = /to\s*-\s*([^\s]+(?:\s+[^\s]+)*)\s+having/;
       const companyNamePattern2 = /Name of Agent:\s+(.+)/;
+      const companyNamePattern3 =
+        /to\s*-\s*Mr\.\/Ms\.\s*([A-Z][a-zA-Z]*(?:\s+[A-Z][a-zA-Z]*)*)\s+son\/daughter of/;
       const startDatePattern = /commencing from\s*(\d{2}\/\d{2}\/\d{4})/;
       const endDatePattern = /ending with\s*(\d{2}\/\d{2}\/\d{4})/;
 
       const registrationNumber: any = text.match(
         registrationNumberPattern
       )?.[1];
-      let companyName: any = "";
-      companyName = text.match(companyNamePattern)?.[1];
       const startDate = text.match(startDatePattern)?.[1];
-      const endDate: any = text.match(endDatePattern)?.[1];
-      if (companyName == undefined) {
-        companyName = text.match(companyNamePattern2)?.[1];
-      }
+      const endDate = text.match(endDatePattern)?.[1];
+
+      // Check for company or agent name
+      let companyName =
+        text.match(companyNamePattern)?.[1] ||
+        text.match(companyNamePattern2)?.[1] ||
+        text.match(companyNamePattern3)?.[1];
 
       let data = {
         reraNumber: Regexs.reraRegex.test(registrationNumber)
@@ -165,7 +168,7 @@ const AgentBasicInfoView = (props: any) => {
   const convertDate = (dateString: any) => {
     // Split the date string into components
     if (dateString != undefined) {
-      const [month, day, year] = dateString.split("/");
+      const [day, month, year] = dateString.split("/");
       return `${year}-${month}-${day}`;
     } else return null;
   };
@@ -354,7 +357,7 @@ const AgentBasicInfoView = (props: any) => {
                 ? strings.CpreraCertificate
                 : strings.compReraCertificate}
             </Text>
-            <RequiredStart />
+            {/* <RequiredStart /> */}
           </View>
           <View style={{ flex: 0.5 }}>
             <TouchableOpacity
@@ -387,33 +390,31 @@ const AgentBasicInfoView = (props: any) => {
           </View>
         </View>
 
-        <TouchableWithoutFeedback onPress={handleMsg}>
-          <View style={styles.inputWrap}>
-            <InputField
-              // disableSpecialCharacters={true}
-              require={true}
-              editable={false}
-              placeholderText={
-                props?.agencyData?.cp_type === 1
-                  ? strings.nameOfCp
-                  : strings.cpCompName
-              }
-              handleInputBtnPress={() => {}}
-              headingText={
-                props?.agencyData?.cp_type === 1
-                  ? strings.nameOfCp
-                  : strings.cpCompName
-              }
-              valueshow={props.agencyData?.owner_name}
-              onChangeText={(val: any) => {
-                props.setAgencyData({
-                  ...props.agencyData,
-                  owner_name: val,
-                });
-              }}
-            />
-          </View>
-        </TouchableWithoutFeedback>
+        <View style={styles.inputWrap}>
+          <InputField
+            // disableSpecialCharacters={true}
+            require={true}
+            editable={props.agencyData?.rera_certificate ? false : true}
+            placeholderText={
+              props?.agencyData?.cp_type === 1
+                ? strings.nameOfCp
+                : strings.cpCompName
+            }
+            handleInputBtnPress={() => {}}
+            headingText={
+              props?.agencyData?.cp_type === 1
+                ? strings.nameOfCp
+                : strings.cpCompName
+            }
+            valueshow={props.agencyData?.owner_name}
+            onChangeText={(val: any) => {
+              props.setAgencyData({
+                ...props.agencyData,
+                owner_name: val,
+              });
+            }}
+          />
+        </View>
 
         <View style={styles.inputWrap}>
           <InputField
@@ -573,100 +574,99 @@ const AgentBasicInfoView = (props: any) => {
             }}
           />
         </View>
-        <TouchableWithoutFeedback onPress={handleMsg}>
-          <View style={styles.inputWrap}>
-            <InputField
-              require={true}
-              editable={false}
-              placeholderText={
-                props?.agencyData?.cp_type === 1
-                  ? strings.channelParnterReraNo
-                  : strings.cpCompReraNo
-              }
-              autoCapitalize="words"
-              handleInputBtnPress={() => {}}
-              headingText={
-                props?.agencyData?.cp_type === 1
-                  ? strings.channelParnterReraNo
-                  : strings.cpCompReraNo
-              }
-              // editable={props.emailMobileChng?.change}
-              maxLength={12}
-              valueshow={props.agencyData?.rera_certificate_no}
-              rightImageVw={styles.tickImgVw}
-              rightImageSty={styles.tickImg}
-              rightImgSrc={
-                props?.emailMobvalidation?.rera_certificate_no ===
-                "rera_certificate_no"
-                  ? images.check
-                  : null
-              }
-              onBlur={(val: any) => {
-                if (
-                  Regexs.reraRegex.test(props.agencyData?.rera_certificate_no)
-                ) {
-                  if (
-                    props.agencyData?.setrera_certificate_no?.toString() !==
-                    props.agencyData?.rera_certificate_no?.toString()
-                  ) {
-                    props.handleCheckEmailMobile(2);
-                  }
-                  props.setEmailMobileChng({
-                    ...props.emailMobileChng,
-                    onrera: "",
-                  });
-                  props.setEmailMobValidation({
-                    ...props.emailMobvalidation,
-                    rera_certificate_no: null,
-                  });
-                }
-              }}
-              onChangeText={(val: any) => {
-                props.setAgencyData({
-                  ...props.agencyData,
-                  rera_certificate_no: val,
-                  norera_register:
-                    val === "" &&
-                    handleValues(props?.agencyData?.rera_certificate) === false
-                      ? null
-                      : "",
-                });
-                if (Regexs.reraRegex.test(val)) {
-                  setShowReraValidationError(false);
-                  props.setEmailMobValidation({
-                    ...props.emailMobvalidation,
-                    rera_certificate_no: "reraStart",
-                  });
-                  props.setEmailMobileChng({
-                    ...props.emailMobileChng,
-                    onrera: "onrera",
-                  });
-                } else {
-                  setShowReraValidationError(true);
-                  props.setEmailMobValidation({
-                    ...props.emailMobvalidation,
-                    rera_certificate_no: null,
-                  });
-                  props.setEmailMobileChng({
-                    ...props.emailMobileChng,
-                    onrera: null,
-                  });
-                }
-              }}
-            />
 
-            {showReraValidationError ? (
-              <View style={{ padding: 5 }}>
-                <Text style={{ fontSize: 12, color: RED_COLOR }}>
-                  Starts with an alphabetic character. (eg:A12345678901)
-                </Text>
-                <Text style={{ fontSize: 12, color: RED_COLOR }}>
-                  Has the remaining characters as numeric digits.
-                </Text>
-              </View>
-            ) : null}
-          </View>
-        </TouchableWithoutFeedback>
+        <View style={styles.inputWrap}>
+          <InputField
+            require={true}
+            editable={props.agencyData?.rera_certificate ? false : true}
+            placeholderText={
+              props?.agencyData?.cp_type === 1
+                ? strings.channelParnterReraNo
+                : strings.cpCompReraNo
+            }
+            autoCapitalize="words"
+            handleInputBtnPress={() => {}}
+            headingText={
+              props?.agencyData?.cp_type === 1
+                ? strings.channelParnterReraNo
+                : strings.cpCompReraNo
+            }
+            // editable={props.emailMobileChng?.change}
+            maxLength={13}
+            valueshow={props.agencyData?.rera_certificate_no}
+            rightImageVw={styles.tickImgVw}
+            rightImageSty={styles.tickImg}
+            rightImgSrc={
+              props?.emailMobvalidation?.rera_certificate_no ===
+              "rera_certificate_no"
+                ? images.check
+                : null
+            }
+            onBlur={(val: any) => {
+              if (
+                Regexs.reraRegex.test(props.agencyData?.rera_certificate_no)
+              ) {
+                if (
+                  props.agencyData?.setrera_certificate_no?.toString() !==
+                  props.agencyData?.rera_certificate_no?.toString()
+                ) {
+                  props.handleCheckEmailMobile(2);
+                }
+                props.setEmailMobileChng({
+                  ...props.emailMobileChng,
+                  onrera: "",
+                });
+                props.setEmailMobValidation({
+                  ...props.emailMobvalidation,
+                  rera_certificate_no: null,
+                });
+              }
+            }}
+            onChangeText={(val: any) => {
+              props.setAgencyData({
+                ...props.agencyData,
+                rera_certificate_no: val,
+                norera_register:
+                  val === "" &&
+                  handleValues(props?.agencyData?.rera_certificate) === false
+                    ? null
+                    : "",
+              });
+              if (Regexs.reraRegex.test(val)) {
+                setShowReraValidationError(false);
+                props.setEmailMobValidation({
+                  ...props.emailMobvalidation,
+                  rera_certificate_no: "reraStart",
+                });
+                props.setEmailMobileChng({
+                  ...props.emailMobileChng,
+                  onrera: "onrera",
+                });
+              } else {
+                setShowReraValidationError(true);
+                props.setEmailMobValidation({
+                  ...props.emailMobvalidation,
+                  rera_certificate_no: null,
+                });
+                props.setEmailMobileChng({
+                  ...props.emailMobileChng,
+                  onrera: null,
+                });
+              }
+            }}
+          />
+
+          {showReraValidationError ? (
+            <View style={{ padding: 5 }}>
+              <Text style={{ fontSize: 12, color: RED_COLOR }}>
+                Starts with an alphabetic character. (eg:A12345678901)
+              </Text>
+              <Text style={{ fontSize: 12, color: RED_COLOR }}>
+                Has the remaining characters as numeric digits.
+              </Text>
+            </View>
+          ) : null}
+        </View>
 
         <View style={styles.inputWrap}>
           <InputCalender
@@ -678,7 +678,7 @@ const AgentBasicInfoView = (props: any) => {
                 ? "Please attach the RERA certificate"
                 : "To change the start date, update the RERA certificate."
             }
-            disabled={true}
+            disabled={props.agencyData?.rera_certificate ? true : false}
             placeholderText={"Start Date"}
             headingText={"RERA Start Date"}
             editable={false}
@@ -706,7 +706,7 @@ const AgentBasicInfoView = (props: any) => {
         <View style={styles.inputWrap}>
           <InputCalender
             require={true}
-            disabled={true}
+            disabled={props.agencyData?.rera_certificate ? true : false}
             message={
               !props?.agencyData?.rera_certificate && props.type != "edit"
                 ? "Please attach the RERA certificate"

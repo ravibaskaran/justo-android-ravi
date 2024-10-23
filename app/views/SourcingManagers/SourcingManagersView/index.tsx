@@ -1,14 +1,20 @@
 import { useFocusEffect } from "@react-navigation/native";
-import { AddTargetForCpAction, removeAddTarget } from "app/Redux/Actions/AgencyActions";
-import { getSourcingManagerList } from "app/Redux/Actions/SourcingManagerActions";
+import {
+  AddTargetForCpAction,
+  removeAddTarget,
+} from "app/Redux/Actions/AgencyActions";
+import {
+  getSourcingHeadSMList,
+  getSourcingManagerList,
+} from "app/Redux/Actions/SourcingManagerActions";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SourcingDetailsView from "./components/SourcingManager";
 import ErrorMessage from "app/components/ErrorMessage";
-import { GREEN_COLOR } from "app/components/utilities/constant";
+import { GREEN_COLOR, ROLE_IDS } from "app/components/utilities/constant";
 
 const SourcingDetailScreen = ({ navigation, route }: any) => {
-  const { type } = route?.params || {}
+  const { type } = route?.params || {};
   const [status, setStatus] = useState(false);
   const [filterisVisible, setFilterisVisible] = useState(false);
   const [sourcingManagers, setSourcingManagers] = useState<any>([]);
@@ -30,7 +36,7 @@ const SourcingDetailScreen = ({ navigation, route }: any) => {
     (state: any) => state.SourcingManager
   );
   const AddTargetForCp = useSelector((state: any) => state.addTargetForCpData);
-
+  const { userData = {} } = useSelector((state: any) => state.userData);
   const [filterData, setFilterData] = useState({
     start_date: "",
     end_date: "",
@@ -56,19 +62,23 @@ const SourcingDetailScreen = ({ navigation, route }: any) => {
     if (AddTargetForCp?.response?.status === 200) {
       ErrorMessage({
         msg: AddTargetForCp?.response?.message,
-        backgroundColor: GREEN_COLOR
-      })
-      dispatch(removeAddTarget())
+        backgroundColor: GREEN_COLOR,
+      });
+      dispatch(removeAddTarget());
       setTimeout(() => {
         setIsVisible(false);
         // navigation.goBack()
-      }, 2000)
-     // navigation.navigate("SourcingManager");
+      }, 2000);
+      // navigation.navigate("SourcingManager");
     }
   }, [AddTargetForCp]);
   const getSMList = (offset: any) => {
     setOffset(offset);
-    dispatch(getSourcingManagerList({}));
+    if (userData?.data?.role_id === ROLE_IDS.sourcing_head_id) {
+      dispatch(getSourcingHeadSMList({}));
+    } else {
+      dispatch(getSourcingManagerList({}));
+    }
     // toGetDatas(array)
   };
 

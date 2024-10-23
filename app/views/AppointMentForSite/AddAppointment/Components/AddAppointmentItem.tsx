@@ -26,8 +26,22 @@ import InputCalender from "app/components/InputCalender";
 import moment from "moment";
 import { leadTypes } from "app/components/utilities/DemoData";
 import CheckBox from "@react-native-community/checkbox";
+import { useState } from "react";
 
 const AddAppointmentItem = (props: any) => {
+
+  const [minAppointmentTime, setMinAppointmentTime] = useState<any>(null);
+  
+  const isToday = (dateString: any) => {
+    const date = new Date(dateString);
+    const today = new Date();
+    return (
+      date.getDate() === today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear()
+    );
+  };
+
   return (
     <ScrollView
       keyboardShouldPersistTaps={"handled"}
@@ -196,6 +210,8 @@ const AddAppointmentItem = (props: any) => {
             headingText={strings.appointmentDate}
             editable={false}
             dateData={(data: any) => {
+              if (isToday(data)) setMinAppointmentTime(data);
+              else setMinAppointmentTime(null);
               props.setAppointMentForm({
                 ...props.appointMentForm,
                 appointment_time: "",
@@ -240,6 +256,7 @@ const AddAppointmentItem = (props: any) => {
                 appointment_time: data,
               });
             }}
+            minimumDate={minAppointmentTime ? minAppointmentTime : null}
             value={
               props?.appointMentForm?.appointment_time === "" ||
               props?.appointMentForm?.appointment_time === null ||

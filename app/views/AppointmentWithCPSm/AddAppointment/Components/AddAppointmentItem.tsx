@@ -1,5 +1,5 @@
 import { View, Text, ScrollView } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Styles";
 import DropdownInput from "../../../../components/DropDown";
 import strings from "../../../../components/utilities/Localization";
@@ -14,6 +14,19 @@ import moment from "moment";
 import Styles from "app/components/DropDown/styles";
 
 const AddAppointmentItem = (props: any) => {
+
+  const [minAppointmentTime, setMinAppointmentTime] = useState<any>(null);
+  
+  const isToday = (dateString: any) => {
+    const date = new Date(dateString);
+    const today = new Date();
+    return (
+      date.getDate() === today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear()
+    );
+  };
+
   const millisecondsInTwoHours = 2 * 60 * 60 * 1000;
   const millisecondsInFiveMinutes = 5 * 60 * 1000;
   const totalMillisecondsToAdd =
@@ -33,6 +46,8 @@ const AddAppointmentItem = (props: any) => {
             editable={false}
             // onChangeText={() => { }}
             dateData={(data: any) => {
+              if (isToday(data)) setMinAppointmentTime(data);
+              else setMinAppointmentTime(null);
               props.setAddAppointmentForm({
                 ...props.addAppointmentForm,
                 appointment_time: "",
@@ -71,6 +86,7 @@ const AddAppointmentItem = (props: any) => {
                 appointment_time: data,
               });
             }}
+            minimumDate={minAppointmentTime ? minAppointmentTime : null}
             setDateshow={(data: any) => {
               props.setAddAppointmentForm({
                 ...props.addAppointmentForm,

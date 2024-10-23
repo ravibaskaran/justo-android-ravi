@@ -144,30 +144,46 @@ const SCMReportTable = (props: any) => {
           </View>
 
           <View style={styles.boxcontent}>
-            <ItemCard
-              title={"Walk-ins"}
-              byCp={data[0]?.walkin_cp}
-              byDirect={data[0]?.walkin_direct}
-              total={data[0]?.walkin}
-            />
-            <ItemCard
-              title={"Leads"}
-              byCp={data[0]?.leades_cp}
-              byDirect={data[0]?.leades_direct}
-              total={data[0]?.total_leades}
-            />
-            <ItemCard
-              title={"Booking"}
-              byCp={data[0]?.booking_cp}
-              byDirect={data[0]?.booking_direct}
-              total={data[0]?.total_booking}
-            />
+            <View style={styles.childContainer}>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                Leads
+              </Text>
+              <Text
+                style={[
+                  styles.cardText,
+                  {
+                    fontSize: 18,
+                    color: "#000",
+                    fontWeight: "700",
+                    paddingTop: 12,
+                  },
+                ]}
+              >
+                {data[0]?.total_leades}
+              </Text>
+            </View>
             <ItemCard
               title={"Site Visit Created"}
               byCp={data[0]?.site_visit_created_cp}
               byDirect={data[0]?.site_visit_created_direct}
               total={data[0]?.site_visit_created}
             />
+            <ItemCard
+              title={"Walk-ins"}
+              byCp={data[0]?.walkin_cp}
+              byDirect={data[0]?.walkin_direct}
+              total={data[0]?.walkin}
+            />
+
+            <ItemCard
+              title={"Booking"}
+              byCp={data[0]?.booking_cp}
+              byDirect={data[0]?.booking_direct}
+              total={data[0]?.total_booking}
+            />
+
             <View style={styles.childContainer}>
               <Text
                 style={[styles.cardText, { color: "#000", fontWeight: "700" }]}

@@ -18,6 +18,7 @@ import {
 import { getPermission } from "app/Redux/Actions/permissionAction";
 import {
   getAssignCPList,
+  getSourcingHeadSMList,
   getSourcingManagerList,
 } from "app/Redux/Actions/SourcingManagerActions";
 import moment from "moment";
@@ -145,11 +146,12 @@ const DashboardScreen = ({ navigation }: any) => {
       getLoginType?.response?.data?.role_id === ROLE_IDS.sourcingmanager_id
     ) {
       dispatch(dashboardSourcingData({}));
-      if (
-        getLoginType?.response?.data?.role_id === ROLE_IDS.sourcingtl_id ||
+      if (getLoginType?.response?.data?.role_id === ROLE_IDS.sourcingtl_id) {
+        dispatch(getSourcingManagerList({}));
+      } else if (
         getLoginType?.response?.data?.role_id === ROLE_IDS.sourcing_head_id
       ) {
-        dispatch(getSourcingManagerList({}));
+        dispatch(getSourcingHeadSMList({}));
       } else if (
         getLoginType?.response?.data?.role_id === ROLE_IDS.sourcingmanager_id
       ) {

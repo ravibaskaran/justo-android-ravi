@@ -1,12 +1,20 @@
 import apiEndPoints from "app/components/utilities/apiEndPoints";
 import { apiCall } from "app/components/utilities/httpClient";
 import { GET_CP_ACTIVE_LEAD, GET_CP_ACTIVE_LEAD_ERROR, REMOVE_TRANSFER_VISIT_DATA, START_LOADING, STOP_LOADING, TRANSFER_VISIT_DATA, TRANSFER_VISIT_ERROR } from "../types";
+import ErrorMessage from "app/components/ErrorMessage";
+import { GREEN_COLOR } from "app/components/utilities/constant";
 
 export const transferVisitList = (params: any) => async (dispatch: any) => {
     dispatch({ type: START_LOADING })
     try {
         const res = await apiCall("post", apiEndPoints.TRANSFER_VISIT, params);
         if (res.data.status == 200) {
+            setTimeout(() => {
+                ErrorMessage({
+                    msg: res.data?.message,
+                    backgroundColor: GREEN_COLOR,
+                  });
+            }, 1700);
             dispatch({
                 type: TRANSFER_VISIT_DATA,
                 payload: res.data,
@@ -24,7 +32,9 @@ export const transferVisitList = (params: any) => async (dispatch: any) => {
         });
     }
     finally {
+        setTimeout(() => {
         dispatch({ type: STOP_LOADING })
+        }, 1600);
     }
 };
 

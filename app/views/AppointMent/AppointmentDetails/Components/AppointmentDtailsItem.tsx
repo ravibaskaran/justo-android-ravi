@@ -446,7 +446,7 @@ const AppointmentDtailsItem = (props: any) => {
           marginVertical: normalizeSpacing(20),
         }}
       >
-        {item.status === 1 ? (
+        {item.status === 1 || item.status === 10 ? (
           <Button
             width={Isios ? 200 : 160}
             height={45}
@@ -462,7 +462,7 @@ const AppointmentDtailsItem = (props: any) => {
         ) : null}
         <Button
           width={Isios ? 200 : 160}
-          height={item.status === 1 ? 45 : 30}
+          height={item?.status === 1 || item?.status === 10? 45 : 30}
           bgcolor={WHITE_COLOR}
           bordercolor={PRIMARY_THEME_COLOR}
           borderWidth={1}

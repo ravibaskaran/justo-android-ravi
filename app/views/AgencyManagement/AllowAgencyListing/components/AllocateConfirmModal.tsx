@@ -9,10 +9,11 @@ import { Dropdown } from "react-native-element-dropdown";
 import { useDispatch, useSelector } from "react-redux";
 import {
   assignCPSM,
+  getSourcingHeadSMList,
   getSourcingManagerList,
 } from "app/Redux/Actions/SourcingManagerActions";
 import ErrorMessage from "app/components/ErrorMessage";
-import { RED_COLOR } from "app/components/utilities/constant";
+import { RED_COLOR, ROLE_IDS } from "app/components/utilities/constant";
 const data = [
   { label: "Item 1", value: "1" },
   { label: "Item 2", value: "2" },
@@ -37,20 +38,29 @@ const AllocateConfirmModal = (props: any) => {
   const { response = {}, list = "" } = useSelector(
     (state: any) => state.SourcingManager
   );
-
+  const { userData = {} } = useSelector((state: any) => state.userData);
   useEffect(() => {
     setSourcingManagers([]);
-    dispatch(
-      getSourcingManagerList({
-        property_id: props?.statusChange?.property_id,
-      })
-    );
+    if (userData?.data?.role_id === ROLE_IDS.sourcing_head_id) {
+      dispatch(
+        getSourcingHeadSMList({
+          property_id: props?.statusChange?.property_id,
+        })
+      );
+    } else {
+      dispatch(
+        getSourcingManagerList({
+          property_id: props?.statusChange?.property_id,
+        })
+      );
+    }
+
     setAllocateData({
       cp_id: [props?.statusChange?._id],
       property_id: props?.statusChange?.property_id,
       assign_type: 2,
     });
-    return () => { };
+    return () => {};
   }, [props?.statusChange]);
 
   useEffect(() => {
@@ -59,7 +69,7 @@ const AllocateConfirmModal = (props: any) => {
         setSourcingManagers(response?.data);
       }
     }
-    return () => { };
+    return () => {};
   }, [response]);
 
   const onpressAllocation = () => {

@@ -7,6 +7,7 @@ import strings from "app/components/utilities/Localization";
 import { getAllMaster } from "app/Redux/Actions/MasterActions";
 import {
   getAssignCPList,
+  getSourcingHeadSMList,
   getSourcingManagerList,
 } from "app/Redux/Actions/SourcingManagerActions";
 import {
@@ -15,7 +16,7 @@ import {
   editUserAppointment,
 } from "app/Redux/Actions/AppiontmentWithUserActions";
 import ErrorMessage from "app/components/ErrorMessage";
-import { GREEN_COLOR } from "app/components/utilities/constant";
+import { GREEN_COLOR, ROLE_IDS } from "app/components/utilities/constant";
 
 const AddAppointmentScreen = ({ navigation, route }: any) => {
   const { data, type } = route?.params || {};
@@ -55,16 +56,19 @@ const AddAppointmentScreen = ({ navigation, route }: any) => {
 
   useEffect(() => {
     if (
-      getLoginType?.response?.data?.role_title === "Sourcing TL" ||
-      getLoginType?.response?.data?.role_title === "Sourcing Head" ||
-      getLoginType?.response?.data?.role_title === "Cluster Head"
+      getLoginType?.response?.data?.role_id === ROLE_IDS.sourcingtl_id ||
+      getLoginType?.response?.data?.role_id === ROLE_IDS.clusterhead_id
     ) {
       setRole("TL");
       dispatch(getSourcingManagerList({}));
+    } else if (
+      getLoginType?.response?.data?.role_id === ROLE_IDS.sourcing_head_id
+    ) {
+      dispatch(getSourcingHeadSMList({}));
     } else {
       if (
-        getLoginType?.response?.data?.role_title === "Sourcing Manager" ||
-        getLoginType?.response?.data?.role_title === "Cluster Head"
+        getLoginType?.response?.data?.role_id === ROLE_IDS.sourcingmanager_id ||
+        getLoginType?.response?.data?.role_id === ROLE_IDS.clusterhead_id
       ) {
         setRole("SM");
         dispatch(

@@ -12,7 +12,7 @@ import { CpType } from "app/components/utilities/DemoData";
 import { RequiredStart } from "app/components/utilities/GlobalFuncations";
 import usePermission from "app/components/utilities/UserPermissions";
 import moment from "moment";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Keyboard,
   Linking,
@@ -36,6 +36,7 @@ import {
   DATE_FORMAT,
   Isios,
   PRIMARY_THEME_COLOR,
+  RED_COLOR,
   Regexs,
   ROLE_IDS,
   WHITE_COLOR,
@@ -43,9 +44,11 @@ import {
 import strings from "../../../../components/utilities/Localization";
 import styles from "./Styles";
 import VisitConfirmModal from "./VisitConfirmModal";
+import ErrorMessage from "app/components/ErrorMessage";
 
 const AddNewVisitorForm = (props: any) => {
   const { masterDatas } = props;
+  const [configuration, setConfiguration] = useState<any>([]);
 
   const { response = {}, detail = "" } = useSelector(
     (state: any) => state.visitorData
@@ -54,18 +57,19 @@ const AddNewVisitorForm = (props: any) => {
   const id = userData?.userData?.data?.role_id;
 
   const Cmteam =
-    ROLE_IDS.closingtl_id === id || ROLE_IDS.closingmanager_id === id;
-  const CHteam =
-    ROLE_IDS.closing_head_id === id || ROLE_IDS.closingmanager_id === id;
+    ROLE_IDS.closingtl_id === id ||
+    ROLE_IDS.closingmanager_id === id ||
+    ROLE_IDS.closing_head_id === id;
+
   const SMteam =
-    ROLE_IDS.sourcingtl_id === id || ROLE_IDS.sourcingmanager_id === id;
-  const SHteam =
-    ROLE_IDS.sourcing_head_id === id || ROLE_IDS.sourcingmanager_id === id;
+    ROLE_IDS.sourcingtl_id === id ||
+    ROLE_IDS.sourcingmanager_id === id ||
+    ROLE_IDS.sourcing_head_id === id;
 
   const leadsourcefilteredData: any = masterDatas.filter((obj: any) =>
-    Cmteam || CHteam
+    Cmteam
       ? obj.title !== "Channel Partner"
-      : SHteam || SMteam
+      : SMteam
       ? obj.title === "Channel Partner"
       : obj.title !== ""
   );
@@ -119,6 +123,22 @@ const AddNewVisitorForm = (props: any) => {
     }
   }, [response]);
 
+  useEffect(() => {
+    if (props?.formData?.property_id) {
+      let property = props?.allProperty.filter(
+        (item: any) => item.property_id == props?.formData?.property_id
+      );
+      setConfiguration(property[0]?.configurations);
+    } else {
+      setConfiguration([]);
+    }
+    props.setFormData({
+      ...props.formData,
+      configuration_id: "",
+      configuration: "",
+    });
+  }, [props?.formData?.property_id]);
+
   function canShowProperty() {
     if (
       props?.formData?.mobile === "" ||
@@ -142,6 +162,26 @@ const AddNewVisitorForm = (props: any) => {
       return true;
     }
   }
+
+  const isPropertySelected = async () => {
+    let isError = true;
+    let errorMessage = "";
+    if (
+      props?.formData?.property_id === "" ||
+      props?.formData?.property_id === undefined ||
+      props?.formData?.property_id === null
+    ) {
+      isError = false;
+      errorMessage = "Please select a property";
+
+      if (errorMessage !== "") {
+        ErrorMessage({
+          msg: errorMessage,
+          backgroundColor: RED_COLOR,
+        });
+      }
+    }
+  };
 
   return (
     <View style={styles.mainContainer}>
@@ -672,7 +712,7 @@ const AddNewVisitorForm = (props: any) => {
               valueshow={props?.formData?.whatsapp_no}
               headingText={strings.whatsappNo}
               keyboardtype={"number-pad"}
-              maxLength={15}
+              maxLength={10}
             />
           </View>
           <View style={styles.inputWrap}>
@@ -843,10 +883,12 @@ const AddNewVisitorForm = (props: any) => {
             <TextInput
               value={props?.formData?.no_of_family_member}
               onChangeText={(data: any) => {
-                props.setFormData({
-                  ...props.formData,
-                  no_of_family_member: data,
-                });
+                if (Regexs.alphaNumeric.test(data) === true) {
+                  props.setFormData({
+                    ...props.formData,
+                    no_of_family_member: data,
+                  });
+                }
               }}
               keyboardType={"number-pad"}
               maxLength={2}
@@ -1000,19 +1042,15 @@ const AddNewVisitorForm = (props: any) => {
                   ? props.formData?.configuration
                   : strings.configurations
               }
-              data={
-                Array.isArray(props?.configuration) ? props?.configuration : []
-              }
+              onFocus={() => isPropertySelected()}
+              data={Array.isArray(configuration) ? configuration : []}
               inputWidth={"100%"}
-              onFocus={() => props.handleDropdownPress(2)}
               paddingLeft={16}
               maxHeight={300}
               labelField={"title"}
               valueField={"_id"}
               value={props?.formData?.configuration_id}
               onChange={(item: any) => {
-                console.log(item);
-
                 props.setFormData({
                   ...props.formData,
                   configuration_id: item._id,
@@ -1538,7 +1576,7 @@ const AddNewVisitorForm = (props: any) => {
           </View>
           <View style={styles.inputWrap}>
             <InputField
-              disableSpecialCharacters={true}
+              disableSpecialCharacters={false}
               placeholderText={"Company Name"}
               handleInputBtnPress={() => {}}
               onChangeText={(data: any) => {

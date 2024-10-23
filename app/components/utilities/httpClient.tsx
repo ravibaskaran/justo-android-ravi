@@ -80,6 +80,7 @@ export async function apiCallJW(
   data: any,
   header = { "Content-Type": "application/json", "access-control-allow-origin": "*" }
 ) {
+  console.log("API URL : ", url);
   try {
     const response = await httpClientJW({
       method,

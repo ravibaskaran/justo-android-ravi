@@ -270,6 +270,7 @@ const AgencyListing = ({ navigation, route }: any) => {
   const onPressSeeEmployee = (data: any) => {
     navigation.navigate("EmployeeListing", { ID: data });
   };
+
   const onPressDeactivates = (data: any, type: any) => {
     dispatch(
       transferVisitList({
@@ -277,10 +278,12 @@ const AgencyListing = ({ navigation, route }: any) => {
         active_status: data?.active_status,
       })
     );
-    getAgencyList(0, {});
+    setTimeout(() => {
+      getAgencyList(0, {});
+    }, 600);
     // navigation.navigate("DeactiveAgency", { data });
   };
-  
+
   const onPressVerify = async (data: any, type: any) => {
     let params = { cp_id: data?.cp_id };
     const res = await apiCall("post", apiEndPoints.VERIFY_CP, params);

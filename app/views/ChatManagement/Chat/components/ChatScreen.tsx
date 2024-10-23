@@ -143,7 +143,7 @@ const ChatScreen = ({ navigation, route }: any) => {
                 filename: items?.filename,
                 type: items?.type === "doc" ? items.type : "",
                 video: items?.video,
-                createdAt: new Date(),
+                createdAt: items?.createdAt,
                 user: {
                   _id: items?._id,
                   // name: "React Native",

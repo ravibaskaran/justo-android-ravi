@@ -1,17 +1,29 @@
+import DropdownInput from "app/components/DropDown";
+import ErrorMessage from "app/components/ErrorMessage";
+import InputCalender from "app/components/InputCalender";
+import CountryPickerModal from "app/components/Modals/CountryPickerModal";
+import JustForOkModal from "app/components/Modals/JustForOkModal";
+import { CpType } from "app/components/utilities/DemoData";
+import moment from "moment";
 import React from "react";
 import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
   ScrollView,
+  Text,
   TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import styles from "./styles";
-import TopScreensViewer from "./TopScreensViewer";
-import Header from "../../../../components/Header";
+import { RadioButton } from "react-native-paper";
+import { useSelector } from "react-redux";
 import images from "../../../../assets/images";
-import strings from "../../../../components/utilities/Localization";
+import Button from "../../../../components/Button";
+import Header from "../../../../components/Header";
+import InputField from "../../../../components/InputField";
+import Styles from "../../../../components/Modals/styles";
+import {
+  normalize,
+  normalizeSpacing,
+} from "../../../../components/scaleFontSize";
 import {
   AMOUNT_TYPE,
   BLACK_COLOR,
@@ -19,47 +31,72 @@ import {
   DATE_FORMAT,
   Isios,
   PRIMARY_THEME_COLOR,
+  RED_COLOR,
   Regexs,
   ROLE_IDS,
   WHITE_COLOR,
 } from "../../../../components/utilities/constant";
-import InputField from "../../../../components/InputField";
-import { RadioButton } from "react-native-paper";
-import Button from "../../../../components/Button";
-import {
-  normalize,
-  normalizeSpacing,
-} from "../../../../components/scaleFontSize";
-import moment from "moment";
-import InputCalender from "app/components/InputCalender";
-import DropdownInput from "app/components/DropDown";
-import Styles from "../../../../components/Modals/styles";
-import { useSelector } from "react-redux";
-import { CpType } from "app/components/utilities/DemoData";
-import CountryPickerModal from "app/components/Modals/CountryPickerModal";
-import JustForOkModal from "app/components/Modals/JustForOkModal";
+import strings from "../../../../components/utilities/Localization";
+import styles from "./styles";
 
 const VisitorUpdateView = (props: any) => {
   const { userData = {} } = useSelector((state: any) => state.userData);
+
   const userId = userData?.data ? userData?.data : {};
   const id = userData?.data?.role_id;
 
   const Cmteam =
-    ROLE_IDS.closingtl_id === id || ROLE_IDS.closingmanager_id === id;
-  const CHteam =
-    ROLE_IDS.closing_head_id === id || ROLE_IDS.closingmanager_id === id;
+    ROLE_IDS.closingtl_id === id ||
+    ROLE_IDS.closingmanager_id === id ||
+    ROLE_IDS.closing_head_id === id;
   const SMteam =
-    ROLE_IDS.sourcingtl_id === id || ROLE_IDS.sourcingmanager_id === id;
-  const SHteam =
-    ROLE_IDS.sourcing_head_id === id || ROLE_IDS.sourcingmanager_id === id;
+    ROLE_IDS.sourcingtl_id === id ||
+    ROLE_IDS.sourcingmanager_id === id ||
+    ROLE_IDS.sourcing_head_id === id;
 
   const leadsourcefilteredData: any = props.masterDatas.filter((obj: any) =>
-    Cmteam || CHteam
+    Cmteam
       ? obj.title !== "Channel Partner"
-      : SHteam || SMteam
+      : SMteam
       ? obj.title === "Channel Partner"
       : obj.title !== ""
   );
+
+  const isPropertySelected = async () => {
+    let isError = true;
+    let errorMessage = "";
+    if (
+      props?.updateForm?.property_id === "" ||
+      props?.updateForm?.property_id === undefined ||
+      props?.updateForm?.property_id === null
+    ) {
+      isError = false;
+      errorMessage = "Please select a property";
+      if (errorMessage !== "") {
+        ErrorMessage({
+          msg: errorMessage,
+          backgroundColor: RED_COLOR,
+        });
+      }
+    }
+  };
+
+  const onChageProperty = async (propertyId: any) => {
+    if (propertyId) {
+      let property = props?.allProperty.filter(
+        (item: any) => item.property_id == propertyId
+      );
+      props.setConfiguration(property[0]?.configurations);
+    } else {
+      props.setConfiguration([]);
+    }
+    props.setUpdateForm({
+      ...props.updateForm,
+      configuration_id: "",
+      configuration: "",
+    });
+  };
+
   return (
     <View style={styles.mainContainer}>
       <Header
@@ -571,6 +608,7 @@ const VisitorUpdateView = (props: any) => {
                 property_type_title: item.property_type,
                 property_title: item.property_title,
               });
+              onChageProperty(item.property_id);
             }}
             newRenderItem={(item: any) => {
               return (
@@ -713,7 +751,7 @@ const VisitorUpdateView = (props: any) => {
             valueshow={props?.updateForm?.whatsapp_no?.toString()}
             headingText={strings.whatsappNo}
             keyboardtype={"number-pad"}
-            maxLength={15}
+            maxLength={10}
           />
         </View>
         <View style={styles.inputWrap}>
@@ -843,10 +881,12 @@ const VisitorUpdateView = (props: any) => {
           <TextInput
             value={props?.updateForm?.no_of_family_member?.toString()}
             onChangeText={(data: any) => {
-              props.setUpdateForm({
-                ...props.updateForm,
-                no_of_family_member: data,
-              });
+              if (Regexs.alphaNumeric.test(data) === true) {
+                props.setUpdateForm({
+                  ...props.updateForm,
+                  no_of_family_member: data,
+                });
+              }
             }}
             maxLength={2}
             keyboardType={"number-pad"}
@@ -998,10 +1038,8 @@ const VisitorUpdateView = (props: any) => {
                 ? props.updateForm?.configuration
                 : strings.configurations
             }
-            data={
-              Array.isArray(props?.configuration) ? props?.configuration : []
-            }
-            onFocus={() => props.handleDropdownPress(2)}
+            data={Array.isArray(props.configuration) ? props.configuration : []}
+            onFocus={() => isPropertySelected}
             inputWidth={"100%"}
             paddingLeft={16}
             maxHeight={300}
@@ -1425,7 +1463,7 @@ const VisitorUpdateView = (props: any) => {
         </View>
         <View style={styles.inputWrap}>
           <InputField
-            disableSpecialCharacters={true}
+            disableSpecialCharacters={false}
             placeholderText={"Company Name"}
             handleInputBtnPress={() => {}}
             onChangeText={(text: any) => {

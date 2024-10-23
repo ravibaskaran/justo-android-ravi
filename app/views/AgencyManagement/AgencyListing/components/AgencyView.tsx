@@ -9,7 +9,10 @@ import images from "../../../../assets/images";
 import strings from "../../../../components/utilities/Localization";
 import ConfirmModal from "../../../../components/Modals/ConfirmModal";
 import FilterModal from "./AgencyFilterModel";
-import { PRIMARY_THEME_COLOR_DARK } from "../../../../components/utilities/constant";
+import {
+  PRIMARY_THEME_COLOR_DARK,
+  ROLE_IDS,
+} from "../../../../components/utilities/constant";
 
 import {
   BLACK_COLOR,
@@ -144,32 +147,34 @@ const AgencyView = (props: any) => {
             </TouchableOpacity>
           )}
         </View>
-        {allocate && (
-          <View style={styles.btnView1}>
-            <TouchableOpacity
-              onPress={() => onPressAllow()}
-              style={[
-                styles.button,
-                {
-                  borderColor: BLACK_COLOR,
-                  backgroundColor: PRIMARY_THEME_COLOR,
-                  width: normalizeWidth(180),
-                },
-              ]}
-            >
-              <Text
+        
+        {allocate &&
+          userData?.data?.role_id !== ROLE_IDS.sourcingmanager_id && (
+            <View style={styles.btnView1}>
+              <TouchableOpacity
+                onPress={() => onPressAllow()}
                 style={[
-                  styles.buttonTxt,
+                  styles.button,
                   {
-                    color: WHITE_COLOR,
+                    borderColor: BLACK_COLOR,
+                    backgroundColor: PRIMARY_THEME_COLOR,
+                    width: normalizeWidth(180),
                   },
                 ]}
               >
-                {strings.AllocateRequest}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        )}
+                <Text
+                  style={[
+                    styles.buttonTxt,
+                    {
+                      color: WHITE_COLOR,
+                    },
+                  ]}
+                >
+                  {strings.AllocateRequest}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          )}
         {/* {userData?.data?.role_title !== 'Sourcing Manager' ?
           (<View style={styles.btnView1}>
             <TouchableOpacity

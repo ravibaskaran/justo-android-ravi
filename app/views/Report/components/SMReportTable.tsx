@@ -180,7 +180,9 @@ const SMReportTable = (props: any) => {
             />
           </TouchableOpacity>
         </View> */}
-        <View style={[styles.container, { flexDirection: "column", marginTop: 0 }]}>
+        <View
+          style={[styles.container, { flexDirection: "column", marginTop: 0 }]}
+        >
           <View style={[styles.imageContainer, { width: "100%" }]}>
             <Image
               style={{ height: 80, width: 80, borderRadius: 100 }}
@@ -203,6 +205,32 @@ const SMReportTable = (props: any) => {
               <Text
                 style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
               >
+                {data[0]?.total_leades}
+              </Text>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                Leads
+              </Text>
+            </View>
+
+            <View style={styles.childContainer}>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                {data[0]?.site_visit_created}
+              </Text>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                Site Visit Created
+              </Text>
+            </View>
+
+            <View style={styles.childContainer}>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
                 {data[0]?.walkin}
               </Text>
               <Text
@@ -216,39 +244,15 @@ const SMReportTable = (props: any) => {
               <Text
                 style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
               >
-                {data[0]?.total_leades}
-              </Text>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
-                Total Leads
-              </Text>
-            </View>
-
-            <View style={styles.childContainer}>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
                 {data[0]?.total_booking}
               </Text>
               <Text
                 style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
               >
-                Total Booking
+                Booking
               </Text>
             </View>
-            <View style={styles.childContainer}>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
-                {data[0]?.site_visit_created}
-              </Text>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
-                Site Visit Created
-              </Text>
-            </View>
+
             <View style={styles.childContainer}>
               <Text
                 style={[styles.cardText, { color: "#000", fontWeight: "700" }]}

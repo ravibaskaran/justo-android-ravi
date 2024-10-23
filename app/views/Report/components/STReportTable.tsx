@@ -186,19 +186,6 @@ const STReportTable = (props: any) => {
               <Text
                 style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
               >
-                {data[0]?.walkin}
-              </Text>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
-                Walk-ins
-              </Text>
-            </View>
-
-            <View style={styles.childContainer}>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
                 {data[0]?.total_leades}
               </Text>
               <Text
@@ -212,12 +199,12 @@ const STReportTable = (props: any) => {
               <Text
                 style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
               >
-                {data[0]?.total_booking}
+                {data[0]?.site_visit_created}
               </Text>
               <Text
                 style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
               >
-                Booking
+                Site Visit Created
               </Text>
             </View>
 
@@ -225,12 +212,25 @@ const STReportTable = (props: any) => {
               <Text
                 style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
               >
-                {data[0]?.site_visit_created}
+                {data[0]?.walkin}
               </Text>
               <Text
                 style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
               >
-                Site Visit Created
+                Walk-ins
+              </Text>
+            </View>
+
+            <View style={styles.childContainer}>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                {data[0]?.total_booking}
+              </Text>
+              <Text
+                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
+              >
+                Booking
               </Text>
             </View>
           </View>
@@ -262,21 +262,9 @@ const STReportTable = (props: any) => {
                     <Text style={styles.nameText}>{item?.user_name}</Text>
                     <View style={{ flexDirection: "row" }}>
                       <Text style={[styles.cardText, { minWidth: 50 }]}>
-                        {item?.walkin}
-                      </Text>
-                      <Text style={styles.cardText}>Walk-ins</Text>
-                    </View>
-                    <View style={{ flexDirection: "row" }}>
-                      <Text style={[styles.cardText, { minWidth: 50 }]}>
                         {item?.total_leades}
                       </Text>
                       <Text style={styles.cardText}>Leads</Text>
-                    </View>
-                    <View style={{ flexDirection: "row" }}>
-                      <Text style={[styles.cardText, { minWidth: 50 }]}>
-                        {item?.total_booking}
-                      </Text>
-                      <Text style={styles.cardText}>Booking</Text>
                     </View>
                     <View style={{ flexDirection: "row" }}>
                       <Text style={[styles.cardText, { minWidth: 50 }]}>
@@ -284,6 +272,19 @@ const STReportTable = (props: any) => {
                       </Text>
                       <Text style={styles.cardText}>Site Visit Created</Text>
                     </View>
+                    <View style={{ flexDirection: "row" }}>
+                      <Text style={[styles.cardText, { minWidth: 50 }]}>
+                        {item?.walkin}
+                      </Text>
+                      <Text style={styles.cardText}>Walk-ins</Text>
+                    </View>
+                    <View style={{ flexDirection: "row" }}>
+                      <Text style={[styles.cardText, { minWidth: 50 }]}>
+                        {item?.total_booking}
+                      </Text>
+                      <Text style={styles.cardText}>Booking</Text>
+                    </View>
+
                     <View style={{ flexDirection: "row" }}>
                       <Text style={[styles.cardText, { minWidth: 50 }]}>
                         {item?.appointmentwithCp}

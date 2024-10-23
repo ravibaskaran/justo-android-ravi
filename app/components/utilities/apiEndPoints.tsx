@@ -42,6 +42,7 @@ export default {
 
   // SOURCING TL
   GET_SOURCING_MANAGER_LIST: "/userManage/getUserSourcingManagerList",
+  GET_SOURCING_HEAD_SM_LIST: "/userManage/getSourcingHeadSMlist",
   GET_SOURCING_MANAGER_DETAIL: "/userManage/getUserSourcingManagerDetail",
   GET_ASSIGNCP_LIST: "/userManage/getAssignCPList",
   STATUS_UPDATE_ASSIGN_CP: "/userManage/smUpdateAssignCpStatus",

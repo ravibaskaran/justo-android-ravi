@@ -183,115 +183,139 @@ const CTReportTable = (props: any) => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        <View
-          style={[styles.container, { flexDirection: "column", marginTop: 0 }]}
-        >
-          <View style={[styles.imageContainer, { width: "100%" }]}>
-            <Image
-              style={{ height: 80, width: 80, borderRadius: 100 }}
-              source={require("./../../../assets/images/userimage.png")}
-            />
-            <Text style={[styles.nameText, { paddingVertical: 10 }]}>
-              {userData?.data?.user_name}
-            </Text>
-          </View>
-          <View style={styles.boxcontent}>
-            <ItemCard
-              title={"Walk-ins"}
-              byCp={data[0]?.walkin_cp}
-              byDirect={data[0]?.walkin_direct}
-              total={data[0]?.walkin}
-            />
-            <ItemCard
-              title={"Leads"}
-              byCp={data[0]?.leades_cp}
-              byDirect={data[0]?.leades_direct}
-              total={data[0]?.total_leades}
-            />
-            <ItemCard
-              title={"Booking"}
-              byCp={data[0]?.booking_cp}
-              byDirect={data[0]?.booking_direct}
-              total={data[0]?.total_booking}
-            />
-            <ItemCard
-              title={"Site Visit Created"}
-              byCp={data[0]?.site_visit_created_cp}
-              byDirect={data[0]?.site_visit_created_direct}
-              total={data[0]?.site_visit_created}
-            />
-          </View>
-        </View>
-
-        {data[0]?.sm_list?.length > 0 ? (
-          <>
-            <Text
-              style={{
-                ...styles.boxText,
-                color: PRIMARY_THEME_COLOR,
-                paddingVertical: 10,
-              }}
-            >
-              Closing Managers
-            </Text>
-
-            {data[0]?.sm_list?.map((item: any, index: any) => {
-              return (
-                <View
-                  key={index}
-                  style={[styles.container, { flexDirection: "column" }]}
+        <View style={{ marginBottom: normalize(30) }}>
+          <View
+            style={[
+              styles.container,
+              { flexDirection: "column", marginTop: 0 },
+            ]}
+          >
+            <View style={[styles.imageContainer, { width: "100%" }]}>
+              <Image
+                style={{ height: 80, width: 80, borderRadius: 100 }}
+                source={require("./../../../assets/images/userimage.png")}
+              />
+              <Text style={[styles.nameText, { paddingVertical: 10 }]}>
+                {userData?.data?.user_name}
+              </Text>
+            </View>
+            <View style={styles.boxcontent}>
+              <View style={styles.childContainer}>
+                <Text
+                  style={[
+                    styles.cardText,
+                    { color: "#000", fontWeight: "700" },
+                  ]}
                 >
-                  <View style={styles.nameContainer}>
-                    <Image
-                      style={{ height: 35, width: 35, borderRadius: 100 }}
-                      source={require("./../../../assets/images/userimage.png")}
-                    />
-                    <Text style={styles.nameText}>{item?.user_name}</Text>
-                  </View>
+                  Leads
+                </Text>
+                <Text
+                  style={[
+                    styles.cardText,
+                    {
+                      color: "#000",
+                      fontWeight: "700",
+                      paddingTop: 12,
+                      fontSize: 18,
+                    },
+                  ]}
+                >
+                  {data[0]?.total_leades}
+                </Text>
+              </View>
+              <ItemCard
+                title={"Site Visit Created"}
+                byCp={data[0]?.site_visit_created_cp}
+                byDirect={data[0]?.site_visit_created_direct}
+                total={data[0]?.site_visit_created}
+              />
+              <ItemCard
+                title={"Walk-ins"}
+                byCp={data[0]?.walkin_cp}
+                byDirect={data[0]?.walkin_direct}
+                total={data[0]?.walkin}
+              />
+              <ItemCard
+                title={"Booking"}
+                byCp={data[0]?.booking_cp}
+                byDirect={data[0]?.booking_direct}
+                total={data[0]?.total_booking}
+              />
+            </View>
+          </View>
 
-                  <View style={styles.childContainer2}>
-                    <Text style={styles.itemText}></Text>
-                    <Text style={styles.itemText}>CP</Text>
-                    <Text style={styles.itemText}>Direct</Text>
-                    <Text style={styles.itemText}>Total</Text>
-                  </View>
-                  <View style={styles.childContainer2}>
-                    <Text style={styles.itemText}>Walk-ins</Text>
-                    <Text style={styles.itemText}>{item?.walkin_cp}</Text>
-                    <Text style={styles.itemText}>{item?.walkin_direct}</Text>
-                    <Text style={styles.itemText}>{item?.walkin}</Text>
-                  </View>
-                  <View style={styles.childContainer2}>
-                    <Text style={styles.itemText}>Leads</Text>
-                    <Text style={styles.itemText}>{item?.leades_cp}</Text>
-                    <Text style={styles.itemText}>{item?.leades_direct}</Text>
-                    <Text style={styles.itemText}>{item?.total_leades}</Text>
-                  </View>
+          {data[0]?.sm_list?.length > 0 ? (
+            <>
+              <Text
+                style={{
+                  ...styles.boxText,
+                  color: PRIMARY_THEME_COLOR,
+                  paddingVertical: 10,
+                }}
+              >
+                Closing Managers
+              </Text>
 
-                  <View style={styles.childContainer2}>
-                    <Text style={styles.itemText}>Booking</Text>
-                    <Text style={styles.itemText}>{item?.booking_cp}</Text>
-                    <Text style={styles.itemText}>{item?.booking_direct}</Text>
-                    <Text style={styles.itemText}>{item?.total_booking}</Text>
-                  </View>
-                  <View style={styles.childContainer2}>
-                    <Text style={styles.itemText}>Site visit created</Text>
-                    <Text style={styles.itemText}>
-                      {item?.site_visit_created_cp}
-                    </Text>
-                    <Text style={styles.itemText}>
-                      {item?.site_visit_created_direct}
-                    </Text>
-                    <Text style={styles.itemText}>
-                      {item?.site_visit_created}
-                    </Text>
-                  </View>
-                </View>
-              );
-            })}
-          </>
-        ) : null}
+              {data[0]?.sm_list?.map((item: any, index: any) => {
+                return (
+                  <View
+                    key={index}
+                    style={[styles.container, { flexDirection: "column" }]}
+                  >
+                    <View style={styles.nameContainer}>
+                      <Image
+                        style={{ height: 35, width: 35, borderRadius: 100 }}
+                        source={require("./../../../assets/images/userimage.png")}
+                      />
+                      <Text style={styles.nameText}>{item?.user_name}</Text>
+                    </View>
 
+                    <View style={styles.childContainer2}>
+                      <Text style={styles.itemText}></Text>
+                      <Text style={styles.itemText}>CP</Text>
+                      <Text style={styles.itemText}>Direct</Text>
+                      <Text style={styles.itemText}>Total</Text>
+                    </View>
+
+                    <View style={styles.childContainer2}>
+                      <Text style={styles.itemText}>Leads</Text>
+                      <Text style={styles.itemText}>NA</Text>
+                      <Text style={styles.itemText}>NA</Text>
+                      <Text style={styles.itemText}>{item?.total_leades}</Text>
+                    </View>
+                    <View style={styles.childContainer2}>
+                      <Text style={styles.itemText}>Site visit created</Text>
+                      <Text style={styles.itemText}>
+                        {item?.site_visit_created_cp}
+                      </Text>
+                      <Text style={styles.itemText}>
+                        {item?.site_visit_created_direct}
+                      </Text>
+                      <Text style={styles.itemText}>
+                        {item?.site_visit_created}
+                      </Text>
+                    </View>
+                    <View style={styles.childContainer2}>
+                      <Text style={styles.itemText}>Walk-ins</Text>
+                      <Text style={styles.itemText}>{item?.walkin_cp}</Text>
+                      <Text style={styles.itemText}>{item?.walkin_direct}</Text>
+                      <Text style={styles.itemText}>{item?.walkin}</Text>
+                    </View>
+
+                    <View style={styles.childContainer2}>
+                      <Text style={styles.itemText}>Booking</Text>
+                      <Text style={styles.itemText}>{item?.booking_cp}</Text>
+                      <Text style={styles.itemText}>
+                        {item?.booking_direct}
+                      </Text>
+                      <Text style={styles.itemText}>{item?.total_booking}</Text>
+                    </View>
+                  </View>
+                );
+              })}
+            </>
+          ) : null}
+        </View>
         {/* <View
           style={{
             flexDirection: "row",

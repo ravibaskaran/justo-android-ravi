@@ -226,7 +226,7 @@ export const getAllocateRequest = () => async (dispatch: any) => {
     dispatch({ type: START_LOADING });
     try {
         const res = await apiCall("post", apiEndPoints.ALLOCATEREQUEST, {});
-        console.log("🚀 ~ file: propertyActions.tsx:229 ~ res?.data:", res?.data)
+        // console.log("🚀 ~ file: propertyActions.tsx:229 ~ res?.data:", res?.data?.data)
         if (res?.data?.status == 200) {
             dispatch({
                 type: GET_ALLOCATE_REQUEST,

@@ -404,7 +404,7 @@ const strings = new LocalizedStrings({
     /*** Sourcing Managers ***/
     SourcingManagersHeader: "Sourcing Managers",
     SourcingTLHeader: "Sourcing TL",
-    SourcingHead:"Sourcing Head",
+    SourcingHead: "Sourcing Head",
     addNewSM: "Add New SM",
     allocateCp: "Allocate CP",
     createSM: "Create SM",
@@ -648,6 +648,10 @@ const strings = new LocalizedStrings({
     allcpcheking: "All CP Checking",
 
     filterData: "Filter Data",
+    alreadyAddedEmail:
+      "You've already added this email. Please add a different one.",
+    alreadyAddedNumber:
+      "You've already added this number. Please add a different one.",
   },
 });
 
