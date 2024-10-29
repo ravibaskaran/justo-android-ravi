@@ -56,7 +56,8 @@ const PropertyDetailView = (props: any) => {
     pancard: data?.pancard ? data?.pancard : '',
     cp_type: data?.cp_type ? data?.cp_type : 1,
     property_tag: data?.property_tag ? data?.property_tag : [],
-    cp_id: props?._id ? props?._id : ""
+    cp_id: props?._id ? props?._id : "",
+    pin_code:data?.pin_code? data?.pin_code:""
   };
   const DATASTATS: any =
   {

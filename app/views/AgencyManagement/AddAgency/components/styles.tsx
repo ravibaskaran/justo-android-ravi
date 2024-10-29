@@ -348,6 +348,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   text1: { color: "red", fontWeight: "bold" },
+  ocrText: {
+    textAlign: "center",
+    paddingHorizontal: 5,
+    paddingTop: 10,
+    fontFamily: FONT_FAMILY_SEMIBOLD,
+    color: PRIMARY_THEME_COLOR,
+  },
 });
 
 export default styles;

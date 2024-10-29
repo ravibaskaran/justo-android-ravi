@@ -101,7 +101,9 @@ const AddAppointmentScreen = ({ navigation, route }: any) => {
       getLoginType?.response?.data?.role_title === "SCM" ||
       getLoginType?.response?.data?.role_title === "Sourcing TL" ||
       getLoginType?.response?.data?.role_title === "Sourcing Manager" ||
-      getLoginType?.response?.data?.role_title === "Sourcing Head"
+      getLoginType?.response?.data?.role_title === "Sourcing Head" ||
+      getLoginType?.response?.data?.role_title === "Site Head" ||
+      getLoginType?.response?.data?.role_title === "Admin"
     ) {
       if (SMListData?.response?.status === 200) {
         if (SMListData?.response?.data?.length > 0) {

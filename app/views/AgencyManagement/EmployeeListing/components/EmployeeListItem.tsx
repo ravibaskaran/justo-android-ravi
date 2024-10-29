@@ -50,6 +50,20 @@ const EmployeeListItem = (props: any) => {
 
       <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
+          <Text style={styles.projectTxt}>{strings.rerano} :</Text>
+        </View>
+        <View style={styles.nameContainer}>
+          <Text style={styles.nameTxt}>
+            {props.items.rera_certificate_no === "" ||
+            props.items.rera_certificate_no === undefined
+              ? strings.notfount
+              : props.items.rera_certificate_no}
+          </Text>
+        </View>
+      </View>
+
+      <View style={styles.Txtview}>
+        <View style={styles.projectContainer}>
           <Text style={styles.projectTxt}>{strings.gender}</Text>
         </View>
         <View style={styles.nameContainer}>

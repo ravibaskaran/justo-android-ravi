@@ -4,7 +4,10 @@ import apiEndPoints from "app/components/utilities/apiEndPoints";
 import { GREEN_COLOR, ROLE_IDS } from "app/components/utilities/constant";
 import { apiCall } from "app/components/utilities/httpClient";
 import { userLogout } from "app/Redux/Actions/AuthActions";
-import { getClosingManagerList } from "app/Redux/Actions/ClosingManager";
+import {
+  getClosHManagerList,
+  getClosingManagerList,
+} from "app/Redux/Actions/ClosingManager";
 import {
   dashboardClosingData,
   dashboardPostSaleData,
@@ -169,11 +172,12 @@ const DashboardScreen = ({ navigation }: any) => {
       getLoginType?.response?.data?.role_id === ROLE_IDS.closingmanager_id
     ) {
       dispatch(dashboardClosingData({}));
-      if (
-        getLoginType?.response?.data?.role_id === ROLE_IDS.closingtl_id ||
+      if (getLoginType?.response?.data?.role_id === ROLE_IDS.closingtl_id) {
+        dispatch(getClosingManagerList({}));
+      } else if (
         getLoginType?.response?.data?.role_id === ROLE_IDS.closing_head_id
       ) {
-        dispatch(getClosingManagerList({}));
+        dispatch(getClosHManagerList({}));
       } else {
         setListData([]);
       }

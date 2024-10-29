@@ -6,6 +6,32 @@ import {
     STOP_LOADING, START_LOADING
 } from "../types";
 
+export const getClosHManagerList = (params: any) => async (dispatch: any) => {
+    dispatch({ type: START_LOADING });
+    try {
+        const res = await apiCall("post", apiEndPoints.GET_CLOSHEADGMANAGER, params);
+        if (res.data.status == 200) {
+            dispatch({
+                type: GET_CLOSINGMANAGER_LIST,
+                payload: res.data,
+            });
+        } else {
+            dispatch({
+                type: GET_CLOSINGMANAGER_LIST_ERROR,
+                payload: console.log(res),
+            });
+        }
+    } catch (e) {
+        dispatch({
+            type: GET_CLOSINGMANAGER_LIST_ERROR,
+            payload: console.log(e),
+        });
+    }
+    finally {
+        dispatch({ type: STOP_LOADING });
+    }
+};
+
 export const getClosingManagerList = (params: any) => async (dispatch: any) => {
     dispatch({ type: START_LOADING });
     try {

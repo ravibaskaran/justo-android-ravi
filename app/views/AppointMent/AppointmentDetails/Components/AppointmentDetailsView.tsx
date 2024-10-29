@@ -157,6 +157,7 @@ const AppointmentDetailsView = (props: any) => {
                   userData?.data?.role_id === ROLE_IDS.closing_head_id ||
                   userData?.data?.role_id === ROLE_IDS.sourcing_head_id ||
                   userData?.data?.role_id === ROLE_IDS.clusterhead_id ||
+                  userData?.data?.role_id === ROLE_IDS.sitehead_id ||
                   userData?.data?.role_id === ROLE_IDS.scm_id ? (
                     <Button
                       buttonText={strings.bookNow}

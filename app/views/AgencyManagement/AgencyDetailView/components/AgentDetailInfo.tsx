@@ -152,6 +152,19 @@ const PropertyDetailItem = (props: any) => {
       </View>
       <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
+          <Text style={styles.projectTxt}>PIN Code</Text>
+        </View>
+        <View>
+          <Text>:</Text>
+        </View>
+        <View style={styles.nameContainer}>
+          <Text style={styles.nameTxt}>
+            {item?.pin_code ? item?.pin_code : strings.notfount}
+          </Text>
+        </View>
+      </View>
+      <View style={styles.Txtview}>
+        <View style={styles.projectContainer}>
           <Text style={styles.projectTxt}>{strings.whatsappNo} </Text>
         </View>
         <View>

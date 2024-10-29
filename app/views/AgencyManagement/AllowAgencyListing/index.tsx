@@ -1,12 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import ErrorMessage from 'app/components/ErrorMessage';
-import { GREEN_COLOR } from 'app/components/utilities/constant';
+import { GREEN_COLOR, ROLE_IDS } from 'app/components/utilities/constant';
 import { getAssignCPList, removeAssignCpStatus, updateAssignCP } from 'app/Redux/Actions/SourcingManagerActions';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import AllowAgencyView from './components/AllowAgencyView';
-import { getAllocateRequest } from 'app/Redux/Actions/propertyActions';
+import { getAllocateCpSoH, getAllocateRequest } from 'app/Redux/Actions/propertyActions';
 
 const AllowAgencyListing = ({ navigation }: any) => {
   const dispatch: any = useDispatch()
@@ -14,6 +14,7 @@ const AllowAgencyListing = ({ navigation }: any) => {
   const statusUpdate = useSelector((state: any) => state.agencyStatus) || {}
   const [pendingAgency, setPendingAgency] = useState<any>([])
   const [statusChange, setStatusChange] = useState<any>({})
+  const { userData = {} } = useSelector((state: any) => state.userData);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -38,9 +39,12 @@ const AllowAgencyListing = ({ navigation }: any) => {
       getPendingList()
     }
   }, [statusUpdate])
+
   const getPendingList = async () => {
-      dispatch(getAllocateRequest())
-  }
+    if (userData?.data?.role_id === ROLE_IDS.sourcing_head_id)
+      dispatch(getAllocateCpSoH());
+    else dispatch(getAllocateRequest());
+  };
 
   const handleBackPress = () => {
     navigation.goBack();

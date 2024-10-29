@@ -88,6 +88,16 @@ const AgentBasicInfoView = (props: any) => {
         </View>
         <View style={styles.Txtview}>
           <View style={styles.projectContainer}>
+            <Text style={styles.projectTxt}>{strings.rerano} :</Text>
+          </View>
+          <View style={styles.nameContainer}>
+            <Text style={styles.nameTxt}>
+              {item?.empolyeeReraNo ? item?.empolyeeReraNo : "NA"}{" "}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.Txtview}>
+          <View style={styles.projectContainer}>
             <Text style={styles.projectTxt}>{strings.gender}</Text>
           </View>
           <View style={styles.nameContainer}>
@@ -249,7 +259,7 @@ const AgentBasicInfoView = (props: any) => {
           </View>
         </TouchableOpacity>
 
-        {props.type == "edit" ? (
+        {/* {props.type == "edit" ? (
           <View style={styles.TypeView}>
             <View style={styles.radioView}>
               <RadioButton.Android
@@ -273,7 +283,6 @@ const AgentBasicInfoView = (props: any) => {
           </View>
         ) : (
           <View style={styles.TypeView}>
-            {/* <RequiredStart /> */}
             <View style={styles.radioView}>
               <RadioButton.Android
                 value={props.agencyData?.cp_type}
@@ -333,7 +342,8 @@ const AgentBasicInfoView = (props: any) => {
               </Text>
             </View>
           </View>
-        )}
+        )} */}
+
         <View
           style={[
             styles.inputWrap,
@@ -389,7 +399,7 @@ const AgentBasicInfoView = (props: any) => {
             )}
           </View>
         </View>
-
+        <Text style={styles.ocrText}>{strings.ocrAvailableMsg}</Text>
         <View style={styles.inputWrap}>
           <InputField
             // disableSpecialCharacters={true}
@@ -738,6 +748,25 @@ const AgentBasicInfoView = (props: any) => {
           />
         </View>
 
+        <View style={styles.inputWrap}>
+          <InputField
+            disableSpecialCharacters={true}
+            require={true}
+            placeholderText={"PIN Code"}
+            handleInputBtnPress={() => {}}
+            headingText={"PIN Code"}
+            valueshow={props.agencyData?.pincode}
+            keyboardtype={"number-pad"}
+            maxLength={6}
+            onChangeText={(data: any) => {
+              props.setAgencyData({
+                ...props.agencyData,
+                pincode: data,
+              });
+            }}
+          />
+        </View>
+
         {/* <View style={styles.inputWrap}>
           <InputField
             require={true}
@@ -794,7 +823,7 @@ const AgentBasicInfoView = (props: any) => {
                 location: val,
               });
             }}
-            inputType={"location"}
+            // inputType={"location"}
             onPressSelect={(data: any, detail: any) => {
               console.log(
                 "🚀 ~ file: AgentBasicInfoView.tsx:473 ~ data:",
@@ -1036,7 +1065,7 @@ const AgentBasicInfoView = (props: any) => {
                     }}
                   >
                     <Text style={styles.headingText}>{strings.employee}</Text>
-                    <RequiredStart />
+                    {/* <RequiredStart /> */}
                   </View>
                   <View style={{ flex: 1 }}>
                     <TouchableOpacity
@@ -1114,6 +1143,7 @@ const AgentBasicInfoView = (props: any) => {
         handleOnBackEmployeeModal={props.handleOnBackEmployeeModal}
         employeeMobileNoSet={props.employeeMobileNoSet}
         employeeEmailAddSet={props.employeeEmailAddSet}
+        employeeReraNoSet={props.employeeReraNoSet}
       />
 
       <PicturePickerModal

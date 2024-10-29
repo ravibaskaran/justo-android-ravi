@@ -17,7 +17,6 @@ import { RadioButton } from "react-native-paper";
 import { RequiredStart } from "../utilities/GlobalFuncations";
 
 const AddEmployeeModal = (props: any) => {
-
   return (
     <Modal isVisible={props.Visible}>
       <ScrollView
@@ -105,7 +104,7 @@ const AddEmployeeModal = (props: any) => {
                 valueshow={props.employeeFormData?.employeeEmail}
                 // editable={props.emailMobileChng?.change}
                 onChangeText={(val: any) => {
-                  props.employeeEmailAddSet(val)
+                  props.employeeEmailAddSet(val);
                   // props.setEmployeeFormData({
                   //   ...props?.employeeFormData,
                   //   employeeEmail: val,
@@ -125,9 +124,11 @@ const AddEmployeeModal = (props: any) => {
                     ? images.check
                     : images.close
                 }
-                rightImageVw={props?.emailMobvalidation?.email === "employeeEmail"
-                ? styles.tickImgVw
-                : {}}
+                rightImageVw={
+                  props?.emailMobvalidation?.email === "employeeEmail"
+                    ? styles.tickImgVw
+                    : {}
+                }
                 rightImageSty={styles.tickImg}
                 onBlur={(val: any) => {
                   if (
@@ -137,7 +138,36 @@ const AddEmployeeModal = (props: any) => {
                   }
                 }}
               />
+
+              <View style={[styles.inputWrap, { top: normalizeSpacing(10) }]}>
+                <InputField
+                  // require={true}
+                  disableSpecialCharacters={true}
+                  headingText={strings.rerano}
+                  placeholderText={strings.rerano}
+                  maxLength={13}
+                  autoCapitalize="words"
+                  valueshow={props?.employeeFormData?.empolyeeReraNo}
+                  onChangeText={(data: any) => {
+                    props.employeeReraNoSet(data);
+                  }}
+                  rightImgSrc={
+                    props?.emailMobvalidation?.employee_rera_number ===
+                    "empolyeeReraNo"
+                      ? images.check
+                      : images.close
+                  }
+                  rightImageVw={
+                    props?.emailMobvalidation?.employee_rera_number ===
+                    "empolyeeReraNo"
+                      ? styles.tickImgVw
+                      : {}
+                  }
+                  rightImageSty={styles.tickImg}
+                />
+              </View>
             </View>
+
             <View style={styles.genderView}>
               <Text style={styles.genderTxt}>{strings.gender}</Text>
               <RequiredStart />
@@ -154,7 +184,7 @@ const AddEmployeeModal = (props: any) => {
                       ...props.employeeFormData,
                       employeeGender: 1,
                     });
-                  //  props.handleCheckEmailMobileforEmployee();
+                    //  props.handleCheckEmailMobileforEmployee();
                   }}
                   color={PRIMARY_THEME_COLOR}
                 />

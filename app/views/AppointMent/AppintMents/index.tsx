@@ -1,7 +1,10 @@
 import { useFocusEffect } from "@react-navigation/native";
 import { AllocateCM } from "app/Redux/Actions/AppointmentCLAction";
 import { getAllAppointmentList } from "app/Redux/Actions/AppointmentWithCpActions";
-import { getClosingManagerList } from "app/Redux/Actions/ClosingManager";
+import {
+  getClosHManagerList,
+  getClosingManagerList,
+} from "app/Redux/Actions/ClosingManager";
 import { removeMasters } from "app/Redux/Actions/MasterActions";
 import ConfirmModal from "app/components/Modals/ConfirmModal";
 import {
@@ -9,7 +12,7 @@ import {
   openPermissionSetting,
 } from "app/components/utilities/GlobalFuncations";
 import strings from "app/components/utilities/Localization";
-import { DATE_FORMAT } from "app/components/utilities/constant";
+import { DATE_FORMAT, ROLE_IDS } from "app/components/utilities/constant";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -167,7 +170,11 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
   };
 
   const getCMList = () => {
-    dispatch(getClosingManagerList({ property_id: propertyId }));
+    const action =
+      getLoginType?.response?.data?.role_id === ROLE_IDS.closing_head_id
+        ? getClosHManagerList
+        : getClosingManagerList;
+    dispatch(action({ property_id: propertyId }));
   };
 
   const handleAllocateCM = () => {

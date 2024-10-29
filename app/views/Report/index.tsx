@@ -1,11 +1,13 @@
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import {
   GetBMreport,
+  GetClHreport,
   GetCMReport,
   GetCTReport,
   GetSCMeport,
   GetSHCHreport,
   GetSMReport,
+  GetSrcHreport,
   GetSTReport,
 } from "app/Redux/Actions/ReportActions";
 import ErrorMessage from "app/components/ErrorMessage";
@@ -19,6 +21,7 @@ import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Keyboard } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import ReportView from "./components/ReportView";
+import strings from "app/components/utilities/Localization";
 
 const ReportScreen = ({ navigation }: any) => {
   const [reportData, setReportData] = useState([]);
@@ -191,13 +194,13 @@ const ReportScreen = ({ navigation }: any) => {
     let errorMessage: any = "";
     if (filterData?.startdate !== "" && filterData?.enddate === "") {
       isError = false;
-      errorMessage = "Please enter end date";
+      errorMessage = strings.endDateReqMsg;
     } else if (filterData?.enddate !== "" && filterData?.startdate === "") {
       isError = false;
-      errorMessage = "Please enter start date";
+      errorMessage = strings.startDateReqMsg;
     } else if (!(filterData?.startdate <= filterData?.enddate)) {
       isError = false;
-      errorMessage = "End date should not be less than start date ";
+      errorMessage = strings.checkEndDateIsGrater;
     }
     if (errorMessage !== "") {
       ErrorMessage({
@@ -225,18 +228,16 @@ const ReportScreen = ({ navigation }: any) => {
           end_date: endDate.toString(),
         })
       );
-      // dispatch(
-      //   GetCTReport({
-      //     start_date: startDate.toString(),
-      //     end_date: endDate.toString(),
-      //   })
-      // );
-    } else if (
-      roleId === ROLE_IDS.closingtl_id ||
-      roleId === ROLE_IDS.closing_head_id
-    ) {
+    } else if (roleId === ROLE_IDS.closingtl_id) {
       dispatch(
         GetCTReport({
+          start_date: startDate.toString(),
+          end_date: endDate.toString(),
+        })
+      );
+    } else if (roleId === ROLE_IDS.closing_head_id) {
+      dispatch(
+        GetClHreport({
           start_date: startDate.toString(),
           end_date: endDate.toString(),
         })
@@ -248,12 +249,16 @@ const ReportScreen = ({ navigation }: any) => {
           end_date: endDate.toString(),
         })
       );
-    } else if (
-      roleId === ROLE_IDS.sourcingtl_id ||
-      roleId === ROLE_IDS.sourcing_head_id
-    ) {
+    } else if (roleId === ROLE_IDS.sourcingtl_id) {
       dispatch(
         GetSTReport({
+          start_date: startDate.toString(),
+          end_date: endDate.toString(),
+        })
+      );
+    } else if (roleId === ROLE_IDS.sourcing_head_id) {
+      dispatch(
+        GetSrcHreport({
           start_date: startDate.toString(),
           end_date: endDate.toString(),
         })

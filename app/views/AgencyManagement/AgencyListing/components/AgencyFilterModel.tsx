@@ -44,16 +44,16 @@ const FilterModal = (props: any) => {
       props.filterData?.enddate === ""
     ) {
       isError = false;
-      errorMessage = "Please enter end date";
+      errorMessage = strings.endDateReqMsg;
     } else if (
       props.filterData?.enddate !== "" &&
       props.filterData?.startdate === ""
     ) {
       isError = false;
-      errorMessage = "Please enter start date";
+      errorMessage = strings.startDateReqMsg;
     } else if (!(props.filterData?.startdate <= props.filterData?.enddate)) {
       isError = false;
-      errorMessage = "End date should not be less than start date ";
+      errorMessage = strings.checkEndDateIsGrater;
     }
     if (errorMessage !== "") {
       ErrorMessage({

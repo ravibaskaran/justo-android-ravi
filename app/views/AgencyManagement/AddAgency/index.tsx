@@ -56,6 +56,7 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
     employeeMobile: "",
     employeeEmail: "",
     employeeGender: "",
+    empolyeeReraNo: "",
   });
   const [employees, setEmployees] = useState<any>([]);
   const [propertyList, setPropertyList] = useState<any>([]);
@@ -75,6 +76,7 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
     date_of_birth: "",
     start_date: "",
     end_date: "",
+    pincode: "",
     primary_mobile: "",
     whatsapp_number: "",
     email: "",
@@ -150,6 +152,7 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
       date_of_birth: "",
       start_date: "",
       end_date: "",
+      pincode: "",
       primary_mobile: "",
       whatsapp_number: "",
       email: "",
@@ -252,6 +255,7 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
             location: response?.data[0]?.location ?? "",
             start_date: response?.data[0]?.rera_start_date ?? "",
             end_date: response?.data[0]?.rera_end_date ?? "",
+            pincode: response?.data[0]?.pin_code ?? "",
             // state_code: response?.data[0]?.state_code ?? "",
             // country_code: response?.data[0]?.country_code ?? "",
             // city: response?.data[0]?.city ?? "",
@@ -467,13 +471,25 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
             errorMessage = strings.reraCertNoCheckValid;
           } else if (agencyData?.start_date === "") {
             isError = false;
-            errorMessage = "Invalid start date";
+            errorMessage = strings.invalidStartDate;
           } else if (agencyData?.end_date === "") {
             isError = false;
-            errorMessage = "Invalid end date";
+            errorMessage = strings.invalidEndDate;
+          } else if (agencyData?.end_date === agencyData?.start_date) {
+            isError = false;
+            errorMessage = strings.startendTimeSame;
           } else if (!(agencyData?.start_date <= agencyData?.end_date)) {
             isError = false;
-            errorMessage = "End date should not be less than start date ";
+            errorMessage = strings.checkEndDateIsGrater;
+          } else if (
+            agencyData.pincode == undefined ||
+            agencyData.pincode?.trim() == ""
+          ) {
+            isError = false;
+            errorMessage = strings.pincodeRequire;
+          } else if (agencyData.pincode.replace(/\s+/g, "")?.length < 6) {
+            isError = false;
+            errorMessage = strings.pincodeError;
           }
           // else if (
           //   agencyData.location == undefined ||
@@ -582,13 +598,25 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
             errorMessage = strings.reraCertNoCheckValid;
           } else if (agencyData?.start_date === "") {
             isError = false;
-            errorMessage = "Invalid start date";
+            errorMessage = strings.invalidStartDate;
           } else if (agencyData?.end_date === "") {
             isError = false;
-            errorMessage = "Invalid end date";
+            errorMessage = strings.invalidEndDate;
+          } else if (agencyData?.end_date === agencyData?.start_date) {
+            isError = false;
+            errorMessage = strings.startendTimeSame;
           } else if (!(agencyData?.start_date <= agencyData?.end_date)) {
             isError = false;
-            errorMessage = "End date should not be less than start date ";
+            errorMessage = strings.checkEndDateIsGrater;
+          } else if (
+            agencyData.pincode == undefined ||
+            agencyData.pincode?.trim() == ""
+          ) {
+            isError = false;
+            errorMessage = strings.pincodeRequire;
+          } else if (agencyData.pincode.replace(/\s+/g, "")?.length < 6) {
+            isError = false;
+            errorMessage = strings.pincodeError;
           }
           // else if (
           //   agencyData.location == undefined ||
@@ -597,10 +625,10 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
           //   isError = false;
           //   errorMessage = strings.addressReqVal;
           // }
-          else if (employees?.length === 0 && type !== "edit") {
-            isError = false;
-            errorMessage = strings.employeesReqVal;
-          }
+          // else if (employees?.length === 0 && type !== "edit") {
+          //   isError = false;
+          //   errorMessage = strings.employeesReqVal;
+          // }
         }
       } else if (formType === 1) {
         if (agencyData?.cp_type === 1) {
@@ -864,6 +892,9 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
     } else if (emailMobvalidation.primary_mobile === "numberAlreadyAdded") {
       isError = false;
       errorMessage = strings.alreadyAddedNumber;
+    } else if (emailMobvalidation.rera_certificate_no === "reraAlreadyAdded") {
+      isError = false;
+      errorMessage = strings.alreadyAddedRera;
     } else if (
       employeeFormData.employeeEmail == undefined ||
       employeeFormData.employeeEmail == ""
@@ -876,6 +907,15 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
     } else if (emailMobvalidation.email == "wrongEmployeeEmail") {
       isError = false;
       errorMessage = strings.emailAlreadyReqVal;
+    } else if (
+      employeeFormData.empolyeeReraNo &&
+      Regexs.reraRegex.test(employeeFormData.empolyeeReraNo) === false
+    ) {
+      isError = false;
+      errorMessage = strings.reraCertNoCheckValid;
+    } else if (emailMobvalidation.rera_certificate_no == "wrongEmployeeRera") {
+      isError = false;
+      errorMessage = strings.reraNumberAlreadyValidReqVal;
     } else if (
       employeeFormData.employeeGender == undefined ||
       employeeFormData.employeeGender == ""
@@ -971,19 +1011,50 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
             }
             break;
           case "rera_certificate_no":
-            if (
-              userData?.data?.role_id === ROLE_IDS.sourcingmanager_id ||
-              userData?.data?.role_id === ROLE_IDS.sourcingtl_id ||
-              userData?.data?.role_id === ROLE_IDS.sourcing_head_id
-            ) {
-              setReraExist(false);
-              setIsVisible(true);
-            } else {
+            const reraArray = isVisibleAddEmployee
+              ? [agencyData?.rera_certificate_no]
+              : [];
+            for (let employee of employees) {
+              reraArray.push(employee?.empolyeeReraNo);
+            }
+            const currentRera = isVisibleAddEmployee
+              ? employeeFormData.empolyeeReraNo
+              : agencyData?.rera_certificate_no;
+            if (reraArray.includes(currentRera)) {
+              const errorMessage = strings.alreadyAddedRera;
               setEmailMobValidation({
                 ...emailMobvalidation,
-                rera_certificate_no: emailAndMobileData?.check_type,
+                rera_certificate_no: isVisibleAddEmployee
+                  ? "reraAlreadyAdded"
+                  : "wrongReraNumber",
               });
+              ErrorMessage({
+                msg: errorMessage,
+                backgroundColor: RED_COLOR,
+              });
+            } else {
+              if (isVisibleAddEmployee) {
+                setEmailMobValidation({
+                  ...emailMobvalidation,
+                  rera_certificate_no: "rera_certificate_no",
+                });
+              } else {
+                if (
+                  userData?.data?.role_id === ROLE_IDS.sourcingmanager_id ||
+                  userData?.data?.role_id === ROLE_IDS.sourcingtl_id ||
+                  userData?.data?.role_id === ROLE_IDS.sourcing_head_id
+                ) {
+                  setReraExist(false);
+                  setIsVisible(true);
+                } else {
+                  setEmailMobValidation({
+                    ...emailMobvalidation,
+                    rera_certificate_no: emailAndMobileData?.check_type,
+                  });
+                }
+              }
             }
+
             break;
           default:
             break;
@@ -1042,24 +1113,36 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
               }
               break;
             case "rera_certificate_no":
-              setEmailMobValidation({
-                ...emailMobvalidation,
-                rera_certificate_no: "wrongReraNumber",
-              });
-              if (
-                userData?.data?.role_id === ROLE_IDS.sourcingmanager_id ||
-                userData?.data?.role_id === ROLE_IDS.sourcing_head_id ||
-                userData?.data?.role_id === ROLE_IDS.sourcingtl_id
-              ) {
-                setCplgId(emailAndMobileData?.response?.cp_lg_id);
-                setReraExist(true);
-                setIsVisible(true);
-              } else {
+              if (isVisibleAddEmployee) {
+                setEmailMobValidation({
+                  ...emailMobvalidation,
+                  rera_certificate_no: "wrongEmployeeRera",
+                });
                 let errorMessage = strings.reraNumberAlreadyValidReqVal;
                 ErrorMessage({
                   msg: errorMessage,
                   backgroundColor: RED_COLOR,
                 });
+              } else {
+                setEmailMobValidation({
+                  ...emailMobvalidation,
+                  rera_certificate_no: "wrongReraNumber",
+                });
+                if (
+                  userData?.data?.role_id === ROLE_IDS.sourcingmanager_id ||
+                  userData?.data?.role_id === ROLE_IDS.sourcing_head_id ||
+                  userData?.data?.role_id === ROLE_IDS.sourcingtl_id
+                ) {
+                  setCplgId(emailAndMobileData?.response?.cp_lg_id);
+                  setReraExist(true);
+                  setIsVisible(true);
+                } else {
+                  let errorMessage = strings.reraNumberAlreadyValidReqVal;
+                  ErrorMessage({
+                    msg: errorMessage,
+                    backgroundColor: RED_COLOR,
+                  });
+                }
               }
               break;
             default:
@@ -1081,7 +1164,14 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
     dispatch(checkEmailMobile(params));
   };
   const handleCheckEmailMobileforEmployee = (type: any, data: any) => {
-    const params = type == 1 ? { mobile: data } : { email: data };
+    let params = {};
+
+    if (type == 1) params = { mobile: data };
+    else if (type == 2)
+      params = {
+        rera_certificate_no: data,
+      };
+    else params = { email: data };
     dispatch(checkEmailMobile(params));
   };
   const handleVisiblePropertyPress = () => {
@@ -1113,6 +1203,23 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
       });
     }
   };
+
+  const employeeReraNoSet = (data: any) => {
+    setEmployeeFormData({
+      ...employeeFormData,
+      empolyeeReraNo: data,
+    });
+
+    if (data.length >= 10) {
+      handleCheckEmailMobileforEmployee(2, data);
+    } else {
+      setEmailMobValidation({
+        ...emailMobvalidation,
+        rera_certificate_no: null,
+      });
+    }
+  };
+
   const employeeEmailAddSet = (data: any) => {
     setEmployeeFormData({
       ...employeeFormData,
@@ -1120,7 +1227,7 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
     });
 
     if (validateEmail.test(data)) {
-      handleCheckEmailMobileforEmployee(2, data);
+      handleCheckEmailMobileforEmployee(3, data);
     } else {
       setEmailMobValidation({
         ...emailMobvalidation,
@@ -1200,6 +1307,10 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
         formData.append(
           "rera_end_date",
           agencyData?.end_date ? agencyData?.end_date : ""
+        );
+        formData.append(
+          "pincode",
+          agencyData?.pincode ? agencyData?.pincode : ""
         );
         formData.append(
           "location",
@@ -1447,6 +1558,7 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
           handleOnBackEmployeeModal={handleOnBackEmployeeModal}
           employeeMobileNoSet={employeeMobileNoSet}
           employeeEmailAddSet={employeeEmailAddSet}
+          employeeReraNoSet={employeeReraNoSet}
           handleClearData={handleClearData}
         />
       ) : (

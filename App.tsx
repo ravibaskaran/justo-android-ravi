@@ -32,7 +32,6 @@ export async function onDisplayNotification(title: any, body: any, data: any) {
       pressAction: {
         id: "default",
       },
-     
     },
   });
 }

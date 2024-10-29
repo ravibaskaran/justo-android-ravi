@@ -381,7 +381,8 @@ const AddNewVisitorForm = (props: any) => {
                       ROLE_IDS.sitehead_id ||
                     userData?.userData?.data?.role_id === ROLE_IDS.admin_id ||
                     userData?.userData?.data?.role_id ===
-                      ROLE_IDS.businesshead_id
+                      ROLE_IDS.businesshead_id ||
+                    userData?.userData?.data?.role_id === ROLE_IDS.scm_id
                   )
                 ) {
                   props.setAllProperty([]);

@@ -248,3 +248,30 @@ export const getAllocateRequest = () => async (dispatch: any) => {
         dispatch({ type: STOP_LOADING });
     }
 };
+
+export const getAllocateCpSoH = () => async (dispatch: any) => {
+    dispatch({ type: START_LOADING });
+    try {
+        const res = await apiCall("post", apiEndPoints.ALLOCATCPSOH, {});
+        console.log("🚀 ~ file: propertyActions.tsx:229 ~ res?.data:", res?.data)
+        if (res?.data?.status == 200) {
+            dispatch({
+                type: GET_ALLOCATE_REQUEST,
+                payload: res.data,
+            });
+        } else {
+            dispatch({
+                type: GET_ALLOCATE_REQUEST_ERROR,
+                payload: [],
+            });
+        }
+    } catch (e) {
+        dispatch({
+            type: GET_ALLOCATE_REQUEST_ERROR,
+            payload: console.log(e),
+        });
+    }
+    finally {
+        dispatch({ type: STOP_LOADING });
+    }
+};

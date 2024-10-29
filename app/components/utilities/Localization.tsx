@@ -652,6 +652,22 @@ const strings = new LocalizedStrings({
       "You've already added this email. Please add a different one.",
     alreadyAddedNumber:
       "You've already added this number. Please add a different one.",
+    alreadyAddedRera:
+      "You've already added this RERA No. Please add a different one.",
+    pincodeRequire: "PIN Code is require. Please enter PIN Code",
+    pincodeError: "Please enter a valid 6-digit pincode.",
+    ocrAvailableMsg:
+      "You can fill in the name, RERA number, start date, and end date using the RERA attachment option.",
+    invalidStartDate: "Invalid start date",
+    invalidEndDate: "Invalid end date",
+    checkEndDateIsGrater: "End date should not be less than start date",
+    endDateReqMsg: "Please enter end date",
+    startDateReqMsg: "Please enter start date",
+    startendTimeSame: "The start date and end date must be distinct.",
+    nameFourLetterReq: "Name must be at least 4 letters",
+    rerano: "RERA No.",
+    reraValidationMsg:
+      "Starts with an alphabetic character. (eg:A12345678901) \nHas the remaining characters as numeric digits.",
   },
 });
 

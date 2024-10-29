@@ -1,27 +1,17 @@
-import { View, Text, StatusBar, FlatList, Alert } from "react-native";
 import React, { useState } from "react";
-import styles from "./styles";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import AgencyListItem from "./EmployeeListItem";
-import { useNavigation } from "@react-navigation/native";
-import Header from "../../../../components/Header";
+import { FlatList, View } from "react-native";
 import images from "../../../../assets/images";
+import Header from "../../../../components/Header";
 import strings from "../../../../components/utilities/Localization";
-import ConfirmModal from "../../../../components/Modals/ConfirmModal";
 import FilterModal from "./EmployeeFilterModel";
-import { PRIMARY_THEME_COLOR_DARK, PURPLE_COLOR } from "../../../../components/utilities/constant";
+import AgencyListItem from "./EmployeeListItem";
+import styles from "./styles";
 
-import {
-  BLACK_COLOR,
-  PRIMARY_THEME_COLOR,
-  WHITE_COLOR,
-} from "../../../../components/utilities/constant";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
-import { useSelector } from "react-redux";
-import { normalizeWidth } from "app/components/scaleFontSize";
-import usePermission from "app/components/utilities/UserPermissions";
 import Button from "app/components/Button";
+import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
+import {
+  PRIMARY_THEME_COLOR
+} from "../../../../components/utilities/constant";
 
 const EmployeeView = (props: any) => {
   const loadingref = false;

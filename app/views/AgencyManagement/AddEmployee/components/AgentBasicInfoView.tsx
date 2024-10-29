@@ -17,6 +17,7 @@ import {
   DATE_FORMAT,
   Isios,
   PRIMARY_THEME_COLOR,
+  RED_COLOR,
   Regexs,
   validateEmail,
   WHITE_COLOR,
@@ -33,6 +34,8 @@ import MultiLocation from "app/components/MultiLocation";
 import { RequiredStart } from "app/components/utilities/GlobalFuncations";
 
 const AgentBasicInfoView = (props: any) => {
+  const [showReraValidationError, setShowReraValidationError] =
+    useState<boolean>(false);
   const handleDelete = (item: any, index: any) => {
     var array: any[] = [...props?.agentInfoData.working_location];
     array?.splice(index, 1);
@@ -44,7 +47,7 @@ const AgentBasicInfoView = (props: any) => {
   return (
     <View style={styles.mainContainer}>
       <Header
-        headerText={strings.employee + " " + strings.info }
+        headerText={strings.employee + " " + strings.info}
         headerStyle={styles.headerStyle}
         headerTextStyle={styles.headerTextStyle}
         leftImageSrc={images.backArrow}
@@ -224,6 +227,86 @@ const AgentBasicInfoView = (props: any) => {
               }}
             />
           </View>
+
+          <View style={styles.inputWrap}>
+            <InputField
+              placeholderText={strings.rerano}
+              editable={true}
+              maxLength={13}
+              autoCapitalize="words"
+              handleInputBtnPress={() => {}}
+              onChangeText={(data: any) => {
+                props.setAgentInfoData({
+                  ...props.agentInfoData,
+                  rera_certificate_no: data,
+                });
+                if (Regexs.reraRegex.test(data)) {
+                  setShowReraValidationError(false);
+                  props.setEmailMobValidation({
+                    ...props.emailMobvalidation,
+                    rera_certificate_no: "reraStart",
+                  });
+                } else {
+                  if (data) {
+                    setShowReraValidationError(true);
+                    props.setEmailMobValidation({
+                      ...props.emailMobvalidation,
+                      rera_certificate_no: null,
+                    });
+                  } else {
+                    setShowReraValidationError(false);
+                    props.setEmailMobValidation({
+                      ...props.emailMobvalidation,
+                      rera_certificate_no: "",
+                    });
+                  }
+                }
+              }}
+              valueshow={props?.agentInfoData?.rera_certificate_no}
+              headingText={strings.rerano}
+              onFocus={() => {
+                if (
+                  props.agentInfoData?.rera_certificate_no !==
+                  props.agentInfoData?.rera_certificate_no
+                ) {
+                  props.setEmailMobValidation({
+                    ...props.emailMobvalidation,
+                    rera_certificate_no: null,
+                  });
+                }
+              }}
+              rightImgSrc={
+                props?.emailMobvalidation?.rera_certificate_no ===
+                "rera_certificate_no"
+                  ? images.check
+                  : null
+              }
+              rightImageVw={styles.tickImgVw}
+              rightImageSty={styles.tickImg}
+              onBlur={(val: any) => {
+                if (
+                  Regexs.reraRegex.test(
+                    props.agentInfoData?.rera_certificate_no
+                  )
+                ) {
+                  props.handleCheckEmailMobile(2);
+                  props.setEmailMobValidation({
+                    ...props.emailMobvalidation,
+                    rera_certificate_no: null,
+                  });
+                }
+              }}
+            />
+          </View>
+
+          {showReraValidationError ? (
+            <View style={{ padding: 5 }}>
+              <Text style={{ fontSize: 12, color: RED_COLOR }}>
+                {strings.reraValidationMsg}
+              </Text>
+            </View>
+          ) : null}
+
           {/* <View style={styles.inputWrap}>
             <InputField
               require={true}

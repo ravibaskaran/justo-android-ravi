@@ -63,6 +63,7 @@ export default {
   GET_PROPERTY_COMPETITOR: "/property/getPropertyCompetitorList",
   GET_PROPERTYCONFIGURATION: "/property/getPropertyConfigurationsList",
   ALLOCATEREQUEST: "property/getCpListForPropertyAllocateRequest",
+  ALLOCATCPSOH: "property/getCpSrcHeadPropertyAllocateRequest",
 
   // MASTER START
   ADDMASTERLIST: "/master/getMasterList",
@@ -148,6 +149,7 @@ export default {
   //closing head
   GET_CLOSINGMANAGER: "/userManage/getClosingManagerListOnCH",
   GETCMDETAIL: "/userManage/getUserClosingManagerDetail",
+  GET_CLOSHEADGMANAGER: "/userManage/getClosingManagerCloseH",
 
   //Support Forum
   GET_SUPPORT_FORUM_LIST: "/supportForum/supportForumList",
@@ -186,4 +188,6 @@ export default {
   GET_SH_CH_REPORT: "/authreport/getSHCHreport",
   GET_BM_REPORT: "/authreport/getBMreport",
   GET_SCM_REPORT: "authreport/getSCMreport",
+  GET_CL_H_REPORT: "authreport/getClHreport",
+  GET_SRC_H_REPORT: "authreport/getSrcHreport",
 };

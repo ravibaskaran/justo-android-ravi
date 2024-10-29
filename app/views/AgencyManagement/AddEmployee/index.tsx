@@ -75,6 +75,7 @@ const AddEmployee = ({ navigation, route }: any) => {
   const [emailMobvalidation, setEmailMobValidation] = useState({
     primary_mobile: null,
     email: null,
+    rera_certificate_no: "",
   });
   const dispatch: any = useDispatch();
   const [visible, setVisible] = useState(false);
@@ -146,7 +147,8 @@ const AddEmployee = ({ navigation, route }: any) => {
   const validation = () => {
     if (
       emailMobvalidation.primary_mobile === "mobileStart" ||
-      emailMobvalidation.email === "emailStart"
+      emailMobvalidation.email === "emailStart" ||
+      emailMobvalidation.rera_certificate_no === "reraStart"
     ) {
       Keyboard.dismiss();
     } else {
@@ -162,6 +164,7 @@ const AddEmployee = ({ navigation, route }: any) => {
         date_of_birth,
         profile_picture,
         primary_mobile,
+        rera_certificate_no,
         email,
         location,
         working_location,
@@ -176,6 +179,9 @@ const AddEmployee = ({ navigation, route }: any) => {
       } else if (Regexs.oneSpaceRegex.test(agent_name?.trim()) === false) {
         isError = false;
         errorMessage = strings.NameCorrectlyVal;
+      } else if (agent_name?.length < 4) {
+        isError = false;
+        errorMessage = strings.nameFourLetterReq;
       }
       // else if (adhar_no === "" || adhar_no === undefined) {
       //   isError = false;
@@ -224,6 +230,15 @@ const AddEmployee = ({ navigation, route }: any) => {
       } else if (type != "edit" && emailMobvalidation.email == null) {
         isError = false;
         errorMessage = strings.emailAlreadyReqVal;
+      } else if (
+        rera_certificate_no &&
+        !Regexs.reraRegex.test(rera_certificate_no)
+      ) {
+        isError = false;
+        errorMessage = strings.reraCertNoCheckValid;
+      } else if (emailMobvalidation.rera_certificate_no == null) {
+        isError = false;
+        errorMessage = strings.reraNumberAlreadyValidReqVal;
       } else if (gender === "" || gender === undefined) {
         isError = false;
         errorMessage = strings.genderReqVal;
@@ -275,6 +290,12 @@ const AddEmployee = ({ navigation, route }: any) => {
             email: emailAndMobileData?.check_type,
           });
           break;
+        case "rera_certificate_no":
+          setEmailMobValidation({
+            ...emailMobvalidation,
+            rera_certificate_no: emailAndMobileData?.check_type,
+          });
+          break;
         default:
           break;
       }
@@ -284,6 +305,7 @@ const AddEmployee = ({ navigation, route }: any) => {
       // })
     } else {
       if (emailAndMobileData?.response?.status === 201) {
+        dispatch(emailCheckRemove());
         switch (emailAndMobileData?.check_type) {
           case "mobile":
             ErrorMessage({
@@ -297,17 +319,27 @@ const AddEmployee = ({ navigation, route }: any) => {
               backgroundColor: RED_COLOR,
             });
             break;
+          case "rera_certificate_no":
+            ErrorMessage({
+              msg: strings.reraNumberAlreadyValidReqVal,
+              backgroundColor: RED_COLOR,
+            });
+            break;
           default:
             break;
         }
       }
     }
   }, [emailAndMobileData]);
-  const handleCheckEmailMobile = (type: any) => {
-    const params =
-      type == 1
-        ? { mobile: agentInfoData?.primary_mobile }
-        : { email: agentInfoData?.email };
+  const handleCheckEmailMobile = (type: any, rera: any) => {
+    let params = {};
+    if (type == 1) params = { mobile: agentInfoData?.primary_mobile };
+    else if (type == 2)
+      params = {
+        rera_certificate_no: rera ? rera : agentInfoData?.rera_certificate_no,
+      };
+    else params = { email: agentInfoData?.email };
+
     dispatch(checkEmailMobile(params));
   };
 
@@ -331,6 +363,12 @@ const AddEmployee = ({ navigation, route }: any) => {
       formData.append(
         "primary_mobile",
         agentInfoData?.primary_mobile ? agentInfoData?.primary_mobile : ""
+      );
+      formData.append(
+        "rera_number",
+        agentInfoData?.rera_certificate_no
+          ? agentInfoData?.rera_certificate_no
+          : ""
       );
       formData.append(
         "whatsapp_number",
