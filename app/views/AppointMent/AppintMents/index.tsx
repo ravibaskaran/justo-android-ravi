@@ -134,18 +134,22 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
   };
 
   const onPressView = async (items: any) => {
-    let array = [];
-    for (let data of response?.data) {
-      if (data.status == 1 && data?.checkin_status?.length > 0) {
-        array.push(data);
+    if (getLoginType?.response?.data?.role_id === ROLE_IDS.closingmanager_id) {
+      let array = [];
+      for (let data of response?.data) {
+        if (data.status == 1 && data?.checkin_status?.length > 0) {
+          array.push(data);
+        }
       }
-    }
-    if (items?.status == 1 && array.length > 0) {
-      if (array[array.length - 1]?._id == items?._id) {
-        navigation.navigate("AppointmentDetailMain", items);
+      if (items?.status == 1 && array.length > 0) {
+        if (array[array.length - 1]?._id == items?._id) {
+          navigation.navigate("AppointmentDetailMain", items);
+        } else {
+          setVisitedUser(array[array.length - 1]);
+          setIsVisible(true);
+        }
       } else {
-        setVisitedUser(array[array.length - 1]);
-        setIsVisible(true);
+        navigation.navigate("AppointmentDetailMain", items);
       }
     } else {
       navigation.navigate("AppointmentDetailMain", items);
