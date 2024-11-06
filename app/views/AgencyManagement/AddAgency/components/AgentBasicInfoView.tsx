@@ -385,7 +385,7 @@ const AgentBasicInfoView = (props: any) => {
                   fontSize: normalize(15),
                 }}
               >
-                {strings.browse}
+                {"Image"}
               </Text>
             </TouchableOpacity>
             {(typeof props.agencyData?.rera_certificate === "string" &&
@@ -399,7 +399,9 @@ const AgentBasicInfoView = (props: any) => {
             )}
           </View>
         </View>
-        <Text style={styles.ocrText}>{strings.ocrAvailableMsg}</Text>
+        <Text style={[styles.ocrText, { fontWeight: "bold" }]}>
+          {strings.ocrAvailableMsg}
+        </Text>
         <View style={styles.inputWrap}>
           <InputField
             // disableSpecialCharacters={true}
@@ -1148,7 +1150,7 @@ const AgentBasicInfoView = (props: any) => {
 
       <PicturePickerModal
         Visible={visible}
-        docType={"all"}
+        docType={""}
         setVisible={setVisible}
         imageData={(data: any) => {
           if (reravisible) {

@@ -656,7 +656,7 @@ const strings = new LocalizedStrings({
       "You've already added this RERA No. Please add a different one.",
     pincodeRequire: "PIN Code is require. Please enter PIN Code",
     pincodeError: "Please enter a valid 6-digit pincode.",
-    ocrAvailableMsg: "Scan the RERA certificate to autofill the data",
+    ocrAvailableMsg: "Upload the RERA certificate to autofill the data",
     invalidStartDate: "Invalid start date",
     invalidEndDate: "Invalid end date",
     checkEndDateIsGrater: "End date should not be less than start date",

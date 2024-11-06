@@ -49,10 +49,7 @@ const SiteHeadView = (props: any) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => props.onPressSiteVisit("todayComplete")}
-          style={[
-            styles.thirdPortioncardView,
-            { height: normalizeHeight(120) },
-          ]}
+          style={[styles.thirdPortioncardView]}
         >
           <View style={styles.thirdPortionCardTextView}>
             <Text style={styles.thirdPortionCardText}>Today's Checkin</Text>

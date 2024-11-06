@@ -192,7 +192,7 @@ const FilterModal = (props: any) => {
                   strings.searchBy + " " + strings.RERA + " " + strings.number
                 }
                 onChangeText={(data: any) => {
-                  if (data?.length > 12) return;
+                  if (data?.length > 13) return;
                   props.setFilterData({
                     ...props.filterData,
                     rera_no: data,

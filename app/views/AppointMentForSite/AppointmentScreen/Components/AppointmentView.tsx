@@ -67,6 +67,7 @@ const AppointmentView = (props: any) => {
 
   useEffect(() => {
     const backAction = () => {
+      if (indexData.index == 1) {
       setIndexData({
         index: 0,
         routes: [
@@ -74,6 +75,7 @@ const AppointmentView = (props: any) => {
           { key: "second", title: strings.allAppointmenr },
         ],
       });
+    }
       setTimeout(() => {
         props.navigation.goBack();
       }, 250);
@@ -172,6 +174,7 @@ const AppointmentView = (props: any) => {
   };
 
   const handleDrawerPress = () => {
+    if (indexData.index == 1) {
     setIndexData({
       index: 0,
       routes: [
@@ -179,6 +182,7 @@ const AppointmentView = (props: any) => {
         { key: "second", title: strings.allAppointmenr },
       ],
     });
+  }
     setTimeout(() => {
       props.navigation.toggleDrawer();
     }, 250);

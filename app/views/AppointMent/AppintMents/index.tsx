@@ -204,11 +204,7 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
         allocatedCM={allocatedCM}
         handleAllocateCM={handleAllocateCM}
         offSET={offSET}
-        moreData={
-          getLoginType?.response?.data?.role_title === "Closing Manager"
-            ? appointMentList?.response?.total_data
-            : response?.total_data
-        }
+        moreData={response?.total_data}
         filterData={filterData}
         setFilterData={setFilterData}
         setAppointmentList={setAppointmentList}
