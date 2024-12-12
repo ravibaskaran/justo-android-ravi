@@ -36,7 +36,7 @@ const FilterModal = (props: any) => {
     dispatch(
       getFilterProperty({
         offset: 0,
-        limit: 3,
+        limit: "",
         start_date: props.filterform.start_date,
         end_date: props.filterform.end_date,
         location: props.filterform.location.trim(),
@@ -61,7 +61,7 @@ const FilterModal = (props: any) => {
     dispatch(
       getAllProperty({
         offset: 0,
-        limit: 3,
+        limit: "",
       })
     );
     props.setIsVisible(false);

@@ -42,11 +42,13 @@ const FollowUpAddScreen = ({ navigation, route }: any) => {
   }, [masterData]);
   useEffect(() => {
     if (AddfollowUp?.response?.status === 200) {
-      if (followUpId?.fromAppointmentPage) {
+      if (followUpId?.fromVisitorPage) {
+        navigation.goBack();
+      } else if (followUpId?.fromAppointmentPage) {
         navigation.goBack();
         navigation.goBack();
       } else {
-        navigation.navigate("FollowUpScreen");
+        navigation.navigate("FollowUpScreen", {});
       }
       dispatch(allfollowupRemove());
       ErrorMessage({

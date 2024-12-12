@@ -14,9 +14,8 @@ import moment from "moment";
 import Styles from "app/components/DropDown/styles";
 
 const AddAppointmentItem = (props: any) => {
-
   const [minAppointmentTime, setMinAppointmentTime] = useState<any>(null);
-  
+
   const isToday = (dateString: any) => {
     const date = new Date(dateString);
     const today = new Date();
@@ -154,7 +153,13 @@ const AddAppointmentItem = (props: any) => {
                 ? props?.addAppointmentForm?.appointment_with
                 : strings.appointmentWith
             }
-            data={props.listData.filter((item: any) => item?.active_status == true)}
+            search={true}
+            searchPlaceholder={strings.search}
+            data={props.listData
+              .filter((item: any) => item?.active_status == true)
+              .sort((a: { user_name: string }, b: { user_name: any }) =>
+                a.user_name.localeCompare(b.user_name)
+              )}
             inputWidth={"100%"}
             paddingLeft={16}
             maxHeight={300}

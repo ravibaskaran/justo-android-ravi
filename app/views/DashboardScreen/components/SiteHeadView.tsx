@@ -32,7 +32,7 @@ const SiteHeadView = (props: any) => {
           </View>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => props.onPressSiteVisit("todayComplete")}
+          onPress={() => props.onPressSiteVisit("today")}
           style={styles.thirdPortioncardView}
         >
           <View style={styles.thirdPortionCardTextView}>
@@ -111,7 +111,7 @@ const SiteHeadView = (props: any) => {
           </TouchableOpacity> */}
 
         <TouchableOpacity
-          onPress={() => props.onPressSiteVisit("followup")}
+          onPress={() => props.onPressFollowUp("todayFollowup")}
           style={styles.thirdPortioncardView}
         >
           <View style={styles.thirdPortionCardTextView}>
@@ -121,7 +121,7 @@ const SiteHeadView = (props: any) => {
           </View>
           <View style={styles.numberView}>
             <Text style={styles.thirdPortionNumberText}>
-              {today_followup?.length}
+              {props?.dashboardData?.today_followup || 0}
             </Text>
           </View>
         </TouchableOpacity>

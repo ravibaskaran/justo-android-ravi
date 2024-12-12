@@ -54,7 +54,7 @@ const SCMView = (props: any) => {
           </View>
           <View style={styles.numberView}>
             <Text style={styles.thirdPortionNumberText}>
-              {props?.dashboardData?.today_site_visit}
+              {props?.dashboardData?.today_checkin}
             </Text>
           </View>
         </TouchableOpacity>
@@ -76,7 +76,7 @@ const SCMView = (props: any) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => props.onPressSiteVisit("followup")}
+          onPress={() => props.onPressFollowUp("todayFollowup")}
           style={styles.thirdPortioncardView}
         >
           <View style={styles.thirdPortionCardTextView}>

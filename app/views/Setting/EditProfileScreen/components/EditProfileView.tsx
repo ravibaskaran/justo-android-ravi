@@ -221,7 +221,7 @@ const EditProfileView = (props: any) => {
               rightImgSrc={images.event}
             />
           </View> */}
-          <InputCalender
+          {/* <InputCalender
             mode={"date"}
             leftIcon={images.event}
             placeholderText={strings.dateOfBirth} //can edit
@@ -246,7 +246,7 @@ const EditProfileView = (props: any) => {
                 ? moment(editData?.dateofbirth).format(DATE_FORMAT_EXCL)
                 : strings.notfount
             }
-          />
+          /> */}
           <View style={styles.inputWrap}>
             <InputField
               disableSpecialCharacters={true}

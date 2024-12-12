@@ -232,7 +232,7 @@ const AgentBasicInfoView = (props: any) => {
             <InputField
               placeholderText={strings.rerano}
               editable={true}
-              maxLength={13}
+              maxLength={17}
               autoCapitalize="words"
               handleInputBtnPress={() => {}}
               onChangeText={(data: any) => {

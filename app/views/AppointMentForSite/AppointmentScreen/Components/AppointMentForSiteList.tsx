@@ -16,6 +16,7 @@ import {
   DATE_TIME_FORMAT,
   RED_COLOR,
   PRIMARY_THEME_COLOR,
+  getCPLeadType,
 } from "../../../../components/utilities/constant";
 import Button from "../../../../components/Button";
 import moment from "moment";
@@ -82,6 +83,23 @@ const AppointMentForSiteList = (props: any) => {
       </View>
       <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
+          <Text style={styles.projectTxt}>Checkin Date</Text>
+        </View>
+        <View>
+          <Text>:</Text>
+        </View>
+        <View style={styles.nameContainer}>
+          <Text style={styles.nameTxt}>
+            {checkinStaus
+              ? moment(props?.items?.checkin_status[0]?.created_date).format(
+                  DATE_TIME_FORMAT
+                )
+              : strings.notfount}
+          </Text>
+        </View>
+      </View>
+      <View style={styles.Txtview}>
+        <View style={styles.projectContainer}>
           <Text style={styles.projectTxt}>Visitor Name</Text>
         </View>
         <View>
@@ -129,7 +147,8 @@ const AppointMentForSiteList = (props: any) => {
         </View>
         <View style={styles.nameContainer}>
           <Text style={styles.nameTxt}>
-            {props.items.create_by ? props.items.create_by : strings.notfount}{props.items?.created_by_role === "" ||
+            {props.items.create_by ? props.items.create_by : strings.notfount}
+            {props.items?.created_by_role === "" ||
             props.items?.created_by_role === undefined ||
             props.items?.created_by_role === null
               ? ""
@@ -145,13 +164,32 @@ const AppointMentForSiteList = (props: any) => {
           <Text>:</Text>
         </View>
         <View style={styles.nameContainer}>
-          <Text style={styles.nameTxt}>
+          <Text style={styles.nameTxt} onPress={() => console.log(props.items)}>
             {props.items?.lead_source && props.items?.lead_source?.length !== 0
-              ? props.items?.lead_source
-              : strings.notfount}
+              ? props.items?.lead_source == "Reference" &&
+                props.items?.referrel_partner === 1
+                ? "Referral Partner"
+                : props.items?.lead_source
+              : strings.notfount}{" "}
+            {getCPLeadType(props?.items?.cp_lead_type)}
           </Text>
         </View>
       </View>
+
+      {props.items?.lead_source == "Reference" ? (
+        <View style={styles.Txtview}>
+          <View style={styles.projectContainer}>
+            <Text style={styles.projectTxt}>Referrer</Text>
+          </View>
+          <View>
+          <Text>:</Text>
+        </View>
+          <View style={styles.nameContainer}>
+            <Text style={styles.nameTxt}>{props.items?.referrer_name}</Text>
+          </View>
+        </View>
+      ) : null}
+
       {props.items?.lead_source == "Channel Partner" ? (
         <View style={styles.Txtview}>
           <View style={styles.projectContainer}>
@@ -164,12 +202,14 @@ const AppointMentForSiteList = (props: any) => {
           </View>
           <View style={styles.nameContainer}>
             <Text style={styles.nameTxt}>
-              {props.items?.cp_name && props.items?.cp_name?.length !== 0 ? props.items?.cp_name : strings.notfount}
+              {props.items?.cp_name && props.items?.cp_name?.length !== 0
+                ? props.items?.cp_name
+                : strings.notfount}
             </Text>
           </View>
         </View>
       ) : null}
-      {props.items?.cp_type === 2 ? (
+      {props.items?.cp_type === 2 && props.items.cp_emp_name?.length !== 0 ? (
         <View style={styles.Txtview}>
           <View style={styles.projectContainer}>
             <Text style={styles.projectTxt}>Emp. Name :</Text>
@@ -199,7 +239,7 @@ const AppointMentForSiteList = (props: any) => {
             {props?.items?.assign_appointment?.length > 0
               ? props?.items?.assign_appointment[0]?.user_name
               : strings.notfount}
-              (
+            (
             {props?.items?.assign_appointment[0]?.assign_by_role === "" ||
             props?.items?.assign_appointment[0]?.assign_by_role === undefined ||
             props?.items?.assign_appointment[0]?.assign_by_role === null
@@ -209,7 +249,7 @@ const AppointMentForSiteList = (props: any) => {
           </Text>
         </View>
       </View>
-      
+
       {/* <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
           <Text style={styles.projectTxt}>Pickup</Text>
@@ -239,7 +279,9 @@ const AppointMentForSiteList = (props: any) => {
                     : props?.items?.status === 2
                     ? GREEN_COLOR
                     : props?.items?.status == 3
-                    ? bookingStatus === 4 ? "red" : GREEN_COLOR
+                    ? bookingStatus === 4
+                      ? "red"
+                      : GREEN_COLOR
                     : props?.items?.status == 5 || props?.items?.status === 6
                     ? "red"
                     : props?.items?.status === 10
@@ -266,11 +308,11 @@ const AppointMentForSiteList = (props: any) => {
               ? "Not Fit for Sale"
               : props?.items?.status === 3
               ? bookingStatus === 1
-              ? "Ready to Book"
-              : bookingStatus === 4
-              ? "Cancel Booking"
-              : "Booking"
-            : "Completed"}
+                ? "Ready to Book"
+                : bookingStatus === 4
+                ? "Cancel Booking"
+                : "Booking"
+              : "Completed"}
           </Text>
         </View>
       </View>
@@ -321,7 +363,8 @@ const AppointMentForSiteList = (props: any) => {
       </View>
       <View style={styles.buttonContainer}>
         <View style={{ flexDirection: "row", alignItems: "center", top: 8 }}>
-          {edit && props?.items?.status === 1  || props?.items?.status === 10? (
+          {(edit && props?.items?.status === 1) ||
+          props?.items?.status === 10 ? (
             <Button
               width={80}
               height={30}

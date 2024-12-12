@@ -1,4 +1,11 @@
-import { View, Text, TouchableOpacity, Image, Linking } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  Linking,
+  Pressable,
+} from "react-native";
 import React from "react";
 import styles from "./styles";
 import strings from "../../../../components/utilities/Localization";
@@ -18,6 +25,7 @@ import {
   TIME_FORMAT,
   DATE_TIME_FORMAT,
   DATE_BY_DAY,
+  getCPLeadType,
 } from "../../../../components/utilities/constant";
 import images from "../../../../assets/images";
 import Button from "../../../../components/Button";
@@ -57,7 +65,9 @@ const AppointmentItem = (props: any) => {
     <View style={styles.IteamView}>
       <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
-          <Text style={styles.projectTxt}>{strings.leadNo} :</Text>
+          <Pressable onPress={() => console.log("items", props?.items)}>
+            <Text style={styles.projectTxt}>{strings.leadNo} :</Text>
+          </Pressable>
         </View>
         <View style={styles.nameContainer}>
           <Text style={styles.nameTxt}>{props.items.lead_no}</Text>
@@ -82,6 +92,23 @@ const AppointmentItem = (props: any) => {
                 ? strings.notfount
                 : " " + props?.items?.appointment_time}
             </Text>
+          </Text>
+        </View>
+      </View>
+      <View style={styles.Txtview}>
+        <View style={styles.projectContainer}>
+          <Text style={styles.projectTxt}>Checkin Date</Text>
+        </View>
+        <View>
+          <Text>:</Text>
+        </View>
+        <View style={styles.nameContainer}>
+          <Text style={styles.nameTxt}>
+            {checkinStaus
+              ? moment(props?.items?.checkin_status[0]?.created_date).format(
+                  DATE_TIME_FORMAT
+                )
+              : strings.notfount}
           </Text>
         </View>
       </View>
@@ -166,12 +193,31 @@ const AppointmentItem = (props: any) => {
         </View>
         <View style={styles.nameContainer}>
           <Text style={styles.nameTxt}>
-            {props.items?.lead_source && props.items.lead_source?.length !== 0
-              ? props.items?.lead_source
-              : strings.notfount}
+             {props.items?.lead_source && props.items?.lead_source?.length !== 0
+              ? props.items?.lead_source == "Reference" &&
+                props.items?.referrel_partner === 1
+                ? "Referral Partner"
+                : props.items?.lead_source
+              : strings.notfount}{" "}
+            {getCPLeadType(props?.items?.cp_lead_type)}
           </Text>
         </View>
       </View>
+
+      {props.items?.lead_source == "Reference" ? (
+        <View style={styles.Txtview}>
+          <View style={styles.projectContainer}>
+            <Text style={styles.projectTxt}>Referrer</Text>
+          </View>
+          <View>
+          <Text>:</Text>
+        </View>
+          <View style={styles.nameContainer}>
+            <Text style={styles.nameTxt}>{props.items?.referrer_name}</Text>
+          </View>
+        </View>
+      ) : null}
+      
       {props.items?.lead_source == "Channel Partner" ? (
         <View style={styles.Txtview}>
           <View style={styles.projectContainer}>
@@ -185,15 +231,13 @@ const AppointmentItem = (props: any) => {
           <View style={styles.nameContainer}>
             <Text style={styles.nameTxt}>
               {props.items?.cp_name && props.items.cp_name?.length !== 0
-                ? `${props.items?.cp_name} ${
-                    props.items?.cp_type === 2 ? "(Company)" : "(Individual)"
-                  }`
+                ? `${props.items?.cp_name}`
                 : strings.notfount}
             </Text>
           </View>
         </View>
       ) : null}
-      {props.items?.cp_type === 2 ? (
+      {props.items?.cp_type === 2 && props.items.cp_emp_name?.length !== 0 ? (
         <View style={styles.Txtview}>
           <View style={styles.projectContainer}>
             <Text style={styles.projectTxt}>Emp. Name </Text>
@@ -394,8 +438,8 @@ const AppointmentItem = (props: any) => {
                   ...props.allocatedCM,
                   appointment_id: props.items?._id,
                 });
-                props.setPropertyId(props.items?.property_id);
                 props.setAllocateModel(true);
+                props.getCMList(props.items?.property_id);
               }}
               textTransform={"uppercase"}
             />

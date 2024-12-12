@@ -134,7 +134,7 @@ const ClosingDashboardView = (props: any) => {
             </View>
           </TouchableOpacity> */}
           <TouchableOpacity
-            onPress={() => props.onPressSiteVisit("followup")}
+            onPress={() => props.onPressFollowUp("todayFollowup")}
             style={styles.thirdPortioncardView}
           >
             <View style={styles.thirdPortionCardTextView}>

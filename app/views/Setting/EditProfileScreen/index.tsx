@@ -81,13 +81,13 @@ const EditProfileScreen = ({ navigation, route }: any) => {
   const handleResponse = () => {
     if (update) {
       ErrorMessage({
-        msg: response.message,
+        msg: response?.message,
         backgroundColor: GREEN_COLOR,
       });
       navigation.goBack(null);
     } else {
       ErrorMessage({
-        msg: response.message,
+        msg: response?.message,
         backgroundColor: RED_COLOR,
       });
     }
@@ -102,7 +102,7 @@ const EditProfileScreen = ({ navigation, route }: any) => {
     //   isError = false;
     //   errorMessage = "Employee Code is require Please enter Employee code";
     // } else
-     if (editData.firstname == undefined || editData.firstname == "") {
+    if (editData.firstname == undefined || editData.firstname == "") {
       isError = false;
       errorMessage = "First Name is require. Please enter Owner Name";
     }
@@ -112,7 +112,7 @@ const EditProfileScreen = ({ navigation, route }: any) => {
     // ) {
     //   isError = false;
     //   errorMessage = "Please enter valid Aadhaar number";
-    // } 
+    // }
     // else if (
     //   editData?.pancard_no &&
     //   Regexs.panRegex.test(editData?.pancard_no) === false
@@ -190,7 +190,11 @@ const EditProfileScreen = ({ navigation, route }: any) => {
       formData.append("firstname", editData?.firstname);
       formData.append("pancard_no", editData?.pancard_no);
       formData.append("gender", editData?.gender);
-      formData.append("dateofbirth", moment(editData?.dateofbirth).format());
+      // formData.append("dateofbirth", moment(editData?.dateofbirth).format());
+      formData.append(
+        "dateofbirth",
+        editData?.dateofbirth ? editData?.dateofbirth : ""
+      );
       formData.append("mobile", editData?.mobile);
       formData.append("whatsapp_no", editData?.whatsapp_no);
       formData.append("email", editData?.email);

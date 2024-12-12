@@ -32,7 +32,7 @@ const AgencyListing = ({ navigation, route }: any) => {
   const [isPropertyVisible, setIsPropertyVisible] = useState(false);
 
   const [CP_ID, setCP_ID] = useState("");
-  const moreData = response?.total_data || 0;
+  const moreData = SmCpList?.response?.data_total || 0;
   const [agentList, setAgentList] = useState<any>([]);
   const [offSET, setOffset] = useState(0);
   const [filterData, setFilterData] = useState({
@@ -77,10 +77,18 @@ const AgencyListing = ({ navigation, route }: any) => {
   useEffect(() => {
     if (SmCpList?.response?.status === 200) {
       if (SmCpList?.response?.message != "CP allocate successfull.") {
-        setAgentList(SmCpList?.response?.data);
+        if (offSET === 0) {
+          setAgentList(SmCpList?.response?.data);
+        } else {
+          setAgentList([...agentList, ...SmCpList?.response?.data]);
+        }
       }
     } else {
-      setAgentList([]);
+      if (offSET > 0) {
+        setAgentList(agentList);
+      } else {
+        setAgentList([]);
+      }
     }
   }, [SmCpList]);
 
@@ -89,6 +97,8 @@ const AgencyListing = ({ navigation, route }: any) => {
     // if (userData?.data?.role_title === 'Sourcing Manager') {
     dispatch(
       getAssignCPList({
+        offset: offset,
+        limit: 5,
         user_id: userData?.data?.user_id,
         startdate: filterData.startdate,
         enddate: filterData.enddate,

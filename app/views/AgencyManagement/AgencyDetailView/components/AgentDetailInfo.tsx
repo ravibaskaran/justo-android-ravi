@@ -83,7 +83,7 @@ const PropertyDetailItem = (props: any) => {
           </Text>
         </View>
       </View>
-      <View style={styles.Txtview}>
+      {/* <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
           <Text style={styles.projectTxt}>{strings.cpType} </Text>
         </View>
@@ -95,7 +95,7 @@ const PropertyDetailItem = (props: any) => {
             {item?.cp_type === 1 ? strings.individualText : strings.companyText}
           </Text>
         </View>
-      </View>
+      </View> */}
       <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
           <Text style={styles.projectTxt}>

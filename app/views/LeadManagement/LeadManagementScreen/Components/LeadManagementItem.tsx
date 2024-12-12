@@ -1,20 +1,18 @@
-import { View, Text, TouchableOpacity, Image, Linking } from "react-native";
+import usePermission from "app/components/utilities/UserPermissions";
+import moment from "moment";
 import React from "react";
-import styles from "./Styles";
+import { Image, Linking, Text, TouchableOpacity, View } from "react-native";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
 import {
   BLACK_COLOR,
   CALL_COLOR,
   DATE_TIME_FORMAT,
-  GREEN_COLOR,
+  getCPLeadType,
   PURPLE_COLOR,
-  RED_COLOR,
-  YELLOW_COLOR,
 } from "../../../../components/utilities/constant";
-import images from "../../../../assets/images";
-import Button from "../../../../components/Button";
 import strings from "../../../../components/utilities/Localization";
-import moment from "moment";
-import usePermission from "app/components/utilities/UserPermissions";
+import styles from "./Styles";
 
 const LeadManagementItem = (props: any) => {
   const { view, edit } = usePermission({
@@ -26,6 +24,13 @@ const LeadManagementItem = (props: any) => {
     props?.items?.appointment_status[
       props?.items?.appointment_status?.length - 1
     ];
+
+  const leadSource =
+    props.items?.lead_source === "Reference" &&
+    props.items?.referrel_partner === 1
+      ? "Referral Partner"
+      : props.items?.lead_source || strings.notfount;
+  const cpLeadType = getCPLeadType(props?.items?.cp_lead_type);
 
   return (
     <View style={styles.IteamView}>
@@ -111,18 +116,25 @@ const LeadManagementItem = (props: any) => {
         </View>
         <View style={styles.nameContainer}>
           <Text style={styles.nameTxt}>
-            {props.items?.lead_source
-              ? props.items?.lead_source
-              : strings.notfount}
+            {leadSource} {cpLeadType}
           </Text>
         </View>
       </View>
+      {props.items?.lead_source === "Reference" ? (
+        <View style={styles.Txtview}>
+          <View style={styles.projectContainer}>
+            <Text style={styles.projectTxt}>Referrer :</Text>
+          </View>
+          <View style={styles.nameContainer}>
+            <Text style={styles.nameTxt}>{props.items?.referrer_name}</Text>
+          </View>
+        </View>
+      ) : null}
+
       {props.items?.lead_source === "Channel Partner" ? (
         <View style={styles.Txtview}>
           <View style={styles.projectContainer}>
-            <Text style={styles.projectTxt}>
-              {props.items?.cp_type === 2 ? "CP Company Name" : "CP Name"}
-            </Text>
+            <Text style={styles.projectTxt}>CP Name :</Text>
           </View>
           <View style={styles.nameContainer}>
             <Text style={styles.nameTxt}>
@@ -131,7 +143,7 @@ const LeadManagementItem = (props: any) => {
           </View>
         </View>
       ) : null}
-      {props.items?.cp_type === 2 ? (
+      {props.items?.cp_type === 2 && props.items.cp_emp_name?.length > 0 ? (
         <View style={styles.Txtview}>
           <View style={styles.projectContainer}>
             <Text style={styles.projectTxt}>Emp. Name :</Text>

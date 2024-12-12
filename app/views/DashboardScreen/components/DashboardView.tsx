@@ -194,6 +194,7 @@ const DashboardView = (props: any) => {
                   dashboardData={props?.dashboardData}
                   getLoginType={props.getLoginType}
                   onPressSiteVisit={props.onPressSiteVisit}
+                  onPressFollowUp={props.onPressFollowUp}
                   onpressBooking={props.onpressBooking}
                   onpressSMList={props.onpressSMList}
                   appointmentList={props.appointmentList}
@@ -224,6 +225,7 @@ const DashboardView = (props: any) => {
                               onpressBooking={props.onpressBooking}
                               onPressTodayVisit={props.onPressTodayVisit}
                               onPressSiteVisit={props.onPressSiteVisit}
+                              onPressFollowUp={props.onPressFollowUp}
                               getLoginType={props.getLoginType}
                               appointmentList={props.appointmentList}
                             />
@@ -235,6 +237,7 @@ const DashboardView = (props: any) => {
                                   getLoginType={props.getLoginType}
                                   onPressTodayVisit={props.onPressTodayVisit}
                                   onPressSiteVisit={props.onPressSiteVisit}
+                                  onPressFollowUp={props.onPressFollowUp}
                                   onPressSMList={props.onPressSMList}
                                   onPressCPList={props.onPressCPList}
                                   onpressAppointmentWithCP={

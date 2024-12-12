@@ -3,9 +3,9 @@ import ErrorMessage from "app/components/ErrorMessage";
 import InputCalender from "app/components/InputCalender";
 import CountryPickerModal from "app/components/Modals/CountryPickerModal";
 import JustForOkModal from "app/components/Modals/JustForOkModal";
-import { CpType } from "app/components/utilities/DemoData";
+import { CpLeadType, CpType } from "app/components/utilities/DemoData";
 import moment from "moment";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   ScrollView,
   Text,
@@ -38,9 +38,14 @@ import {
 } from "../../../../components/utilities/constant";
 import strings from "../../../../components/utilities/Localization";
 import styles from "./styles";
+import { useFocusEffect } from "@react-navigation/native";
+import { RequiredStart } from "app/components/utilities/GlobalFuncations";
 
 const VisitorUpdateView = (props: any) => {
   const { userData = {} } = useSelector((state: any) => state.userData);
+  const [romProperty, setRomProperty] = useState<any>([]);
+  const propertyData = useSelector((state: any) => state.propertyData) || {};
+  // const [configuration, setConfiguration] = useState<any>([]);
 
   const userId = userData?.data ? userData?.data : {};
   const id = userData?.data?.role_id;
@@ -54,13 +59,30 @@ const VisitorUpdateView = (props: any) => {
     ROLE_IDS.sourcingmanager_id === id ||
     ROLE_IDS.sourcing_head_id === id;
 
-  const leadsourcefilteredData: any = props.masterDatas.filter((obj: any) =>
-    Cmteam
-      ? obj.title !== "Channel Partner"
-      : SMteam
-      ? obj.title === "Channel Partner"
-      : obj.title !== ""
-  );
+  // const leadsourcefilteredData: any = props.masterDatas.filter((obj: any) =>
+  //   Cmteam
+  //     ? obj.title !== "Channel Partner"
+  //     : SMteam
+  //     ? obj.title === "Channel Partner"
+  //     : obj.title !== ""
+  // );
+
+  const leadsourcefilteredData: any = props.masterDatas.filter((obj: any) => {
+    if (userData?.data?.rom && SMteam) {
+      return [
+        "Channel Partner",
+        "Exhibition",
+        "Direct Walk-in",
+        "Reference",
+      ].includes(obj.title);
+    } else {
+      return Cmteam
+        ? obj.title !== "Channel Partner"
+        : SMteam
+        ? obj.title === "Channel Partner"
+        : obj.title !== "";
+    }
+  });
 
   const isPropertySelected = async () => {
     let isError = true;
@@ -81,20 +103,72 @@ const VisitorUpdateView = (props: any) => {
     }
   };
 
-  const onChageProperty = async (propertyId: any) => {
+  useFocusEffect(
+    React.useCallback(() => {
+      onChageProperty(props?.updateForm?.property_id, false);
+      return () => {};
+    }, [props?.updateForm?.property_id])
+  );
+
+  const onChageProperty = async (
+    propertyId: any,
+    isSwitchProperty: boolean
+  ) => {
     if (propertyId) {
-      let property = props?.allProperty.filter(
-        (item: any) => item.property_id == propertyId
-      );
+      // let property = props?.allProperty.filter(
+      //   (item: any) => item.property_id == propertyId
+      // );
+
+      let property =
+        userData?.data?.rom &&
+        SMteam &&
+        props.updateForm?.lead_source !== CONST_IDS?.cp_lead_source_id
+          ? romProperty.filter((item: any) => item.property_id == propertyId)
+          : props?.allProperty.filter(
+              (item: any) => item.property_id == propertyId
+            );
       props.setConfiguration(property[0]?.configurations);
     } else {
       props.setConfiguration([]);
     }
-    props.setUpdateForm({
-      ...props.updateForm,
-      configuration_id: "",
-      configuration: "",
-    });
+
+    if (isSwitchProperty) {
+      props.setUpdateForm({
+        ...props.updateForm,
+        configuration_id: "",
+        configuration: "",
+        property_id: propertyId,
+      });
+    }
+  };
+
+  useEffect(() => {
+    getAllPropertyData();
+  }, []);
+
+  const getAllPropertyData = () => {
+    if (propertyData?.response?.status === 200) {
+      if (propertyData?.response?.data?.length > 0) {
+        const activeData = propertyData?.response?.data.filter((el: any) => {
+          return el.status == true;
+        });
+        activeData?.length > 0
+          ? setRomProperty(activeData)
+          : setRomProperty([]);
+      } else {
+        setRomProperty([]);
+      }
+    } else {
+      setRomProperty([]);
+    }
+  };
+
+  const getLeadSourceName = (lead: any) => {
+    if (props.updateForm?.lead_source) {
+      return props.updateForm?.lead_source;
+    } else {
+      return "Lead Source";
+    }
   };
 
   return (
@@ -286,18 +360,15 @@ const VisitorUpdateView = (props: any) => {
         <View style={[styles.inputWrap]}>
           <DropdownInput
             headingText={"Lead Source"}
-            placeholder={
-              props.updateForm?.lead_source
-                ? props.updateForm?.lead_source
-                : "Lead Source"
-            }
-            disable={
-              userData?.data?.role_id === ROLE_IDS.closingtl_id ||
-              userData?.data?.role_id === ROLE_IDS.closing_head_id ||
-              userData?.data?.role_id === ROLE_IDS.closingmanager_id
-                ? true
-                : false
-            }
+            placeholder={getLeadSourceName(props.updateForm?.lead_source)}
+            // disable={
+            //   userData?.data?.role_id === ROLE_IDS.closingtl_id ||
+            //   userData?.data?.role_id === ROLE_IDS.closing_head_id ||
+            //   userData?.data?.role_id === ROLE_IDS.closingmanager_id
+            //     ? true
+            //     : false
+            // }
+            disable={true}
             data={
               leadsourcefilteredData?.length > 0 &&
               Array.isArray(leadsourcefilteredData)
@@ -315,23 +386,26 @@ const VisitorUpdateView = (props: any) => {
             onChange={(item: any) => {
               console.log("item: ", item);
               if (
-                props?.updateForm?.lead_source_id ===
-                  CONST_IDS?.cp_lead_source_id ||
-                props?.updateForm?.lead_source_id ===
-                  CONST_IDS?.by_self_lead_source_id
+                item._id === CONST_IDS?.cp_lead_source_id
+                //   ||
+                // props?.updateForm?.lead_source_id ===
+                //   CONST_IDS?.by_self_lead_source_id
               ) {
                 props.handleLeadSourcePressWhenNoCp();
               }
+
               props.setUpdateForm({
                 ...props.updateForm,
                 lead_source: item._id,
                 lead_source_id: item._id,
                 lead_source_title: item.title,
-                cp_type: "",
+                cp_type: item._id === CONST_IDS?.cp_lead_source_id ? 2 : "",
                 cp_id: "",
                 cp_emp_id: "",
                 referrer_name: "",
+                referrer_email: "",
                 referrer_contact: "",
+                cp_name: "",
               });
               if (
                 !(
@@ -341,7 +415,8 @@ const VisitorUpdateView = (props: any) => {
                   userData?.data?.role_id === ROLE_IDS.clusterhead_id ||
                   userData?.data?.role_id === ROLE_IDS.sitehead_id ||
                   userData?.data?.role_id === ROLE_IDS.admin_id ||
-                  userData?.data?.role_id === ROLE_IDS.businesshead_id
+                  userData?.data?.role_id === ROLE_IDS.businesshead_id ||
+                  userData?.data?.role_id === ROLE_IDS.scm_id
                 )
               ) {
                 props.setAllProperty([]);
@@ -360,11 +435,39 @@ const VisitorUpdateView = (props: any) => {
             }}
           />
         </View>
-        {props?.updateForm?.lead_source_id === CONST_IDS?.cp_lead_source_id ||
-        props?.updateForm?.lead_source_id ===
-          CONST_IDS?.by_self_lead_source_id ? (
+        {props?.updateForm?.lead_source_id === CONST_IDS?.cp_lead_source_id ? (
+          // || props?.updateForm?.lead_source_id ===
+          //   CONST_IDS?.by_self_lead_source_id
           <>
             <View style={styles.inputWrap}>
+              <DropdownInput
+                headingText={"CP Lead type"}
+                placeholder={"Select CP Lead type"}
+                // data={CpType}
+                data={CpLeadType}
+                require
+                inputWidth={"100%"}
+                paddingLeft={Isios ? 6 : 10}
+                maxHeight={300}
+                labelField="label"
+                valueField={"value"}
+                value={props?.updateForm?.cp_lead_type}
+                onChange={(item: any) => {
+                  props.setUpdateForm({
+                    ...props.updateForm,
+                    cp_lead_type: item.value,
+                  });
+                }}
+                newRenderItem={(item: any) => {
+                  return (
+                    <View style={Styles.item}>
+                      <Text style={Styles.textItem}>{item.label}</Text>
+                    </View>
+                  );
+                }}
+              />
+            </View>
+            {/* <View style={styles.inputWrap}>
               <DropdownInput
                 headingText={"Channel Partner type"}
                 placeholder={"Select Channel Partner type"}
@@ -404,8 +507,8 @@ const VisitorUpdateView = (props: any) => {
                   );
                 }}
               />
-            </View>
-            {props.updateForm?.cp_type === 1 ? (
+            </View> */}
+            {/* {props.updateForm?.cp_type === 1 ? (
               <View style={styles.inputWrap}>
                 <DropdownInput
                   headingText={"CP Name"}
@@ -450,96 +553,154 @@ const VisitorUpdateView = (props: any) => {
                 />
               </View>
             ) : props.updateForm?.cp_type === 2 ? (
-              <>
-                <View style={styles.inputWrap}>
-                  <DropdownInput
-                    headingText={"CP Company Name"}
-                    placeholder={
-                      props.updateForm?.cp_name
-                        ? props.updateForm?.cp_name
-                        : "Select CP Company Name"
-                    }
-                    data={props.companyList}
-                    require
-                    disable={
-                      userData?.data?.role_id === ROLE_IDS.closingtl_id ||
-                      userData?.data?.role_id === ROLE_IDS.closing_head_id ||
-                      userData?.data?.role_id === ROLE_IDS.closingmanager_id
-                        ? true
-                        : false
-                    }
-                    inputWidth={"100%"}
-                    paddingLeft={Isios ? 6 : 10}
-                    maxHeight={300}
-                    labelField="agent_name"
-                    valueField={"_id"}
-                    onFocus={() => props.handleCompanyDropdownPress()}
-                    value={props?.updateForm?.cp_id}
-                    onChange={(item: any) => {
-                      props.setUpdateForm({
-                        ...props.updateForm,
-                        cp_id: item._id,
-                        cp_emp_id: "",
-                        property_id: "",
-                        property_type_title: "",
-                        property_title: "",
-                      });
-                      props.handleGetProperty(item._id);
-                    }}
-                    newRenderItem={(item: any) => {
-                      return (
-                        <View style={Styles.item}>
-                          <Text style={Styles.textItem}>{item.agent_name}</Text>
-                        </View>
-                      );
-                    }}
-                  />
-                </View>
-                {props?.updateForm?.cp_id !== "" ? (
-                  <View style={styles.inputWrap}>
-                    <DropdownInput
-                      headingText={"Company Employee name"}
-                      placeholder={"Select Employee name"}
-                      data={props.employeeList}
-                      inputWidth={"100%"}
-                      paddingLeft={Isios ? 6 : 10}
-                      maxHeight={300}
-                      disable={
-                        userData?.data?.role_id === ROLE_IDS.closingtl_id ||
-                        userData?.data?.role_id === ROLE_IDS.closing_head_id ||
-                        userData?.data?.role_id === ROLE_IDS.closingmanager_id
-                          ? true
-                          : false
-                      }
-                      labelField="employee_name"
-                      valueField={"user_id"}
-                      onFocus={() => props.handleEmployeeDropdownPress()}
-                      value={props?.updateForm?.cp_emp_id}
-                      onChange={(item: any) => {
-                        props.setUpdateForm({
-                          ...props.updateForm,
-                          cp_emp_id: item.user_id,
-                        });
-                      }}
-                      newRenderItem={(item: any) => {
-                        return (
-                          <View style={Styles.item}>
-                            <Text style={Styles.textItem}>
-                              {item.employee_name}
-                            </Text>
-                          </View>
-                        );
-                      }}
-                    />
-                  </View>
-                ) : null}
-              </>
+              <> */}
+            <View style={styles.inputWrap}>
+              <DropdownInput
+                headingText={"CP Company Name"}
+                placeholder={
+                  props.updateForm?.cp_name
+                    ? props.updateForm?.cp_name
+                    : "Select CP Company Name"
+                }
+                data={props.companyList}
+                require
+                search={true}
+                searchPlaceholder={strings.search + " " + strings.cp}
+                disable={
+                  userData?.data?.role_id === ROLE_IDS.closingtl_id ||
+                  userData?.data?.role_id === ROLE_IDS.closing_head_id ||
+                  userData?.data?.role_id === ROLE_IDS.closingmanager_id
+                    ? true
+                    : false
+                }
+                // disable={true}
+                inputWidth={"100%"}
+                paddingLeft={Isios ? 6 : 10}
+                maxHeight={300}
+                labelField="agency_name"
+                valueField={"_id"}
+                onFocus={() => props.handleCompanyDropdownPress()}
+                value={props?.updateForm?.cp_id}
+                onChange={(item: any) => {
+                  props.setUpdateForm({
+                    ...props.updateForm,
+                    cp_id: item._id,
+                    cp_emp_id: "",
+                  });
+                  // props.handleGetProperty(item._id);
+                }}
+                newRenderItem={(item: any) => {
+                  return (
+                    <View style={Styles.item}>
+                      <Text style={Styles.textItem}>{item.agency_name}</Text>
+                    </View>
+                  );
+                }}
+              />
+            </View>
+            {props?.updateForm?.cp_id !== "" &&
+            props?.updateForm?.cp_id != null ? (
+              <View style={styles.inputWrap}>
+                <DropdownInput
+                  headingText={"Company Employee name"}
+                  placeholder={"Select Employee name"}
+                  data={props.employeeList}
+                  inputWidth={"100%"}
+                  paddingLeft={Isios ? 6 : 10}
+                  maxHeight={300}
+                  disable={
+                    userData?.data?.role_id === ROLE_IDS.closingtl_id ||
+                    userData?.data?.role_id === ROLE_IDS.closing_head_id ||
+                    userData?.data?.role_id === ROLE_IDS.closingmanager_id
+                      ? true
+                      : false
+                  }
+                  labelField="employee_name"
+                  valueField={"user_id"}
+                  onFocus={() => props.handleEmployeeDropdownPress()}
+                  value={props?.updateForm?.cp_emp_id}
+                  onChange={(item: any) => {
+                    props.setUpdateForm({
+                      ...props.updateForm,
+                      cp_emp_id: item.user_id,
+                    });
+                  }}
+                  newRenderItem={(item: any) => {
+                    return (
+                      <View style={Styles.item}>
+                        <Text style={Styles.textItem}>
+                          {item.employee_name}
+                        </Text>
+                      </View>
+                    );
+                  }}
+                />
+              </View>
             ) : null}
           </>
-        ) : null}
+        ) : //   ) : null}
+        // </>
+        null}
 
-        {props?.updateForm?.lead_source_id === CONST_IDS?.ref_lead_source_id ? (
+        {props?.updateForm?.lead_source_id === CONST_IDS?.ref_lead_source_id &&
+        props?.updateForm?.referrel_partner ? (
           <>
+            <View
+              style={[styles.genderView, { marginLeft: normalizeSpacing(20) }]}
+            >
+              <Text style={styles.headingsTxt}>{"If Referral Partner"}</Text>
+              <RequiredStart />
+              <View style={styles.radioView}>
+                <RadioButton.Android
+                  disabled={true}
+                  value="1"
+                  status={
+                    props?.updateForm?.referrel_partner === 1
+                      ? "checked"
+                      : "unchecked"
+                  }
+                  color={PRIMARY_THEME_COLOR}
+                />
+                <Text
+                  style={[
+                    styles.radioTxt,
+                    {
+                      color:
+                        props?.updateForm?.referrel_partner === 1
+                          ? PRIMARY_THEME_COLOR
+                          : BLACK_COLOR,
+                    },
+                  ]}
+                >
+                  {strings.yes}
+                </Text>
+              </View>
+              <View style={styles.radioView}>
+                <RadioButton.Android
+                  disabled={true}
+                  value="2"
+                  status={
+                    props?.updateForm?.referrel_partner === 2
+                      ? "checked"
+                      : "unchecked"
+                  }
+                  color={PRIMARY_THEME_COLOR}
+                />
+                <Text
+                  style={[
+                    styles.radioTxt,
+                    {
+                      color:
+                        props?.formData?.referrel_partner === 2
+                          ? PRIMARY_THEME_COLOR
+                          : BLACK_COLOR,
+                    },
+                  ]}
+                >
+                  {strings.no}
+                </Text>
+              </View>
+            </View>
             <View style={styles.inputWrap}>
               <InputField
                 require={true}
@@ -552,6 +713,7 @@ const VisitorUpdateView = (props: any) => {
                     referrer_contact: data,
                   });
                 }}
+                editable={false}
                 valueshow={props?.updateForm?.referrer_contact}
                 headingText={strings.referrerNumber}
                 keyboardtype={"number-pad"}
@@ -561,6 +723,8 @@ const VisitorUpdateView = (props: any) => {
             <View style={styles.inputWrap}>
               <InputField
                 require={true}
+                disable={true}
+                editable={false}
                 disableSpecialCharacters={true}
                 placeholderText={strings.referrerName}
                 headingText={strings.referrerName}
@@ -574,33 +738,58 @@ const VisitorUpdateView = (props: any) => {
                 valueshow={props?.updateForm?.referrer_name}
               />
             </View>
+            <View style={styles.inputWrap}>
+              <InputField
+                editable={!props?.updateForm?.referrerEmailExist}
+                keyboardtype={"email-address"}
+                placeholderText={"Referrer Email"}
+                headingText={"Referrer Email"}
+                handleInputBtnPress={() => {}}
+                onFocus={() => props.checkRefferrerNumberExist()}
+                onChangeText={(data: any) => {
+                  props.setUpdateForm({
+                    ...props.updateForm,
+                    referrer_email: data,
+                  });
+                }}
+                valueshow={props?.updateForm?.referrer_email}
+              />
+            </View>
           </>
         ) : null}
 
         <View style={styles.inputWrap}>
           <DropdownInput
             require={true}
-            disable={
-              userData?.data?.role_id === ROLE_IDS.closingtl_id ||
-              userData?.data?.role_id === ROLE_IDS.closing_head_id ||
-              userData?.data?.role_id === ROLE_IDS.closingmanager_id
-                ? true
-                : false
-            }
+            // disable={
+            //   userData?.data?.role_id === ROLE_IDS.closingtl_id ||
+            //   userData?.data?.role_id === ROLE_IDS.closing_head_id ||
+            //   userData?.data?.role_id === ROLE_IDS.closingmanager_id
+            //     ? true
+            //     : false
+            // }
+            disable={true}
             headingText={"Property Name"}
             placeholder={
               props.updateForm?.property_title
                 ? props.updateForm?.property_title
                 : "Property"
             }
-            data={props?.allProperty}
+            // data={props?.allProperty}
+            data={
+              userData?.data?.rom &&
+              SMteam &&
+              props.updateForm?.lead_source !== CONST_IDS?.cp_lead_source_id
+                ? romProperty
+                : props?.allProperty.filter((item: any) => item.status == true)
+            }
             // disable={props.type == 'edit' || props.type == 'propertySelect' ? true : false}
             inputWidth={"100%"}
             paddingLeft={16}
             maxHeight={300}
             labelField="property_title"
             valueField={"_id"}
-            value={props?.updateForm?.propertyuid}
+            value={props?.updateForm?.property_id}
             onChange={(item: any) => {
               props.setUpdateForm({
                 ...props.updateForm,
@@ -608,7 +797,7 @@ const VisitorUpdateView = (props: any) => {
                 property_type_title: item.property_type,
                 property_title: item.property_title,
               });
-              onChageProperty(item.property_id);
+              onChageProperty(item.property_id, true);
             }}
             newRenderItem={(item: any) => {
               return (
@@ -884,7 +1073,7 @@ const VisitorUpdateView = (props: any) => {
               if (Regexs.alphaNumeric.test(data) === true) {
                 props.setUpdateForm({
                   ...props.updateForm,
-                  no_of_family_member: data,
+                  no_of_family_member: data?.trim(),
                 });
               }
             }}
@@ -1103,7 +1292,7 @@ const VisitorUpdateView = (props: any) => {
             onChangeText={(text: any) => {
               props.setUpdateForm({
                 ...props.updateForm,
-                areain_sqlft: text,
+                areain_sqlft: text?.trim(),
               });
             }}
             maxLength={10}
@@ -1121,10 +1310,12 @@ const VisitorUpdateView = (props: any) => {
             <TextInput
               value={props?.updateForm?.min_budget?.toString()}
               onChangeText={(data: any) => {
-                props.setUpdateForm({
-                  ...props.updateForm,
-                  min_budget: data,
-                });
+                if (Regexs.alphaNumeric.test(data) === true) {
+                  props.setUpdateForm({
+                    ...props.updateForm,
+                    min_budget: data?.trim(),
+                  });
+                }
               }}
               maxLength={4}
               keyboardType={"number-pad"}
@@ -1164,10 +1355,12 @@ const VisitorUpdateView = (props: any) => {
             <TextInput
               value={props?.updateForm?.max_budget?.toString()}
               onChangeText={(data: any) => {
-                props.setUpdateForm({
-                  ...props.updateForm,
-                  max_budget: data,
-                });
+                if (Regexs.alphaNumeric.test(data) === true) {
+                  props.setUpdateForm({
+                    ...props.updateForm,
+                    max_budget: data?.trim(),
+                  });
+                }
               }}
               maxLength={4}
               keyboardType={"number-pad"}
@@ -1276,10 +1469,12 @@ const VisitorUpdateView = (props: any) => {
             <TextInput
               value={props?.updateForm?.min_emi_budget?.toString()}
               onChangeText={(data: any) => {
-                props.setUpdateForm({
-                  ...props.updateForm,
-                  min_emi_budget: data,
-                });
+                if (Regexs.alphaNumeric.test(data) === true) {
+                  props.setUpdateForm({
+                    ...props.updateForm,
+                    min_emi_budget: data?.trim(),
+                  });
+                }
               }}
               maxLength={4}
               keyboardType={"number-pad"}
@@ -1319,10 +1514,12 @@ const VisitorUpdateView = (props: any) => {
             <TextInput
               value={props?.updateForm?.max_emi_budget}
               onChangeText={(data: any) => {
-                props.setUpdateForm({
-                  ...props.updateForm,
-                  max_emi_budget: data,
-                });
+                if (Regexs.alphaNumeric.test(data) === true) {
+                  props.setUpdateForm({
+                    ...props.updateForm,
+                    max_emi_budget: data?.trim(),
+                  });
+                }
               }}
               maxLength={4}
               keyboardType={"number-pad"}

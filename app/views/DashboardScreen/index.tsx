@@ -161,7 +161,7 @@ const DashboardScreen = ({ navigation }: any) => {
         dispatch(
           getAssignCPList({
             offset: 0,
-            limit: 10,
+            limit: 5,
             user_id: getLoginType?.response?.data?.user_id,
           })
         );
@@ -229,6 +229,11 @@ const DashboardScreen = ({ navigation }: any) => {
   const onPressTodayVisit = (type: any) => {
     navigation.navigate("LeadManagementScreen", type);
   };
+
+  const onPressFollowUp = (type: any) => {
+    navigation.navigate("TodaysFollowUpScreen", { type: type });
+  };
+
   const onPressSiteVisit = (type: any) => {
     if (
       getLoginType?.response?.data?.role_id === ROLE_IDS.closingtl_id ||
@@ -295,6 +300,7 @@ const DashboardScreen = ({ navigation }: any) => {
       getLoginType={getLoginType}
       onPressTodayVisit={onPressTodayVisit}
       onPressSiteVisit={onPressSiteVisit}
+      onPressFollowUp={onPressFollowUp}
       onPressSMList={onPressSMList}
       onPressCPList={onPressCPList}
       onPressCMLIST={onPressCMLIST}

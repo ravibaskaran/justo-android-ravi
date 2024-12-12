@@ -145,7 +145,7 @@ const AddEmployeeModal = (props: any) => {
                   disableSpecialCharacters={true}
                   headingText={strings.rerano}
                   placeholderText={strings.rerano}
-                  maxLength={13}
+                  maxLength={17}
                   autoCapitalize="words"
                   valueshow={props?.employeeFormData?.empolyeeReraNo}
                   onChangeText={(data: any) => {

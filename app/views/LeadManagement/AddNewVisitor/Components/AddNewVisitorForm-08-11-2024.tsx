@@ -1,6 +1,5 @@
 import CheckBox from "@react-native-community/checkbox";
 import DropdownInput from "app/components/DropDown";
-import ErrorMessage from "app/components/ErrorMessage";
 import InputCalender from "app/components/InputCalender";
 import CountryPickerModal from "app/components/Modals/CountryPickerModal";
 import JustForOkModal from "app/components/Modals/JustForOkModal";
@@ -9,7 +8,7 @@ import {
   normalizeSpacing,
   normalizeWidth,
 } from "app/components/scaleFontSize";
-import { CpLeadType } from "app/components/utilities/DemoData";
+import { CpType } from "app/components/utilities/DemoData";
 import { RequiredStart } from "app/components/utilities/GlobalFuncations";
 import usePermission from "app/components/utilities/UserPermissions";
 import moment from "moment";
@@ -17,7 +16,6 @@ import React, { useEffect, useState } from "react";
 import {
   Keyboard,
   Linking,
-  Pressable,
   ScrollView,
   Text,
   TextInput,
@@ -46,6 +44,7 @@ import {
 import strings from "../../../../components/utilities/Localization";
 import styles from "./Styles";
 import VisitConfirmModal from "./VisitConfirmModal";
+import ErrorMessage from "app/components/ErrorMessage";
 
 const AddNewVisitorForm = (props: any) => {
   const { masterDatas } = props;
@@ -56,8 +55,7 @@ const AddNewVisitorForm = (props: any) => {
   );
   const userData = useSelector((state: any) => state.userData);
   const id = userData?.userData?.data?.role_id;
-  const [romProperty, setRomProperty] = useState<any>([]);
-  const propertyData = useSelector((state: any) => state.propertyData) || {};
+
   const Cmteam =
     ROLE_IDS.closingtl_id === id ||
     ROLE_IDS.closingmanager_id === id ||
@@ -68,25 +66,13 @@ const AddNewVisitorForm = (props: any) => {
     ROLE_IDS.sourcingmanager_id === id ||
     ROLE_IDS.sourcing_head_id === id;
 
-  const leadsourcefilteredData: any = masterDatas.filter((obj: any) => {
-    if (userData?.userData?.data?.rom && SMteam) {
-      return [
-        "Channel Partner",
-        "Exhibition",
-        "Direct Walk-in",
-        "Reference",
-      ].includes(obj.title);
-    } else if (SMteam) {
-      return [
-        CONST_IDS.cp_lead_source_id,
-        CONST_IDS.ref_lead_source_id,
-      ].includes(obj?._id);
-    } else {
-      return Cmteam
-        ? obj?._id !== CONST_IDS.cp_lead_source_id
-        : obj.title !== "";
-    }
-  });
+  const leadsourcefilteredData: any = masterDatas.filter((obj: any) =>
+    Cmteam
+      ? obj.title !== "Channel Partner"
+      : SMteam
+      ? obj.title === "Channel Partner"
+      : obj.title !== ""
+  );
 
   const { create } = usePermission({
     create:
@@ -139,16 +125,9 @@ const AddNewVisitorForm = (props: any) => {
 
   useEffect(() => {
     if (props?.formData?.property_id) {
-      let property =
-        userData?.userData?.data?.rom &&
-        SMteam &&
-        props?.formData?.lead_source !== CONST_IDS?.cp_lead_source_id
-          ? romProperty.filter(
-              (item: any) => item.property_id == props?.formData?.property_id
-            )
-          : props?.allProperty.filter(
-              (item: any) => item.property_id == props?.formData?.property_id
-            );
+      let property = props?.allProperty.filter(
+        (item: any) => item.property_id == props?.formData?.property_id
+      );
       setConfiguration(property[0]?.configurations);
     } else {
       setConfiguration([]);
@@ -159,10 +138,6 @@ const AddNewVisitorForm = (props: any) => {
       configuration: "",
     });
   }, [props?.formData?.property_id]);
-
-  useEffect(() => {
-    getAllPropertyData();
-  }, []);
 
   function canShowProperty() {
     if (
@@ -205,23 +180,6 @@ const AddNewVisitorForm = (props: any) => {
           backgroundColor: RED_COLOR,
         });
       }
-    }
-  };
-
-  const getAllPropertyData = () => {
-    if (propertyData?.response?.status === 200) {
-      if (propertyData?.response?.data?.length > 0) {
-        const activeData = propertyData?.response?.data.filter((el: any) => {
-          return el.status == true;
-        });
-        activeData?.length > 0
-          ? setRomProperty(activeData)
-          : setRomProperty([]);
-      } else {
-        setRomProperty([]);
-      }
-    } else {
-      setRomProperty([]);
     }
   };
 
@@ -402,25 +360,33 @@ const AddNewVisitorForm = (props: any) => {
                   ...props.formData,
                   lead_source: item._id,
                   lead_source_title: item.title,
-                  cp_type: item._id === CONST_IDS?.cp_lead_source_id ? 2 : "",
+                  cp_type: "",
                   cp_id: "",
                   cp_emp_id: "",
                   referrer_name: "",
-                  referrer_email: "",
                   referrer_contact: "",
-                  property_id: "",
-                  property_type_title: "",
-                  property_title: "",
-                  cp_lead_type: "",
-                  referrel_partner:
-                    item._id === CONST_IDS?.ref_lead_source_id
-                      ? SMteam
-                        ? 1
-                        : Cmteam
-                        ? 2
-                        : ""
-                      : "",
                 });
+
+                if (
+                  !(
+                    userData?.userData?.data?.role_id ===
+                      ROLE_IDS.closingtl_id ||
+                    userData?.userData?.data?.role_id ===
+                      ROLE_IDS.closing_head_id ||
+                    userData?.userData?.data?.role_id ===
+                      ROLE_IDS.closingmanager_id ||
+                    userData?.userData?.data?.role_id ===
+                      ROLE_IDS.clusterhead_id ||
+                    userData?.userData?.data?.role_id ===
+                      ROLE_IDS.sitehead_id ||
+                    userData?.userData?.data?.role_id === ROLE_IDS.admin_id ||
+                    userData?.userData?.data?.role_id ===
+                      ROLE_IDS.businesshead_id ||
+                    userData?.userData?.data?.role_id === ROLE_IDS.scm_id
+                  )
+                ) {
+                  props.setAllProperty([]);
+                }
               }}
               newRenderItem={(item: any) => {
                 return (
@@ -439,22 +405,27 @@ const AddNewVisitorForm = (props: any) => {
             <>
               <View style={styles.inputWrap}>
                 <DropdownInput
-                  headingText={"CP Lead type"}
-                  placeholder={"Select CP Lead type"}
-                  // data={CpType}
-                  data={CpLeadType}
+                  headingText={"Channel Partner type"}
+                  placeholder={"Select Channel Partner type"}
+                  data={CpType}
                   require
                   inputWidth={"100%"}
                   paddingLeft={Isios ? 6 : 10}
                   maxHeight={300}
                   labelField="label"
                   valueField={"value"}
-                  value={props?.formData?.cp_lead_type}
+                  value={props?.formData?.cp_type}
                   onChange={(item: any) => {
                     props.setFormData({
                       ...props.formData,
-                      cp_lead_type: item.value,
+                      cp_type: item.value,
+                      cp_id: "",
+                      cp_emp_id: "",
+                      property_id: "",
+                      property_type_title: "",
+                      property_title: "",
                     });
+                    props.setAllProperty([]);
                   }}
                   newRenderItem={(item: any) => {
                     return (
@@ -465,7 +436,7 @@ const AddNewVisitorForm = (props: any) => {
                   }}
                 />
               </View>
-              {/* {props.formData?.cp_type === 1 ? (
+              {props.formData?.cp_type === 1 ? (
                 <View style={styles.inputWrap}>
                   <DropdownInput
                     headingText={"CP Name"}
@@ -501,153 +472,85 @@ const AddNewVisitorForm = (props: any) => {
                   />
                 </View>
               ) : props.formData?.cp_type === 2 ? (
-                <> */}
-              <View style={styles.inputWrap}>
-                <DropdownInput
-                  headingText={"CP Company Name"}
-                  placeholder={"Select CP Company Name"}
-                  search={true}
-                  searchPlaceholder={strings.search + " " + strings.company}
-                  data={props.agentList}
-                  require
-                  inputWidth={"100%"}
-                  paddingLeft={Isios ? 6 : 10}
-                  maxHeight={300}
-                  labelField="agent_name"
-                  valueField={"_id"}
-                  onFocus={() => props.handleCompanyDropdownPress()}
-                  value={props?.formData?.cp_id}
-                  onChange={(item: any) => {
-                    props.setFormData({
-                      ...props.formData,
-                      cp_id: item._id,
-                      cp_emp_id: "",
-                      property_id: "",
-                      property_type_title: "",
-                      property_title: "",
-                    });
-                    props.handleGetProperty(item._id);
-                  }}
-                  newRenderItem={(item: any) => {
-                    return (
-                      <View style={Styles.item}>
-                        <Text style={Styles.textItem}>{item.agent_name}</Text>
-                      </View>
-                    );
-                  }}
-                />
-              </View>
-
-              {props?.formData?.cp_id !== "" ? (
-                <View style={styles.inputWrap}>
-                  <DropdownInput
-                    headingText={"Company Employee name"}
-                    placeholder={"Select Employee name"}
-                    search={true}
-                    searchPlaceholder={strings.search + " " + strings.employee}
-                    data={props.employeeList}
-                    inputWidth={"100%"}
-                    paddingLeft={Isios ? 6 : 10}
-                    maxHeight={300}
-                    labelField="employee_name"
-                    valueField={"user_id"}
-                    onFocus={() => props.handleEmployeeDropdownPress()}
-                    value={props?.formData?.cp_emp_id}
-                    onChange={(item: any) => {
-                      props.setFormData({
-                        ...props.formData,
-                        cp_emp_id: item.user_id,
-                      });
-                    }}
-                    newRenderItem={(item: any) => {
-                      return (
-                        <View style={Styles.item}>
-                          <Text style={Styles.textItem}>
-                            {item.employee_name}
-                          </Text>
-                        </View>
-                      );
-                    }}
-                  />
-                </View>
+                <>
+                  <View style={styles.inputWrap}>
+                    <DropdownInput
+                      headingText={"CP Company Name"}
+                      placeholder={"Select CP Company Name"}
+                      search={true}
+                      searchPlaceholder={strings.search + " " + strings.company}
+                      data={props.companyList}
+                      require
+                      inputWidth={"100%"}
+                      paddingLeft={Isios ? 6 : 10}
+                      maxHeight={300}
+                      labelField="agent_name"
+                      valueField={"_id"}
+                      onFocus={() => props.handleCompanyDropdownPress()}
+                      value={props?.formData?.cp_id}
+                      onChange={(item: any) => {
+                        props.setFormData({
+                          ...props.formData,
+                          cp_id: item._id,
+                          cp_emp_id: "",
+                          property_id: "",
+                          property_type_title: "",
+                          property_title: "",
+                        });
+                        props.handleGetProperty(item._id);
+                      }}
+                      newRenderItem={(item: any) => {
+                        return (
+                          <View style={Styles.item}>
+                            <Text style={Styles.textItem}>
+                              {item.agent_name}
+                            </Text>
+                          </View>
+                        );
+                      }}
+                    />
+                  </View>
+                  {props?.formData?.cp_id !== "" ? (
+                    <View style={styles.inputWrap}>
+                      <DropdownInput
+                        headingText={"Company Employee name"}
+                        placeholder={"Select Employee name"}
+                        search={true}
+                        searchPlaceholder={
+                          strings.search + " " + strings.employee
+                        }
+                        data={props.employeeList}
+                        inputWidth={"100%"}
+                        paddingLeft={Isios ? 6 : 10}
+                        maxHeight={300}
+                        labelField="employee_name"
+                        valueField={"user_id"}
+                        onFocus={() => props.handleEmployeeDropdownPress()}
+                        value={props?.formData?.cp_emp_id}
+                        onChange={(item: any) => {
+                          props.setFormData({
+                            ...props.formData,
+                            cp_emp_id: item.user_id,
+                          });
+                        }}
+                        newRenderItem={(item: any) => {
+                          return (
+                            <View style={Styles.item}>
+                              <Text style={Styles.textItem}>
+                                {item.employee_name}
+                              </Text>
+                            </View>
+                          );
+                        }}
+                      />
+                    </View>
+                  ) : null}
+                </>
               ) : null}
-              {/* </>
-              ) : null} */}
             </>
           ) : null}
           {props?.formData?.lead_source === CONST_IDS?.ref_lead_source_id ? (
             <>
-              <View
-                style={[
-                  styles.genderView,
-                  { marginLeft: normalizeSpacing(20) },
-                ]}
-              >
-                <Text style={styles.headingsTxt}>{"If Referral Partner"}</Text>
-                <RequiredStart />
-                <View style={styles.radioView}>
-                  <RadioButton.Android
-                    disabled={SMteam || Cmteam}
-                    value="1"
-                    status={
-                      props?.formData?.referrel_partner === 1
-                        ? "checked"
-                        : "unchecked"
-                    }
-                    onPress={() =>
-                      props.setFormData({
-                        ...props.formData,
-                        referrel_partner: 1,
-                      })
-                    }
-                    color={PRIMARY_THEME_COLOR}
-                  />
-                  <Text
-                    style={[
-                      styles.radioTxt,
-                      {
-                        color:
-                          props?.formData?.referrel_partner === 1
-                            ? PRIMARY_THEME_COLOR
-                            : BLACK_COLOR,
-                      },
-                    ]}
-                  >
-                    {strings.yes}
-                  </Text>
-                </View>
-                <View style={styles.radioView}>
-                  <RadioButton.Android
-                    disabled={SMteam || Cmteam}
-                    value="2"
-                    status={
-                      props?.formData?.referrel_partner === 2
-                        ? "checked"
-                        : "unchecked"
-                    }
-                    onPress={() =>
-                      props.setFormData({
-                        ...props.formData,
-                        referrel_partner: 2,
-                      })
-                    }
-                    color={PRIMARY_THEME_COLOR}
-                  />
-                  <Text
-                    style={[
-                      styles.radioTxt,
-                      {
-                        color:
-                          props?.formData?.referrel_partner === 2
-                            ? PRIMARY_THEME_COLOR
-                            : BLACK_COLOR,
-                      },
-                    ]}
-                  >
-                    {strings.no}
-                  </Text>
-                </View>
-              </View>
               <View style={styles.inputWrap}>
                 <InputField
                   require={true}
@@ -658,10 +561,6 @@ const AddNewVisitorForm = (props: any) => {
                     props.setFormData({
                       ...props.formData,
                       referrer_contact: data,
-                      referrer_name: "",
-                      referrer_email: "",
-                      referrerNmbrExist: false,
-                      referrerEmailExist: false,
                     });
                   }}
                   valueshow={props?.formData?.referrer_contact}
@@ -671,53 +570,20 @@ const AddNewVisitorForm = (props: any) => {
                 />
               </View>
               <View style={styles.inputWrap}>
-                <Pressable onPress={() => props.checkPhoneNumberIsValid(2)}>
-                  <InputField
-                    require={true}
-                    disableSpecialCharacters={true}
-                    placeholderText={strings.referrerName}
-                    headingText={strings.referrerName}
-                    editable={
-                      !props?.formData?.referrerNmbrExist &&
-                      Regexs.mobilenumRegex.test(
-                        props?.formData?.referrer_contact
-                      )
-                    }
-                    onFocus={() => props.checkRefferrerNumberExist()}
-                    handleInputBtnPress={() => {}}
-                    onChangeText={(data: any) => {
-                      props.setFormData({
-                        ...props.formData,
-                        referrer_name: data,
-                      });
-                    }}
-                    valueshow={props?.formData?.referrer_name}
-                  />
-                </Pressable>
-              </View>
-              <View style={styles.inputWrap}>
-                <Pressable onPress={() => props.checkPhoneNumberIsValid(2)}>
-                  <InputField
-                    placeholderText={"Referrer Email"}
-                    headingText={"Referrer Email"}
-                    editable={
-                      !props?.formData?.referrerEmailExist &&
-                      Regexs.mobilenumRegex.test(
-                        props?.formData?.referrer_contact
-                      )
-                    }
-                    keyboardtype={"email-address"}
-                    onFocus={() => props.checkRefferrerNumberExist()}
-                    handleInputBtnPress={() => {}}
-                    onChangeText={(data: any) => {
-                      props.setFormData({
-                        ...props.formData,
-                        referrer_email: data,
-                      });
-                    }}
-                    valueshow={props?.formData?.referrer_email}
-                  />
-                </Pressable>
+                <InputField
+                  require={true}
+                  disableSpecialCharacters={true}
+                  placeholderText={strings.referrerName}
+                  headingText={strings.referrerName}
+                  handleInputBtnPress={() => {}}
+                  onChangeText={(data: any) => {
+                    props.setFormData({
+                      ...props.formData,
+                      referrer_name: data,
+                    });
+                  }}
+                  valueshow={props?.formData?.referrer_name}
+                />
               </View>
             </>
           ) : null}
@@ -731,15 +597,9 @@ const AddNewVisitorForm = (props: any) => {
                   ? props.formData?.property_title
                   : "Property"
               }
-              data={
-                userData?.userData?.data?.rom &&
-                SMteam &&
-                props?.formData?.lead_source !== CONST_IDS?.cp_lead_source_id
-                  ? romProperty
-                  : props?.allProperty.filter(
-                      (item: any) => item.status == true
-                    )
-              }
+              data={props?.allProperty.filter(
+                (item: any) => item.status == true
+              )}
               disable={
                 props.type == "edit" ||
                 (props.type == "propertySelect" &&
@@ -753,9 +613,9 @@ const AddNewVisitorForm = (props: any) => {
               labelField="property_title"
               valueField={"_id"}
               value={props?.formData?.property_id}
-              onFocus={() => props.checkPhoneNumberIsValid(1)}
+              onFocus={() => props.checkPhoneNumberIsValid()}
               onChange={(item: any) => {
-                if (props?.allProperty?.length > 0 || romProperty?.length > 0) {
+                if (props?.allProperty?.length > 0) {
                   props.setFormData({
                     ...props.formData,
                     property_id: item.property_id,
@@ -866,7 +726,6 @@ const AddNewVisitorForm = (props: any) => {
                   email: data,
                 });
               }}
-              keyboardtype={"email-address"}
               valueshow={props?.formData?.email}
               headingText={strings.email + " " + strings.address}
             />
@@ -1274,12 +1133,10 @@ const AddNewVisitorForm = (props: any) => {
               <TextInput
                 value={props?.formData?.min_budget?.toString()}
                 onChangeText={(data: any) => {
-                  if (Regexs.alphaNumeric.test(data) === true) {
-                    props.setFormData({
-                      ...props.formData,
-                      min_budget: data?.trim(),
-                    });
-                  }
+                  props.setFormData({
+                    ...props.formData,
+                    min_budget: data,
+                  });
                 }}
                 maxLength={4}
                 keyboardType={"number-pad"}
@@ -1319,12 +1176,10 @@ const AddNewVisitorForm = (props: any) => {
               <TextInput
                 value={props?.formData?.max_budget}
                 onChangeText={(data: any) => {
-                  if (Regexs.alphaNumeric.test(data) === true) {
-                    props.setFormData({
-                      ...props.formData,
-                      max_budget: data?.trim(),
-                    });
-                  }
+                  props.setFormData({
+                    ...props.formData,
+                    max_budget: data,
+                  });
                 }}
                 keyboardType={"number-pad"}
                 maxLength={4}
@@ -1469,12 +1324,10 @@ const AddNewVisitorForm = (props: any) => {
               <TextInput
                 value={props?.formData?.min_emi_budget?.toString()}
                 onChangeText={(data: any) => {
-                  if (Regexs.alphaNumeric.test(data) === true) {
-                    props.setFormData({
-                      ...props.formData,
-                      min_emi_budget: data?.trim(),
-                    });
-                  }
+                  props.setFormData({
+                    ...props.formData,
+                    min_emi_budget: data,
+                  });
                 }}
                 maxLength={4}
                 keyboardType={"number-pad"}
@@ -1514,12 +1367,10 @@ const AddNewVisitorForm = (props: any) => {
               <TextInput
                 value={props?.formData?.max_emi_budget}
                 onChangeText={(data: any) => {
-                  if (Regexs.alphaNumeric.test(data) === true) {
-                    props.setFormData({
-                      ...props.formData,
-                      max_emi_budget: data?.trim(),
-                    });
-                  }
+                  props.setFormData({
+                    ...props.formData,
+                    max_emi_budget: data,
+                  });
                 }}
                 keyboardType={"number-pad"}
                 maxLength={4}

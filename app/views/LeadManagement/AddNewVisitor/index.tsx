@@ -1,40 +1,35 @@
-import { View, Text, Alert, Keyboard } from "react-native";
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import AddNewVisitorForm from "./Components/AddNewVisitorForm";
-import { useDispatch, useSelector } from "react-redux";
+import { useFocusEffect } from "@react-navigation/native";
+import { getEmployeeList } from "app/Redux/Actions/CompanyActions";
 import {
   addVisitor,
   addVisitorRemove,
   addVisitorWithoutProperty,
-  checkVisitAvailble,
   CheckVisitAvailRemove,
   editVisitor,
   getVisitorDetail,
 } from "app/Redux/Actions/LeadsActions";
+import { getAllMaster } from "app/Redux/Actions/MasterActions";
+import { getAssignCPList } from "app/Redux/Actions/SourcingManagerActions";
+import { getAllProperty } from "app/Redux/Actions/propertyActions";
+import { START_LOADING, STOP_LOADING } from "app/Redux/types";
 import ErrorMessage from "app/components/ErrorMessage";
+import strings from "app/components/utilities/Localization";
+import apiEndPoints from "app/components/utilities/apiEndPoints";
 import {
   CONST_IDS,
   GREEN_COLOR,
   RED_COLOR,
-  ROLE_IDS,
   Regexs,
+  ROLE_IDS,
 } from "app/components/utilities/constant";
-import { getAllMaster } from "app/Redux/Actions/MasterActions";
-import { getAllProperty } from "app/Redux/Actions/propertyActions";
-import { getAssignCPList } from "app/Redux/Actions/SourcingManagerActions";
-import {
-  getCompanyList,
-  getEmployeeList,
-} from "app/Redux/Actions/CompanyActions";
-import strings from "app/components/utilities/Localization";
-import apiEndPoints from "app/components/utilities/apiEndPoints";
+import { CountryArray } from "app/components/utilities/countryData";
 import { apiCall } from "app/components/utilities/httpClient";
 import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { Keyboard } from "react-native";
 import { DATE_FORMAT } from "react-native-gifted-chat";
-import JustForOkModal from "app/components/Modals/JustForOkModal";
-import { START_LOADING, STOP_LOADING } from "app/Redux/types";
-import { CountryArray } from "app/components/utilities/countryData";
-import { useFocusEffect } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import AddNewVisitorForm from "./Components/AddNewVisitorForm";
 
 const AddNewVisitorScreen = ({ navigation, route }: any) => {
   const { type, data } = route?.params || {};
@@ -82,13 +77,17 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
     property_type: "",
     preferred_bank: "",
     visit_confirmation_status: 1,
-
+    cp_lead_type: "",
     cp_type: "",
     cp_id: "",
     cp_emp_id: "",
     referrer_name: "",
+    referrer_email: "",
     referrer_contact: "",
     country_code: "+91",
+    referrerNmbrExist: false,
+    referrel_partner: "",
+    referrerEmailExist: false,
   });
   const [NavigationType, setNavigationType] = useState(0);
   const [dropDownType, setDropDownType] = useState(0);
@@ -119,6 +118,8 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
   const [countryCode, setCountryCode] = useState("+91");
   const [countyPicker, setCountyPicker] = useState(false);
   const [disabled, setDisabled] = useState(false);
+  const [isCpLoading, setIsCpLoading] = useState(false);
+
   useEffect(() => {
     if (type === "edit") {
       if (data?._id) {
@@ -183,6 +184,7 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
       userData?.data?.role_id != ROLE_IDS.closing_head_id &&
       userData?.data?.role_id != ROLE_IDS.closingmanager_id
     ) {
+      setIsCpLoading(true);
       dispatch(
         getAssignCPList({
           user_id: userData?.data?.user_id,
@@ -195,7 +197,12 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
   useEffect(() => {
     if (SmCpList?.response?.status === 200) {
       setAgentList(SmCpList?.response?.data);
+      dispatch({ type: STOP_LOADING });
+      setIsCpLoading(false);
     } else {
+      if (JSON.stringify(SmCpList?.response) === JSON.stringify([])) {
+        setIsCpLoading(false);
+      }
       setAgentList([]);
     }
   }, [SmCpList]);
@@ -209,8 +216,11 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
     );
   };
   const handleCompanyDropdownPress = () => {
-    const tempArr = agentList.filter((el: any) => el?.cp_type === 2);
-    setCompanyList(tempArr);
+    // const tempArr = agentList.filter((el: any) => el?.cp_type === 2);
+    // setCompanyList(tempArr);
+    if (isCpLoading) {
+      dispatch({ type: START_LOADING });
+    }
   };
   const handleCpNameDropdownPress = () => {
     const tempArr = agentList.filter(
@@ -232,6 +242,13 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
     if (masterData?.response?.status === 200) {
       if (masterData?.response?.data?.length > 0) {
         if (dropDownType != 2) {
+          //   let array = masterData?.response?.data
+          //   array.forEach((item: { title: string; }) => {
+          //     if (item.title === "Reference") {
+          //         item.title = "Referrer Partner";
+          //     }
+          // });
+
           setMasterDatas(masterData?.response?.data);
         }
       }
@@ -299,24 +316,14 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      if (
-        userData?.data?.role_id === ROLE_IDS.closingtl_id ||
-        userData?.data?.role_id === ROLE_IDS.closingmanager_id ||
-        userData?.data?.role_id === ROLE_IDS.sitehead_id ||
-        userData?.data?.role_id === ROLE_IDS.admin_id ||
-        userData?.data?.role_id === ROLE_IDS.clusterhead_id ||
-        userData?.data?.role_id === ROLE_IDS.businesshead_id ||
-        userData?.data?.role_id === ROLE_IDS.scm_id ||
-        userData?.data?.role_id === ROLE_IDS.closing_head_id
-      ) {
-        dispatch(
-          getAllProperty({
-            offset: 0,
-            limit: "",
-          })
-        );
-        getAllPropertyData();
-      }
+      dispatch(
+        getAllProperty({
+          offset: 0,
+          limit: "",
+        })
+      );
+      getAllPropertyData();
+
       return () => {};
     }, [navigation])
   );
@@ -517,6 +524,12 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
         if (formData.cp_type == undefined || formData.cp_type == "") {
           isError = false;
           errorMessage = "Please Enter Channel Partner type";
+        } else if (
+          formData.cp_lead_type == undefined ||
+          formData.cp_lead_type == ""
+        ) {
+          isError = false;
+          errorMessage = "Please Enter Channel Partner Lead type";
         } else if (formData.cp_id == undefined || formData.cp_id == "") {
           isError = false;
           errorMessage =
@@ -526,7 +539,10 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
         }
       }
       if (formData?.lead_source === CONST_IDS?.ref_lead_source_id) {
-        if (
+        if (formData?.referrel_partner === "") {
+          isError = false;
+          errorMessage = "Please select If Referral partner";
+        } else if (
           formData?.referrer_name?.trim() === "" ||
           formData?.referrer_name?.trim() === undefined
         ) {
@@ -551,6 +567,12 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
         ) {
           isError = false;
           errorMessage = "Please Enter valid referrer mobile number";
+        } else if (
+          formData?.referrer_email &&
+          Regexs.emailRegex.test(formData?.referrer_email) === false
+        ) {
+          isError = false;
+          errorMessage = "Please enter valid referrer email id";
         }
       }
       if (formData?.min_budget || formData.max_budget) {
@@ -644,16 +666,14 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
       dispatch(addVisitorRemove());
       if (NavigationType === 1) {
         setNavigationType(0);
-
         if (
           userData?.data?.role_id === ROLE_IDS.closingmanager_id ||
           userData?.data?.role_id === ROLE_IDS.closingtl_id ||
           userData?.data?.role_id === ROLE_IDS.closing_head_id
         ) {
-          navigation.navigate(
-            "AppointmentDetailMain",
-            addData?.response?.appointmentDetail
-          );
+          let data = addData?.response?.appointmentDetail;
+          data.fromVisitorPage = true;
+          navigation.navigate("AppointmentDetailMain", data);
         } else {
           navigation.navigate("LeadManagementScreen");
         }
@@ -674,6 +694,7 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
             property_title: data?.property_title ? data?.property_title : "",
             pickup: data?.pickup,
           },
+          fromVisitorPage: true,
         });
       }
       ErrorMessage({
@@ -717,35 +738,74 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
     }
   }, [visitAVailableData]);
 
-  const checkPhoneNumberIsValid = async () => {
-    let isError = true;
-    let errorMessage = "";
-    if (
-      formData?.mobile === "" ||
-      formData?.mobile === undefined ||
-      formData?.mobile === null
-    ) {
-      isError = false;
-      errorMessage = "Please fill mobile number";
-    } else if (
-      formData?.mobile &&
-      countryCode === "+91" &&
-      Regexs.mobilenumRegex.test(formData?.mobile) === false
-    ) {
-      isError = false;
-      errorMessage = "Please Enter valid mobile number";
-    } else if (
-      formData?.mobile &&
-      countryCode !== "+91" &&
-      formData?.mobile?.length < 10
-    ) {
-      isError = false;
-      errorMessage = "Please Enter valid mobile number";
-    }
-    if (errorMessage !== "") {
-      ErrorMessage({
-        msg: errorMessage,
+  const checkPhoneNumberIsValid = async (type: any) => {
+    const isMobile = type === 1;
+    const number = isMobile ? formData?.mobile : formData?.referrer_contact;
+    const phType = isMobile ? "mobile" : "referrer";
+
+    if (!number) {
+      return ErrorMessage({
+        msg: `Please fill ${phType} number`,
         backgroundColor: RED_COLOR,
+      });
+    }
+
+    const isValid =
+      (countryCode === "+91" && Regexs.mobilenumRegex.test(number)) ||
+      (countryCode !== "+91" && number.length >= 10);
+
+    if (!isValid) {
+      return ErrorMessage({
+        msg: `Please enter a valid ${phType} number`,
+        backgroundColor: RED_COLOR,
+      });
+    }
+  };
+
+  const checkRefferrerNumberExist = async () => {
+    console.log(formData?.referrer_contact);
+
+    dispatch({ type: START_LOADING });
+
+    try {
+      const res = await apiCall(
+        "post",
+        apiEndPoints.CHECK_REFERENCE_NMBR_EXIST,
+        { referrer_contact: formData?.referrer_contact }
+      );
+
+      console.log(res?.data);
+      if (res?.data?.status === 200) {
+        dispatch({ type: STOP_LOADING });
+        console.log(res?.data?.data);
+        setFormData({
+          ...formData,
+          referrer_name: res?.data?.data,
+          referrer_email: res?.data?.referrer_email,
+          referrerNmbrExist: true,
+          referrerEmailExist: res?.data?.referrer_email ? true : false,
+        });
+        // setTimeout(() => {
+        if (!formData?.referrer_name) {
+          ErrorMessage({
+            msg: "This referrer number is associated with " + res?.data?.data,
+            backgroundColor: GREEN_COLOR,
+          });
+        }
+
+        // }, 500);
+      } else if (res?.data?.status === 201) {
+        dispatch({ type: STOP_LOADING });
+        setFormData({
+          ...formData,
+          referrerEmailExist: false,
+          referrerNmbrExist: false,
+        });
+        return false;
+      }
+    } catch (e) {
+      dispatch({
+        type: STOP_LOADING,
       });
     }
   };
@@ -965,18 +1025,23 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
             cp_type: formData?.cp_type,
           };
         }
-        if (formData?.referrer_name) {
+        if (formData?.cp_lead_type) {
+          edit_params = {
+            ...edit_params,
+            cp_lead_type: formData?.cp_lead_type,
+          };
+        }
+
+        if (formData?.lead_source === CONST_IDS?.ref_lead_source_id) {
           edit_params = {
             ...edit_params,
             referrer_name: formData?.referrer_name,
-          };
-        }
-        if (formData?.referrer_contact) {
-          edit_params = {
-            ...edit_params,
+            referrer_email: formData?.referrer_email,
             referrer_contact: formData?.referrer_contact,
+            referrel_partner: formData.referrel_partner,
           };
         }
+
         dispatch(editVisitor(edit_params));
       } else {
         if (formData?.cp_id) {
@@ -1054,22 +1119,26 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
               cp_type: formData?.cp_type,
             };
           }
+          if (formData?.cp_lead_type) {
+            add_params = {
+              ...add_params,
+              cp_lead_type: formData?.cp_lead_type,
+            };
+          }
+
           if (formData?.cp_id) {
             add_params = {
               ...add_params,
               cp_id: formData?.cp_id,
             };
           }
-          if (formData?.referrer_name) {
+          if (formData?.lead_source === CONST_IDS?.ref_lead_source_id) {
             add_params = {
               ...add_params,
               referrer_name: formData?.referrer_name,
-            };
-          }
-          if (formData?.referrer_contact) {
-            add_params = {
-              ...add_params,
+              referrer_email: formData?.referrer_email,
               referrer_contact: formData?.referrer_contact,
+              referrel_partner: formData.referrel_partner,
             };
           }
 
@@ -1141,6 +1210,7 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
       dropdownAgentList={dropdownAgentList}
       handleCompanyDropdownPress={handleCompanyDropdownPress}
       companyList={companyList}
+      agentList={agentList}
       employeeList={employeeList}
       handleEmployeeDropdownPress={handleEmployeeDropdownPress}
       handleCpNameDropdownPress={handleCpNameDropdownPress}
@@ -1164,6 +1234,7 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
       checkMobileExistWithSameProperty={(propertyId: string) =>
         checkMobileExistWithSameProperty(propertyId)
       }
+      checkRefferrerNumberExist={checkRefferrerNumberExist}
     />
   );
 };

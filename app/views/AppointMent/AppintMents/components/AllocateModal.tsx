@@ -29,7 +29,7 @@ const AllocateModal = (props: any) => {
                             placeholder={strings.selectNewClosMngr}
                             headingText={strings.selectNewClosMngr}
                             data={props?.ClosingMList}
-                            onFocus={() => props.getCMList()}
+                            // onFocus={() => props.getCMList()}
                             inputWidth={'100%'}
                             paddingLeft={16}
                             maxHeight={300}

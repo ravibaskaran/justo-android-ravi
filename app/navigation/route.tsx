@@ -115,6 +115,7 @@ import AddEmployee from "app/views/AgencyManagement/AddEmployee";
 import CpDetailForReport from "app/views/CpDetailForReport";
 import AppointmentCTA from "app/views/ReportCTAManagement/AppointmentCTA";
 import BookingCTA from "app/views/ReportCTAManagement/BookingCTA";
+import TodaysFollowUpScreen from "app/views/FollowUp/TodaysFollowUP";
 
 const Stack = createNativeStackNavigator();
 const AppStack = createNativeStackNavigator();
@@ -141,6 +142,11 @@ const DrawerComponent = () => {
       <Drawer.Screen name="ClosingManager" component={ClosingManager} />
       <Drawer.Screen name="UserManager" component={UserManagementScreen} />
       <Drawer.Screen name="FollowUpScreen" component={FollowUpScreen} />
+      <Drawer.Screen
+        name="TodaysFollowUpScreen"
+        component={TodaysFollowUpScreen}
+      />
+
       <Drawer.Screen
         name="AppointmentForSite"
         component={AppointmentForSiteScreen}

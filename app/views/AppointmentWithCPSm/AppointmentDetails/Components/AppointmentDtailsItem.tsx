@@ -28,12 +28,12 @@ const AppointmentDtailsItem = (props: any) => {
     appdetail?.latitude !== null &&
     appdetail?.longitude !== null
   ) {
-    Geocoder.from(appdetail?.latitude, appdetail?.longitude)
-      .then((json) => {
-        var addressComponent = json.results[0].formatted_address;
-        setLocation(addressComponent);
-      })
-      .catch((error) => console.warn(error));
+    // Geocoder.from(appdetail?.latitude, appdetail?.longitude)
+    //   .then((json) => {
+    //     var addressComponent = json.results[0].formatted_address;
+    //     setLocation(addressComponent);
+    //   })
+    //   .catch((error) => console.warn(error));
   } else {
   }
 

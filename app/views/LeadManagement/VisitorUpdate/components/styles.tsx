@@ -200,5 +200,12 @@ const styles = StyleSheet.create({
         width: normalizeWidth(18),
         tintColor: WHITE_COLOR,
       },
+      genderView: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "flex-start",
+        marginVertical: normalizeSpacing(10),
+        width: "100%",
+      }
 })
 export default styles

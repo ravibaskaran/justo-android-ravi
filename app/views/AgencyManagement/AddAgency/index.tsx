@@ -3,6 +3,7 @@ import ErrorMessage from "app/components/ErrorMessage";
 import ConfirmModal from "app/components/Modals/ConfirmModal";
 import apiEndPoints from "app/components/utilities/apiEndPoints";
 import {
+  BLACK_COLOR,
   GREEN_COLOR,
   RED_COLOR,
   Regexs,
@@ -291,14 +292,14 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
     }
   }, [response]);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      if (SmCpList?.response?.message == "CP allocate successfull.") {
-        getAgencyList(0, {});
-      }
-      return () => {};
-    }, [navigation, , type, SmCpList])
-  );
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     if (SmCpList?.response?.message == "CP allocate successfull.") {
+  //       getAgencyList(0, {});
+  //     }
+  //     return () => {};
+  //   }, [navigation, , type, SmCpList])
+  // );
 
   const getAgencyList = (offset: any, filterData: any) => {
     dispatch(
@@ -1042,7 +1043,8 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
                 if (
                   userData?.data?.role_id === ROLE_IDS.sourcingmanager_id ||
                   userData?.data?.role_id === ROLE_IDS.sourcingtl_id ||
-                  userData?.data?.role_id === ROLE_IDS.sourcing_head_id
+                  userData?.data?.role_id === ROLE_IDS.sourcing_head_id ||
+                  userData?.data?.role_id === ROLE_IDS.scm_id
                 ) {
                   setReraExist(false);
                   setIsVisible(true);
@@ -1131,7 +1133,8 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
                 if (
                   userData?.data?.role_id === ROLE_IDS.sourcingmanager_id ||
                   userData?.data?.role_id === ROLE_IDS.sourcing_head_id ||
-                  userData?.data?.role_id === ROLE_IDS.sourcingtl_id
+                  userData?.data?.role_id === ROLE_IDS.sourcingtl_id ||
+                  userData?.data?.role_id === ROLE_IDS.scm_id
                 ) {
                   setCplgId(emailAndMobileData?.response?.cp_lg_id);
                   setReraExist(true);
@@ -1235,6 +1238,16 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
       });
     }
   };
+
+  useEffect(() => {
+    dispatch(
+      getAllProperty({
+        offset: 0,
+        limit: "",
+      })
+    );
+  }, []);
+
   const onPressNext = (screenType: any, data: any) => {
     // Keyboard.dismiss()
     if (screenType <= 1) {
@@ -1477,46 +1490,43 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
       })
     );
 
-    let cpIds = [];
-    for (let data of agentList) {
-      cpIds.push(data?._id);
-    }
-    cpIds.push(cplgId);
-
     const params = {
-      cp_id: cplgId,
-      property_tag: JSON.stringify(transformedArray),
+      cp_id: [cplgId],
     };
 
-    const res = await apiCall(
-      "post",
-      apiEndPoints.UPDATE_CP_PROPERTY_SM,
-      params
-    );
-    const response: any = res?.data;
-    console.log(response);
-    if (response?.status === 200) {
-      setTimeout(() => {
-        dispatch(
-          assignCPSM({
-            user_id: userData?.data?.user_id,
-            cp_id: cpIds,
-          })
+    const res = await apiCall("post", apiEndPoints.ADD_CP_BUCKET, params);
+
+    console.log(res?.data);
+    if (res?.data?.status === 200) {
+      setTimeout(async () => {
+        const params = {
+          cp_id: cplgId,
+          property_tag: JSON.stringify(transformedArray),
+        };
+
+        const response = await apiCall(
+          "post",
+          apiEndPoints.UPDATE_CP_PROPERTY_SM,
+          params
         );
-        setTimeout(() => {
-          ErrorMessage({
-            msg: response?.message,
-            backgroundColor: GREEN_COLOR,
-          });
-          onPressBack();
-        }, 1000);
+        if (response?.data?.status == 200) {
+          setTimeout(() => {
+            ErrorMessage({
+              msg: res?.data?.message,
+              backgroundColor: GREEN_COLOR,
+            });
+            onPressBack();
+          }, 1000);
+        }
       }, 500);
     } else {
       dispatch({ type: STOP_LOADING });
-      ErrorMessage({
-        msg: response?.message,
-        backgroundColor: RED_COLOR,
-      });
+      setTimeout(() => {
+        ErrorMessage({
+          msg: res?.data?.message,
+          backgroundColor: BLACK_COLOR,
+        });
+      }, 500);
     }
   };
 

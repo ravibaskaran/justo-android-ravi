@@ -17,13 +17,21 @@ import moment from "moment";
 import {
   BLACK_COLOR,
   DATE_TIME_FORMAT,
+  getCPLeadType,
   Isios,
 } from "app/components/utilities/constant";
 
 const LeadDetailsIteam = (props: any) => {
   const item = props?.items || {};
-  const appointment_status = item?.appointment_status
-    return (
+  const appointment_status = item?.appointment_status;
+
+  const leadSource =
+    item?.lead_source === "Reference" && item?.referrel_partner === 1
+      ? "Referral Partner"
+      : item?.lead_source || strings.notfount;
+  const cpLeadType = getCPLeadType(item?.cp_lead_type);
+
+  return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.topDetailsView}>
         <View style={styles.topTxtView}>
@@ -130,14 +138,23 @@ const LeadDetailsIteam = (props: any) => {
         </View>
         <View style={styles.nameContainer}>
           <Text style={styles.nameTxt}>
-            {item?.lead_source === "" ||
-            item?.lead_source === undefined ||
-            item?.lead_source === null
-              ? strings.notfount
-              : item?.lead_source}
+            {leadSource} {cpLeadType}
           </Text>
         </View>
       </View>
+      {item?.lead_source === "Reference" ? (
+        <View style={styles.Txtview}>
+          <View style={styles.projectContainer}>
+            <Text style={styles.projectTxt}>Referrer</Text>
+          </View>
+          <View>
+          <Text>:</Text>
+        </View>
+          <View style={styles.nameContainer}>
+            <Text style={styles.nameTxt}>{item?.referrer_name}</Text>
+          </View>
+        </View>
+      ) : null}
       {item?.lead_source === "Channel Partner" ? (
         <View style={styles.Txtview}>
           <View style={styles.projectContainer}>

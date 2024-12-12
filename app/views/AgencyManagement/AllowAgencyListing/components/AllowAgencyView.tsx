@@ -29,7 +29,7 @@ const AllowAgencyView = (props: any) => {
         leftImageSrc={images.backArrow}
         // rightFirstImageScr={images.filter}
         rightSecondImageScr={images.notification}
-        headerText={strings.AllocateRequest}
+        headerText={"Allocate CP to SM"}
         handleOnLeftIconPress={props.handleBackPress}
         headerStyle={styles.headerStyle}
         RightFirstIconStyle={styles.RightFirstIconStyle}

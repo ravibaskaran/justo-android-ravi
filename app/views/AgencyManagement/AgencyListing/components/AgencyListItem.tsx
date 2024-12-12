@@ -42,7 +42,7 @@ const AgencyListItem = (props: any) => {
           <Text style={styles.nameTxt}>{props?.items.agent_name}</Text>
         </View>
       </View>
-      <View style={styles.Txtview}>
+      {/* <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
           <Text style={styles.projectTxt}>{strings.cpType} :</Text>
         </View>
@@ -53,7 +53,7 @@ const AgencyListItem = (props: any) => {
               : strings.notfount}
           </Text>
         </View>
-      </View>
+      </View> */}
       <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
           <Text style={styles.projectTxt}>{strings.location} :</Text>

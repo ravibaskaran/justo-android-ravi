@@ -43,7 +43,7 @@ export const ONE_MONTH_DATES = new Date(
 
 // export const GLOBAL_URL = "http://192.168.1.52:3002"; // localhost server Aswin
 // export const GLOBAL_URL = "http://192.168.1.48:3001"; // localhost server Shabeer
-// export const GLOBAL_URL = 'http://192.168.1.58:3002' // Aswin cp.
+// export const GLOBAL_URL = "http://192.168.1.58:3002"; // Aswin cp.
 // export const  GLOBAL_URL = 'https://prodapi.justoverse.com:3002' //prod
 // export const GLOBAL_URL = "https://demoapi.inexoftworld.com:3002"; // localhost server
 export const GLOBAL_URL = "https://api.justoverse.com:3000"; //New localhost serve*
@@ -97,7 +97,7 @@ export const Regexs = {
   alphaNumeric: new RegExp(/^[A-Za-z0-9\s]*$/),
   gstRegex: new RegExp(/\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}/),
   oneSpaceRegex: new RegExp(/^([a-zA-Z0-9]+\s)*[a-zA-Z0-9]+$/),
-  reraRegex: new RegExp(/^[A-Z]\d{11,12}$/),
+  reraRegex: new RegExp(/^(UPRERA[A-Z]{3}\d{8,10}|[A-Z]\d{11,12})$/),
 };
 
 export const todayDate = {
@@ -127,3 +127,11 @@ export const INVENTORY_STATUS = {
   rtb: "RTB",
   rts: "RTS",
 };
+
+export function getCPLeadType(cp_lead_type: any) {
+  if (cp_lead_type == 1) {
+    return " (Direct)";
+  } else if (cp_lead_type == 2) {
+    return " (Tele-calling)";
+  } else return "";
+}

@@ -44,25 +44,32 @@ const AppointmentListView = (props: any) => {
             //         props.getAppointmentList(0, {})
             //     }
             // }
-            if (indexData?.index === 0) {
-                // Nested coditions for filter data with types
-                if (props.type === 'todayComplete') {
-                    props.getAppointmentList(0, { ...props.todayAppointment, status: 3 })
-                }
-                else if (props.type === 'followup') {
-                    props.getAppointmentList(0, { ...props.todayAppointment, status: 10 })
-                } 
-                else if (props.type === 'today') {
-                    props.getAppointmentList(0, props.todayAppointment)
+            setTimeout(() => {
+                if (indexData?.index === 0) {
+                    // Nested coditions for filter data with types
+                    if (props.type === 'todayComplete') {
+                        props.getAppointmentList(0, { ...props.todayAppointment, status: 3 })
+                    }
+                    else if (props.type === 'followup') {
+                        props.getAppointmentList(0, { ...props.todayAppointment, status: 10 })
+                    } 
+                    else if (props.type === 'today') {
+                        props.getAppointmentList(0, props.todayAppointment)
+                    } else {
+                        props.getAppointmentList(0, props.todayAppointment)
+                    }
                 } else {
-                    props.getAppointmentList(0, props.todayAppointment)
+                    props.getAppointmentList(0, {})
                 }
-            } else {
-                props.getAppointmentList(0, {})
-            }
+            }, 100);
+           
             return () => { };
         }, [props.navigation, indexData, props.getLoginType, props.type])
     );
+
+    useEffect(() => {
+        props?.setIsTodayAppointment(indexData.index === 0);
+    }, [indexData]);
 
     useEffect(() => {
         const backAction = () => {
@@ -156,7 +163,6 @@ const AppointmentListView = (props: any) => {
                     setAllocateModel={setAllocateModel}
                     setLocationModel={setLocationModel}
                     setAllocatedCM={props.setAllocatedCM}
-                    setPropertyId={props.setPropertyId}
                     allocatedCM={props.allocatedCM}
                     getAppointmentList={props.getAppointmentList}
                     setFilterData={props.setFilterData}
@@ -167,6 +173,8 @@ const AppointmentListView = (props: any) => {
                     todayAppointment={props.todayAppointment}
                     keyType={route.key}
                     settype={props.settype}
+                    index={indexData?.index}
+                    getCMList={props.getCMList}
                 />;
             case 'second':
                 return <RouteScreen
@@ -176,7 +184,6 @@ const AppointmentListView = (props: any) => {
                     setAllocateModel={setAllocateModel}
                     setLocationModel={setLocationModel}
                     setAllocatedCM={props.setAllocatedCM}
-                    setPropertyId={props.setPropertyId}
                     allocatedCM={props.allocatedCM}
                     getAppointmentList={props.getAppointmentList}
                     setFilterData={props.setFilterData}
@@ -187,6 +194,9 @@ const AppointmentListView = (props: any) => {
                     todayAppointment={props.todayAppointment}
                     keyType={route.key}
                     settype={props.settype}
+                    index={indexData?.index}
+                    getCMList={props.getCMList}
+
                 />;
         }
     };
@@ -250,7 +260,7 @@ const AppointmentListView = (props: any) => {
             <AllocateModal
                 Visible={allocateModel}
                 setIsVisible={() => setAllocateModel(false)}
-                getCMList={props.getCMList}
+                // getCMList={props.getCMList}
                 ClosingMList={props.ClosingMList}
                 setAllocatedCM={props.setAllocatedCM}
                 allocatedCM={props.allocatedCM}

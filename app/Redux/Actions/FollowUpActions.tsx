@@ -16,6 +16,8 @@ import {
 
 export const getAllFollowUpList = (params: any) => async (dispatch: any) => {
   dispatch({ type: START_LOADING });
+  console.log(params);
+  
   try {
     const res = await apiCall("post", apiEndPoints.GET_FOLLOWUP_LIST, params);
     if (res.data.status == 200) {

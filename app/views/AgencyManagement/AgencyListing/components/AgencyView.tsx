@@ -94,9 +94,7 @@ const AgencyView = (props: any) => {
         statusBarColor={PRIMARY_THEME_COLOR}
       />
       <View style={styles.propertyListView}>
-        <Text style={styles.count}>
-          Count : {props?.agentList?.length ? props?.agentList?.length : 0}
-        </Text>
+        <Text style={styles.count}>Count : {props?.moreData}</Text>
         <View style={styles.btnView}>
           {/* Add New Cp */}
           {create && (
@@ -147,7 +145,6 @@ const AgencyView = (props: any) => {
             </TouchableOpacity>
           )}
         </View>
-        
         {allocate &&
           userData?.data?.role_id !== ROLE_IDS.sourcingmanager_id && (
             <View style={styles.btnView1}>
@@ -170,7 +167,7 @@ const AgencyView = (props: any) => {
                     },
                   ]}
                 >
-                  {strings.AllocateRequest}
+                  Allocate CP to SM
                 </Text>
               </TouchableOpacity>
             </View>
@@ -225,7 +222,7 @@ const AgencyView = (props: any) => {
             onEndReached={() => {
               if (props?.agentList?.length < props?.moreData) {
                 props.getAgencyList(
-                  props?.agentList?.length > 6 ? props.offSET + 1 : 0,
+                  props?.agentList?.length >= 5 ? props.offSET + 1 : 0,
                   props.filterData
                 );
               }

@@ -1,4 +1,5 @@
 import TextRecognition from "@react-native-ml-kit/text-recognition";
+import ErrorMessage from "app/components/ErrorMessage";
 import InputCalender from "app/components/InputCalender";
 import AddEmployeeModal from "app/components/Modals/AddEmployeeModal";
 import ConfirmModal from "app/components/Modals/ConfirmModal";
@@ -12,12 +13,10 @@ import moment from "moment";
 import React, { useState } from "react";
 import {
   Image,
-  Pressable,
   ScrollView,
   Text,
   TouchableOpacity,
-  TouchableWithoutFeedback,
-  View,
+  View
 } from "react-native";
 import { RadioButton } from "react-native-paper";
 import { useDispatch } from "react-redux";
@@ -37,7 +36,6 @@ import {
 } from "../../../../components/utilities/constant";
 import strings from "../../../../components/utilities/Localization";
 import styles from "./styles";
-import ErrorMessage from "app/components/ErrorMessage";
 
 const AgentBasicInfoView = (props: any) => {
   const handleDelete = (item: any, index: any) => {
@@ -118,46 +116,68 @@ const AgentBasicInfoView = (props: any) => {
   const recognizeTextFromImage = async (imagePath: any) => {
     try {
       const result = await TextRecognition.recognize(imagePath?.uri);
+      //  let text =
+      //   'HI 1:50 00\nRoyorazon womes P..\nMaharashtra Real Estate Regulatory Authority\nREGISTRATION CERTIFICATE OF REAL ESTATE AGENT FORM\nFORM "H\n[See rule 12(1Xb)]\n1. This registration is granted under section 9 with registration certificate bearing No. A478511156351 to -\n having its registered office I principal place of business at Tehsil: Pune City District:\nPune, Pin: 411021. to act as a real estate agent to facilitate the sale or purchasse of any plot, apartment or building, as the\ncase may be, in real estate projects registered in the State of Maharashtra in terms and the rules and regulations made there\nunder.\n2. This registration is granted subject to the following conditions, namely:-\n0) The real estate agent shall not facilitate the sale or purchase of any plot, apartment or building, as the case may be,\nin a real estate project or part of it, being sold by the promoter which is required but not registered with the regulatory\nauthority,\n41\n() The real estate agent shall maintain and preserve such books of account, records and documents as provided\nunder rule 16)\n(iil) The real estate agent shall not involve himself in any unfair trade practices as specified under clause (c) of section\n10 read with Rule 17:\n(iv) The real estate agent shall provide assistance to enable the allottee and promoter to exercise their respective\nrights and fulfil their respective obligations at the time of booking and sale of any plot, apartment or building, as the\ncase may be.\n(v) The real estate agent shall comply with the provisions and the rules and regulations made there under,\nDated: 12/04/2021\nPlace: Mumbai\n(vi) The real estate agent shall discharge such other functions as may be specified by the regulatory authority by\nregulations;\n3. The registration is valid for a period of five years commencing from 12/04/2021 and ending with 12/04/2026 unless\nrenewed by the regulatory authority in accordance with the provisions or the rules and regulations made there under.\n4. If the above mentioned conditions are not fulfilled by the real estate agent, the regulatory authority may take necessary\naction against the real estate agent including revoking the registration granted herein, as per the Act and the rules and\nregulations made there under.\nSignature valid\nDigitally Sighed by\nhand Prabhu\neMahaRERA)\nDate:12-4-2021 12:51:00\nSignature and seal of the Authorized Officer\nMaharashtra Real Estate Regulatory Authority';
+
       setTimeout(() => {
         dispatch({ type: STOP_LOADING });
       }, 2000);
       let text = result?.text;
 
-      // let text =
-      //   'HI 1:50 00\nCorazon Homes P..\nMaharashtra Real Estate Regulatory Authority\nREGISTRATION CERTIFICATE OF REAL ESTATE AGENT FORM\nFORM "H\n[See rule 12(1Xb)]\n1. This registration is granted under section 9 with registration certificate bearing No. A52100000952 to -\nCarmandu Limited having its registered office I principal place of business at Tehsil: Pune City District:\nPune, Pin: 411021. to act as a real estate agent to facilitate the sale or purchasse of any plot, apartment or building, as the\ncase may be, in real estate projects registered in the State of Maharashtra in terms and the rules and regulations made there\nunder.\n2. This registration is granted subject to the following conditions, namely:-\n0) The real estate agent shall not facilitate the sale or purchase of any plot, apartment or building, as the case may be,\nin a real estate project or part of it, being sold by the promoter which is required but not registered with the regulatory\nauthority,\n41\n() The real estate agent shall maintain and preserve such books of account, records and documents as provided\nunder rule 16)\n(iil) The real estate agent shall not involve himself in any unfair trade practices as specified under clause (c) of section\n10 read with Rule 17:\n(iv) The real estate agent shall provide assistance to enable the allottee and promoter to exercise their respective\nrights and fulfil their respective obligations at the time of booking and sale of any plot, apartment or building, as the\ncase may be.\n(v) The real estate agent shall comply with the provisions and the rules and regulations made there under,\nDated: 12/04/2021\nPlace: Mumbai\n(vi) The real estate agent shall discharge such other functions as may be specified by the regulatory authority by\nregulations;\n3. The registration is valid for a period of five years commencing from 12/04/2021 and ending with 12/04/2026 unless\nrenewed by the regulatory authority in accordance with the provisions or the rules and regulations made there under.\n4. If the above mentioned conditions are not fulfilled by the real estate agent, the regulatory authority may take necessary\naction against the real estate agent including revoking the registration granted herein, as per the Act and the rules and\nregulations made there under.\nSignature valid\nDigitally Sighed by\nhand Prabhu\neMahaRERA)\nDate:12-4-2021 12:51:00\nSignature and seal of the Authorized Officer\nMaharashtra Real Estate Regulatory Authority';
+      const normalizedText = text
+        .replace(/\n/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+
+      const fixedText = normalizedText.replace(
+        /(\d{2}-\d{2}-)\s*(\d{4})/g,
+        "$1$2"
+      );
 
       const registrationNumberPattern = /No\.\s*(\w+)/;
       const companyNamePattern = /to\s*-\s*([^\s]+(?:\s+[^\s]+)*)\s+having/;
       const companyNamePattern2 = /Name of Agent:\s+(.+)/;
       const companyNamePattern3 =
         /to\s*-\s*Mr\.\/Ms\.\s*([A-Z][a-zA-Z]*(?:\s+[A-Z][a-zA-Z]*)*)\s+son\/daughter of/;
+      const upReraCompanyName =
+        /UPRERA[A-Z]{3}\d{8,10}\s+([A-Za-z0-9\s\.\-\_]+(?:\s+(?:PRIVATE LIMITED|LIMITED|LLP|FIRM|SOCIETY|COMPANY))?)/i;
+
       const startDatePattern = /commencing from\s*(\d{2}\/\d{2}\/\d{4})/;
       const endDatePattern = /ending with\s*(\d{2}\/\d{2}\/\d{4})/;
+      const upStartDatePattern = /commencing from\s*(\d{2}-\d{2}-\d{4})/;
+      const upEndDatePattern = /ending with\s*(\d{2}-\d{2}-\d{4})/;
 
       const registrationNumber: any = text.match(
         registrationNumberPattern
       )?.[1];
-      const startDate = text.match(startDatePattern)?.[1];
-      const endDate = text.match(endDatePattern)?.[1];
+      const startDate =
+        text.match(startDatePattern)?.[1] ||
+        fixedText.match(upStartDatePattern)?.[1];
+      const endDate =
+        text.match(endDatePattern)?.[1] ||
+        fixedText.match(upEndDatePattern)?.[1];
 
       // Check for company or agent name
       let companyName =
         text.match(companyNamePattern)?.[1] ||
         text.match(companyNamePattern2)?.[1] ||
-        text.match(companyNamePattern3)?.[1];
+        text.match(companyNamePattern3)?.[1] ||
+        text.match(upReraCompanyName)?.[1];
 
+      let sDate = convertDateFormat(startDate);
+      let eDate = convertDateFormat(endDate);
       let data = {
         reraNumber: Regexs.reraRegex.test(registrationNumber)
           ? registrationNumber
           : undefined,
-        companyName: companyName,
-        startDate: startDate,
-        endDate: endDate,
+        companyName: companyName ?companyName :"",
+        startDate: sDate,
+        endDate: eDate,
         imagePath: imagePath,
       };
-
-      if (endDate !== undefined) {
-        const [day, month, year] = endDate.split("/").map(Number);
+      
+      if (eDate !== undefined) {
+        const [day, month, year] = eDate.split("/").map(Number);
         const givenDate = new Date(year, month - 1, day);
         const currentDate = new Date();
         if (givenDate > currentDate) {
@@ -173,6 +193,11 @@ const AgentBasicInfoView = (props: any) => {
     } catch (error) {
       console.error("Error recognizing text from image: ", error);
     }
+  };
+
+  const convertDateFormat = (date: any) => {
+    if (!date) return undefined;
+    return date?.includes("-") ? date?.replace(/-/g, "/") : date;
   };
 
   const convertDate = (dateString: any) => {
@@ -406,7 +431,7 @@ const AgentBasicInfoView = (props: any) => {
           <InputField
             // disableSpecialCharacters={true}
             require={true}
-            editable={props.agencyData?.rera_certificate ? false : true}
+            // editable={props.agencyData?.rera_certificate ? false : true}
             placeholderText={
               props?.agencyData?.cp_type === 1
                 ? strings.nameOfCp
@@ -604,7 +629,7 @@ const AgentBasicInfoView = (props: any) => {
                 : strings.cpCompReraNo
             }
             // editable={props.emailMobileChng?.change}
-            maxLength={13}
+            maxLength={17}
             valueshow={props.agencyData?.rera_certificate_no}
             rightImageVw={styles.tickImgVw}
             rightImageSty={styles.tickImg}
@@ -671,10 +696,7 @@ const AgentBasicInfoView = (props: any) => {
           {showReraValidationError ? (
             <View style={{ padding: 5 }}>
               <Text style={{ fontSize: 12, color: RED_COLOR }}>
-                Starts with an alphabetic character. (eg:A12345678901)
-              </Text>
-              <Text style={{ fontSize: 12, color: RED_COLOR }}>
-                Has the remaining characters as numeric digits.
+                {strings.reraValidationMsg}
               </Text>
             </View>
           ) : null}

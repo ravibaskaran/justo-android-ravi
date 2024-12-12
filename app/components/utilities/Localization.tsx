@@ -666,7 +666,9 @@ const strings = new LocalizedStrings({
     nameFourLetterReq: "Name must be at least 4 letters",
     rerano: "RERA No.",
     reraValidationMsg:
-      "Starts with an alphabetic character. (eg:A12345678901) \nHas the remaining characters as numeric digits.",
+      "MAHA RERA - (eg: A12345678901) \nUP RERA - (eg: UPRERAABC12345678)",
+    cpDirect: "Direct",
+    cpTelecalling: "Tele-calling",
   },
 });
 

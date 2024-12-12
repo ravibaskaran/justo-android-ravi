@@ -18,7 +18,6 @@ import {
 } from "app/Redux/Actions/LeadsActions";
 import { getAllMaster } from "app/Redux/Actions/MasterActions";
 import { getAllProperty } from "app/Redux/Actions/propertyActions";
-import { getAssignCPList } from "app/Redux/Actions/SourcingManagerActions";
 import { START_LOADING, STOP_LOADING } from "app/Redux/types";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Keyboard } from "react-native";
@@ -99,15 +98,23 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
     property_type: "",
     preferred_bank: "",
     lead_source: "",
-
-    cp_type: "",
+    cp_lead_type: "",
+    cp_type: 2,
     cp_id: "",
     cp_emp_id: "",
     referrer_name: "",
+    referrer_email: "",
+    referrerEmailExist: false,
     referrer_contact: "",
+    referrel_partner: "",
   });
-
   const [allProperty, setAllProperty] = useState<any>([]);
+  const id = userData?.data?.role_id;
+
+  const Cmteam =
+    ROLE_IDS.closingtl_id === id ||
+    ROLE_IDS.closingmanager_id === id ||
+    ROLE_IDS.closing_head_id === id;
 
   // useEffect(() => {
   //   dispatch(
@@ -184,34 +191,36 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
         userData?.data?.role_id === ROLE_IDS.admin_id ||
         userData?.data?.role_id === ROLE_IDS.businesshead_id
       ) {
-        dispatch(
-          getAllProperty({
-            offset: 0,
-            limit: "",
-          })
-        );
-        getAllPropertyData();
-
-        if (propertyData?.response?.status === 200) {
-          if (propertyData?.response?.data?.length > 0) {
-            const activeData = propertyData?.response?.data.filter(
-              (el: any) => {
-                return el.status == true;
-              }
-            );
-            activeData?.length > 0
-              ? setAllProperty(activeData)
-              : setAllProperty([]);
-          } else {
-            setAllProperty([]);
-          }
-        } else {
-          setAllProperty([]);
-        }
+        getProperty();
       }
       return () => {};
     }, [navigation])
   );
+
+  const getProperty = () => {
+    dispatch(
+      getAllProperty({
+        offset: 0,
+        limit: "",
+      })
+    );
+    getAllPropertyData();
+
+    if (propertyData?.response?.status === 200) {
+      if (propertyData?.response?.data?.length > 0) {
+        const activeData = propertyData?.response?.data.filter((el: any) => {
+          return el.status == true;
+        });
+        activeData?.length > 0
+          ? setAllProperty(activeData)
+          : setAllProperty([]);
+      } else {
+        setAllProperty([]);
+      }
+    } else {
+      setAllProperty([]);
+    }
+  };
 
   // useEffect(() => {
   //   if (
@@ -293,15 +302,39 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
         lead_source: response?.data[0]?.lead_source,
         create_by: response?.data[0]?.create_by,
         lead_source_id: response?.data[0]?.lead_source_id,
-        cp_type: response?.data[0]?.cp_type,
+        cp_type: response?.data[0]?.cp_type ? response?.data[0]?.cp_type : 2,
+        cp_lead_type: response?.data[0]?.cp_lead_type,
         cp_id: response?.data[0]?.cp_id,
         cp_emp_id: response?.data[0]?.cp_emp_id,
         cp_name: response?.data[0]?.cp_name,
         referrer_name: response?.data[0]?.referrer_name,
+        referrer_email: response?.data[0]?.referrer_email,
+        referrerEmailExist: response?.data[0]?.referrer_email ? true : false,
         referrer_contact: response?.data[0]?.referrer_contact,
+        referrel_partner: response?.data[0]?.referrel_partner,
         mobile_number: response?.data[0]?.customer_detail?.mobile,
+        country_code: response?.data[0]?.customer_detail?.country_code
+          ? response?.data[0]?.customer_detail?.country_code
+          : "+91",
       });
-      setConfiguration(response?.data[0]?.configurations)
+
+      if (response?.data[0]?.configurations?.length > 0) {
+        setConfiguration(response?.data[0]?.configurations);
+      }
+      if (
+        response?.data[0]?.lead_source_id != CONST_IDS?.cp_lead_source_id &&
+        userData?.data?.role_id === ROLE_IDS.scm_id
+      ) {
+        getProperty();
+      }
+      if (
+        !Cmteam &&
+        response?.data[0]?.property_id &&
+        response?.data[0]?.lead_source_id == CONST_IDS?.cp_lead_source_id
+      ) {
+        getCPByProperty(response?.data[0]?.property_id);
+      }
+
       setCountryCode(response?.data[0]?.customer_detail?.country_code);
     }
   }, [response]);
@@ -316,21 +349,43 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
 
   useEffect(() => {
     handleDropdownPress(13);
-    dispatch(
-      getAssignCPList({
-        user_id: userData?.data?.user_id,
-        status: "",
-      })
-    );
+    // dispatch(
+    //   getAssignCPList({
+    //     user_id: userData?.data?.user_id,
+    //     status: "",
+    //   })
+    // );
   }, [navigation]);
 
-  useEffect(() => {
-    if (SmCpList?.response?.status === 200) {
-      setAgentList(SmCpList?.response?.data);
+  const getCPByProperty = async (property_id: any) => {
+    dispatch({ type: START_LOADING });
+    const params = { property_id: property_id };
+    const res = await apiCall("post", apiEndPoints.CP_UNDERPROPERTY, params);
+    const response: any = res?.data;
+
+    if (response?.status === 200) {
+      if (response?.data?.length > 0) {
+        setAgentList(response?.data);
+        dispatch({ type: STOP_LOADING });
+      } else {
+        dispatch({ type: STOP_LOADING });
+      }
     } else {
-      setAgentList([]);
+      dispatch({ type: STOP_LOADING });
+      ErrorMessage({
+        msg: response?.message,
+        backgroundColor: RED_COLOR,
+      });
     }
-  }, [SmCpList]);
+  };
+
+  // useEffect(() => {
+  //   if (SmCpList?.response?.status === 200) {
+  //     setAgentList(SmCpList?.response?.data);
+  //   } else {
+  //     setAgentList([]);
+  //   }
+  // }, [SmCpList]);
   useEffect(() => {
     if (employeeData?.response?.status === 200) {
       setEmployeeList(employeeData?.response?.data);
@@ -338,10 +393,11 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
       setEmployeeList([]);
     }
   }, [employeeData]);
+
   const handleCompanyDropdownPress = () => {
-    const tempArr = agentList.filter((el: any) => el?.cp_type === 2);
-    setCompanyList(tempArr);
+    setCompanyList(agentList);
   };
+
   const handleCpNameDropdownPress = () => {
     const tempArr = agentList.filter(
       (el: any) => el?.cp_type !== 2 || el?.cp_type === undefined
@@ -614,14 +670,16 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
     //   errorMessage = "Please enter valid whatsapp number";
     // }
     if (updateForm?.lead_source_id === CONST_IDS.cp_lead_source_id) {
-      if (
-        updateForm.cp_type == null ||
-        updateForm.cp_type == undefined ||
-        updateForm.cp_type == ""
-      ) {
-        isError = false;
-        errorMessage = "Please Enter Channel Partner type";
-      } else if (updateForm.cp_id == undefined || updateForm.cp_id == "") {
+      // if (
+      //   updateForm.cp_type == null ||
+      //   updateForm.cp_type == undefined ||
+      //   updateForm.cp_type == ""
+      // ) {
+      //   isError = false;
+      //   errorMessage = "Please Enter Channel Partner type";
+      // }
+      //  else
+      if (updateForm.cp_id == undefined || updateForm.cp_id == "") {
         isError = false;
         errorMessage =
           updateForm.cp_type === 1
@@ -655,6 +713,12 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
       ) {
         isError = false;
         errorMessage = "Please Enter valid referrer mobile number";
+      } else if (
+        updateForm?.referrer_email &&
+        Regexs.emailRegex.test(updateForm?.referrer_email) === false
+      ) {
+        isError = false;
+        errorMessage = "Please enter valid referrer email id";
       }
     }
     if (updateForm?.adhar_no) {
@@ -839,24 +903,29 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
           cp_type: updateForm?.cp_type,
         };
       }
+      if (updateForm?.cp_lead_type) {
+        edit_params = {
+          ...edit_params,
+          cp_lead_type: updateForm?.cp_lead_type,
+        };
+      }
       if (updateForm?.cp_id) {
         edit_params = {
           ...edit_params,
           cp_id: updateForm?.cp_id,
         };
       }
-      if (updateForm?.referrer_name) {
+      if (updateForm?.lead_source_id == CONST_IDS?.ref_lead_source_id) {
         edit_params = {
           ...edit_params,
           referrer_name: updateForm?.referrer_name,
-        };
-      }
-      if (updateForm?.referrer_contact) {
-        edit_params = {
-          ...edit_params,
+          referrer_email: updateForm?.referrer_email,
           referrer_contact: updateForm?.referrer_contact,
+          referrel_partner: updateForm?.referrel_partner,
         };
       }
+
+      console.log(edit_params?.cp_lead_type);
       dispatch(editVisitor(edit_params));
     }
   };
@@ -898,6 +967,41 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
 
   const onPressRightButton = () => {
     setOkIsVisible(false);
+  };
+
+  const checkRefferrerNumberExist = async () => {
+    dispatch({ type: START_LOADING });
+    try {
+      const res = await apiCall(
+        "post",
+        apiEndPoints.CHECK_REFERENCE_NMBR_EXIST,
+        { referrer_contact: updateForm?.referrer_contact }
+      );
+      if (res?.data?.status === 200) {
+        dispatch({ type: STOP_LOADING });
+        console.log(res?.data?.data);
+        setUpdateForm({
+          ...updateForm,
+          referrer_email: res?.data?.referrer_email,
+          referrerEmailExist: res?.data?.referrer_email ? true : false,
+        });
+        if (res?.data?.referrer_email) {
+          ErrorMessage({
+            msg:
+              "This referrer number is associated with " +
+              res?.data?.referrer_email,
+            backgroundColor: GREEN_COLOR,
+          });
+        }
+      } else if (res?.data?.status === 201) {
+        dispatch({ type: STOP_LOADING });
+        return false;
+      }
+    } catch (e) {
+      dispatch({
+        type: STOP_LOADING,
+      });
+    }
   };
 
   return (
@@ -979,6 +1083,7 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
         }
         okIsVisible={okIsVisible}
         mobileerror={mobileerror}
+        checkRefferrerNumberExist={checkRefferrerNumberExist}
         onPressRightButton={onPressRightButton}
       />
     </>

@@ -1,18 +1,26 @@
 import { useFocusEffect } from "@react-navigation/native";
-import { AllocateCM } from "app/Redux/Actions/AppointmentCLAction";
 import { getAllAppointmentList } from "app/Redux/Actions/AppointmentWithCpActions";
 import {
   getClosHManagerList,
   getClosingManagerList,
 } from "app/Redux/Actions/ClosingManager";
 import { removeMasters } from "app/Redux/Actions/MasterActions";
+import { START_LOADING, STOP_LOADING } from "app/Redux/types";
+import ErrorMessage from "app/components/ErrorMessage";
+import { handleApiError } from "app/components/ErrorMessage/HandleApiErrors";
 import ConfirmModal from "app/components/Modals/ConfirmModal";
 import {
   handlePermission,
   openPermissionSetting,
 } from "app/components/utilities/GlobalFuncations";
 import strings from "app/components/utilities/Localization";
-import { DATE_FORMAT, ROLE_IDS } from "app/components/utilities/constant";
+import apiEndPoints from "app/components/utilities/apiEndPoints";
+import {
+  DATE_FORMAT,
+  GREEN_COLOR,
+  ROLE_IDS,
+} from "app/components/utilities/constant";
+import { apiCall } from "app/components/utilities/httpClient";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,8 +42,9 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
   const [type, settype] = useState("");
   const [isVisible, setIsVisible] = useState(false);
   const [visitedUser, setVisitedUser] = useState<any>({});
-  const [propertyId, setPropertyId] = useState("");
-
+  const [moreData, setMoreData] = useState(0);
+  const [_apiRefresing, setApiRefresing] = useState(false);
+  const [isTodayAppointment, setIsTodayAppointment] = useState(true);
   const [filterData, setFilterData] = useState({
     start_date: "",
     end_date: "",
@@ -49,6 +58,7 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
 
   useFocusEffect(
     React.useCallback(() => {
+      setApiRefresing(false);
       settype(route?.params);
       return () => {};
     }, [navigation, list, route])
@@ -78,7 +88,12 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
     //         setAppointmentList([])
     //     }
     // } else {
+    // console.log(JSON.stringify(response));
+    // _apiRefresing = false;
+    setApiRefresing(false);
+    // console.log(response)
     if (response?.status === 200) {
+      setMoreData(response?.total_data);
       if (response?.data?.length > 0) {
         if (offSET == 0) {
           setAppointmentList(response?.data);
@@ -89,7 +104,12 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
         setAppointmentList([]);
       }
     } else {
-      setAppointmentList([]);
+      if (offSET > 0) {
+        setAppointmentList(appointmentList);
+      } else {
+        setMoreData(0);
+        setAppointmentList([]);
+      }
     }
     // }
   }, [response, appointMentList, getLoginType]);
@@ -104,6 +124,8 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
   }, [CMList]);
 
   const getAppointmentList = (offset: any, data: any) => {
+    if (_apiRefresing) return;
+    setApiRefresing(true);
     // if (getLoginType?.response?.data?.role_title === 'Closing Manager') {
     //     setOffset(offset)
     //     dispatch(getAllPickupList({
@@ -173,17 +195,30 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
     }
   };
 
-  const getCMList = () => {
+  const getCMList = (property_Id: any) => {
     const action =
       getLoginType?.response?.data?.role_id === ROLE_IDS.closing_head_id
         ? getClosHManagerList
         : getClosingManagerList;
-    dispatch(action({ property_id: propertyId }));
+    dispatch(action({ property_id: property_Id }));
   };
-
-  const handleAllocateCM = () => {
-    dispatch(AllocateCM(allocatedCM));
-    getAppointmentList(0, todayAppointment);
+          
+  const handleAllocateCM = async () => {
+    dispatch({ type: START_LOADING });
+    const res = await apiCall("post", apiEndPoints.ALLOCATE_CM, allocatedCM);
+    if (res?.data?.status == 200) {
+      ErrorMessage({
+        msg: res?.data?.message,
+        backgroundColor: GREEN_COLOR,
+      });
+      getAppointmentList(0, isTodayAppointment ? todayAppointment : {});
+      dispatch({ type: STOP_LOADING });
+    } else {
+      setTimeout(() => {
+        handleApiError(res?.data);
+      }, 500);
+      dispatch({ type: STOP_LOADING });
+    }
   };
   return (
     <>
@@ -200,11 +235,10 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
         getCMList={getCMList}
         ClosingMList={ClosingMList}
         setAllocatedCM={setAllocatedCM}
-        setPropertyId={setPropertyId}
         allocatedCM={allocatedCM}
         handleAllocateCM={handleAllocateCM}
         offSET={offSET}
-        moreData={response?.total_data}
+        moreData={moreData}
         filterData={filterData}
         setFilterData={setFilterData}
         setAppointmentList={setAppointmentList}
@@ -213,6 +247,7 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
         getLoginType={getLoginType}
         type={type}
         settype={settype}
+        setIsTodayAppointment={setIsTodayAppointment}
       />
       <ConfirmModal
         Visible={isVisible}

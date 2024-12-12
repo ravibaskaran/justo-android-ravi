@@ -67,8 +67,11 @@ const AddAppointmentScreen = ({ navigation, route }: any) => {
       dispatch(getSourcingHeadSMList({}));
     } else {
       if (
-        getLoginType?.response?.data?.role_id === ROLE_IDS.sourcingmanager_id ||
-        getLoginType?.response?.data?.role_id === ROLE_IDS.clusterhead_id
+        (getLoginType?.response?.data?.role_id ===
+          ROLE_IDS.sourcingmanager_id ||
+          getLoginType?.response?.data?.role_id === ROLE_IDS.clusterhead_id ||
+          getLoginType?.response?.data?.role_id === ROLE_IDS.sitehead_id) &&
+        type != strings.edit
       ) {
         setRole("SM");
         dispatch(

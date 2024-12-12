@@ -33,6 +33,11 @@ const AppointmentDetailsView = (props: any) => {
     create: "book_now",
     approve: "ready_for_booking",
   });
+  const assign_role =
+    data?.assign_appointment?.length > 0
+      ? data?.assign_appointment[0]?.assign_by_role
+      : "";
+
   return (
     <View style={styles.mainContainer}>
       <Header
@@ -183,33 +188,61 @@ const AppointmentDetailsView = (props: any) => {
           ) : null}
         </View>
       ) : data?.status === 1 ? (
-        <View style={styles.bntView}>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            {/* Status Update */}
-            <Button
-              buttonText={strings.noShow}
-              handleBtnPress={() =>
-                props.handleStatusUpdate({ ...data, editType: "closing" })
-              }
-              width={Isios ? 180 : 160}
-            />
-            {/* Checked In */}
-            <Button
-              buttonText={strings.visitorCheckin}
-              handleBtnPress={() => setCpChecking(true)}
-              width={Isios ? 180 : 160}
-            />
+        userData?.data?.role_title == "SCM" ? (
+          assign_role == "SCM" ? (
+            <View style={styles.bntView}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                {/* Status Update */}
+                <Button
+                  buttonText={strings.noShow}
+                  handleBtnPress={() =>
+                    props.handleStatusUpdate({ ...data, editType: "closing" })
+                  }
+                  width={Isios ? 180 : 160}
+                />
+                {/* Checked In */}
+                <Button
+                  buttonText={strings.visitorCheckin}
+                  handleBtnPress={() => setCpChecking(true)}
+                  width={Isios ? 180 : 160}
+                />
+              </View>
+            </View>
+          ) : null
+        ) : (
+          <View style={styles.bntView}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {/* Status Update */}
+              <Button
+                buttonText={strings.noShow}
+                handleBtnPress={() =>
+                  props.handleStatusUpdate({ ...data, editType: "closing" })
+                }
+                width={Isios ? 180 : 160}
+              />
+              {/* Checked In */}
+              <Button
+                buttonText={strings.visitorCheckin}
+                handleBtnPress={() => setCpChecking(true)}
+                width={Isios ? 180 : 160}
+              />
+            </View>
           </View>
-        </View>
+        )
       ) : null}
-      {/* )} */}
-
+      
       {/* Ready To Book Model */}
       <ReadyToBookModal
         Visible={readyToBooK}

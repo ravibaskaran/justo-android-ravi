@@ -12,6 +12,7 @@ import {
   DATE_FORMAT,
   DATE_BY_DAY,
   Isios,
+  getCPLeadType,
 } from "app/components/utilities/constant";
 import strings from "app/components/utilities/Localization";
 import Button from "app/components/Button";
@@ -292,7 +293,12 @@ const AppointmentDtailsItem = (props: any) => {
         </View>
         <View style={styles.nameContainer}>
           <Text style={styles.nameTxt}>
-            {item?.lead_source ? item?.lead_source : strings.notfount}
+            {item?.lead_source
+              ? item?.lead_source == "Reference" && item?.referrel_partner === 1
+                ? "Referral Partner"
+                : item?.lead_source
+              : strings.notfount}{" "}
+            {getCPLeadType(item?.cp_lead_type)}
           </Text>
         </View>
       </View>
@@ -301,6 +307,21 @@ const AppointmentDtailsItem = (props: any) => {
                 ? "(Company)"
                 : "(Individual)"
               : null} */}
+
+      {item?.lead_source == "Reference" ? (
+        <View style={styles.Txtview}>
+          <View style={styles.projectContainer}>
+            <Text style={styles.projectTxt}>Referrer</Text>
+          </View>
+          <View>
+            <Text>:</Text>
+          </View>
+          <View style={styles.nameContainer}>
+            <Text style={styles.nameTxt}>{item?.referrer_name}</Text>
+          </View>
+        </View>
+      ) : null}
+      
       {item?.lead_source == "Channel Partner" ? (
         <View style={styles.Txtview}>
           <View style={styles.projectContainer}>
@@ -314,11 +335,7 @@ const AppointmentDtailsItem = (props: any) => {
           </View>
           <View style={styles.nameContainer}>
             <Text style={styles.nameTxt}>
-              {item?.cp_name
-                ? `${item?.cp_name} ${
-                    item?.cp_type === 2 ? "(Company)" : "(Individual)"
-                  }`
-                : strings.notfount}
+              {item?.cp_name ? `${item?.cp_name}` : strings.notfount}
             </Text>
           </View>
         </View>
@@ -462,7 +479,7 @@ const AppointmentDtailsItem = (props: any) => {
         ) : null}
         <Button
           width={Isios ? 200 : 160}
-          height={item?.status === 1 || item?.status === 10? 45 : 30}
+          height={item?.status === 1 || item?.status === 10 ? 45 : 30}
           bgcolor={WHITE_COLOR}
           bordercolor={PRIMARY_THEME_COLOR}
           borderWidth={1}

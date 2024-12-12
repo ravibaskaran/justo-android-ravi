@@ -7,6 +7,7 @@ import {
   DATE_BY_DAY,
   DATE_FORMAT,
   DATE_TIME_FORMAT,
+  getCPLeadType,
   GREEN_COLOR,
   PRIMARY_THEME_COLOR,
   YELLOW_COLOR,
@@ -98,7 +99,9 @@ const AppointmentDtailsItem = (props: any) => {
             props?.detail?.expected_possession_date === undefined ||
             props?.detail?.expected_possession_date === null
               ? strings.notfount
-              : moment.utc(props?.detail?.expected_possession_date).format(DATE_BY_DAY)}
+              : moment
+                  .utc(props?.detail?.expected_possession_date)
+                  .format(DATE_BY_DAY)}
           </Text>
         </View>
       </View>
@@ -224,7 +227,9 @@ const AppointmentDtailsItem = (props: any) => {
                       ? "red"
                       : YELLOW_COLOR
                     : props?.detail?.status == 3
-                    ? bookingStatus === 4 ? "red" : GREEN_COLOR
+                    ? bookingStatus === 4
+                      ? "red"
+                      : GREEN_COLOR
                     : props?.detail?.status == 5 || props?.detail?.status === 6
                     ? "red"
                     : props?.detail?.status === 10
@@ -251,11 +256,11 @@ const AppointmentDtailsItem = (props: any) => {
               ? "Not Fit for Sale"
               : props?.detail?.status === 3
               ? bookingStatus === 1
-              ? "Ready to Book"
-              : bookingStatus === 4
-              ? "Cancel Booking"
-              : "Booking"
-            : "Completed"}
+                ? "Ready to Book"
+                : bookingStatus === 4
+                ? "Cancel Booking"
+                : "Booking"
+              : "Completed"}
           </Text>
         </View>
       </View>
@@ -283,7 +288,7 @@ const AppointmentDtailsItem = (props: any) => {
           </View>
         </View>
       )}
-      
+
       {/* <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
           <Text style={styles.projectTxt}>{strings.createBy}</Text>
@@ -326,12 +331,30 @@ const AppointmentDtailsItem = (props: any) => {
         <View style={styles.nameContainer}>
           <Text style={styles.nameTxt}>
             {props.detail?.lead_source
-              ? props.detail?.lead_source
-              : strings.notfount}
+              ? props.detail?.lead_source == "Reference" &&
+                props.detail?.referrel_partner === 1
+                ? "Referral Partner"
+                : props.detail?.lead_source
+              : strings.notfount}{" "}
+            {getCPLeadType(props?.detail?.cp_lead_type)}
           </Text>
         </View>
       </View>
-      
+
+      {props.detail?.lead_source == "Reference" ? (
+        <View style={styles.Txtview}>
+          <View style={styles.projectContainer}>
+            <Text style={styles.projectTxt}>Referrer</Text>
+          </View>
+          <View>
+          <Text>:</Text>
+        </View>
+          <View style={styles.nameContainer}>
+            <Text style={styles.nameTxt}>{props.detail?.referrer_name}</Text>
+          </View>
+        </View>
+      ) : null}
+
       {props.detail?.lead_source == "Channel Partner" ? (
         <View style={styles.Txtview}>
           <View style={styles.projectContainer}>
@@ -352,7 +375,7 @@ const AppointmentDtailsItem = (props: any) => {
       {props.detail?.cp_type === 2 ? (
         <View style={styles.Txtview}>
           <View style={styles.projectContainer}>
-            <Text style={styles.projectTxt}>Emp. Name :</Text>
+            <Text style={styles.projectTxt}>Emp. Name</Text>
           </View>
           <View>
             <Text>:</Text>
@@ -376,8 +399,8 @@ const AppointmentDtailsItem = (props: any) => {
         <View style={styles.nameContainer}>
           <Text style={styles.nameTxt}>
             {props?.detail?.create_by === "" ||
-              props?.detail?.create_by === undefined ||
-              props?.detail?.create_by === null
+            props?.detail?.create_by === undefined ||
+            props?.detail?.create_by === null
               ? strings.notfount
               : props?.detail?.create_by}
           </Text>
@@ -393,8 +416,8 @@ const AppointmentDtailsItem = (props: any) => {
         <View style={styles.nameContainer}>
           <Text style={styles.nameTxt}>
             {props?.detail?.created_by_role === "" ||
-              props?.detail?.created_by_role === undefined ||
-              props?.detail?.created_by_role === null
+            props?.detail?.created_by_role === undefined ||
+            props?.detail?.created_by_role === null
               ? strings.notfount
               : props?.detail?.created_by_role}
           </Text>

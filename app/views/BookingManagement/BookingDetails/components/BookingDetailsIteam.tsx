@@ -20,6 +20,7 @@ import {
   CONST_IDS,
   DATE_BY_DAY,
   DATE_TIME_FORMAT,
+  getCPLeadType,
   Isios,
   ROLE_IDS,
 } from "app/components/utilities/constant";
@@ -265,10 +266,31 @@ const BookingDetailsItem = (props: any) => {
         </View>
         <View style={styles.nameContainer}>
           <Text style={styles.nameTxt}>
-            {item?.lead_source_name ? item?.lead_source_name : strings.notfount}
+            {item?.lead_source_name
+              ? item?.lead_source_name == "Reference" &&
+                item?.referrel_partner == 1
+                ? "Referral Partner"
+                : item?.lead_source_name
+              : strings.notfount}{" "}
+            {getCPLeadType(item?.cp_lead_type)}
           </Text>
         </View>
       </View>
+
+      {item?.lead_source_name == "Reference" ? (
+        <View style={styles.Txtview}>
+          <View style={styles.projectContainer}>
+            <Text style={styles.projectTxt}>Referrer</Text>
+          </View>
+          <View>
+            <Text>:</Text>
+          </View>
+          <View style={styles.nameContainer}>
+            <Text style={styles.nameTxt}>{item?.referrer_name}</Text>
+          </View>
+        </View>
+      ) : null}
+
       {item?.leads?.lead_source === CONST_IDS.cp_lead_source_id ? (
         <>
           <View style={styles.Txtview}>

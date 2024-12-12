@@ -15,7 +15,11 @@ const RouteScreen = (props: any) => {
         data={Array.isArray(props.DATA) ? props.DATA : []}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={
-          <EmptyListScreen message={strings.todayappointment} />
+          <EmptyListScreen
+            message={
+              (props?.index === 0 ? "Today " : "") + strings.appointmentHeader
+            }
+          />
         }
         renderItem={({ item }) => (
           <AppointmentsItem
@@ -25,8 +29,8 @@ const RouteScreen = (props: any) => {
             setAllocateModel={props.setAllocateModel}
             setLocationModel={props.setLocationModel}
             setAllocatedCM={props.setAllocatedCM}
-            setPropertyId={props.setPropertyId}
             allocatedCM={props.allocatedCM}
+            getCMList={props.getCMList}
           />
         )}
         refreshing={false}

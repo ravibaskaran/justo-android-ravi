@@ -99,6 +99,7 @@ const AppointmentDetails = ({ navigation, route }: any) => {
   }, []);
 
   const handleBackPress = () => {
+    if (data?.fromVisitorPage) navigation.goBack();
     navigation.goBack();
   };
   const handleVistorUpdate = (data: any) => {
@@ -148,6 +149,7 @@ const AppointmentDetails = ({ navigation, route }: any) => {
 
   const onPressFollowUp = () => {
     data.fromAppointmentPage = true;
+    data.fromVisitorPage = data?.fromVisitorPage;
     data.appointment_id = detailsData[0]?._id;
     data.update_type = 10;
     navigation.navigate("FollUpAdd", data);

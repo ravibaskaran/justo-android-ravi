@@ -55,7 +55,7 @@ const PropertyScreen = ({ navigation }: any) => {
 
     dispatch(getAllProperty({
       offset: offset,
-      limit: 10,
+      limit: "",
       start_date: data?.start_date ? data?.start_date : '',
       end_date: data?.end_date ? data?.end_date : '',
       location: data?.location ? data?.location : '',

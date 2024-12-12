@@ -35,6 +35,7 @@ export default {
   EDIT_CHANNELPARTNER: "/channelPartner/updateChannelPartner",
   CHECKEMAILMOBILE: "/auth/checkEmailMobile",
   GET_SOURCINGMANAGER: "/channelPartner/getListSourcingManager",
+  CP_UNDERPROPERTY: "/channelPartner/cpUnderProperty",
 
   // MASTERS
   GET_CITY_LIST: "/master/getCityList",
@@ -48,6 +49,7 @@ export default {
   STATUS_UPDATE_ASSIGN_CP: "/userManage/smUpdateAssignCpStatus",
   ASSIGNCP_SM: "/userManage/cpAssignSorcingManager",
   GET_USERS_LIST_FOR_SH: "/userManage/getUserListForSitehead",
+  ADD_CP_BUCKET: "/userManage/addCpToBucket",
 
   // property Start
   ADDPROPERTY: "/property/addProperty",
@@ -145,6 +147,7 @@ export default {
   GET_USERVISTLIST: "/visit/getUserVisitList",
   CLOSE_VISIT: "/visit/closeVisit",
   CREATE_VISIT_WITHOUT_PROPERTY: "/visit/addVisitProperty",
+  CHECK_REFERENCE_NMBR_EXIST: "/visit/checkReferenceNmbrExist",
 
   //closing head
   GET_CLOSINGMANAGER: "/userManage/getClosingManagerListOnCH",

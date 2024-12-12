@@ -95,7 +95,8 @@ const AddAppointmentScreen = ({ navigation, route }: any) => {
         if (
           roleId === ROLE_IDS.closing_head_id ||
           roleId === ROLE_IDS.closingtl_id ||
-          roleId === ROLE_IDS.closingmanager_id
+          roleId === ROLE_IDS.closingmanager_id ||
+          roleId === ROLE_IDS.scm_id
         ) {
           navigation.navigate("Appointments");
         } else {
@@ -286,6 +287,7 @@ const AddAppointmentScreen = ({ navigation, route }: any) => {
     );
   };
   const handleBackPress = () => {
+    if (route?.params?.fromVisitorPage) navigation.goBack();
     navigation.goBack();
   };
 

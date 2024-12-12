@@ -46,21 +46,39 @@ const AppointmentView = (props: any) => {
         customer_name: "",
         property_name: "",
       });
-      if (indexData?.index === 0) {
-        // Nested coditions for filter data with types
-        if (props.type === "today") {
-          props.getAppointmentList(0, props.todayAppointment);
-        } else if (props.type === "followup") {
-          props.getAppointmentList(0, {
-            ...props.todayAppointment,
-            status: 10,
-          });
+      // if (indexData?.index === 0) {
+      //   // Nested coditions for filter data with types
+      //   if (props.type === "today") {
+      //     props.getAppointmentList(0, props.todayAppointment);
+      //   } else if (props.type === "followup") {
+      //     props.getAppointmentList(0, {
+      //       ...props.todayAppointment,
+      //       status: 10,
+      //     });
+      //   } else {
+      //     props.getAppointmentList(0, props.todayAppointment);
+      //   }
+      // } else {
+      //   props.getAppointmentList(0, {});
+      // }
+      setTimeout(() => {
+        if (indexData?.index === 0) {
+            // Nested coditions for filter data with types
+            if (props.type === 'todayComplete') {
+                props.getAppointmentList(0, { ...props.todayAppointment, status: 3 })
+            }
+            else if (props.type === 'followup') {
+                props.getAppointmentList(0, { ...props.todayAppointment, status: 10 })
+            } 
+            else if (props.type === 'today') {
+                props.getAppointmentList(0, props.todayAppointment)
+            } else {
+                props.getAppointmentList(0, props.todayAppointment)
+            }
         } else {
-          props.getAppointmentList(0, props.todayAppointment);
+            props.getAppointmentList(0, {})
         }
-      } else {
-        props.getAppointmentList(0, {});
-      }
+    }, 100);
       return () => {};
     }, [props.navigation, indexData, props.type])
   );

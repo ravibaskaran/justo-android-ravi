@@ -6,6 +6,7 @@ import {
   BLACK_COLOR,
   CONST_IDS,
   DATE_TIME_FORMAT,
+  getCPLeadType,
   GREEN_COLOR,
   PURPLE_COLOR,
   ROLE_IDS,
@@ -250,12 +251,30 @@ const BookingListItem = (props: any) => {
           </View>
           <View style={styles.nameContainer}>
             <Text style={styles.nameTxt}>
-              {props.items.lead_source_name
-                ? props.items.lead_source_name
-                : strings.notfount}
+              {props?.items?.lead_source_name
+                ? props?.items?.lead_source_name == "Reference" &&
+                  props?.items?.referrel_partner == 1
+                  ? "Referral Partner"
+                  : props?.items?.lead_source_name
+                : strings.notfount}{" "}
+              {getCPLeadType(props?.items?.cp_lead_type)}
             </Text>
           </View>
         </View>
+
+        {props?.items?.lead_source_name == "Reference" ? (
+          <View style={styles.Txtview}>
+            <View style={styles.projectContainer}>
+              <Text style={styles.projectTxt}>Referrer</Text>
+            </View>
+            <View>
+              <Text>:</Text>
+            </View>
+            <View style={styles.nameContainer}>
+              <Text style={styles.nameTxt}>{props?.items?.referrer_name}</Text>
+            </View>
+          </View>
+        ) : null}
         {props.items.lead_source === CONST_IDS.cp_lead_source_id ? (
           <>
             <View style={styles.Txtview}>
