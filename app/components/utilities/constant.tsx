@@ -77,9 +77,11 @@ export const ROLE_IDS = {
 };
 export const CONST_IDS = {
   cp_lead_source_id: "645b3a414194e4010913546c",
-  by_self_lead_source_id: "63ecd90787f864d94a3882ee",
+  direct_Walk_in_lead_source_id: "63ecd90787f864d94a3882ee",
   followup_status_site_visit_id: "635cccc2476b6dc530658566",
   ref_lead_source_id: "645b3a524194e40109135470",
+  ref_partner_lead_source_id: "675a8359dd8bb8672316ca6e",
+  exhibition_lead_source_id: "6703dd223cd31cb5d2d14320",
 };
 export const Regexs = {
   AadharRegex: new RegExp(/^[2-9]{1}[0-9]{3}\s[0-9]{4}\s[0-9]{4}$/),

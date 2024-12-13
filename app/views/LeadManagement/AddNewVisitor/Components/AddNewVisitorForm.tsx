@@ -56,8 +56,6 @@ const AddNewVisitorForm = (props: any) => {
   );
   const userData = useSelector((state: any) => state.userData);
   const id = userData?.userData?.data?.role_id;
-  const [romProperty, setRomProperty] = useState<any>([]);
-  const propertyData = useSelector((state: any) => state.propertyData) || {};
   const Cmteam =
     ROLE_IDS.closingtl_id === id ||
     ROLE_IDS.closingmanager_id === id ||
@@ -71,19 +69,21 @@ const AddNewVisitorForm = (props: any) => {
   const leadsourcefilteredData: any = masterDatas.filter((obj: any) => {
     if (userData?.userData?.data?.rom && SMteam) {
       return [
-        "Channel Partner",
-        "Exhibition",
-        "Direct Walk-in",
-        "Reference",
-      ].includes(obj.title);
+        CONST_IDS.cp_lead_source_id,
+        CONST_IDS.ref_partner_lead_source_id,
+        CONST_IDS.direct_Walk_in_lead_source_id,
+        CONST_IDS.exhibition_lead_source_id,
+        CONST_IDS.ref_lead_source_id,
+      ].includes(obj?._id);
     } else if (SMteam) {
       return [
         CONST_IDS.cp_lead_source_id,
-        CONST_IDS.ref_lead_source_id,
+        CONST_IDS.ref_partner_lead_source_id,
       ].includes(obj?._id);
     } else {
       return Cmteam
-        ? obj?._id !== CONST_IDS.cp_lead_source_id
+        ? obj?._id !== CONST_IDS.cp_lead_source_id &&
+            obj?._id !== CONST_IDS.ref_partner_lead_source_id
         : obj.title !== "";
     }
   });
@@ -139,16 +139,9 @@ const AddNewVisitorForm = (props: any) => {
 
   useEffect(() => {
     if (props?.formData?.property_id) {
-      let property =
-        userData?.userData?.data?.rom &&
-        SMteam &&
-        props?.formData?.lead_source !== CONST_IDS?.cp_lead_source_id
-          ? romProperty.filter(
-              (item: any) => item.property_id == props?.formData?.property_id
-            )
-          : props?.allProperty.filter(
-              (item: any) => item.property_id == props?.formData?.property_id
-            );
+      let property = props?.allProperty.filter(
+        (item: any) => item.property_id == props?.formData?.property_id
+      );
       setConfiguration(property[0]?.configurations);
     } else {
       setConfiguration([]);
@@ -159,10 +152,6 @@ const AddNewVisitorForm = (props: any) => {
       configuration: "",
     });
   }, [props?.formData?.property_id]);
-
-  useEffect(() => {
-    getAllPropertyData();
-  }, []);
 
   function canShowProperty() {
     if (
@@ -205,23 +194,6 @@ const AddNewVisitorForm = (props: any) => {
           backgroundColor: RED_COLOR,
         });
       }
-    }
-  };
-
-  const getAllPropertyData = () => {
-    if (propertyData?.response?.status === 200) {
-      if (propertyData?.response?.data?.length > 0) {
-        const activeData = propertyData?.response?.data.filter((el: any) => {
-          return el.status == true;
-        });
-        activeData?.length > 0
-          ? setRomProperty(activeData)
-          : setRomProperty([]);
-      } else {
-        setRomProperty([]);
-      }
-    } else {
-      setRomProperty([]);
     }
   };
 
@@ -330,17 +302,11 @@ const AddNewVisitorForm = (props: any) => {
                       property_title: "",
                     });
                   }
-                  // if (Regexs.mobilenumRegex.test(data)) {
-                  //   props.setEmailMobValidation({
-                  //     ...props.emailMobvalidation,
-                  //     mobile: null,
-                  //   });
-                  // } else {
+
                   props.setEmailMobValidation({
                     ...props.emailMobvalidation,
                     mobile: null,
                   });
-                  // }
                 }}
                 valueshow={props?.formData?.mobile}
                 headingText={strings.mobileNo}
@@ -360,11 +326,6 @@ const AddNewVisitorForm = (props: any) => {
                       mobile: null,
                     });
                   }
-                }}
-                onBlur={(val: any) => {
-                  // if (Regexs.mobilenumRegex.test(props?.formData?.mobile)) {
-                  //   props.handleCheckEmailMobile();
-                  // }
                 }}
               />
             </View>
@@ -414,11 +375,9 @@ const AddNewVisitorForm = (props: any) => {
                   cp_lead_type: "",
                   referrel_partner:
                     item._id === CONST_IDS?.ref_lead_source_id
-                      ? SMteam
-                        ? 1
-                        : Cmteam
-                        ? 2
-                        : ""
+                      ? 2
+                      : item._id === CONST_IDS?.ref_partner_lead_source_id
+                      ? 1
                       : "",
                 });
               }}
@@ -441,7 +400,6 @@ const AddNewVisitorForm = (props: any) => {
                 <DropdownInput
                   headingText={"CP Lead type"}
                   placeholder={"Select CP Lead type"}
-                  // data={CpType}
                   data={CpLeadType}
                   require
                   inputWidth={"100%"}
@@ -465,43 +423,7 @@ const AddNewVisitorForm = (props: any) => {
                   }}
                 />
               </View>
-              {/* {props.formData?.cp_type === 1 ? (
-                <View style={styles.inputWrap}>
-                  <DropdownInput
-                    headingText={"CP Name"}
-                    placeholder={"Select CP"}
-                    search={true}
-                    searchPlaceholder={strings.search + " " + strings.cp}
-                    data={props?.dropdownAgentList}
-                    inputWidth={"100%"}
-                    require
-                    paddingLeft={Isios ? 6 : 10}
-                    maxHeight={300}
-                    labelField="agent_name"
-                    valueField={"_id"}
-                    onFocus={() => props.handleCpNameDropdownPress()}
-                    value={props?.formData?.cp_id}
-                    onChange={(item: any) => {
-                      props.setFormData({
-                        ...props.formData,
-                        cp_id: item._id,
-                        property_id: "",
-                        property_type_title: "",
-                        property_title: "",
-                      });
-                      props.handleGetProperty(item._id);
-                    }}
-                    newRenderItem={(item: any) => {
-                      return (
-                        <View style={Styles.item}>
-                          <Text style={Styles.textItem}>{item.agent_name}</Text>
-                        </View>
-                      );
-                    }}
-                  />
-                </View>
-              ) : props.formData?.cp_type === 2 ? (
-                <> */}
+
               <View style={styles.inputWrap}>
                 <DropdownInput
                   headingText={"CP Company Name"}
@@ -571,83 +493,12 @@ const AddNewVisitorForm = (props: any) => {
                   />
                 </View>
               ) : null}
-              {/* </>
-              ) : null} */}
             </>
           ) : null}
-          {props?.formData?.lead_source === CONST_IDS?.ref_lead_source_id ? (
+          {props?.formData?.lead_source === CONST_IDS?.ref_lead_source_id ||
+          props?.formData?.lead_source ===
+            CONST_IDS?.ref_partner_lead_source_id ? (
             <>
-              <View
-                style={[
-                  styles.genderView,
-                  { marginLeft: normalizeSpacing(20) },
-                ]}
-              >
-                <Text style={styles.headingsTxt}>{"If Referral Partner"}</Text>
-                <RequiredStart />
-                <View style={styles.radioView}>
-                  <RadioButton.Android
-                    disabled={SMteam || Cmteam}
-                    value="1"
-                    status={
-                      props?.formData?.referrel_partner === 1
-                        ? "checked"
-                        : "unchecked"
-                    }
-                    onPress={() =>
-                      props.setFormData({
-                        ...props.formData,
-                        referrel_partner: 1,
-                      })
-                    }
-                    color={PRIMARY_THEME_COLOR}
-                  />
-                  <Text
-                    style={[
-                      styles.radioTxt,
-                      {
-                        color:
-                          props?.formData?.referrel_partner === 1
-                            ? PRIMARY_THEME_COLOR
-                            : BLACK_COLOR,
-                      },
-                    ]}
-                  >
-                    {strings.yes}
-                  </Text>
-                </View>
-                <View style={styles.radioView}>
-                  <RadioButton.Android
-                    disabled={SMteam || Cmteam}
-                    value="2"
-                    status={
-                      props?.formData?.referrel_partner === 2
-                        ? "checked"
-                        : "unchecked"
-                    }
-                    onPress={() =>
-                      props.setFormData({
-                        ...props.formData,
-                        referrel_partner: 2,
-                      })
-                    }
-                    color={PRIMARY_THEME_COLOR}
-                  />
-                  <Text
-                    style={[
-                      styles.radioTxt,
-                      {
-                        color:
-                          props?.formData?.referrel_partner === 2
-                            ? PRIMARY_THEME_COLOR
-                            : BLACK_COLOR,
-                      },
-                    ]}
-                  >
-                    {strings.no}
-                  </Text>
-                </View>
-              </View>
               <View style={styles.inputWrap}>
                 <InputField
                   require={true}
@@ -731,15 +582,9 @@ const AddNewVisitorForm = (props: any) => {
                   ? props.formData?.property_title
                   : "Property"
               }
-              data={
-                userData?.userData?.data?.rom &&
-                SMteam &&
-                props?.formData?.lead_source !== CONST_IDS?.cp_lead_source_id
-                  ? romProperty
-                  : props?.allProperty.filter(
-                      (item: any) => item.status == true
-                    )
-              }
+              data={props?.allProperty.filter(
+                (item: any) => item.status == true
+              )}
               disable={
                 props.type == "edit" ||
                 (props.type == "propertySelect" &&
@@ -755,13 +600,12 @@ const AddNewVisitorForm = (props: any) => {
               value={props?.formData?.property_id}
               onFocus={() => props.checkPhoneNumberIsValid(1)}
               onChange={(item: any) => {
-                if (props?.allProperty?.length > 0 || romProperty?.length > 0) {
+                if (props?.allProperty?.length > 0) {
                   props.setFormData({
                     ...props.formData,
                     property_id: item.property_id,
                     property_type_title: item.property_type,
                     property_title: item.property_title,
-                    // pickup: item?.pickup,
                   });
                   props.checkMobileExistWithSameProperty(item.property_id);
                 }
@@ -1793,7 +1637,6 @@ const AddNewVisitorForm = (props: any) => {
                     ? [{ scaleX: 0.8 }, { scaleY: 0.8 }]
                     : [{ scaleX: 1 }, { scaleY: 1 }],
                 }}
-                // onValueChange={(newValue) => setToggleCheckBox(newValue)}
               />
               <Text style={styles.bottomText}>{strings.iAknowledge}</Text>
             </View>

@@ -2,6 +2,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import ErrorMessage from "app/components/ErrorMessage";
 import apiEndPoints from "app/components/utilities/apiEndPoints";
 import {
+  BLACK_COLOR,
   CONST_IDS,
   GREEN_COLOR,
   RED_COLOR,
@@ -16,7 +17,6 @@ import {
   editVisitor,
   getVisitorDetail,
 } from "app/Redux/Actions/LeadsActions";
-import { getAllMaster } from "app/Redux/Actions/MasterActions";
 import { getAllProperty } from "app/Redux/Actions/propertyActions";
 import { START_LOADING, STOP_LOADING } from "app/Redux/types";
 import React, { useEffect, useLayoutEffect, useState } from "react";
@@ -34,15 +34,11 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
   const editData = useSelector((state: any) => state.editVisitorData) || {};
   const propertyData = useSelector((state: any) => state.propertyData) || {};
   const { userData = {} } = useSelector((state: any) => state.userData) || [];
-  const SmCpList = useSelector((state: any) => state.SourcingManager) || [];
   const employeeData = useSelector((state: any) => state.employeeData) || {};
-  const [screenType, setScreenType] = useState(0);
   const [masterDatas, setMasterDatas] = useState<any>([]);
   const [agentList, setAgentList] = useState<any>([]);
   const [companyList, setCompanyList] = useState<any>([]);
   const [employeeList, setEmployeeList] = useState<any>([]);
-  const [sourcingPropertyList, setSourcingPropertyList] = useState<any>([]);
-  const [dropdownAgentList, setDropdownAgentList] = useState<any>([]);
   const [dropDownType, setDropDownType] = useState(0);
   const [countryData, setCountryData] = useState(CountryArray);
   const [countryCode, setCountryCode] = useState("+91");
@@ -104,7 +100,6 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
     cp_emp_id: "",
     referrer_name: "",
     referrer_email: "",
-    referrerEmailExist: false,
     referrer_contact: "",
     referrel_partner: "",
   });
@@ -116,96 +111,18 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
     ROLE_IDS.closingmanager_id === id ||
     ROLE_IDS.closing_head_id === id;
 
-  // useEffect(() => {
-  //   dispatch(
-  //     getAllProperty({
-  //       offset: 0,
-  //       limit: "",
-  //     })
-  //   );
-  // getAllPropertyData();
-  // }, []);
-  useEffect(() => {
-    if (propertyData?.response) {
-      const { response, loading, list } = propertyData;
-      if (response?.status === 200 && response?.data?.length > 0) {
-        setSourcingPropertyList(
-          response?.data?.filter((el: any) => el?.status === true)
-        );
-      } else {
-        setSourcingPropertyList([]);
-      }
-    }
-  }, [propertyData]);
-  const handleGetProperty = async (id: any) => {
-    dispatch({ type: START_LOADING });
-    dispatch(
-      getAllProperty({
-        offset: 0,
-        limit: "",
-      })
-    );
-    const params = {
-      cp_id: id,
-    };
-    const res = await apiCall(
-      "post",
-      apiEndPoints.GET_CP_PROPERTY_FOR_SM,
-      params
-    );
-    const response: any = res?.data;
-    if (response?.status === 200) {
-      if (response?.data?.length > 0) {
-        dispatch({ type: STOP_LOADING });
-        const list = sourcingPropertyList?.filter((o1: any) =>
-          response?.data?.some((o2: any) => o1?.property_id === o2?.property_id)
-        );
-        setAllProperty(list);
-        if (list?.length === 0) {
-          ErrorMessage({
-            msg: "No property assigned to this CP",
-            backgroundColor: RED_COLOR,
-          });
-        }
-      } else {
-        dispatch({ type: STOP_LOADING });
-        setAllProperty([]);
-      }
-    } else {
-      dispatch({ type: STOP_LOADING });
-      ErrorMessage({
-        msg: response?.message,
-        backgroundColor: RED_COLOR,
-      });
-      setAllProperty([]);
-    }
-  };
   useFocusEffect(
     React.useCallback(() => {
-      if (
-        userData?.data?.role_id === ROLE_IDS.closingtl_id ||
-        userData?.data?.role_id === ROLE_IDS.closing_head_id ||
-        userData?.data?.role_id === ROLE_IDS.closingmanager_id ||
-        userData?.data?.role_id === ROLE_IDS.clusterhead_id ||
-        userData?.data?.role_id === ROLE_IDS.sitehead_id ||
-        userData?.data?.role_id === ROLE_IDS.admin_id ||
-        userData?.data?.role_id === ROLE_IDS.businesshead_id
-      ) {
-        getProperty();
-      }
+      getProperty();
       return () => {};
     }, [navigation])
   );
 
   const getProperty = () => {
-    dispatch(
-      getAllProperty({
-        offset: 0,
-        limit: "",
-      })
-    );
-    getAllPropertyData();
+    dispatch(getAllProperty({ offset: 0, limit: "" }));
+  };
 
+  useEffect(() => {
     if (propertyData?.response?.status === 200) {
       if (propertyData?.response?.data?.length > 0) {
         const activeData = propertyData?.response?.data.filter((el: any) => {
@@ -220,46 +137,7 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
     } else {
       setAllProperty([]);
     }
-  };
-
-  // useEffect(() => {
-  //   if (
-  //     userData?.data?.role_id === ROLE_IDS.closingtl_id ||
-  //     userData?.data?.role_id === ROLE_IDS.closingmanager_id ||
-  //     userData?.data?.role_id === ROLE_IDS.clusterhead_id ||
-  //     userData?.data?.role_id === ROLE_IDS.sitehead_id ||
-  //     userData?.data?.role_id === ROLE_IDS.businesshead_id
-  //   ) {
-  //     dispatch(
-  //       getAllProperty({
-  //         offset: 0,
-  //         limit: "",
-  //       })
-  //     );
-  //     getAllPropertyData();
-
-  //     if (propertyData?.response?.status === 200) {
-  //       if (propertyData?.response?.data?.length > 0) {
-  //         const activeData = propertyData?.response?.data.filter((el: any) => {
-  //           return el.status == true;
-  //         });
-  //         activeData?.length > 0
-  //           ? setAllProperty(activeData)
-  //           : setAllProperty([]);
-  //       } else {
-  //         setAllProperty([]);
-  //       }
-  //     } else {
-  //       setAllProperty([]);
-  //     }
-  //   }
-  // }, []);
-
-  const getAllPropertyData = () => {
-    if (propertyData?.response?.status === 200) {
-      setAllProperty(propertyData?.response?.data);
-    }
-  };
+  }, [employeeData]);
 
   useLayoutEffect(() => {
     if (data?.lead_id) {
@@ -270,6 +148,15 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
       );
     }
   }, [detail, data]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (!Cmteam && data?.lead_source == "Channel Partner") {
+        getCPByProperty(data?.property_id);
+      }
+      return () => {};
+    }, [data])
+  );
 
   useEffect(() => {
     if (response?.status === 200) {
@@ -309,7 +196,6 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
         cp_name: response?.data[0]?.cp_name,
         referrer_name: response?.data[0]?.referrer_name,
         referrer_email: response?.data[0]?.referrer_email,
-        referrerEmailExist: response?.data[0]?.referrer_email ? true : false,
         referrer_contact: response?.data[0]?.referrer_contact,
         referrel_partner: response?.data[0]?.referrel_partner,
         mobile_number: response?.data[0]?.customer_detail?.mobile,
@@ -317,48 +203,16 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
           ? response?.data[0]?.customer_detail?.country_code
           : "+91",
       });
-
       if (response?.data[0]?.configurations?.length > 0) {
         setConfiguration(response?.data[0]?.configurations);
       }
-      if (
-        response?.data[0]?.lead_source_id != CONST_IDS?.cp_lead_source_id &&
-        userData?.data?.role_id === ROLE_IDS.scm_id
-      ) {
-        getProperty();
-      }
-      if (
-        !Cmteam &&
-        response?.data[0]?.property_id &&
-        response?.data[0]?.lead_source_id == CONST_IDS?.cp_lead_source_id
-      ) {
-        getCPByProperty(response?.data[0]?.property_id);
-      }
-
       setCountryCode(response?.data[0]?.customer_detail?.country_code);
     }
   }, [response]);
 
-  // useEffect(() => {
-  //   dispatch(
-  //     getAllMaster({
-  //       type: 2,
-  //     })
-  //   );
-  // }, []);
-
-  useEffect(() => {
-    handleDropdownPress(13);
-    // dispatch(
-    //   getAssignCPList({
-    //     user_id: userData?.data?.user_id,
-    //     status: "",
-    //   })
-    // );
-  }, [navigation]);
-
   const getCPByProperty = async (property_id: any) => {
     dispatch({ type: START_LOADING });
+    console.log(property_id);
     const params = { property_id: property_id };
     const res = await apiCall("post", apiEndPoints.CP_UNDERPROPERTY, params);
     const response: any = res?.data;
@@ -374,18 +228,11 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
       dispatch({ type: STOP_LOADING });
       ErrorMessage({
         msg: response?.message,
-        backgroundColor: RED_COLOR,
+        backgroundColor: BLACK_COLOR,
       });
     }
   };
 
-  // useEffect(() => {
-  //   if (SmCpList?.response?.status === 200) {
-  //     setAgentList(SmCpList?.response?.data);
-  //   } else {
-  //     setAgentList([]);
-  //   }
-  // }, [SmCpList]);
   useEffect(() => {
     if (employeeData?.response?.status === 200) {
       setEmployeeList(employeeData?.response?.data);
@@ -398,13 +245,6 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
     setCompanyList(agentList);
   };
 
-  const handleCpNameDropdownPress = () => {
-    const tempArr = agentList.filter(
-      (el: any) => el?.cp_type !== 2 || el?.cp_type === undefined
-    );
-    setDropdownAgentList(tempArr);
-  };
-
   const handleEmployeeDropdownPress = () => {
     dispatch(
       getEmployeeList({
@@ -413,18 +253,7 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
     );
   };
 
-  const handleDropdownPress = (type: any) => {
-    // setMasterDatas([])
-    setDropDownType(type);
-    dispatch(
-      getAllMaster({
-        type: type,
-      })
-    );
-  };
-
   async function handleCountryCode(search: any) {
-    // setCountryCode(search)
     if (search) {
       if (isNaN(search)) {
         let array = CountryArray.filter((l: any) => {
@@ -448,7 +277,6 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
       ...updateForm,
       country_code: countryCode,
     });
-    // setCountryFlag(flag)
     setCountyPicker(false);
   }
   const handleCloseCountry = () => {
@@ -486,137 +314,7 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
       });
     }
   }, [editData]);
-  // const validation = () => {
-  //   let isError = true;
-  //   let errorMessage: any = ''
-  //   if (screenType === 0) {
-  //     if (updateForm?.property_id === '' && updateForm?.property_type_title === '') {
-  //       isError = false;
-  //       errorMessage = "Please select property name"
-  //     } else if (
-  //       updateForm?.first_name === "" ||
-  //       updateForm?.first_name === undefined
-  //     ) {
-  //       isError = false;
-  //       errorMessage = "Please fill visitor name";
-  //     } else if (Regexs.phoneNumRegex.test(updateForm?.mobile) === false) {
-  //       isError = false;
-  //       errorMessage = "Please enter valid Mobile number";
-  //     } else if (updateForm?.whatsapp_no && Regexs.phoneNumRegex.test(updateForm?.whatsapp_no) === false) {
-  //       isError = false;
-  //       errorMessage = "Please enter valid whatsapp number";
-  //     }
-  //     if (updateForm?.lead_source_id === CONST_IDS.cp_lead_source_id) {
-  //       if ( updateForm.cp_type == null || updateForm.cp_type == undefined || updateForm.cp_type == "") {
-  //         isError = false;
-  //         errorMessage = "Please Enter Channel Partner type";
-  //       } else if (updateForm.cp_id == undefined || updateForm.cp_id == "") {
-  //         isError = false;
-  //         errorMessage =
-  //           updateForm.cp_type === 1
-  //             ? "Please Enter CP Name"
-  //             : "Please Enter CP Company Name";
-  //       }
-  //     }
-  //     if (updateForm?.adhar_no) {
-  //       if (Regexs.AadharRegex.test(updateForm?.adhar_no) === false) {
-  //         isError = false;
-  //         errorMessage = "Please enter valid Aadhaar number";
-  //       }
-  //     }
-  //     if (updateForm?.pancard_no) {
-  //       if (Regexs.panRegex.test(updateForm?.pancard_no) === false) {
-  //         isError = false;
-  //         errorMessage = "Please enter valid Pancard number";
-  //       }
-  //     }
-  //     if (updateForm?.email) {
-  //       if (Regexs.emailRegex.test(updateForm?.email) === false) {
-  //         isError = false;
-  //         errorMessage = "Please enter valid Email id";
-  //       }
-  //     }
-  //     if (updateForm?.no_of_family_member) {
-  //       if (updateForm?.no_of_family_member?.length > 2) {
-  //         isError = false;
-  //         errorMessage = "Please enter valid family member";
-  //       }
-  //     }
-  //   }
-  //   if (screenType === 1) {
-  //     if (updateForm?.min_budget && !updateForm.max_budget) {
-  //       isError = false;
-  //       errorMessage = "Please enter Maximum budget";
-  //     }
-  //     else if (updateForm?.max_budget && !updateForm.min_budget) {
-  //       isError = false;
-  //       errorMessage = "Please enter Minimum budget";
-  //     }
-  //     else if (updateForm?.max_emi_budget && !updateForm.min_emi_budget) {
-  //       isError = false;
-  //       errorMessage = "Please enter Minimum EMI budget";
-  //     }
-  //     else if (updateForm?.min_emi_budget && !updateForm.max_emi_budget) {
-  //       isError = false;
-  //       errorMessage = "Please enter Maximum EMI budget";
-  //     }
-  //     if (updateForm?.min_budget && updateForm.max_budget) {
-  //       let tempMinVal: any;
-  //       updateForm?.min_budget_type === "K"
-  //         ? (tempMinVal = updateForm?.min_budget * 1000)
-  //         : updateForm?.min_budget_type === "L"
-  //           ? (tempMinVal = updateForm?.min_budget * 100000)
-  //           : updateForm?.min_budget_type === "Cr"
-  //             ? (tempMinVal = updateForm?.min_budget * 10000000)
-  //             : null;
 
-  //       let tempMaxVal: any;
-  //       updateForm?.max_budget_type === "K"
-  //         ? (tempMaxVal = updateForm?.max_budget * 1000)
-  //         : updateForm?.max_budget_type === "L"
-  //           ? (tempMaxVal = updateForm?.max_budget * 100000)
-  //           : updateForm?.max_budget_type === "Cr"
-  //             ? (tempMaxVal = updateForm?.max_budget * 10000000)
-  //             : null;
-
-  //       if (tempMinVal >= tempMaxVal) {
-  //         isError = false;
-  //         errorMessage = "Maximum budget should more than Minimum budget";
-  //       }
-  //     }
-  //     if (updateForm?.min_emi_budget && updateForm.max_emi_budget) {
-  //       let tempMinVal: any;
-  //       updateForm?.min_emi_budget_type === "K"
-  //         ? (tempMinVal = updateForm?.min_emi_budget * 1000)
-  //         : updateForm?.min_emi_budget_type === "L"
-  //           ? (tempMinVal = updateForm?.min_emi_budget * 100000)
-  //           : updateForm?.min_emi_budget_type === "Cr"
-  //             ? (tempMinVal = updateForm?.min_emi_budget * 10000000)
-  //             : null;
-
-  //       let tempMaxVal: any;
-  //       updateForm?.max_emi_budget_type === "K"
-  //         ? (tempMaxVal = updateForm?.max_emi_budget * 1000)
-  //         : updateForm?.max_emi_budget_type === "L"
-  //           ? (tempMaxVal = updateForm?.max_emi_budget * 100000)
-  //           : updateForm?.max_emi_budget_type === "Cr"
-  //             ? (tempMaxVal = updateForm?.max_emi_budget * 10000000)
-  //             : null;
-
-  //       if (tempMinVal >= tempMaxVal) {
-  //         isError = false;
-  //         errorMessage = "Maximum Emi should more than Minimum Emi";
-  //       }
-  //     }
-  //   }
-  //   if (errorMessage !== '') {
-  //     ErrorMessage({
-  //       msg: errorMessage,
-  //       backgroundColor: RED_COLOR
-  //     })
-  //   }
-  //   return isError;
-  // }
   const validation = () => {
     Keyboard.dismiss();
     let isError = true;
@@ -662,23 +360,8 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
       isError = false;
       errorMessage = "Please Enter valid mobile number";
     }
-    // else if (
-    //   updateForm?.whatsapp_no &&
-    //   Regexs.phoneNumRegex.test(updateForm?.whatsapp_no) === false
-    // ) {
-    //   isError = false;
-    //   errorMessage = "Please enter valid whatsapp number";
-    // }
+
     if (updateForm?.lead_source_id === CONST_IDS.cp_lead_source_id) {
-      // if (
-      //   updateForm.cp_type == null ||
-      //   updateForm.cp_type == undefined ||
-      //   updateForm.cp_type == ""
-      // ) {
-      //   isError = false;
-      //   errorMessage = "Please Enter Channel Partner type";
-      // }
-      //  else
       if (updateForm.cp_id == undefined || updateForm.cp_id == "") {
         isError = false;
         errorMessage =
@@ -820,11 +503,6 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
     // }
   };
   const onPressNext = (type: any) => {
-    // if (type != null) {
-    //   if (validation()) {
-    //     setScreenType(type)
-    //   }
-    // } else
     if (validation()) {
       let edit_params: any = {
         lead_id: updateForm?.lead_id,
@@ -885,9 +563,6 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
         preferred_bank: updateForm?.preferred_bank,
         lead_source: updateForm?.lead_source_id,
         lead_source_title: updateForm?.lead_source_title,
-        // cp_type: updateForm?.cp_type,
-        // cp_id: updateForm?.cp_id,
-        // cp_emp_id: updateForm?.cp_emp_id,
         cp_name: updateForm?.cp_name,
         country_code: updateForm?.country_code,
       };
@@ -929,10 +604,11 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
       dispatch(editVisitor(edit_params));
     }
   };
-  const checkMobileExistWithSameProperty = async (propertyId: string) => {
+
+  const checkMobileExistWithSameProperty = async () => {
     let params: any = {
       mobile: updateForm?.mobile,
-      property_id: propertyId,
+      property_id: updateForm.property_id,
     };
     dispatch({ type: START_LOADING });
 
@@ -969,104 +645,19 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
     setOkIsVisible(false);
   };
 
-  const checkRefferrerNumberExist = async () => {
-    dispatch({ type: START_LOADING });
-    try {
-      const res = await apiCall(
-        "post",
-        apiEndPoints.CHECK_REFERENCE_NMBR_EXIST,
-        { referrer_contact: updateForm?.referrer_contact }
-      );
-      if (res?.data?.status === 200) {
-        dispatch({ type: STOP_LOADING });
-        console.log(res?.data?.data);
-        setUpdateForm({
-          ...updateForm,
-          referrer_email: res?.data?.referrer_email,
-          referrerEmailExist: res?.data?.referrer_email ? true : false,
-        });
-        if (res?.data?.referrer_email) {
-          ErrorMessage({
-            msg:
-              "This referrer number is associated with " +
-              res?.data?.referrer_email,
-            backgroundColor: GREEN_COLOR,
-          });
-        }
-      } else if (res?.data?.status === 201) {
-        dispatch({ type: STOP_LOADING });
-        return false;
-      }
-    } catch (e) {
-      dispatch({
-        type: STOP_LOADING,
-      });
-    }
-  };
-
   return (
     <>
-      {/* {screenType === 0 ?
-        <VisitorUpdateFirstView
-          handleBackPress={handleBackPress}
-          screenType={screenType}
-          updateForm={updateForm}
-          setUpdateForm={setUpdateForm}
-          onPressNext={onPressNext}
-          allProperty={allProperty}
-          handleDropdownPress={handleDropdownPress}
-          masterDatas={masterDatas}
-          handleCpNameDropdownPress={handleCpNameDropdownPress}
-          dropdownAgentList={dropdownAgentList}
-          companyList={companyList}
-          handleCompanyDropdownPress={handleCompanyDropdownPress}
-          employeeList={employeeList}
-          handleEmployeeDropdownPress={handleEmployeeDropdownPress}
-          handleGetProperty={handleGetProperty}
-          setAllProperty={setAllProperty}
-        /> :
-        <>
-          {screenType === 1 ?
-            <VisitorUpdateSecondView
-              handleBackPress={handleBackPress}
-              screenType={screenType}
-              setScreenType={setScreenType}
-              updateForm={updateForm}
-              setUpdateForm={setUpdateForm}
-              onPressNext={onPressNext}
-              masterDatas={masterDatas}
-              configuration={configuration}
-            /> :
-            <VisitorUpdateThirdView
-              handleBackPress={handleBackPress}
-              screenType={screenType}
-              setScreenType={setScreenType}
-              updateForm={updateForm}
-              setUpdateForm={setUpdateForm}
-              onPressNext={onPressNext}
-              handleDropdownPress={handleDropdownPress}
-              masterDatas={masterDatas}
-            />
-          }
-        </>
-      } */}
       <VisitorUpdateFirstView
         handleBackPress={handleBackPress}
-        screenType={screenType}
         updateForm={updateForm}
         setUpdateForm={setUpdateForm}
         onPressNext={onPressNext}
         allProperty={allProperty}
-        handleDropdownPress={handleDropdownPress}
         masterDatas={masterDatas}
-        handleCpNameDropdownPress={handleCpNameDropdownPress}
-        dropdownAgentList={dropdownAgentList}
         companyList={companyList}
         handleCompanyDropdownPress={handleCompanyDropdownPress}
         employeeList={employeeList}
         handleEmployeeDropdownPress={handleEmployeeDropdownPress}
-        handleGetProperty={handleGetProperty}
-        setAllProperty={setAllProperty}
         configuration={configuration}
         setConfiguration={setConfiguration}
         selectCountryData={selectCountryData}
@@ -1077,13 +668,9 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
         countyPicker={countyPicker}
         setCountyPicker={setCountyPicker}
         handleCountryCode={handleCountryCode}
-        handleLeadSourcePressWhenNoCp={getAllPropertyData}
-        checkMobileExistWithSameProperty={(propertyId: string) =>
-          checkMobileExistWithSameProperty(propertyId)
-        }
+        checkMobileExistWithSameProperty={checkMobileExistWithSameProperty}
         okIsVisible={okIsVisible}
         mobileerror={mobileerror}
-        checkRefferrerNumberExist={checkRefferrerNumberExist}
         onPressRightButton={onPressRightButton}
       />
     </>

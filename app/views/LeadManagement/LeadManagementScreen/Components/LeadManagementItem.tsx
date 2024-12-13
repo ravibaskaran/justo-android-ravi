@@ -190,7 +190,7 @@ const LeadManagementItem = (props: any) => {
               },
             ]}
           >
-            {/* {props.items.lead_status === 1
+            {props.items.lead_status === 1
               ? "New Lead"
               : props.items.lead_status === 2
               ? "In Follow up"
@@ -202,8 +202,11 @@ const LeadManagementItem = (props: any) => {
               ? "Registration"
               : props.items.lead_status === 6
               ? "Not interested"
-              : props.items.lead_status === 7 && "Ready To Book"} */}
-            {appointment_status === 1
+              : props.items.lead_status === 8
+              ? "Cancel visit"
+              : props.items.lead_status === 7 && "Ready To Book"}
+
+              {/* {appointment_status === 1
               ? "Ready to visit"
               : appointment_status === 2
               ? "Visited"
@@ -215,7 +218,7 @@ const LeadManagementItem = (props: any) => {
               ? "Reschedule"
               : appointment_status === 6
               ? "Not interested"
-              : "New Lead"}
+              : "New Lead"} */}
           </Text>
         </View>
       </View>

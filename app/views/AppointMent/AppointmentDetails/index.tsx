@@ -86,6 +86,7 @@ const AppointmentDetails = ({ navigation, route }: any) => {
 
   useEffect(() => {
     const backAction = () => {
+      if (data?.fromVisitorPage) navigation.goBack();
       navigation.goBack();
       return true;
     };

@@ -1,11 +1,12 @@
+import { useFocusEffect } from "@react-navigation/native";
 import DropdownInput from "app/components/DropDown";
 import ErrorMessage from "app/components/ErrorMessage";
 import InputCalender from "app/components/InputCalender";
 import CountryPickerModal from "app/components/Modals/CountryPickerModal";
 import JustForOkModal from "app/components/Modals/JustForOkModal";
-import { CpLeadType, CpType } from "app/components/utilities/DemoData";
+import { CpLeadType } from "app/components/utilities/DemoData";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   ScrollView,
   Text,
@@ -38,51 +39,10 @@ import {
 } from "../../../../components/utilities/constant";
 import strings from "../../../../components/utilities/Localization";
 import styles from "./styles";
-import { useFocusEffect } from "@react-navigation/native";
-import { RequiredStart } from "app/components/utilities/GlobalFuncations";
 
 const VisitorUpdateView = (props: any) => {
   const { userData = {} } = useSelector((state: any) => state.userData);
-  const [romProperty, setRomProperty] = useState<any>([]);
-  const propertyData = useSelector((state: any) => state.propertyData) || {};
-  // const [configuration, setConfiguration] = useState<any>([]);
-
   const userId = userData?.data ? userData?.data : {};
-  const id = userData?.data?.role_id;
-
-  const Cmteam =
-    ROLE_IDS.closingtl_id === id ||
-    ROLE_IDS.closingmanager_id === id ||
-    ROLE_IDS.closing_head_id === id;
-  const SMteam =
-    ROLE_IDS.sourcingtl_id === id ||
-    ROLE_IDS.sourcingmanager_id === id ||
-    ROLE_IDS.sourcing_head_id === id;
-
-  // const leadsourcefilteredData: any = props.masterDatas.filter((obj: any) =>
-  //   Cmteam
-  //     ? obj.title !== "Channel Partner"
-  //     : SMteam
-  //     ? obj.title === "Channel Partner"
-  //     : obj.title !== ""
-  // );
-
-  const leadsourcefilteredData: any = props.masterDatas.filter((obj: any) => {
-    if (userData?.data?.rom && SMteam) {
-      return [
-        "Channel Partner",
-        "Exhibition",
-        "Direct Walk-in",
-        "Reference",
-      ].includes(obj.title);
-    } else {
-      return Cmteam
-        ? obj.title !== "Channel Partner"
-        : SMteam
-        ? obj.title === "Channel Partner"
-        : obj.title !== "";
-    }
-  });
 
   const isPropertySelected = async () => {
     let isError = true;
@@ -105,70 +65,29 @@ const VisitorUpdateView = (props: any) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      onChageProperty(props?.updateForm?.property_id, false);
+      onChageProperty(props?.updateForm?.property_id);
       return () => {};
     }, [props?.updateForm?.property_id])
   );
 
-  const onChageProperty = async (
-    propertyId: any,
-    isSwitchProperty: boolean
-  ) => {
+  const onChageProperty = async (propertyId: any) => {
     if (propertyId) {
-      // let property = props?.allProperty.filter(
-      //   (item: any) => item.property_id == propertyId
-      // );
-
-      let property =
-        userData?.data?.rom &&
-        SMteam &&
-        props.updateForm?.lead_source !== CONST_IDS?.cp_lead_source_id
-          ? romProperty.filter((item: any) => item.property_id == propertyId)
-          : props?.allProperty.filter(
-              (item: any) => item.property_id == propertyId
-            );
+      let property = props?.allProperty.filter(
+        (item: any) => item.property_id == propertyId
+      );
       props.setConfiguration(property[0]?.configurations);
     } else {
       props.setConfiguration([]);
     }
-
-    if (isSwitchProperty) {
-      props.setUpdateForm({
-        ...props.updateForm,
-        configuration_id: "",
-        configuration: "",
-        property_id: propertyId,
-      });
-    }
   };
 
-  useEffect(() => {
-    getAllPropertyData();
-  }, []);
-
-  const getAllPropertyData = () => {
-    if (propertyData?.response?.status === 200) {
-      if (propertyData?.response?.data?.length > 0) {
-        const activeData = propertyData?.response?.data.filter((el: any) => {
-          return el.status == true;
-        });
-        activeData?.length > 0
-          ? setRomProperty(activeData)
-          : setRomProperty([]);
-      } else {
-        setRomProperty([]);
-      }
-    } else {
-      setRomProperty([]);
+  const getLeadSourceName = () => {
+    const { lead_source, referrel_partner } = props.updateForm || {};
+    if (!lead_source) return "Lead Source";
+    if (lead_source === "Reference" && referrel_partner === 1) {
+      return "Referral Partner";
     }
-  };
-
-  const getLeadSourceName = (lead: any) => {
-    if (props.updateForm?.lead_source) {
-      return props.updateForm?.lead_source;
-    } else {
-      return "Lead Source";
-    }
+    return lead_source;
   };
 
   return (
@@ -184,67 +103,12 @@ const VisitorUpdateView = (props: any) => {
         barStyle={"light-content"}
         statusBarColor={PRIMARY_THEME_COLOR}
       />
-      <View style={styles.noMoveVw}>
-        {/* <TopScreensViewer type={props.screenType} /> */}
-      </View>
+      <View style={styles.noMoveVw}></View>
       <ScrollView
         keyboardShouldPersistTaps={"handled"}
         automaticallyAdjustKeyboardInsets={Isios ? true : false}
         contentContainerStyle={styles.wrap}
       >
-        {/* <View style={styles.inputWrap}>
-          {props?.updateForm?.property_id !== "" &&
-          props?.updateForm?.property_id !== null ? (
-            <InputField
-              placeholderText={"Name"}
-              editable={false}
-              handleInputBtnPress={() => {}}
-              onChangeText={(text: any) => {
-                props.setUpdateForm({
-                  ...props.updateForm,
-                  property_title: text,
-                });
-              }}
-              valueshow={props?.updateForm?.property_title}
-              headingText={"Property Name"}
-            />
-          ) : (
-            <DropdownInput
-              // require={true}
-              headingText={"Property Name"}
-              placeholder={
-                props.updateForm?.property_title
-                  ? props.updateForm?.property_title
-                  : "Property"
-              }
-              data={props?.allProperty}
-              // disable={props.type == 'edit' || props.type == 'propertySelect' ? true : false}
-              inputWidth={"100%"}
-              paddingLeft={16}
-              maxHeight={300}
-              labelField="property_title"
-              valueField={"_id"}
-              value={props?.updateForm?.propertyuid}
-              onChange={(item: any) => {
-                props.setUpdateForm({
-                  ...props.updateForm,
-                  property_id: item.property_id,
-                  property_type_title: item.property_type,
-                  property_title: item.property_title,
-                });
-              }}
-              newRenderItem={(item: any) => {
-                return (
-                  <>
-                    <View style={Styles.item}>
-                      <Text style={Styles.textItem}>{item.property_title}</Text>
-                    </View>
-                  </>
-                );
-              }}
-            />
-          )}
-        </View> */}
         <View style={styles.typeVw}>
           <Text style={styles.typeTxt}>Visitor Details</Text>
           <View style={styles.typeBorders} />
@@ -348,9 +212,7 @@ const VisitorUpdateView = (props: any) => {
                     Regexs.mobilenumRegex.test(props?.updateForm?.mobile) &&
                     props?.updateForm?.property_id
                   ) {
-                    props.checkMobileExistWithSameProperty(
-                      props?.updateForm?.property_id
-                    );
+                    props.checkMobileExistWithSameProperty();
                   }
                 }
               }}
@@ -360,22 +222,13 @@ const VisitorUpdateView = (props: any) => {
         <View style={[styles.inputWrap]}>
           <DropdownInput
             headingText={"Lead Source"}
-            placeholder={getLeadSourceName(props.updateForm?.lead_source)}
-            // disable={
-            //   userData?.data?.role_id === ROLE_IDS.closingtl_id ||
-            //   userData?.data?.role_id === ROLE_IDS.closing_head_id ||
-            //   userData?.data?.role_id === ROLE_IDS.closingmanager_id
-            //     ? true
-            //     : false
-            // }
+            placeholder={getLeadSourceName()}
             disable={true}
             data={
-              leadsourcefilteredData?.length > 0 &&
-              Array.isArray(leadsourcefilteredData)
-                ? leadsourcefilteredData
+              props.masterDatas?.length > 0 && Array.isArray(props.masterDatas)
+                ? props.masterDatas
                 : []
             }
-            onFocus={() => props.handleDropdownPress(13)}
             inputWidth={"100%"}
             require
             paddingLeft={Isios ? 6 : 10}
@@ -383,45 +236,6 @@ const VisitorUpdateView = (props: any) => {
             labelField={"title"}
             valueField={"_id"}
             value={props?.updateForm?.lead_source}
-            onChange={(item: any) => {
-              console.log("item: ", item);
-              if (
-                item._id === CONST_IDS?.cp_lead_source_id
-                //   ||
-                // props?.updateForm?.lead_source_id ===
-                //   CONST_IDS?.by_self_lead_source_id
-              ) {
-                props.handleLeadSourcePressWhenNoCp();
-              }
-
-              props.setUpdateForm({
-                ...props.updateForm,
-                lead_source: item._id,
-                lead_source_id: item._id,
-                lead_source_title: item.title,
-                cp_type: item._id === CONST_IDS?.cp_lead_source_id ? 2 : "",
-                cp_id: "",
-                cp_emp_id: "",
-                referrer_name: "",
-                referrer_email: "",
-                referrer_contact: "",
-                cp_name: "",
-              });
-              if (
-                !(
-                  userData?.data?.role_id === ROLE_IDS.closingtl_id ||
-                  userData?.data?.role_id === ROLE_IDS.closing_head_id ||
-                  userData?.data?.role_id === ROLE_IDS.closingmanager_id ||
-                  userData?.data?.role_id === ROLE_IDS.clusterhead_id ||
-                  userData?.data?.role_id === ROLE_IDS.sitehead_id ||
-                  userData?.data?.role_id === ROLE_IDS.admin_id ||
-                  userData?.data?.role_id === ROLE_IDS.businesshead_id ||
-                  userData?.data?.role_id === ROLE_IDS.scm_id
-                )
-              ) {
-                props.setAllProperty([]);
-              }
-            }}
             newRenderItem={(item: any) => {
               return (
                 item.title !== "" && (
@@ -436,14 +250,11 @@ const VisitorUpdateView = (props: any) => {
           />
         </View>
         {props?.updateForm?.lead_source_id === CONST_IDS?.cp_lead_source_id ? (
-          // || props?.updateForm?.lead_source_id ===
-          //   CONST_IDS?.by_self_lead_source_id
           <>
             <View style={styles.inputWrap}>
               <DropdownInput
                 headingText={"CP Lead type"}
                 placeholder={"Select CP Lead type"}
-                // data={CpType}
                 data={CpLeadType}
                 require
                 inputWidth={"100%"}
@@ -467,93 +278,7 @@ const VisitorUpdateView = (props: any) => {
                 }}
               />
             </View>
-            {/* <View style={styles.inputWrap}>
-              <DropdownInput
-                headingText={"Channel Partner type"}
-                placeholder={"Select Channel Partner type"}
-                data={CpType}
-                require
-                disable={
-                  userData?.data?.role_id === ROLE_IDS.closingtl_id ||
-                  userData?.data?.role_id === ROLE_IDS.closing_head_id ||
-                  userData?.data?.role_id === ROLE_IDS.closingmanager_id
-                    ? true
-                    : false
-                }
-                inputWidth={"100%"}
-                paddingLeft={Isios ? 6 : 10}
-                maxHeight={300}
-                labelField="label"
-                valueField={"value"}
-                value={props?.updateForm?.cp_type}
-                onChange={(item: any) => {
-                  props.setUpdateForm({
-                    ...props.updateForm,
-                    cp_type: item.value,
-                    cp_id: "",
-                    cp_emp_id: "",
-                    property_id: "",
-                    property_type_title: "",
-                    property_title: "",
-                    cp_name: "",
-                  });
-                  props.setAllProperty([]);
-                }}
-                newRenderItem={(item: any) => {
-                  return (
-                    <View style={Styles.item}>
-                      <Text style={Styles.textItem}>{item.label}</Text>
-                    </View>
-                  );
-                }}
-              />
-            </View> */}
-            {/* {props.updateForm?.cp_type === 1 ? (
-              <View style={styles.inputWrap}>
-                <DropdownInput
-                  headingText={"CP Name"}
-                  placeholder={
-                    props.updateForm?.cp_name
-                      ? props.updateForm?.cp_name
-                      : "Select CP"
-                  }
-                  data={props?.dropdownAgentList}
-                  inputWidth={"100%"}
-                  require
-                  disable={
-                    userData?.data?.role_id === ROLE_IDS.closingtl_id ||
-                    userData?.data?.role_id === ROLE_IDS.closing_head_id ||
-                    userData?.data?.role_id === ROLE_IDS.closingmanager_id
-                      ? true
-                      : false
-                  }
-                  paddingLeft={Isios ? 6 : 10}
-                  maxHeight={300}
-                  labelField="agent_name"
-                  valueField={"_id"}
-                  onFocus={() => props.handleCpNameDropdownPress()}
-                  value={props?.updateForm?.cp_id}
-                  onChange={(item: any) => {
-                    props.setUpdateForm({
-                      ...props.updateForm,
-                      cp_id: item._id,
-                      property_id: "",
-                      property_type_title: "",
-                      property_title: "",
-                    });
-                    props.handleGetProperty(item._id);
-                  }}
-                  newRenderItem={(item: any) => {
-                    return (
-                      <View style={Styles.item}>
-                        <Text style={Styles.textItem}>{item.agent_name}</Text>
-                      </View>
-                    );
-                  }}
-                />
-              </View>
-            ) : props.updateForm?.cp_type === 2 ? (
-              <> */}
+
             <View style={styles.inputWrap}>
               <DropdownInput
                 headingText={"CP Company Name"}
@@ -573,7 +298,6 @@ const VisitorUpdateView = (props: any) => {
                     ? true
                     : false
                 }
-                // disable={true}
                 inputWidth={"100%"}
                 paddingLeft={Isios ? 6 : 10}
                 maxHeight={300}
@@ -587,7 +311,6 @@ const VisitorUpdateView = (props: any) => {
                     cp_id: item._id,
                     cp_emp_id: "",
                   });
-                  // props.handleGetProperty(item._id);
                 }}
                 newRenderItem={(item: any) => {
                   return (
@@ -598,6 +321,7 @@ const VisitorUpdateView = (props: any) => {
                 }}
               />
             </View>
+
             {props?.updateForm?.cp_id !== "" &&
             props?.updateForm?.cp_id != null ? (
               <View style={styles.inputWrap}>
@@ -638,69 +362,10 @@ const VisitorUpdateView = (props: any) => {
               </View>
             ) : null}
           </>
-        ) : //   ) : null}
-        // </>
-        null}
+        ) : null}
 
-        {props?.updateForm?.lead_source_id === CONST_IDS?.ref_lead_source_id &&
-        props?.updateForm?.referrel_partner ? (
+        {props?.updateForm?.lead_source_id === CONST_IDS?.ref_lead_source_id ? (
           <>
-            <View
-              style={[styles.genderView, { marginLeft: normalizeSpacing(20) }]}
-            >
-              <Text style={styles.headingsTxt}>{"If Referral Partner"}</Text>
-              <RequiredStart />
-              <View style={styles.radioView}>
-                <RadioButton.Android
-                  disabled={true}
-                  value="1"
-                  status={
-                    props?.updateForm?.referrel_partner === 1
-                      ? "checked"
-                      : "unchecked"
-                  }
-                  color={PRIMARY_THEME_COLOR}
-                />
-                <Text
-                  style={[
-                    styles.radioTxt,
-                    {
-                      color:
-                        props?.updateForm?.referrel_partner === 1
-                          ? PRIMARY_THEME_COLOR
-                          : BLACK_COLOR,
-                    },
-                  ]}
-                >
-                  {strings.yes}
-                </Text>
-              </View>
-              <View style={styles.radioView}>
-                <RadioButton.Android
-                  disabled={true}
-                  value="2"
-                  status={
-                    props?.updateForm?.referrel_partner === 2
-                      ? "checked"
-                      : "unchecked"
-                  }
-                  color={PRIMARY_THEME_COLOR}
-                />
-                <Text
-                  style={[
-                    styles.radioTxt,
-                    {
-                      color:
-                        props?.formData?.referrel_partner === 2
-                          ? PRIMARY_THEME_COLOR
-                          : BLACK_COLOR,
-                    },
-                  ]}
-                >
-                  {strings.no}
-                </Text>
-              </View>
-            </View>
             <View style={styles.inputWrap}>
               <InputField
                 require={true}
@@ -713,7 +378,6 @@ const VisitorUpdateView = (props: any) => {
                     referrer_contact: data,
                   });
                 }}
-                editable={false}
                 valueshow={props?.updateForm?.referrer_contact}
                 headingText={strings.referrerNumber}
                 keyboardtype={"number-pad"}
@@ -723,8 +387,6 @@ const VisitorUpdateView = (props: any) => {
             <View style={styles.inputWrap}>
               <InputField
                 require={true}
-                disable={true}
-                editable={false}
                 disableSpecialCharacters={true}
                 placeholderText={strings.referrerName}
                 headingText={strings.referrerName}
@@ -740,12 +402,10 @@ const VisitorUpdateView = (props: any) => {
             </View>
             <View style={styles.inputWrap}>
               <InputField
-                editable={!props?.updateForm?.referrerEmailExist}
                 keyboardtype={"email-address"}
                 placeholderText={"Referrer Email"}
                 headingText={"Referrer Email"}
                 handleInputBtnPress={() => {}}
-                onFocus={() => props.checkRefferrerNumberExist()}
                 onChangeText={(data: any) => {
                   props.setUpdateForm({
                     ...props.updateForm,
@@ -761,13 +421,6 @@ const VisitorUpdateView = (props: any) => {
         <View style={styles.inputWrap}>
           <DropdownInput
             require={true}
-            // disable={
-            //   userData?.data?.role_id === ROLE_IDS.closingtl_id ||
-            //   userData?.data?.role_id === ROLE_IDS.closing_head_id ||
-            //   userData?.data?.role_id === ROLE_IDS.closingmanager_id
-            //     ? true
-            //     : false
-            // }
             disable={true}
             headingText={"Property Name"}
             placeholder={
@@ -775,30 +428,12 @@ const VisitorUpdateView = (props: any) => {
                 ? props.updateForm?.property_title
                 : "Property"
             }
-            // data={props?.allProperty}
-            data={
-              userData?.data?.rom &&
-              SMteam &&
-              props.updateForm?.lead_source !== CONST_IDS?.cp_lead_source_id
-                ? romProperty
-                : props?.allProperty.filter((item: any) => item.status == true)
-            }
-            // disable={props.type == 'edit' || props.type == 'propertySelect' ? true : false}
             inputWidth={"100%"}
             paddingLeft={16}
             maxHeight={300}
             labelField="property_title"
             valueField={"_id"}
             value={props?.updateForm?.property_id}
-            onChange={(item: any) => {
-              props.setUpdateForm({
-                ...props.updateForm,
-                property_id: item.property_id,
-                property_type_title: item.property_type,
-                property_title: item.property_title,
-              });
-              onChageProperty(item.property_id, true);
-            }}
             newRenderItem={(item: any) => {
               return (
                 <>
@@ -958,27 +593,6 @@ const VisitorUpdateView = (props: any) => {
           />
         </View>
         <View style={[styles.inputWrap, { marginBottom: normalize(10) }]}>
-          {/* <InputField
-            inputType={"location"}
-            placeholderText={"Location"}
-            headingText={"Location"}
-            valueshow={props?.updateForm?.location}
-            onChangeText={(data: any) => {
-              props.setUpdateForm({
-                ...props.updateForm,
-                location: data ? data : props?.updateForm?.location,
-              });
-            }}
-            onPressSelect={(data: any, detail: any) => {
-              props.setUpdateForm({
-                ...props.updateForm,
-                location: data?.description,
-                latitude: detail?.geometry?.location?.lat,
-                longitude: detail?.geometry?.location?.lng,
-              });
-            }}
-          /> */}
-
           <InputField
             placeholderText={"Location"}
             handleInputBtnPress={() => {}}
@@ -1127,7 +741,10 @@ const VisitorUpdateView = (props: any) => {
             }
             data={[
               { label: strings.MoveIn, value: strings.MoveIn },
-              { label: strings.Underonstruction, value: strings.MoveIn },
+              {
+                label: strings.Underonstruction,
+                value: strings.Underonstruction,
+              },
             ]}
             inputWidth={"100%"}
             paddingLeft={16}
@@ -1702,40 +1319,6 @@ const VisitorUpdateView = (props: any) => {
             headingText={"Office Address"}
           />
         </View>
-        {/* 63ecd90787f864d94a3882ee */}
-        {/* 63ecd94387f864d94a38838d */}
-        {/* <View style={[styles.inputWrap]}>
-                        <DropdownInput
-                            headingText={'Lead Source'}
-                            placeholder={props.updateForm?.lead_source ?
-                                props.updateForm?.lead_source: 'Lead Source'}
-                            data={props?.masterDatas?.length > 0 && Array.isArray(props?.masterDatas) ? props?.masterDatas : []}
-                            onFocus={() => props.handleDropdownPress(13)}
-                            inputWidth={'100%'}
-                            require
-                            paddingLeft={16}
-                            maxHeight={300}
-                            labelField={"title"}
-                            valueField={'_id'}
-                            value={props?.updateForm?.lead_source}
-                            onChange={(item: any) => {
-                                props.setUpdateForm({
-                                    ...props.updateForm,
-                                    lead_source: item._id,
-                                    lead_source_title: item.title
-                                })
-                            }}
-                            newRenderItem={(item: any) => {
-                                return item.title !== "" && (
-                                    <>
-                                        <View style={Styles.item}>
-                                            <Text style={Styles.textItem}>{item.title}</Text>
-                                        </View>
-                                    </>
-                                );
-                            }}
-                        />
-                    </View> */}
         <View style={styles.inputWrap}>
           <InputField
             placeholderText={"Remark"}
@@ -1752,8 +1335,6 @@ const VisitorUpdateView = (props: any) => {
         </View>
         <View style={styles.inputWrap}>
           <Button
-            // handleBtnPress={(type: any) => props.onPressNext(1)}
-            // rightImage={images.forwardArrow}
             handleBtnPress={(type: any) => props.onPressNext(null)}
             buttonText={strings.update}
             textTransform={"uppercase"}

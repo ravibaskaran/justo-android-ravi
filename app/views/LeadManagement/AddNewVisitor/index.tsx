@@ -153,15 +153,6 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
     }
   }, [formData?.lead_source]);
 
-  // useEffect(() => {
-  //   if (companyData?.response?.status === 200) {
-  //     setCompanyList(companyData?.response?.company);
-  //   } else {
-  //     setCompanyList([]);
-  //   }
-  //   console.log('companyList: ', companyList);
-
-  // }, [companyData])
   useEffect(() => {
     if (employeeData?.response?.status === 200) {
       setEmployeeList(employeeData?.response?.data);
@@ -172,13 +163,6 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
 
   useEffect(() => {
     handleDropdownPress(13);
-    dispatch(
-      getAllProperty({
-        offset: 0,
-        limit: "",
-      })
-    );
-
     if (
       userData?.data?.role_id != ROLE_IDS.closingtl_id &&
       userData?.data?.role_id != ROLE_IDS.closing_head_id &&
@@ -206,8 +190,8 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
       setAgentList([]);
     }
   }, [SmCpList]);
+
   const handleDropdownPress = (type: any) => {
-    // setMasterDatas([])
     setDropDownType(type);
     dispatch(
       getAllMaster({
@@ -215,9 +199,8 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
       })
     );
   };
+
   const handleCompanyDropdownPress = () => {
-    // const tempArr = agentList.filter((el: any) => el?.cp_type === 2);
-    // setCompanyList(tempArr);
     if (isCpLoading) {
       dispatch({ type: START_LOADING });
     }
@@ -242,13 +225,6 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
     if (masterData?.response?.status === 200) {
       if (masterData?.response?.data?.length > 0) {
         if (dropDownType != 2) {
-          //   let array = masterData?.response?.data
-          //   array.forEach((item: { title: string; }) => {
-          //     if (item.title === "Reference") {
-          //         item.title = "Referrer Partner";
-          //     }
-          // });
-
           setMasterDatas(masterData?.response?.data);
         }
       }
@@ -270,14 +246,26 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
     }
   }, [propertyData]);
 
+  useEffect(() => {
+    if (propertyData?.response?.status === 200) {
+      if (propertyData?.response?.data?.length > 0) {
+        const activeData = propertyData?.response?.data.filter((el: any) => {
+          return el.status == true;
+        });
+
+        activeData?.length > 0
+          ? setAllProperty(activeData)
+          : setAllProperty([]);
+      } else {
+        setAllProperty([]);
+      }
+    } else {
+      setAllProperty([]);
+    }
+  }, [propertyData]);
+
   const handleGetProperty = async (id: any) => {
     dispatch({ type: START_LOADING });
-    dispatch(
-      getAllProperty({
-        offset: 0,
-        limit: "",
-      })
-    );
     const params = {
       cp_id: id,
     };
@@ -322,65 +310,9 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
           limit: "",
         })
       );
-      getAllPropertyData();
-
       return () => {};
     }, [navigation])
   );
-
-  // useEffect(() => {
-  //   if (!(formData?.lead_source_id === CONST_IDS?.cp_lead_source_id) && propertyData?.response?.status === 200) {
-  //     if (propertyData?.response?.data?.length > 0) {
-  //       const activeData = propertyData?.response?.data.filter(
-  //         (el: any) => {
-  //           return el.status == true;
-  //         }
-  //       );
-  //       console.log("🚀 ~ file: index.tsx:311 ~ propertyData?.response?.data:", propertyData?.response?.data)
-  //       activeData?.length > 0
-  //         ? setAllProperty(activeData)
-  //         : setAllProperty([]);
-  //     } else {
-  //       setAllProperty([]);
-  //     }
-  //   } else {
-  //     setAllProperty([]);
-  //   }
-  // }, [propertyData, formData?.lead_source])
-
-  // useEffect(() => {
-  //   if (
-  //     userData?.data?.role_id === ROLE_IDS.closingtl_id ||
-  //     userData?.data?.role_id === ROLE_IDS.closingmanager_id ||
-  //     userData?.data?.role_id === ROLE_IDS.sitehead_id ||
-  //     userData?.data?.role_id === ROLE_IDS.admin_id ||
-  //     userData?.data?.role_id === ROLE_IDS.clusterhead_id ||
-  //     userData?.data?.role_id === ROLE_IDS.businesshead_id
-  //   ) {
-  //     dispatch(
-  //       getAllProperty({
-  //         offset: 0,
-  //         limit: "",
-  //       })
-  //     );
-  //     getAllPropertyData();
-
-  //     if (propertyData?.response?.status === 200) {
-  //       if (propertyData?.response?.data?.length > 0) {
-  //         const activeData = propertyData?.response?.data.filter((el: any) => {
-  //           return el.status == true;
-  //         });
-  //         activeData?.length > 0
-  //           ? setAllProperty(activeData)
-  //           : setAllProperty([]);
-  //       } else {
-  //         setAllProperty([]);
-  //       }
-  //     } else {
-  //       setAllProperty([]);
-  //     }
-  //   }
-  // }, [propertyData]);
 
   const getAllPropertyData = () => {
     if (propertyData?.response?.status === 200) {
@@ -395,7 +327,6 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
   const OnpressseheduleVisit = () => {
     if (validation()) {
       OnpressCreateEdit();
-      // navigation.navigate('AddAppointmentForSite', {type: 'visitAppo'})
     }
   };
 
@@ -484,15 +415,7 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
       ) {
         isError = false;
         errorMessage = "Please enter valid Pancard number";
-      }
-      // else if (
-      //   formData?.whatsapp_no &&
-      //   Regexs.phoneNumRegex.test(formData?.whatsapp_no) === false
-      // ) {
-      //   isError = false;
-      //   errorMessage = "Please enter valid whatsapp number";
-      // }
-      else if (
+      } else if (
         formData?.email &&
         Regexs.emailRegex.test(formData?.email) === false
       ) {
@@ -538,11 +461,11 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
               : "Please Enter CP Company Name";
         }
       }
-      if (formData?.lead_source === CONST_IDS?.ref_lead_source_id) {
-        if (formData?.referrel_partner === "") {
-          isError = false;
-          errorMessage = "Please select If Referral partner";
-        } else if (
+      if (
+        formData?.lead_source === CONST_IDS?.ref_lead_source_id ||
+        formData?.lead_source === CONST_IDS?.ref_partner_lead_source_id
+      ) {
+        if (
           formData?.referrer_name?.trim() === "" ||
           formData?.referrer_name?.trim() === undefined
         ) {
@@ -763,21 +686,15 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
   };
 
   const checkRefferrerNumberExist = async () => {
-    console.log(formData?.referrer_contact);
-
     dispatch({ type: START_LOADING });
-
     try {
       const res = await apiCall(
         "post",
         apiEndPoints.CHECK_REFERENCE_NMBR_EXIST,
         { referrer_contact: formData?.referrer_contact }
       );
-
-      console.log(res?.data);
       if (res?.data?.status === 200) {
         dispatch({ type: STOP_LOADING });
-        console.log(res?.data?.data);
         setFormData({
           ...formData,
           referrer_name: res?.data?.data,
@@ -1000,7 +917,12 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
             : "",
           locality: formData?.locality,
           remark: formData?.remark,
-          lead_source: formData?.lead_source,
+          lead_source:
+            formData?.lead_source == CONST_IDS?.ref_lead_source_id
+              ? formData?.lead_source
+              : formData?.lead_source == CONST_IDS?.ref_partner_lead_source_id
+              ? CONST_IDS?.ref_lead_source_id
+              : formData?.lead_source,
           lead_source_title: formData?.lead_source_title,
           marital_status: formData?.marital_status,
           no_of_family_member: formData?.no_of_family_member,
@@ -1032,7 +954,10 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
           };
         }
 
-        if (formData?.lead_source === CONST_IDS?.ref_lead_source_id) {
+        if (
+          formData?.lead_source === CONST_IDS?.ref_lead_source_id ||
+          formData?.lead_source === CONST_IDS?.ref_partner_lead_source_id
+        ) {
           edit_params = {
             ...edit_params,
             referrer_name: formData?.referrer_name,
@@ -1096,7 +1021,13 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
               : "",
             locality: formData?.locality,
             remark: formData?.remark,
-            lead_source: formData?.lead_source,
+            lead_source:
+              formData?.lead_source == CONST_IDS?.ref_lead_source_id
+                ? formData?.lead_source
+                : formData?.lead_source == CONST_IDS?.ref_partner_lead_source_id
+                ? CONST_IDS?.ref_lead_source_id
+                : formData?.lead_source,
+
             marital_status: formData?.marital_status,
             no_of_family_member: formData?.no_of_family_member,
             current_stay: formData?.current_stay,
@@ -1132,7 +1063,10 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
               cp_id: formData?.cp_id,
             };
           }
-          if (formData?.lead_source === CONST_IDS?.ref_lead_source_id) {
+          if (
+            formData?.lead_source === CONST_IDS?.ref_lead_source_id ||
+            formData?.lead_source === CONST_IDS?.ref_partner_lead_source_id
+          ) {
             add_params = {
               ...add_params,
               referrer_name: formData?.referrer_name,
@@ -1157,7 +1091,6 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
   };
 
   async function handleCountryCode(search: any) {
-    // setCountryCode(search)
     if (search) {
       if (isNaN(search)) {
         let array = CountryArray.filter((l: any) => {
@@ -1181,7 +1114,6 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
       ...formData,
       country_code: countryCode,
     });
-    // setCountryFlag(flag)
     setCountyPicker(false);
   }
   const handleCloseCountry = () => {
@@ -1196,9 +1128,7 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
       type={type}
       formData={formData}
       setFormData={setFormData}
-      // handleMasterDatas={handleMasterDatas}
       masterDatas={masterDatas}
-      // handleProperty={handleProperty}
       allProperty={allProperty}
       setNavigationType={setNavigationType}
       handleDropdownPress={handleDropdownPress}

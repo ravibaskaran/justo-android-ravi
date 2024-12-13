@@ -25,13 +25,14 @@ const FilterModal = (props: any) => {
     // dispatch(getAllMaster({
     //   type: 2
     // }))
-    dispatch(
-      getAllProperty({
-        offset: 0,
-        limit: "",
-      })
-    );
-    getAllPropertyData();
+    if (props?.Visible || propertyData?.length == 0) {
+      dispatch(
+        getAllProperty({
+          offset: 0,
+          limit: "",
+        })
+      );
+    }
   }, [props?.Visible]);
   const { response = { data: [] } } =
     useSelector((state: any) => state.masterData) || {};
@@ -60,7 +61,7 @@ const FilterModal = (props: any) => {
     });
   };
 
-  const getAllPropertyData = () => {
+  useEffect(() => {
     if (propertyData?.response?.status === 200) {
       if (propertyData?.response?.data?.length > 0) {
         const activeData = propertyData?.response?.data.filter((el: any) => {
@@ -75,7 +76,7 @@ const FilterModal = (props: any) => {
     } else {
       setAllProperty([]);
     }
-  };
+  }, [propertyData, setAllProperty]);
 
   const configRender = (item: any) => {
     return (
