@@ -97,6 +97,7 @@ export const Regexs = {
   ifscRegex: new RegExp(/^[A-Z]{4}0[A-Z0-9]{6}$/),
   specialCharacters: new RegExp(/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/),
   alphaNumeric: new RegExp(/^[A-Za-z0-9\s]*$/),
+  validNumberWithDecimal: new RegExp(/^([1-9]\d*|0)(\.\d*)?$/),
   gstRegex: new RegExp(/\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}/),
   oneSpaceRegex: new RegExp(/^([a-zA-Z0-9]+\s)*[a-zA-Z0-9]+$/),
   reraRegex: new RegExp(/^(UPRERA[A-Z]{3}\d{8,10}|[A-Z]\d{11,12})$/),

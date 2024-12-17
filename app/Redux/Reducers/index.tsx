@@ -27,6 +27,7 @@ import { UserManagerReducer } from "./UserManagerReducer";
 import { RecoveryReducer } from "./RecoveryReducer";
 import { CompanyReducer, EmployeeReducer } from "./CompanyReducer";
 import { ReportReducer } from "./ReportReducer";
+import { ProjectReportReducer } from "./ProjectReportReducer";
 
 export default {
     loadingReducer: loadingReducer,
@@ -130,4 +131,6 @@ export default {
 
    //report
    reportData : ReportReducer,
+   projectReportData : ProjectReportReducer,
+
 }

@@ -72,7 +72,7 @@ const LoginView = (props: any) => {
           <Text style={styles.spanText}> {strings.privacyPolicy} </Text>
         </TouchableOpacity>
       </View> */}
-      <View style={{alignItems: 'center'}}><Text>(ST-Version)</Text></View>
+      <View style={{alignItems: 'center'}}><Text>(ST-Version)</Text></View> 
       <View style={styles.bottomView}>
         <CheckBox
           value={true}

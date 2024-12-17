@@ -116,6 +116,7 @@ import CpDetailForReport from "app/views/CpDetailForReport";
 import AppointmentCTA from "app/views/ReportCTAManagement/AppointmentCTA";
 import BookingCTA from "app/views/ReportCTAManagement/BookingCTA";
 import TodaysFollowUpScreen from "app/views/FollowUp/TodaysFollowUP";
+import ProjectReportScreen from "app/views/ProjectDetailsReport";
 
 const Stack = createNativeStackNavigator();
 const AppStack = createNativeStackNavigator();
@@ -164,6 +165,7 @@ const DrawerComponent = () => {
       <Drawer.Screen name="Support" component={SupportScreen} />
       <Drawer.Screen name="SalesTools" component={SalesToolsScreen} />
       <Drawer.Screen name="Report" component={ReportScreen} />
+      <Drawer.Screen name="PDRScreen" component={ProjectReportScreen} />
       <Drawer.Screen name="Chat" component={ChatViewScreen} />
       <Drawer.Screen name="Recovery" component={RecoveryScreen} />
       <Drawer.Screen name="CpChecking" component={CpChecking} />

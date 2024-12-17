@@ -22,6 +22,8 @@ import Button from "../../../../components/Button";
 import usePermission from "app/components/utilities/UserPermissions";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import FirstRoute from "./FirstRoute";
+import { START_LOADING } from "app/Redux/types";
+import { useDispatch } from "react-redux";
 
 const AppointmentView = (props: any) => {
   const loadingref = false;
@@ -35,6 +37,7 @@ const AppointmentView = (props: any) => {
     ],
   });
   const layout = useWindowDimensions();
+  const dispatch: any = useDispatch();
 
   useFocusEffect(
     React.useCallback(() => {
@@ -63,22 +66,26 @@ const AppointmentView = (props: any) => {
       // }
       setTimeout(() => {
         if (indexData?.index === 0) {
-            // Nested coditions for filter data with types
-            if (props.type === 'todayComplete') {
-                props.getAppointmentList(0, { ...props.todayAppointment, status: 3 })
-            }
-            else if (props.type === 'followup') {
-                props.getAppointmentList(0, { ...props.todayAppointment, status: 10 })
-            } 
-            else if (props.type === 'today') {
-                props.getAppointmentList(0, props.todayAppointment)
-            } else {
-                props.getAppointmentList(0, props.todayAppointment)
-            }
+          // Nested coditions for filter data with types
+          if (props.type === "todayComplete") {
+            props.getAppointmentList(0, {
+              ...props.todayAppointment,
+              status: 3,
+            });
+          } else if (props.type === "followup") {
+            props.getAppointmentList(0, {
+              ...props.todayAppointment,
+              status: 10,
+            });
+          } else if (props.type === "today") {
+            props.getAppointmentList(0, props.todayAppointment);
+          } else {
+            props.getAppointmentList(0, props.todayAppointment);
+          }
         } else {
-            props.getAppointmentList(0, {})
+          props.getAppointmentList(0, {});
         }
-    }, 100);
+      }, 100);
       return () => {};
     }, [props.navigation, indexData, props.type])
   );
@@ -86,14 +93,14 @@ const AppointmentView = (props: any) => {
   useEffect(() => {
     const backAction = () => {
       if (indexData.index == 1) {
-      setIndexData({
-        index: 0,
-        routes: [
-          { key: "first", title: strings.todayappointment },
-          { key: "second", title: strings.allAppointmenr },
-        ],
-      });
-    }
+        setIndexData({
+          index: 0,
+          routes: [
+            { key: "first", title: strings.todayappointment },
+            { key: "second", title: strings.allAppointmenr },
+          ],
+        });
+      }
       setTimeout(() => {
         props.navigation.goBack();
       }, 250);
@@ -193,14 +200,14 @@ const AppointmentView = (props: any) => {
 
   const handleDrawerPress = () => {
     if (indexData.index == 1) {
-    setIndexData({
-      index: 0,
-      routes: [
-        { key: "first", title: strings.todayappointment },
-        { key: "second", title: strings.allAppointmenr },
-      ],
-    });
-  }
+      setIndexData({
+        index: 0,
+        routes: [
+          { key: "first", title: strings.todayappointment },
+          { key: "second", title: strings.allAppointmenr },
+        ],
+      });
+    }
     setTimeout(() => {
       props.navigation.toggleDrawer();
     }, 250);
@@ -247,7 +254,12 @@ const AppointmentView = (props: any) => {
           renderTabBar={renderTabBar}
           navigationState={indexData}
           renderScene={({ index, route }: any) => renderScene({ index, route })}
-          onIndexChange={handleIndexChange}
+          onIndexChange={(index) => {
+            dispatch({ type: START_LOADING });
+            setTimeout(() => {
+              handleIndexChange(index);
+            }, 100);
+          }}
           initialLayout={{ width: layout.width }}
         />
       </View>

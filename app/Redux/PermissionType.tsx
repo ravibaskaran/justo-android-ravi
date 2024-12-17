@@ -214,6 +214,15 @@ export const MENUITEMS = [
         sort: 4
     },
     {
+        title: strings.projectDetailsReport,
+        icon: images.report,
+        path: "PDRScreen",
+        permission: true,
+        deploy: true,
+        slug: 'project_details_report',
+        sort: 4
+    },
+    {
         title: strings.chatHeader,
         icon: images.chat,
         path: "Chat",

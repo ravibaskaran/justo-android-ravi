@@ -669,6 +669,7 @@ const strings = new LocalizedStrings({
       "MAHA RERA - (eg: A12345678901) \nUP RERA - (eg: UPRERAABC12345678)",
     cpDirect: "Direct",
     cpTelecalling: "Tele-calling",
+    projectDetailsReport: "Project Details Report",
   },
 });
 

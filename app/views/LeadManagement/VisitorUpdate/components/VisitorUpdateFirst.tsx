@@ -927,10 +927,23 @@ const VisitorUpdateView = (props: any) => {
             <TextInput
               value={props?.updateForm?.min_budget?.toString()}
               onChangeText={(data: any) => {
-                if (Regexs.alphaNumeric.test(data) === true) {
+                const sanitizedData = data.replace(/\s+/g, ""); // Remove spaces
+                if (
+                  sanitizedData === "" ||
+                  Regexs.validNumberWithDecimal.test(sanitizedData)
+                ) {
                   props.setUpdateForm({
                     ...props.updateForm,
-                    min_budget: data?.trim(),
+                    min_budget: sanitizedData,
+                  });
+                }
+              }}
+              onBlur={() => {
+                const currentValue = props?.updateForm?.min_budget?.toString();
+                if (currentValue?.endsWith(".")) {
+                  props.setUpdateForm({
+                    ...props.updateForm,
+                    min_budget: currentValue.slice(0, -1), // Remove the last character (period)
                   });
                 }
               }}
@@ -972,10 +985,23 @@ const VisitorUpdateView = (props: any) => {
             <TextInput
               value={props?.updateForm?.max_budget?.toString()}
               onChangeText={(data: any) => {
-                if (Regexs.alphaNumeric.test(data) === true) {
+                const sanitizedData = data.replace(/\s+/g, ""); // Remove spaces
+                if (
+                  sanitizedData === "" ||
+                  Regexs.validNumberWithDecimal.test(sanitizedData)
+                ) {
                   props.setUpdateForm({
                     ...props.updateForm,
-                    max_budget: data?.trim(),
+                    max_budget: sanitizedData,
+                  });
+                }
+              }}
+              onBlur={() => {
+                const currentValue = props?.updateForm?.max_budget?.toString();
+                if (currentValue?.endsWith(".")) {
+                  props.setUpdateForm({
+                    ...props.updateForm,
+                    max_budget: currentValue.slice(0, -1), // Remove the last character (period)
                   });
                 }
               }}
@@ -1086,10 +1112,24 @@ const VisitorUpdateView = (props: any) => {
             <TextInput
               value={props?.updateForm?.min_emi_budget?.toString()}
               onChangeText={(data: any) => {
-                if (Regexs.alphaNumeric.test(data) === true) {
+                const sanitizedData = data.replace(/\s+/g, ""); // Remove spaces
+                if (
+                  sanitizedData === "" ||
+                  Regexs.validNumberWithDecimal.test(sanitizedData)
+                ) {
                   props.setUpdateForm({
                     ...props.updateForm,
-                    min_emi_budget: data?.trim(),
+                    min_emi_budget: sanitizedData,
+                  });
+                }
+              }}
+              onBlur={() => {
+                const currentValue =
+                  props?.updateForm?.min_emi_budget?.toString();
+                if (currentValue?.endsWith(".")) {
+                  props.setUpdateForm({
+                    ...props.updateForm,
+                    min_emi_budget: currentValue.slice(0, -1), // Remove the last character (period)
                   });
                 }
               }}
@@ -1131,10 +1171,24 @@ const VisitorUpdateView = (props: any) => {
             <TextInput
               value={props?.updateForm?.max_emi_budget}
               onChangeText={(data: any) => {
-                if (Regexs.alphaNumeric.test(data) === true) {
+                const sanitizedData = data.replace(/\s+/g, ""); // Remove spaces
+                if (
+                  sanitizedData === "" ||
+                  Regexs.validNumberWithDecimal.test(sanitizedData)
+                ) {
                   props.setUpdateForm({
                     ...props.updateForm,
-                    max_emi_budget: data?.trim(),
+                    max_emi_budget: sanitizedData,
+                  });
+                }
+              }}
+              onBlur={() => {
+                const currentValue =
+                  props?.updateForm?.max_emi_budget?.toString();
+                if (currentValue?.endsWith(".")) {
+                  props.setUpdateForm({
+                    ...props.updateForm,
+                    max_emi_budget: currentValue.slice(0, -1), // Remove the last character (period)
                   });
                 }
               }}

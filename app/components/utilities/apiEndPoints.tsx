@@ -190,7 +190,8 @@ export default {
   GET_ST_REPORT: "/authreport/getSTreport",
   GET_SH_CH_REPORT: "/authreport/getSHCHreport",
   GET_BM_REPORT: "/authreport/getBMreport",
-  GET_SCM_REPORT: "authreport/getSCMreport",
-  GET_CL_H_REPORT: "authreport/getClHreport",
-  GET_SRC_H_REPORT: "authreport/getSrcHreport",
+  GET_SCM_REPORT: "/authreport/getSCMreport",
+  GET_CL_H_REPORT: "/authreport/getClHreport",
+  GET_SRC_H_REPORT: "/authreport/getSrcHreport",
+  GET_PROJECT_DETAILS_REPORT: "/authreport/getPdrReport",
 };
