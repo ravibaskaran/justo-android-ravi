@@ -161,7 +161,7 @@ const DashboardScreen = ({ navigation }: any) => {
         dispatch(
           getAssignCPList({
             offset: 0,
-            limit: 5,
+            limit: 6,
             user_id: getLoginType?.response?.data?.user_id,
           })
         );

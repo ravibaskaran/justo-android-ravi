@@ -10,6 +10,7 @@ import {
   Isios,
   PRIMARY_THEME_COLOR,
   WHITE_COLOR,
+  WHITE_COLOR_LIGHT,
 } from "app/components/utilities/constant";
 import { Dimensions, StyleSheet } from "react-native";
 
@@ -29,15 +30,15 @@ const styles = StyleSheet.create({
     backgroundColor: PRIMARY_THEME_COLOR,
     borderRadius: 10,
     margin: 5,
-    paddingVertical: 20,
+    paddingBottom: 20,
   },
   nameText: {
-    color: WHITE_COLOR,
+    color: PRIMARY_THEME_COLOR,
     fontWeight: "900",
     fontFamily: FONT_FAMILY_SEMIBOLD,
     fontSize: normalize(Isios ? 14 : 16),
-    paddingLeft: 20,
     flex: 1,
+    marginRight: 10,
   },
   childContainer2: {
     flexDirection: "row",
@@ -79,8 +80,17 @@ const styles = StyleSheet.create({
   imageStyle: {
     height: normalizeHeight(20),
     width: normalizeWidth(20),
-    tintColor: WHITE_COLOR,
-    marginRight:20
+    tintColor: PRIMARY_THEME_COLOR,
+  },
+
+  nameContainer: {
+    margin: 8,
+    flexDirection: "row",
+    padding: 10,
+    backgroundColor: "#fff",
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    alignItems: "center",
   },
 });
 export default styles;

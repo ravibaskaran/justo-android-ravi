@@ -54,7 +54,9 @@ const DataRow = ({
   values: (number | undefined)[];
 }) => (
   <View style={styles.childContainer2}>
-    <Text style={styles.itemText}>{getLabel(label)}</Text>
+    <Text style={[styles.itemText, { textAlign: "left", marginLeft: 10 }]}>
+      {getLabel(label)}
+    </Text>
     {values.map((value, index) => (
       <Text key={index} style={[styles.itemText, { flex: 0.6 }]}>
         {value}
@@ -132,10 +134,9 @@ const ProjectReportList = ({ items, date }: { items: any; date: any }) => {
     return data.trim();
   };
 
-
   return (
     <View style={styles.container}>
-      <View style={{ flexDirection: "row" }}>
+      <View style={styles.nameContainer}>
         <Text style={styles.nameText}>{property_name}</Text>
         <TouchableOpacity onPress={() => onPressShare()}>
           <Image source={images.shareIcon} style={styles.imageStyle} />
@@ -144,9 +145,9 @@ const ProjectReportList = ({ items, date }: { items: any; date: any }) => {
 
       <View style={styles.childContainer2}>
         <Text style={styles.itemText}></Text>
-        <Text style={styles.itemText}>FTD</Text>
-        <Text style={styles.itemText}>MTD</Text>
-        <Text style={styles.itemText}>YTD</Text>
+        <Text style={[styles.itemText, { flex: 0.6 }]}>FTD</Text>
+        <Text style={[styles.itemText, { flex: 0.6 }]}>MTD</Text>
+        <Text style={[styles.itemText, { flex: 0.6 }]}>YTD</Text>
       </View>
 
       <Text style={styles.subHead}>Bookings</Text>

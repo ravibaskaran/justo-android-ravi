@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-import { useFocusEffect, useIsFocused } from "@react-navigation/native";
-import { DATE_FORMAT } from "app/components/utilities/constant";
+import { useFocusEffect } from "@react-navigation/native";
 import { GetProjectDetailsReport } from "app/Redux/Actions/ProjectReportActions";
-import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import ProjectReportView from "./components/ProjectReportView";
 
@@ -28,7 +26,7 @@ const ProjectReportScreen = ({ navigation }: any) => {
       });
       getData({});
       return () => {};
-    }, [navigation, list])
+    }, [navigation])
   );
 
   const getData = (data: any) => {

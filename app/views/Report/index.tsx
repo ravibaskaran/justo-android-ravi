@@ -72,11 +72,19 @@ const ReportScreen = ({ navigation }: any) => {
     : moment(new Date()).format("DD-MM-YYYY");
   const fileName = today_Date + "_to_" + lastDate;
 
-  useLayoutEffect(() => {
-    if (!filterModalVisible) {
+  // useLayoutEffect(() => {
+  //   if (!filterModalVisible) {
+  //     getData(today, today);
+  //   }
+  // }, [isFocused, filterData, navigation]);
+
+  useFocusEffect(
+    React.useCallback(() => {
       getData(today, today);
-    }
-  }, [isFocused, filterData, navigation]);
+      return () => {};
+    }, [navigation])
+  );
+
   useEffect(() => {
     if (ReportData?.response?.data?.length > 0) {
       setReportData(ReportData?.response?.data);

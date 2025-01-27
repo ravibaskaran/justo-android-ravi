@@ -1,20 +1,17 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
-import React, { useEffect } from "react";
-import styles from "./styles";
+import usePermission from "app/components/utilities/UserPermissions";
+import moment from "moment";
+import React from "react";
+import { Image, Text, TouchableOpacity, View } from "react-native";
+import { useSelector } from "react-redux";
+import images from "../../../../assets/images";
 import strings from "../../../../components/utilities/Localization";
 import {
-  BLACK_COLOR,
-  YELLOW_COLOR,
-  GOLDEN_COLOR,
+  DATE_TIME_FORMAT,
   GREEN_COLOR,
   RED_COLOR,
-  ROLE_IDS,
-  DATE_TIME_FORMAT,
+  ROLE_IDS
 } from "../../../../components/utilities/constant";
-import images from "../../../../assets/images";
-import moment from "moment";
-import { useSelector } from "react-redux";
-import usePermission from "app/components/utilities/UserPermissions";
+import styles from "./styles";
 
 const PropertyListItem = (props: any) => {
   const getLoginType = useSelector((state: any) => state.login);
@@ -35,10 +32,10 @@ const PropertyListItem = (props: any) => {
       </View>
       <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
-          <Text style={styles.projectTxt}>Locality :</Text>
+          <Text style={styles.projectTxt}>City :</Text>
         </View>
         <View style={styles.nameContainer}>
-          <Text style={styles.nameTxt}>{props.items.location}</Text>
+          <Text style={styles.nameTxt}>{props.items.city}</Text>
         </View>
       </View>
       <View style={styles.Txtview}>
@@ -46,7 +43,7 @@ const PropertyListItem = (props: any) => {
           <Text style={styles.projectTxt}>Location :</Text>
         </View>
         <View style={styles.nameContainer}>
-          <Text style={styles.nameTxt}>{props.items.area}</Text>
+          <Text style={styles.nameTxt}>{props.items.location}</Text>
         </View>
       </View>
       <View style={styles.Txtview}>

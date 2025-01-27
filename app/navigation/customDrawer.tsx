@@ -450,6 +450,15 @@ const customDrawer = ({ navigation }: any) => {
             navigation.navigate("SettingScreen");
           }}
         /> */}
+        {/* <DrawerTabSection
+            type={"all"}
+            iconSource={15}
+            tabTitle={"Project Details Report"}
+            handleDrawerNavigation={() => {
+              console.log("PDRScreen");
+              navigation.navigate("PDRScreen", { type: "" });
+            }}
+          /> */}
         <DrawerTabSection
           type={"all"}
           iconSource={images.logout}
@@ -460,8 +469,8 @@ const customDrawer = ({ navigation }: any) => {
       <View style={styles.versionView}>
         <View style={[styles.drawerTouch, { justifyContent: "center" }]}>
           <Text style={styles.drawerText}>
-            {strings.versionText}ST-{DeviceInfo.getVersion()}
-            {/* {strings.versionText}-{DeviceInfo.getVersion()} */}
+            {/* {strings.versionText}ST-{DeviceInfo.getVersion()} */}
+            {strings.versionText}-{DeviceInfo.getVersion()}
           </Text>
         </View>
       </View>
