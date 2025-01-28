@@ -24,12 +24,13 @@ const ChangePasswordView = (props: any) => {
     isVisibleOldPassword,
     isVisibleNewPassword,
     isVisibleCnfmPassword,
+    handleForgetPress,
   } = props;
   return (
     <View style={styles.mainContainer}>
       <Header
-        leftImageSrc={images.backArrow}
-        rightSecondImageScr={images.notification}
+        leftImageSrc={data?.hideIcons ? false : images.backArrow}
+        rightSecondImageScr={data?.hideIcons ? false : images.notification}
         headerText={data.heading}
         headerStyle={styles.headerStyle}
         RightFirstIconStyle={styles.leftImageIconStyle}
@@ -103,6 +104,12 @@ const ChangePasswordView = (props: any) => {
               isSecureText={isVisibleCnfmPassword}
             />
           </View>
+          {data?.hideIcons && (
+            <Text onPress={handleForgetPress} style={styles.forgotText}>
+              {strings.forgotPassword}
+            </Text>
+          )}
+
           <View style={styles.btnView}>
             <Button
               handleBtnPress={handleChangePress}

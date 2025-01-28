@@ -19,44 +19,44 @@ const ChangePasswordScreen = ({ navigation, route }: any) => {
   const [isVisibleOldPassword, setIsVisibleOldPassword] = useState(true);
   const [isVisibleNewPassword, setIsVisibleNewPassword] = useState(true);
   const [isVisibleCnfmPassword, setIsVisibleCnfmPassword] = useState(true);
- 
+
   const [email, setEmail] = useState("");
   const { response = {}, changepassword = false } = useSelector(
     (state: any) => state.changePasswordResponse
-    );
+  );
 
   useEffect(() => {
-    if(changepassword === true){
-      if(response.status === 200){
-      ErrorMessage({
+    if (changepassword === true) {
+      if (response.status === 200) {
+        ErrorMessage({
           msg: response.message,
           backgroundColor: GREEN_COLOR,
         });
-        dispatch(userLogout())
-        navigation.navigate('AuthLoading');
+        dispatch(userLogout());
+        navigation.navigate("AuthLoading");
         dispatch({
           type: CHANGEPASSWORD_NULL,
-          payload: {}
-      })
+          payload: {},
+        });
       } else {
         ErrorMessage({
           msg: response.message,
           backgroundColor: RED_COLOR,
         });
       }
-   }
+    }
   }, [response]);
-  
+
   const handleOldPasswordBtnPress = () => {
-    Keyboard.dismiss()
+    Keyboard.dismiss();
     setIsVisibleOldPassword(!isVisibleOldPassword);
   };
   const handleNewPasswordBtnPress = () => {
-    Keyboard.dismiss()
+    Keyboard.dismiss();
     setIsVisibleNewPassword(!isVisibleNewPassword);
   };
   const handlecnfmPasswordBtnPress = () => {
-    Keyboard.dismiss()
+    Keyboard.dismiss();
     setIsVisibleCnfmPassword(!isVisibleCnfmPassword);
   };
 
@@ -93,15 +93,19 @@ const ChangePasswordScreen = ({ navigation, route }: any) => {
   };
 
   const handleChangePress = () => {
-    Keyboard.dismiss()
+    Keyboard.dismiss();
     if (validation()) {
-
       const params = {
         old_password: passwordData.oldPassword,
         new_password: passwordData.password,
       };
       dispatch(changePassword(params));
     }
+  };
+
+  const handleForgetPress = () => {
+    dispatch(userLogout());
+    navigation.navigate("AuthLoading");
   };
 
   return (
@@ -117,6 +121,7 @@ const ChangePasswordScreen = ({ navigation, route }: any) => {
       isVisibleNewPassword={isVisibleNewPassword}
       handlecnfmPasswordBtnPress={handlecnfmPasswordBtnPress}
       isVisibleCnfmPassword={isVisibleCnfmPassword}
+      handleForgetPress={handleForgetPress}
     />
   );
 };

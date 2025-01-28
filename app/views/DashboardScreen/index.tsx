@@ -29,6 +29,7 @@ import React, { useEffect, useState } from "react";
 import { Alert, BackHandler } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import DashboardView from "./components/DashboardView";
+import images from "app/assets/images";
 
 const DashboardScreen = ({ navigation }: any) => {
   const dispatch: any = useDispatch();
@@ -62,7 +63,6 @@ const DashboardScreen = ({ navigation }: any) => {
   );
   useFocusEffect(
     React.useCallback(() => {
-      getDashboard();
       if (
         getLoginType?.response?.data?.role_id === ROLE_IDS.closingmanager_id ||
         getLoginType?.response?.data?.role_id === ROLE_IDS.closingtl_id ||
@@ -83,6 +83,34 @@ const DashboardScreen = ({ navigation }: any) => {
       return () => {};
     }, [navigation])
   );
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const passwordChangedDateStr =
+        getLoginType?.response?.data?.passwordChangedDate;
+
+      if (passwordChangedDateStr) {
+        const passwordChangedDate: any = new Date(passwordChangedDateStr);
+        const currentDate: any = new Date();
+        const timeDifference = currentDate - passwordChangedDate;
+        const daysDifference = timeDifference / (1000 * 60 * 60 * 24);
+        if (daysDifference > 45) navigateToChangePass();
+        else getDashboard();
+      } else {
+        navigateToChangePass();
+      }
+      return () => {};
+    }, [navigation, getLoginType])
+  );
+
+  const navigateToChangePass = async () => {
+    navigation.navigate("changePassword", {
+      heading: "Change password",
+      icon: images.lock,
+      type: "changePassword",
+      hideIcons: true,
+    });
+  };
 
   async function getAllAppointment() {
     let params = {
