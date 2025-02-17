@@ -18,6 +18,7 @@ import {
   SafeAreaView,
   ScrollView,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 import RNFS from "react-native-fs";
@@ -144,33 +145,25 @@ const SCMReportTable = (props: any) => {
           </View>
 
           <View style={styles.boxcontent}>
-            <View style={styles.childContainer}>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
-                Leads
-              </Text>
-              <Text
-                style={[
-                  styles.cardText,
-                  {
-                    fontSize: 18,
-                    color: "#000",
-                    fontWeight: "700",
-                    paddingTop: 12,
-                  },
-                ]}
-              >
+            <TouchableOpacity
+              // disabled={true}
+              onPress={() => props.onCardPress("Leads")}
+              style={styles.childContainer}
+            >
+              <Text style={[styles.cardText, styles.cardText2]}>
                 {data[0]?.total_leades}
               </Text>
-            </View>
+              <Text style={[styles.cardText, styles.cardText1]}>Leads</Text>
+            </TouchableOpacity>
             <ItemCard
+              onPress={() => props.onCardPress("Site Visit Created")}
               title={"Site Visit Created"}
               byCp={data[0]?.site_visit_created_cp}
               byDirect={data[0]?.site_visit_created_direct}
               total={data[0]?.site_visit_created}
             />
             <ItemCard
+              onPress={() => props.onCardPress("Walk-ins")}
               title={"Walk-ins"}
               byCp={data[0]?.walkin_cp}
               byDirect={data[0]?.walkin_direct}
@@ -178,24 +171,25 @@ const SCMReportTable = (props: any) => {
             />
 
             <ItemCard
+              onPress={() => props.onCardPress("Booking")}
               title={"Booking"}
               byCp={data[0]?.booking_cp}
               byDirect={data[0]?.booking_direct}
               total={data[0]?.total_booking}
             />
 
-            <View style={styles.childContainer}>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
-                CP Appointments
-              </Text>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
+            <TouchableOpacity
+              // disabled={true}
+              onPress={() => props.onCardPress("CP Appointments")}
+              style={styles.childContainer}
+            >
+              <Text style={[styles.cardText, styles.cardText2]}>
                 {data[0]?.appointmentwithCp}
               </Text>
-            </View>
+              <Text style={[styles.cardText, styles.cardText1]}>
+                CP Appointments
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>

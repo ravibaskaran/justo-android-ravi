@@ -1,12 +1,10 @@
-import { View, Text } from "react-native";
-import React, { useEffect, useState } from "react";
-import AppointmentView from "./Components/AppointmentView";
-import { getAllAppointmentList } from "app/Redux/Actions/AppointmentWithCpActions";
-import { useDispatch, useSelector } from "react-redux";
 import { useFocusEffect } from "@react-navigation/native";
 import { getUserAppointmentList } from "app/Redux/Actions/AppiontmentWithUserActions";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import AppointmentView from "./Components/AppointmentView";
 
-const AppointmentScreenCPSM = ({ navigation }: any) => {
+const AppointmentScreenCPSM = ({ navigation, route }: any) => {
   const [appointmentList, setAppointmentList] = useState<any>([]);
   const [offSET, setOffset] = useState(0);
   const [role, setRole] = useState("");
@@ -84,6 +82,7 @@ const AppointmentScreenCPSM = ({ navigation }: any) => {
       role={role}
       list={list}
       edit={edit}
+      route={route}
     />
   );
 };

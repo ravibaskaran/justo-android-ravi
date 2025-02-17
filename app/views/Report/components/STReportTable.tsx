@@ -174,65 +174,52 @@ const STReportTable = (props: any) => {
             </Text>
           </View>
 
-          <View
-            style={{
-              flex: 1,
-              flexDirection: "row",
-              flexWrap: "wrap",
-              justifyContent: "center",
-            }}
-          >
-            <View style={styles.childContainer}>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
+          <View style={styles.boxcontent}>
+            <TouchableOpacity
+              // disabled={true}
+              onPress={() => props.onCardPress("Leads")}
+              style={styles.childContainer}
+            >
+              <Text style={[styles.cardText, styles.cardText2]}>
                 {data[0]?.total_leades}
               </Text>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
-                Leads
-              </Text>
-            </View>
+              <Text style={[styles.cardText, styles.cardText1]}>Leads</Text>
+            </TouchableOpacity>
 
-            <View style={styles.childContainer}>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
+            <TouchableOpacity
+              // disabled={true}
+              onPress={() => props.onCardPress("Site Visit Created")}
+              style={styles.childContainer}
+            >
+              <Text style={[styles.cardText, styles.cardText2]}>
                 {data[0]?.site_visit_created}
               </Text>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
+              <Text style={[styles.cardText, styles.cardText1]}>
                 Site Visit Created
               </Text>
-            </View>
+            </TouchableOpacity>
 
-            <View style={styles.childContainer}>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
+            <TouchableOpacity
+              // disabled={true}
+              onPress={() => props.onCardPress("Walk-ins")}
+              style={styles.childContainer}
+            >
+              <Text style={[styles.cardText, styles.cardText2]}>
                 {data[0]?.walkin}
               </Text>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
-                Walk-ins
-              </Text>
-            </View>
+              <Text style={[styles.cardText, styles.cardText1]}>Walk-ins</Text>
+            </TouchableOpacity>
 
-            <View style={styles.childContainer}>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
+            <TouchableOpacity
+              // disabled={true}
+              onPress={() => props.onCardPress("Booking")}
+              style={styles.childContainer}
+            >
+              <Text style={[styles.cardText, styles.cardText2]}>
                 {data[0]?.total_booking}
               </Text>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
-                Booking
-              </Text>
-            </View>
+              <Text style={[styles.cardText, styles.cardText1]}>Booking</Text>
+            </TouchableOpacity>
           </View>
         </View>
 

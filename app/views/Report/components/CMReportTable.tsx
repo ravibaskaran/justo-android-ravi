@@ -18,6 +18,7 @@ import {
   SafeAreaView,
   ScrollView,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 import RNFS from "react-native-fs";
@@ -143,27 +144,18 @@ const CMReportTable = (props: any) => {
             </Text>
           </View>
           <View style={styles.boxcontent}>
-            <View style={styles.childContainer}>
-              <Text
-                style={[styles.cardText, { color: "#000", fontWeight: "700" }]}
-              >
-                Leads
-              </Text>
-              <Text
-                style={[
-                  styles.cardText,
-                  {
-                    fontSize: 18,
-                    color: "#000",
-                    fontWeight: "700",
-                    paddingTop: 12,
-                  },
-                ]}
-              >
+            <TouchableOpacity
+              // disabled={true}
+              onPress={() => props.onCardPress("Leads")}
+              style={styles.childContainer}
+            >
+              <Text style={[styles.cardText, styles.cardText1]}>Leads</Text>
+              <Text style={[styles.cardText, styles.cardText2]}>
                 {data[0]?.total_leades}
               </Text>
-            </View>
+            </TouchableOpacity>
             <ItemCard
+              onPress={() => props.onCardPress("Site Visit Created")}
               title={"Site Visit Created"}
               byCp={data[0]?.site_visit_created_cp}
               byDirect={data[0]?.site_visit_created_direct}
@@ -171,11 +163,13 @@ const CMReportTable = (props: any) => {
             />
             <ItemCard
               title={"Walk-ins"}
+              onPress={() => props.onCardPress("Walk-ins")}
               byCp={data[0]?.walkin_cp}
               byDirect={data[0]?.walkin_direct}
               total={data[0]?.walkin}
             />
             <ItemCard
+              onPress={() => props.onCardPress("Booking")}
               title={"Booking"}
               byCp={data[0]?.booking_cp}
               byDirect={data[0]?.booking_direct}

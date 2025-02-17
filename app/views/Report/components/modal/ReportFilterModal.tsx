@@ -36,7 +36,14 @@ const FilterModal = (props: any) => {
     useSelector((state: any) => state.UserManager) || {};
 
   useEffect(() => {
-    dispatch(getUsersListForSiteHead({}));
+    if (
+      roleId === ROLE_IDS.sitehead_id ||
+      roleId === ROLE_IDS.admin_id ||
+      roleId === ROLE_IDS.clusterhead_id ||
+      roleId === ROLE_IDS.businesshead_id
+    ) {
+      dispatch(getUsersListForSiteHead({}));
+    }
   }, []);
   useEffect(() => {
     let arr: any;

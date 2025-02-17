@@ -138,3 +138,8 @@ export function getCPLeadType(cp_lead_type: any) {
     return " (Tele-calling)";
   } else return "";
 }
+
+export const REGISTERD_CP = {
+  YES: 1,
+  NO: 2,
+};

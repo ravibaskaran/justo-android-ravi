@@ -58,7 +58,9 @@ const AppointmentItem = (props: any) => {
   });
   const checkinStaus =
     props?.items?.checkin_status?.length > 0
-      ? props?.items?.checkin_status[0]?.status
+      ? props?.items?.checkin_status[0]?.created_date
+      : props?.items?.checkin_status?.created_date
+      ? props?.items?.checkin_status?.created_date
       : "";
 
   return (
@@ -104,10 +106,8 @@ const AppointmentItem = (props: any) => {
         </View>
         <View style={styles.nameContainer}>
           <Text style={styles.nameTxt}>
-            {checkinStaus
-              ? moment(props?.items?.checkin_status[0]?.created_date).format(
-                  DATE_TIME_FORMAT
-                )
+          {checkinStaus
+              ? moment(checkinStaus).format(DATE_TIME_FORMAT)
               : strings.notfount}
           </Text>
         </View>

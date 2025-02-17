@@ -1,10 +1,14 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import styles from "./styles";
 
 const ItemCard = (props: any) => {
   return (
-    <View style={styles.childContainer}>
+    <TouchableOpacity
+      // disabled={true}
+      onPress={props.onPress}
+      style={styles.childContainer}
+    >
       <Text style={styles.text1}>{props?.title}</Text>
       <View style={styles.smallContainer}>
         <View style={{ flex: 1 }}>
@@ -13,10 +17,8 @@ const ItemCard = (props: any) => {
         </View>
         <Text style={styles.text2}>{props?.total}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
 export default ItemCard;
-
-

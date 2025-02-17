@@ -25,6 +25,7 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AppointmentView from "./components/Appointments";
+import AppointmentsForReport from "./components/AppointmentsForReport";
 
 const AppointmentsScreen = ({ navigation, route }: any) => {
   const [dropLocisVisible, setDropLocisVisible] = useState(false);
@@ -222,33 +223,64 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
   };
   return (
     <>
-      <AppointmentView
-        filterisVisible={filterisVisible}
-        setFilterisVisible={setFilterisVisible}
-        // handleDrawerPress={handleDrawerPress}
-        onPressView={onPressView}
-        DATA={appointmentList}
-        handleScanQr={handleScanQr}
-        dropLocisVisible={dropLocisVisible}
-        setDropLocisVisible={setDropLocisVisible}
-        getAppointmentList={getAppointmentList}
-        getCMList={getCMList}
-        ClosingMList={ClosingMList}
-        setAllocatedCM={setAllocatedCM}
-        allocatedCM={allocatedCM}
-        handleAllocateCM={handleAllocateCM}
-        offSET={offSET}
-        moreData={moreData}
-        filterData={filterData}
-        setFilterData={setFilterData}
-        setAppointmentList={setAppointmentList}
-        todayAppointment={todayAppointment}
-        navigation={navigation}
-        getLoginType={getLoginType}
-        type={type}
-        settype={settype}
-        setIsTodayAppointment={setIsTodayAppointment}
-      />
+      {route.params?.fromReport ? (
+        <AppointmentsForReport
+          filterisVisible={filterisVisible}
+          setFilterisVisible={setFilterisVisible}
+          // handleDrawerPress={handleDrawerPress}
+          onPressView={onPressView}
+          DATA={appointmentList}
+          dropLocisVisible={dropLocisVisible}
+          setDropLocisVisible={setDropLocisVisible}
+          getAppointmentList={getAppointmentList}
+          getCMList={getCMList}
+          ClosingMList={ClosingMList}
+          setAllocatedCM={setAllocatedCM}
+          allocatedCM={allocatedCM}
+          handleAllocateCM={handleAllocateCM}
+          offSET={offSET}
+          moreData={moreData}
+          filterData={filterData}
+          setFilterData={setFilterData}
+          setAppointmentList={setAppointmentList}
+          todayAppointment={todayAppointment}
+          navigation={navigation}
+          getLoginType={getLoginType}
+          type={type}
+          settype={settype}
+          params={route.params}
+          setIsTodayAppointment={setIsTodayAppointment}
+        />
+      ) : (
+        <AppointmentView
+          filterisVisible={filterisVisible}
+          setFilterisVisible={setFilterisVisible}
+          // handleDrawerPress={handleDrawerPress}
+          onPressView={onPressView}
+          DATA={appointmentList}
+          handleScanQr={handleScanQr}
+          dropLocisVisible={dropLocisVisible}
+          setDropLocisVisible={setDropLocisVisible}
+          getAppointmentList={getAppointmentList}
+          getCMList={getCMList}
+          ClosingMList={ClosingMList}
+          setAllocatedCM={setAllocatedCM}
+          allocatedCM={allocatedCM}
+          handleAllocateCM={handleAllocateCM}
+          offSET={offSET}
+          moreData={moreData}
+          filterData={filterData}
+          setFilterData={setFilterData}
+          setAppointmentList={setAppointmentList}
+          todayAppointment={todayAppointment}
+          navigation={navigation}
+          getLoginType={getLoginType}
+          type={type}
+          settype={settype}
+          setIsTodayAppointment={setIsTodayAppointment}
+        />
+      )}
+
       <ConfirmModal
         Visible={isVisible}
         setIsVisible={setIsVisible}

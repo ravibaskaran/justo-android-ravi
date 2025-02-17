@@ -72,7 +72,7 @@ const ProjectReportList = ({ items, date }: { items: any; date: any }) => {
   const getValues = (data: any, field: string) => [
     data?.ftd?.[field],
     data?.mtd?.[field],
-    data?.ytd?.[field],
+    // data?.ytd?.[field],
   ];
   function formatDateString(dateString: any) {
     const [year, month, day] = dateString.split("-");
@@ -101,7 +101,8 @@ const ProjectReportList = ({ items, date }: { items: any; date: any }) => {
     data += `*Property: ${property_name}*\n\n`;
 
     // Define the types (FTD, MTD, YTD)
-    const types = ["ftd", "mtd", "ytd"];
+    // const types = ["ftd", "mtd", "ytd"];
+    const types = ["ftd", "mtd"];
 
     // Loop over the booking types and site visit data
     types.forEach((type) => {
@@ -147,7 +148,7 @@ const ProjectReportList = ({ items, date }: { items: any; date: any }) => {
         <Text style={styles.itemText}></Text>
         <Text style={[styles.itemText, { flex: 0.6 }]}>FTD</Text>
         <Text style={[styles.itemText, { flex: 0.6 }]}>MTD</Text>
-        <Text style={[styles.itemText, { flex: 0.6 }]}>YTD</Text>
+        {/* <Text style={[styles.itemText, { flex: 0.6 }]}>YTD</Text> */}
       </View>
 
       <Text style={styles.subHead}>Bookings</Text>

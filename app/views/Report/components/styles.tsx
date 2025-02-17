@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     fontWeight: "900",
     fontFamily: FONT_FAMILY_SEMIBOLD,
     fontSize: normalize(Isios ? 14 : 16),
-    paddingHorizontal:10
+    paddingHorizontal: 10,
   },
   container: {
     flexDirection: "row",
@@ -179,10 +179,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
   },
-  nameContainer:{
+  nameContainer: {
     flexDirection: "row",
     alignItems: "center",
     paddingLeft: 15,
-  }
+  },
+  cardText1: {
+    color: "#000",
+    fontWeight: "700",
+  },
+  cardText2: {
+    color: "#000",
+    fontWeight: "700",
+    paddingTop: 12,
+    fontSize: 18,
+  },
 });
 export default styles;

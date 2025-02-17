@@ -69,6 +69,7 @@ const AddAppointmentScreen = ({ navigation, route }: any) => {
       if (
         (getLoginType?.response?.data?.role_id ===
           ROLE_IDS.sourcingmanager_id ||
+          ROLE_IDS.scm_id ||
           getLoginType?.response?.data?.role_id === ROLE_IDS.clusterhead_id ||
           getLoginType?.response?.data?.role_id === ROLE_IDS.sitehead_id) &&
         type != strings.edit

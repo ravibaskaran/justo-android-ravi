@@ -94,6 +94,11 @@ const styles = StyleSheet.create({
   },
   btnView: {
     marginVertical: normalizeSpacing(20)
+  },
+  headingsTxt: {
+    fontSize: normalize(16),
+    color: BLACK_COLOR,
+    fontFamily: FONT_FAMILY_SEMIBOLD,
   }
 })
 

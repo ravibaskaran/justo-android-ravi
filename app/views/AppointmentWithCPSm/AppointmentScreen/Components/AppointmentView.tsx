@@ -1,5 +1,20 @@
-import { View, useWindowDimensions, FlatList, Text } from "react-native";
+import Geolocation from "@react-native-community/geolocation";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
+import ErrorMessage from "app/components/ErrorMessage";
+import usePermission from "app/components/utilities/UserPermissions";
+import {
+  RemoveAppointment,
+  updateUserAppointmentStatus,
+} from "app/Redux/Actions/AppiontmentWithUserActions";
+import AppointmentFilterModal from "app/views/AppointMent/AppintMents/components/AppointmentFilterModal ";
 import React, { useEffect, useState } from "react";
+import { FlatList, Text, View, useWindowDimensions } from "react-native";
+import { TabBar, TabView } from "react-native-tab-view";
+import { useDispatch, useSelector } from "react-redux";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import Header from "../../../../components/Header";
 import {
   GREEN_COLOR,
   PRIMARY_THEME_COLOR,
@@ -8,28 +23,11 @@ import {
   TABBAR_COLOR,
   todayDate,
 } from "../../../../components/utilities/constant";
-import Header from "../../../../components/Header";
-import images from "../../../../assets/images";
 import strings from "../../../../components/utilities/Localization";
-import styles from "./Styles";
-import { SceneMap, TabBar, TabView } from "react-native-tab-view";
-import SmAppointment from "./SmAppointment";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import AppointmentModal from "./AppointmentModal";
-import Button from "../../../../components/Button";
 import MyAppointment from "./MyAppointment";
-import { useDispatch, useSelector } from "react-redux";
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
-import { getUserVisitList } from "app/Redux/Actions/LeadsActions";
-import {
-  RemoveAppointment,
-  updateUserAppointmentStatus,
-} from "app/Redux/Actions/AppiontmentWithUserActions";
-import ConfirmModal from "app/components/Modals/ConfirmModal";
-import Geolocation from "@react-native-community/geolocation";
-import usePermission from "app/components/utilities/UserPermissions";
-import AppointmentFilterModal from "app/views/AppointMent/AppintMents/components/AppointmentFilterModal ";
-import ErrorMessage from "app/components/ErrorMessage";
+import SmAppointment from "./SmAppointment";
+import styles from "./Styles";
 
 const AppointmentView = (props: any) => {
   const dispatch: any = useDispatch();
@@ -109,6 +107,35 @@ const AppointmentView = (props: any) => {
       }
     );
   }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      if (props?.route?.params?.fromReport) {
+        setIndexData({
+          index: 1,
+          routes: [
+            {
+              key: "first",
+              title:
+                roleId === ROLE_IDS.sourcingtl_id ||
+                roleId === ROLE_IDS.sourcing_head_id
+                  ? "My Appointment"
+                  : "Today Appointment",
+            },
+            {
+              key: "second",
+              title:
+                roleId === ROLE_IDS.sourcingtl_id ||
+                roleId === ROLE_IDS.sourcing_head_id
+                  ? "SM Appointment With CP"
+                  : "All Appointment",
+            },
+          ],
+        });
+      }
+
+      return () => {};
+    }, [props?.route])
+  );
 
   useFocusEffect(
     React.useCallback(() => {
@@ -118,33 +145,45 @@ const AppointmentView = (props: any) => {
         customer_name: "",
         status: "",
       });
+      const isSourcingRole =
+        roleId === ROLE_IDS.sourcingtl_id ||
+        roleId === ROLE_IDS.sourcing_head_id;
+
       if (indexData?.index == 1) {
-        if (
-          roleId === ROLE_IDS.sourcingtl_id ||
-          roleId === ROLE_IDS.sourcing_head_id
-        ) {
-          props.getAppointmentList(
-            roleId === ROLE_IDS.sourcingtl_id ||
-              roleId === ROLE_IDS.sourcing_head_id
-              ? 3
-              : 1,
-            {}
-          );
+        if (isSourcingRole) {
+          props.getAppointmentList(3, {});
         } else {
-          props.getAppointmentList(2, {});
+          if (props?.route?.params?.fromReport) {
+            props.setFilterData({
+              start_date: props?.route?.params.sDate,
+              end_date: props?.route?.params.eDate,
+              customer_name: "",
+              status: "",
+            });
+            props.getAppointmentList(2, {
+              start_date: props?.route?.params.sDate,
+              end_date: props?.route?.params.eDate,
+            });
+          } else {
+            props.getAppointmentList(2, {});
+          }
         }
       } else {
-        if (
-          roleId === ROLE_IDS.sourcingtl_id ||
-          roleId === ROLE_IDS.sourcing_head_id
-        ) {
+        if (isSourcingRole) {
           props.getAppointmentList(2, {});
         } else {
           props.getAppointmentList(2, todayDate);
         }
       }
       return () => {};
-    }, [navigation, indexData, userEditAppointmentData, props.list, props.edit])
+    }, [
+      navigation,
+      indexData,
+      userEditAppointmentData,
+      props.list,
+      props.edit,
+      props?.route,
+    ])
   );
 
   const handleIndexChange = (index: any) => {
@@ -188,31 +227,18 @@ const AppointmentView = (props: any) => {
     setIsVisible(false);
   };
   const onPressApply = (type: any) => {
+    const isSourcingRole =
+      roleId === ROLE_IDS.sourcingtl_id || roleId === ROLE_IDS.sourcing_head_id;
     if (type === "reset") {
       if (indexData?.index == 1) {
-        props.getAppointmentList(
-          roleId === ROLE_IDS.sourcingtl_id ||
-            roleId === ROLE_IDS.sourcing_head_id
-            ? 3
-            : 1,
-          {}
-        );
+        props.getAppointmentList(isSourcingRole ? 3 : 2, {});
       } else {
         props.getAppointmentList(2, {});
       }
     } else {
       if (indexData?.index == 1) {
-        if (
-          roleId === ROLE_IDS.sourcingtl_id ||
-          roleId === ROLE_IDS.sourcing_head_id
-        ) {
-          props.getAppointmentList(
-            roleId === ROLE_IDS.sourcingtl_id ||
-              roleId === ROLE_IDS.sourcing_head_id
-              ? 3
-              : 1,
-            props.filterData
-          );
+        if (isSourcingRole) {
+          props.getAppointmentList(3, props.filterData);
         } else {
           props.getAppointmentList(2, props.filterData);
         }
@@ -256,13 +282,7 @@ const AppointmentView = (props: any) => {
     if (type === 0) {
       props.setFilterData(todayDate);
       if (indexData?.index == 1) {
-        props.getAppointmentList(
-          roleId === ROLE_IDS.sourcingtl_id ||
-            roleId === ROLE_IDS.sourcing_head_id
-            ? 3
-            : 1,
-          todayDate
-        );
+        props.getAppointmentList(3, todayDate);
       } else {
         props.getAppointmentList(2, todayDate);
       }
@@ -274,13 +294,7 @@ const AppointmentView = (props: any) => {
         status: "",
       });
       if (indexData?.index == 1) {
-        props.getAppointmentList(
-          roleId === ROLE_IDS.sourcingtl_id ||
-            roleId === ROLE_IDS.sourcing_head_id
-            ? 3
-            : 1,
-          {}
-        );
+        props.getAppointmentList(3, {});
       } else {
         props.getAppointmentList(2, {});
       }
@@ -347,12 +361,7 @@ const AppointmentView = (props: any) => {
               customer_name: "",
               status: "",
             });
-            props.getAppointmentList(
-              roleId === ROLE_IDS.sourcingtl_id ||
-                roleId === ROLE_IDS.sourcing_head_id
-                ? 3
-                : 1
-            );
+            props.getAppointmentList(3);
           }}
           refreshing={loadingref}
         />

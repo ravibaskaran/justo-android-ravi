@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { View, Text } from 'react-native'
-import LeadManagementView from './Components/LeadManagementView'
-import { useDispatch, useSelector } from 'react-redux'
 import { useFocusEffect } from '@react-navigation/native'
-import { getAllLeadsList } from 'app/Redux/Actions/LeadsActions'
 import { getCpActiveLead } from 'app/Redux/Actions/TransferVisitAction'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import LeadManagementView from './Components/LeadManagementView'
 
 const DeactiveAgency = ({ navigation, route }: any) => {
   const dispatch: any = useDispatch()

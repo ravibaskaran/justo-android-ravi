@@ -7,11 +7,18 @@ import images from "../../../../assets/images";
 import {
   GRAY_LIGHT_COLOR,
   DATE_FORMAT,
+  PRIMARY_THEME_COLOR,
+  BLACK_COLOR,
+  REGISTERD_CP,
 } from "../../../../components/utilities/constant";
 import Button from "../../../../components/Button";
 import InputCalender from "app/components/InputCalender";
 import moment from "moment";
 import Styles from "app/components/DropDown/styles";
+import { RequiredStart } from "app/components/utilities/GlobalFuncations";
+import { normalizeSpacing } from "app/components/scaleFontSize";
+import { RadioButton } from "react-native-paper";
+import InputField from "app/components/InputField";
 
 const AddAppointmentItem = (props: any) => {
   const [minAppointmentTime, setMinAppointmentTime] = useState<any>(null);
@@ -32,7 +39,7 @@ const AddAppointmentItem = (props: any) => {
     millisecondsInTwoHours + millisecondsInFiveMinutes;
   const getAheadTime = new Date(Date.now() + totalMillisecondsToAdd);
   return (
-    <ScrollView>
+    <ScrollView keyboardShouldPersistTaps={"handled"}>
       <View style={styles.wrap}>
         <View style={styles.inputWrap}>
           <InputCalender
@@ -143,44 +150,172 @@ const AddAppointmentItem = (props: any) => {
             }}
           />
         </View>
-        <View style={styles.inputWrap}>
-          <DropdownInput
-            require={true}
-            disable={props.type === strings.edit}
-            headingText={strings.appointmentWith}
-            placeholder={
-              props?.addAppointmentForm?.appointment_with
-                ? props?.addAppointmentForm?.appointment_with
-                : strings.appointmentWith
-            }
-            search={true}
-            searchPlaceholder={strings.search}
-            data={props.listData
-              .filter((item: any) => item?.active_status == true)
-              .sort((a: { user_name: string }, b: { user_name: any }) =>
-                a.user_name.localeCompare(b.user_name)
-              )}
-            inputWidth={"100%"}
-            paddingLeft={16}
-            maxHeight={300}
-            labelField="user_name"
-            valueField={"_id"}
-            value={props?.addAppointmentForm?.appointment_with}
-            onChange={(item: any) => {
-              props.setAddAppointmentForm({
-                ...props.addAppointmentForm,
-                appointment_with: item._id,
-              });
-            }}
-            newRenderItem={(item: any) => {
-              return (
-                <View style={Styles.item}>
-                  <Text style={Styles.textItem}>{item.user_name}</Text>
-                </View>
-              );
-            }}
-          />
+        <View style={[styles.genderView, { marginLeft: normalizeSpacing(20) }]}>
+          <Text style={styles.headingsTxt}>Justo CP</Text>
+          <RequiredStart />
+          <View style={styles.radioView}>
+            <RadioButton.Android
+              disabled={props.type === strings.edit}
+              value="1"
+              status={
+                props?.addAppointmentForm?.registered_cp === REGISTERD_CP.YES
+                  ? "checked"
+                  : "unchecked"
+              }
+              onPress={() =>
+                props.setAddAppointmentForm({
+                  ...props.addAppointmentForm,
+                  registered_cp: REGISTERD_CP.YES,
+                  non_reg_cp_name: "",
+                  non_reg_cp_mobile: "",
+                  non_reg_cp_email: "",
+                })
+              }
+              color={PRIMARY_THEME_COLOR}
+            />
+            <Text
+              style={[
+                styles.radioTxt,
+                {
+                  color:
+                    props?.addAppointmentForm?.registered_cp ===
+                    REGISTERD_CP.YES
+                      ? PRIMARY_THEME_COLOR
+                      : BLACK_COLOR,
+                },
+              ]}
+            >
+              {strings.yes}
+            </Text>
+          </View>
+          <View style={styles.radioView}>
+            <RadioButton.Android
+              disabled={props.type === strings.edit}
+              value="2"
+              status={
+                props?.addAppointmentForm?.registered_cp === REGISTERD_CP.NO
+                  ? "checked"
+                  : "unchecked"
+              }
+              onPress={() =>
+                props.setAddAppointmentForm({
+                  ...props.addAppointmentForm,
+                  registered_cp: REGISTERD_CP.NO,
+                  appointment_with: "",
+                })
+              }
+              color={PRIMARY_THEME_COLOR}
+            />
+            <Text
+              style={[
+                styles.radioTxt,
+                {
+                  color:
+                    props?.addAppointmentForm?.registered_cp ===
+                    REGISTERD_CP.NO
+                      ? PRIMARY_THEME_COLOR
+                      : BLACK_COLOR,
+                },
+              ]}
+            >
+              {strings.no}
+            </Text>
+          </View>
         </View>
+        {props?.addAppointmentForm?.registered_cp === REGISTERD_CP.YES ? (
+          <View style={styles.inputWrap}>
+            <DropdownInput
+              require={true}
+              disable={props.type === strings.edit}
+              headingText={strings.appointmentWith}
+              placeholder={
+                props?.addAppointmentForm?.appointment_with
+                  ? props?.addAppointmentForm?.appointment_with
+                  : strings.appointmentWith
+              }
+              search={true}
+              searchPlaceholder={strings.search}
+              data={props.listData
+                .filter((item: any) => item?.active_status == true)
+                .sort((a: { user_name: string }, b: { user_name: any }) =>
+                  a.user_name.localeCompare(b.user_name)
+                )}
+              inputWidth={"100%"}
+              paddingLeft={16}
+              maxHeight={300}
+              labelField="user_name"
+              valueField={"_id"}
+              value={props?.addAppointmentForm?.appointment_with}
+              onChange={(item: any) => {
+                props.setAddAppointmentForm({
+                  ...props.addAppointmentForm,
+                  appointment_with: item._id,
+                });
+              }}
+              newRenderItem={(item: any) => {
+                return (
+                  <View style={Styles.item}>
+                    <Text style={Styles.textItem}>{item.user_name}</Text>
+                  </View>
+                );
+              }}
+            />
+          </View>
+        ) : (
+          <>
+            <View style={styles.inputWrap}>
+              <InputField
+                require={true}
+                disableSpecialCharacters={true}
+                headingText={strings.nameOfCp}
+                placeholderText={strings.name}
+                autoCapitalize="words"
+                handleInputBtnPress={() => {}}
+                onChangeText={(data: any) => {
+                  props.setAddAppointmentForm({
+                    ...props.addAppointmentForm,
+                    non_reg_cp_name: data,
+                  });
+                }}
+                valueshow={props?.addAppointmentForm?.non_reg_cp_name}
+              />
+            </View>
+            <View style={styles.inputWrap}>
+              <InputField
+                require={true}
+                disableSpecialCharacters={true}
+                headingText={strings.mobileNo}
+                placeholderText={strings.mobileNo}
+                handleInputBtnPress={() => {}}
+                keyboardtype={"number-pad"}
+                maxLength={10}
+                onChangeText={(data: any) => {
+                  props.setAddAppointmentForm({
+                    ...props.addAppointmentForm,
+                    non_reg_cp_mobile: data,
+                  });
+                }}
+                valueshow={props?.addAppointmentForm?.non_reg_cp_mobile}
+              />
+            </View>
+            <View style={styles.inputWrap}>
+              <InputField
+                placeholderText={strings.email + " " + strings.address}
+                handleInputBtnPress={() => {}}
+                keyboardtype={"email-address"}
+                headingText={strings.email + " " + strings.address}
+                onChangeText={(data: any) => {
+                  props.setAddAppointmentForm({
+                    ...props.addAppointmentForm,
+                    non_reg_cp_email: data,
+                  });
+                }}
+                valueshow={props?.addAppointmentForm?.non_reg_cp_email}
+              />
+            </View>
+          </>
+        )}
+
         <View style={styles.btnView}>
           <Button
             btnTxtsize={16}

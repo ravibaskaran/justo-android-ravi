@@ -9,21 +9,21 @@ import BookingListView from "./components/BookingList";
 import { todayDate } from "app/components/utilities/constant";
 
 const BookingListScreen = ({ navigation, route }: any) => {
-  const { type = '', onpressType = '' } = route?.params || {}
+  const { type = "", onpressType = "" } = route?.params || {};
   const [BookingList, setBookingList] = useState<any>([]);
   const [offSET, setOffset] = useState(0);
   const [datatype, setDatatype] = useState("");
   const dispatch: any = useDispatch();
   const { response = {}, list = "" } = useSelector(
     (state: any) => state.booking
-    );
+  );
   const moreData = response?.total_data;
 
   const [filterData, setFilterData] = useState({
     start_date: "",
     end_date: "",
     status: "",
-    customer_name: ""
+    customer_name: "",
   });
 
   useFocusEffect(
@@ -32,8 +32,8 @@ const BookingListScreen = ({ navigation, route }: any) => {
         start_date: "",
         end_date: "",
         status: "",
-        customer_name: ""
-      })
+        customer_name: "",
+      });
       return () => {};
     }, [navigation])
   );
@@ -41,9 +41,9 @@ const BookingListScreen = ({ navigation, route }: any) => {
     React.useCallback(() => {
       // getBookingLits(0, []);
       setBookingList([]);
-      handleonpressType();
+      handleonpressType();               
       return () => {};
-    }, [navigation, list, type, onpressType])
+    }, [navigation, list, route])
   );
   useEffect(() => {
     if (response?.status === 200) {
@@ -53,7 +53,7 @@ const BookingListScreen = ({ navigation, route }: any) => {
         } else {
           setBookingList([...BookingList, ...response?.data]);
         }
-      }else {
+      } else {
         setBookingList([]);
       }
     } else {
@@ -62,7 +62,10 @@ const BookingListScreen = ({ navigation, route }: any) => {
   }, [response]);
 
   const handleonpressType = () => {
-    if (onpressType === "today") {
+    const { params } = route ?? {}; // Destructure route params
+    if (params?.fromReport) {
+      getBookingLits(0, { start_date: params.sDate, end_date: params.eDate });
+    } else if (onpressType === "today") {
       getBookingLits(0, todayDate);
     } else {
       getBookingLits(0, []);
@@ -78,7 +81,9 @@ const BookingListScreen = ({ navigation, route }: any) => {
           limit: 10,
           start_date: array?.start_date ? array?.start_date : "",
           end_date: array?.end_date ? array?.end_date : "",
-          customer_name: array?.customer_name?.trim() ? array?.customer_name?.trim() : "",
+          customer_name: array?.customer_name?.trim()
+            ? array?.customer_name?.trim()
+            : "",
         })
       );
     } else {
@@ -89,11 +94,13 @@ const BookingListScreen = ({ navigation, route }: any) => {
           booking_status: array?.status
             ? array?.status
             : type === "readyToBook"
-              ? 1
-              : 5,
+            ? 1
+            : 5,
           start_date: array?.start_date ? array?.start_date : "",
           end_date: array?.end_date ? array?.end_date : "",
-          customer_name: array?.customer_name?.trim() ? array?.customer_name?.trim() : "",
+          customer_name: array?.customer_name?.trim()
+            ? array?.customer_name?.trim()
+            : "",
         })
       );
     }

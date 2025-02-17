@@ -1,13 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
-import { View, Text } from "react-native";
-import LeadManagementView from "./Components/LeadManagementView";
-import { useDispatch, useSelector } from "react-redux";
 import { useFocusEffect } from "@react-navigation/native";
 import { getAllLeadsList } from "app/Redux/Actions/LeadsActions";
 import strings from "app/components/utilities/Localization";
-import { todayDate } from "app/components/utilities/constant";
 import moment from "moment";
+import React, { useEffect, useRef, useState } from "react";
 import { DATE_FORMAT } from "react-native-gifted-chat";
+import { useDispatch, useSelector } from "react-redux";
+import LeadManagementView from "./Components/LeadManagementView";
+import { ROLE_IDS } from "app/components/utilities/constant";
 
 const LeadManagementScreen = ({ navigation, route }: any) => {
   const dispatch: any = useDispatch();
@@ -30,7 +29,7 @@ const LeadManagementScreen = ({ navigation, route }: any) => {
   });
   const [visitorList, setVisiitorList] = useState<any>([]);
   const [offSET, setOffset] = useState(0);
-
+  const { userData = {} } = useSelector((state: any) => state.userData) || [];
   const todayDate = {
     startdate: moment(new Date()).format(DATE_FORMAT),
     enddate: moment(new Date()).format(DATE_FORMAT),
@@ -38,7 +37,8 @@ const LeadManagementScreen = ({ navigation, route }: any) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      setFilterData({
+      const { params } = route ?? {}; // Destructure route params
+      const defaultFilterData = {
         startdate: "",
         enddate: "",
         search_by_visisor_name: "",
@@ -49,12 +49,33 @@ const LeadManagementScreen = ({ navigation, route }: any) => {
         property_title: "",
         visit_status: strings.warm,
         lead_status: "",
-      });
-      if (route?.params === "today") {
+      };
+
+      let filterData = { ...defaultFilterData };
+
+      if (params === "today") {
+        filterData = {
+          ...filterData,
+          startdate: todayDate.startdate,
+          enddate: todayDate.enddate,
+        };
         getVisitorsList(0, todayDate);
+      } else if (params?.fromReport) {
+        filterData = {
+          ...filterData,
+          startdate: params.sDate,
+          enddate: params.eDate,
+        };
+        getVisitorsList(0, {
+          startdate: params.sDate,
+          enddate: params.eDate,
+        });
       } else {
         getVisitorsList(0, {});
       }
+
+      setFilterData(filterData);
+
       return () => {};
     }, [navigation, route])
   );
@@ -77,11 +98,12 @@ const LeadManagementScreen = ({ navigation, route }: any) => {
   }, [response]);
 
   const getVisitorsList = (offset: any, data: any) => {
+    const { params } = route ?? {}; 
     setOffset(offset);
     dispatch(
       getAllLeadsList({
         offset: offset,
-        limit: 3,
+        limit: 10,
         start_date: data?.startdate ? data?.startdate : "",
         end_date: data?.enddate ? data?.enddate : "",
         search_by_visisor_name: data?.search_by_visisor_name
@@ -94,6 +116,15 @@ const LeadManagementScreen = ({ navigation, route }: any) => {
         property_id: data?.property_id ? data?.property_id : "",
         visit_status: data?.visit_status ? data?.visit_status : "",
         lead_status: data?.lead_status ? data?.lead_status : "",
+        reportdata:
+          userData?.data?.role_id == ROLE_IDS.closingtl_id ||
+          userData?.data?.role_id == ROLE_IDS.closing_head_id ||
+          userData?.data?.role_id == ROLE_IDS.closingmanager_id ||
+          userData?.data?.role_id == ROLE_IDS.scm_id
+            ? params?.fromReport
+              ? true
+              : undefined
+            : undefined,
       })
     );
   };

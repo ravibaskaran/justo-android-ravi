@@ -8,6 +8,7 @@ import {
   GREEN_COLOR,
   MAP_KEY,
   RED_COLOR,
+  REGISTERD_CP,
   YELLOW_COLOR,
 } from "app/components/utilities/constant";
 import strings from "app/components/utilities/Localization";
@@ -74,6 +75,51 @@ const AppointmentDtailsItem = (props: any) => {
           <Text style={styles.nameTxt}>{appdetail.appointment_type_title}</Text>
         </View>
       </View>
+
+      <View style={styles.Txtview}>
+        <View style={styles.projectContainer}>
+          <Text style={styles.projectTxt}>Justo CP</Text>
+        </View>
+        <View>
+          <Text>:</Text>
+        </View>
+        <View style={styles.nameContainer}>
+          <Text style={styles.nameTxt}>
+            {appdetail?.registered_cp == REGISTERD_CP.NO ? "No" : "Yes"}
+          </Text>
+        </View>
+      </View>
+      {appdetail?.registered_cp == REGISTERD_CP.NO && (
+      <>
+        <View style={styles.Txtview}>
+          <View style={styles.projectContainer}>
+            <Text style={styles.projectTxt}>{strings.mobileNo}</Text>
+          </View>
+          <View>
+            <Text>:</Text>
+          </View>
+          <View style={styles.nameContainer}>
+            <Text style={styles.nameTxt}>
+              {appdetail?.non_reg_cp_mobile ? appdetail?.non_reg_cp_mobile : "NA"}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.Txtview}>
+          <View style={styles.projectContainer}>
+            <Text style={styles.projectTxt}>{strings.email}</Text>
+          </View>
+          <View>
+            <Text>:</Text>
+          </View>
+          <View style={styles.nameContainer}>
+            <Text style={styles.nameTxt}>
+              {appdetail?.non_reg_cp_email ? appdetail?.non_reg_cp_email : "NA"}
+            </Text>
+          </View>
+        </View>
+      </>
+      )}
+
       <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
           <Text style={styles.projectTxt}>Appointment With</Text>

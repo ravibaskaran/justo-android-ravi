@@ -11,6 +11,7 @@ import {
   PURPLE_COLOR,
   RED_COLOR,
   ROLE_IDS,
+  REGISTERD_CP,
   YELLOW_COLOR,
 } from "../../../../components/utilities/constant";
 import strings from "../../../../components/utilities/Localization";
@@ -81,6 +82,16 @@ const MyAppointment = (props: any) => {
         <View style={styles.nameContainer}>
           <Text style={styles.nameTxt}>
             {props.items.appointment_type_title}
+          </Text>
+        </View>
+      </View>
+      <View style={styles.Txtview}>
+        <View style={styles.projectContainer}>
+          <Text style={styles.projectTxt}>Justo CP :</Text>
+        </View>
+        <View style={styles.nameContainer}>
+          <Text style={styles.nameTxt}>
+            {props.items?.registered_cp == REGISTERD_CP.NO ? "No" : "Yes"}
           </Text>
         </View>
       </View>

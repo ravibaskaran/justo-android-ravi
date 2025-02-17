@@ -14,7 +14,7 @@ import {
   JW_PASSWORD,
   PRIMARY_THEME_COLOR,
   PRIMARY_THEME_COLOR_DARK,
-  RED_COLOR
+  RED_COLOR,
 } from "app/components/utilities/constant";
 import { apiCallJW } from "app/components/utilities/httpClient";
 import React, { useEffect, useState } from "react";
@@ -22,6 +22,9 @@ import { Keyboard, Text, View } from "react-native";
 import { useDispatch } from "react-redux";
 import Button from "../../../../components/Button";
 import styles from "./styles";
+import FastImages from "app/components/FastImage";
+import { normalizeHeight } from "app/components/scaleFontSize";
+import Modal from "react-native-modal";
 
 const ConfigurationsItem = (props: any) => {
   const [maininventory, setMainInventory] = useState<any>([]);
@@ -30,6 +33,7 @@ const ConfigurationsItem = (props: any) => {
   const [flatTypes, setFlatTypes] = useState<any>([]);
   const [inventory, setInventory] = useState<any>([]);
   const [updateState, setUpdateState] = useState(0);
+  const [isVisable, setIsVisable] = useState(false);
 
   const setcofigdataFlat = (item: any, index: any) => {
     var filteredData = maininventory.filter(
@@ -175,8 +179,11 @@ const ConfigurationsItem = (props: any) => {
               handleBtnPress={() => props.setBrowse(true)}
             />
             {typeof props?.flatBooking?.cheque_image === "object" ? (
-              <Text style={{ fontSize: 12, textAlign: "center" }}>
-                {"Photo Added"}
+              <Text
+                onPress={() => setIsVisable(true)}
+                style={{ fontSize: 12, textAlign: "center" }}
+              >
+                {"View Photo"}
               </Text>
             ) : null}
           </View>
@@ -259,7 +266,17 @@ const ConfigurationsItem = (props: any) => {
                 ? props?.flatBooking?.flat_name
                 : strings.inventory
             }
-            data={Array.isArray(inventory) ? inventory : []}
+            data={
+              Array.isArray(inventory)
+                ? inventory.filter(
+                    (item) =>
+                      !props.flatBookingsMap.some(
+                        (addedItem: any) =>
+                          addedItem.flat_name === item["Flat Name"]
+                      ) // Check if the flat name is already added
+                  )
+                : []
+            }
             inputWidth={"100%"}
             paddingLeft={16}
             maxHeight={300}
@@ -282,7 +299,7 @@ const ConfigurationsItem = (props: any) => {
                             fontWeight: "bold",
                             color:
                               item["Status"] == INVENTORY_STATUS.rtb
-                                ? PRIMARY_THEME_COLOR_DARK 
+                                ? PRIMARY_THEME_COLOR_DARK
                                 : GREEN_COLOR,
                           }}
                         >
@@ -363,6 +380,24 @@ const ConfigurationsItem = (props: any) => {
           setUpdateState(updateState + 1);
         }}
       />
+
+      <Modal
+        isVisible={isVisable}
+        onBackdropPress={() => setIsVisable(false)}
+        onBackButtonPress={() => setIsVisable(false)}
+      >
+        <View>
+          <FastImages
+            source={{ uri: props.flatBooking?.cheque_image?.uri }}
+            style={{
+              width: "100%",
+              height: normalizeHeight(300),
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          />
+        </View>
+      </Modal>
     </View>
   );
 };

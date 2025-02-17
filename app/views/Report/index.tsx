@@ -338,6 +338,37 @@ const ReportScreen = ({ navigation }: any) => {
       navigation.navigate("CpDetailForReport", { cpList: list, smName: name });
     }
   };
+
+  const onCardPress = (rote: string) => {
+    console.log(rote, selectedStartDate, selectedEndDate);
+
+    if (
+      rote === "Leads" ||
+      rote === "Booking" ||
+      rote === "Walk-ins" ||
+      rote === "Site Visit Created" ||
+      rote === "CP Appointments"
+    ) {
+      navigation.navigate(
+        rote === "Leads"
+          ? "LeadManagementScreen"
+          : rote == "Booking"
+          ? "BookingList"
+          : rote == "Walk-ins"
+          ? "Appointments"
+          : rote == "Site Visit Created"
+          ? "Appointments"
+          : "AppointmentScreenCPSM", // For CP Appointments
+        {
+          fromReport: true,
+          sDate: selectedStartDate,
+          eDate: selectedEndDate,
+          routeName: rote,
+        }
+      );
+    }
+  };
+
   return (
     <>
       <ReportView
@@ -352,6 +383,7 @@ const ReportScreen = ({ navigation }: any) => {
         setFilterData={setFilterData}
         handleFilter={handleFilter}
         onReset={onReset}
+        onCardPress={onCardPress}
         handleCpDetailPress={handleCpDetailPress}
         propertyListForFilter={propertyListForFilter}
         clusterheadListForFilter={clusterheadListForFilter}

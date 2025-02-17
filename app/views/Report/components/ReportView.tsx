@@ -44,6 +44,7 @@ const ReportView = (props: any) => {
     fileName,
     selectedStartDate,
     selectedEndDate,
+    onCardPress,
   } = props;
 
   function formatDateString(dateString: any) {
@@ -260,6 +261,7 @@ const ReportView = (props: any) => {
         </View>
         {roleId === ROLE_IDS.sourcingmanager_id ? (
           <SMReportTable
+            onCardPress={onCardPress}
             data={reportData}
             onReset={onReset}
             handleCpDetailPress={handleCpDetailPress}
@@ -269,6 +271,7 @@ const ReportView = (props: any) => {
           />
         ) : roleId === ROLE_IDS.closingmanager_id ? (
           <CMReportTable
+            onCardPress={onCardPress}
             data={reportData}
             onReset={onReset}
             userData={userData}
@@ -277,6 +280,7 @@ const ReportView = (props: any) => {
           />
         ) : roleId === ROLE_IDS.scm_id ? (
           <SCMReportTable
+            onCardPress={onCardPress}
             data={reportData}
             onReset={onReset}
             userData={userData}
@@ -287,6 +291,7 @@ const ReportView = (props: any) => {
           roleId === ROLE_IDS.sourcing_head_id ? (
           <STReportTable
             data={reportData}
+            onCardPress={onCardPress}
             onReset={onReset}
             userData={userData}
             handleCpDetailPress={handleCpDetailPress}
@@ -296,6 +301,7 @@ const ReportView = (props: any) => {
         ) : roleId === ROLE_IDS.closingtl_id ||
           roleId === ROLE_IDS.closing_head_id ? (
           <CTReportTable
+            onCardPress={onCardPress}
             data={reportData}
             onReset={onReset}
             userData={userData}
@@ -307,6 +313,7 @@ const ReportView = (props: any) => {
           roleId === ROLE_IDS.admin_id ? (
           <ClusterHeadReportTable
             data={reportData}
+            onCardPress={onCardPress}
             onReset={onReset}
             handleCpDetailPress={handleCpDetailPress}
             handleCTANavigation={handleCTANavigation}

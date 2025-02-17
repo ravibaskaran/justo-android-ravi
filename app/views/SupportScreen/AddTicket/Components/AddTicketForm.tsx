@@ -19,9 +19,13 @@ import {
   normalize,
 } from "app/components/scaleFontSize";
 import PicturePickerModal from "app/components/Modals/PicturePicker";
+import Modal from "react-native-modal";
+import FastImages from "app/components/FastImage";
 
 const AddTicketForm = (props: any) => {
   const [visible, setVisible] = useState(false);
+  const [isVisable, setIsVisable] = useState(false);
+
   return (
     <View style={styles.mainContainer}>
       <Header
@@ -40,9 +44,7 @@ const AddTicketForm = (props: any) => {
       <ScrollView
         keyboardShouldPersistTaps={"handled"}
         automaticallyAdjustKeyboardInsets={Isios ? true : false}
-        contentContainerStyle={
-          { flexGrow: 1 }
-        }
+        contentContainerStyle={{ flexGrow: 1 }}
       >
         <View style={styles.topItemsVw}>
           <View style={styles.inputWrap}>
@@ -119,7 +121,12 @@ const AddTicketForm = (props: any) => {
                   </Text>
                 </TouchableOpacity>
                 {props.addTicketData?.image?.uri ? (
-                  <Text style={styles.attachTxt1}>Image Added</Text>
+                  <Text
+                    style={styles.attachTxt1}
+                    onPress={() => setIsVisable(true)}
+                  >
+                    View Image
+                  </Text>
                 ) : null}
               </View>
             </View>
@@ -148,6 +155,23 @@ const AddTicketForm = (props: any) => {
             });
           }}
         />
+        <Modal
+          isVisible={isVisable}
+          onBackdropPress={() => setIsVisable(false)}
+          onBackButtonPress={() => setIsVisable(false)}
+        >
+          <View>
+            <FastImages
+              source={{ uri: props.addTicketData?.image?.uri }}
+              style={{
+                width: "100%",
+                height: normalizeHeight(300),
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            />
+          </View>
+        </Modal>
       </ScrollView>
     </View>
   );

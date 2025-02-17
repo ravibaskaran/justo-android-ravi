@@ -1,9 +1,6 @@
 import JustForOkModal from "app/components/Modals/JustForOkModal";
 import React from "react";
-import {
-  ScrollView,
-  View
-} from "react-native";
+import { ScrollView, View } from "react-native";
 import images from "../../../../assets/images";
 import Button from "../../../../components/Button";
 import Header from "../../../../components/Header";
@@ -131,6 +128,7 @@ const BookingView = (props: any) => {
                   setBrowse={(data: boolean) => props?.setBrowse(data)}
                   onDeleteBtnPress={() => props?.onDeleteBtnPress(index)}
                   browse={props.browse}
+                  flatBookingsMap={props.flatBookingsMap.flatBooking}
                 />
               );
             }
