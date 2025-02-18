@@ -1,15 +1,13 @@
 
-import { View, Text, Image, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
-import Modal from "react-native-modal";
-import styles from "./styles";
-import images from "../../../../assets/images";
-import strings from "../../../../components/utilities/Localization";
-import { Dropdown } from "react-native-element-dropdown";
-import Button from "../../../../components/Button";
-import InputField from "../../../../components/InputField";
-import { GRAY_LIGHT_COLOR, WHITE_COLOR } from "../../../../components/utilities/constant";
 import DropdownInput from "app/components/DropDown";
+import React from "react";
+import { Image, Text, TouchableOpacity, View } from "react-native";
+import Modal from "react-native-modal";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import { GRAY_LIGHT_COLOR } from "../../../../components/utilities/constant";
+import strings from "../../../../components/utilities/Localization";
+import styles from "./styles";
 
 const AllocateModal = (props: any) => {
     return (

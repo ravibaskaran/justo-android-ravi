@@ -1,18 +1,15 @@
 
-import { View, Text, Image, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
-import Modal from "react-native-modal";
-import styles from "./styles";
-import images from "../../../../assets/images";
-import strings from "../../../../components/utilities/Localization";
-import { Dropdown } from "react-native-element-dropdown";
-import Button from "../../../../components/Button";
-import InputField from "../../../../components/InputField";
-import { GRAY_LIGHT_COLOR, MAP_KEY, PRIMARY_THEME_COLOR_DARK, WHITE_COLOR } from "../../../../components/utilities/constant";
-import DropdownInput from "app/components/DropDown";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import { normalize, normalizeSpacing, normalizeHeight } from "app/components/scaleFontSize";
+import { normalize, normalizeHeight, normalizeSpacing } from "app/components/scaleFontSize";
+import React from "react";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import Modal from "react-native-modal";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import { MAP_KEY, PRIMARY_THEME_COLOR_DARK } from "../../../../components/utilities/constant";
+import strings from "../../../../components/utilities/Localization";
+import styles from "./styles";
 
 const DropLocationModal = (props: any) => {
     return (

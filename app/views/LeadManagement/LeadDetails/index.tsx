@@ -1,8 +1,7 @@
-import { View, Text } from 'react-native'
-import React, { useEffect, useLayoutEffect, useState } from 'react'
-import LeadDetailsView from './Components/LeadDetailsView'
-import { useDispatch, useSelector } from 'react-redux'
 import { getVisitorDetail } from 'app/Redux/Actions/LeadsActions'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import LeadDetailsView from './Components/LeadDetailsView'
 
 const LeadDetails = ({ navigation, route }: any) => {
   const dispatch: any = useDispatch()

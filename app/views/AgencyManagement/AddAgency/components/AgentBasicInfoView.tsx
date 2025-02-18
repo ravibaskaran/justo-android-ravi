@@ -11,13 +11,7 @@ import { handleValues } from "app/components/utilities/handleValues";
 import { START_LOADING, STOP_LOADING } from "app/Redux/types";
 import moment from "moment";
 import React, { useState } from "react";
-import {
-  Image,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View
-} from "react-native";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { RadioButton } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import images from "../../../../assets/images";
@@ -38,15 +32,6 @@ import strings from "../../../../components/utilities/Localization";
 import styles from "./styles";
 
 const AgentBasicInfoView = (props: any) => {
-  const handleDelete = (item: any, index: any) => {
-    var array: any[] = [...props?.agencyData?.working_location];
-    array?.splice(index, 1);
-    props?.setAgencyData({
-      ...props?.agencyData,
-      working_location: array,
-    });
-  };
-
   const [showReraValidationError, setShowReraValidationError] =
     useState<boolean>(false);
   const [reravisible, setreraVisible] = useState(false);
@@ -170,12 +155,12 @@ const AgentBasicInfoView = (props: any) => {
         reraNumber: Regexs.reraRegex.test(registrationNumber)
           ? registrationNumber
           : undefined,
-        companyName: companyName ?companyName :"",
+        companyName: companyName ? companyName : "",
         startDate: sDate,
         endDate: eDate,
         imagePath: imagePath,
       };
-      
+
       if (eDate !== undefined) {
         const [day, month, year] = eDate.split("/").map(Number);
         const givenDate = new Date(year, month - 1, day);
@@ -283,91 +268,6 @@ const AgentBasicInfoView = (props: any) => {
             />
           </View>
         </TouchableOpacity>
-
-        {/* {props.type == "edit" ? (
-          <View style={styles.TypeView}>
-            <View style={styles.radioView}>
-              <RadioButton.Android
-                value={props.agencyData?.cp_type}
-                status={"checked"}
-                color={PRIMARY_THEME_COLOR}
-              />
-              <Text
-                style={[
-                  styles.radioTxt,
-                  {
-                    color: PRIMARY_THEME_COLOR,
-                  },
-                ]}
-              >
-                {props.agencyData.cp_type === 2
-                  ? strings.companyText
-                  : strings.individualText}
-              </Text>
-            </View>
-          </View>
-        ) : (
-          <View style={styles.TypeView}>
-            <View style={styles.radioView}>
-              <RadioButton.Android
-                value={props.agencyData?.cp_type}
-                status={
-                  props.agencyData.cp_type === 2 ? "checked" : "unchecked"
-                }
-                onPress={() => {
-                  props.setAgencyData({
-                    ...props.agencyData,
-                    cp_type: 2,
-                  });
-                  props.handleClearData(2);
-                }}
-                color={PRIMARY_THEME_COLOR}
-              />
-              <Text
-                style={[
-                  styles.radioTxt,
-                  {
-                    color:
-                      props.agencyData.cp_type === 2
-                        ? PRIMARY_THEME_COLOR
-                        : BLACK_COLOR,
-                  },
-                ]}
-              >
-                {strings.companyText}
-              </Text>
-            </View>
-            <View style={styles.radioView}>
-              <RadioButton.Android
-                value={props.agencyData?.cp_type}
-                status={
-                  props.agencyData.cp_type === 1 ? "checked" : "unchecked"
-                }
-                onPress={() => {
-                  props.setAgencyData({
-                    ...props.agencyData,
-                    cp_type: 1,
-                  });
-                  props.handleClearData(1);
-                }}
-                color={PRIMARY_THEME_COLOR}
-              />
-              <Text
-                style={[
-                  styles.radioTxt,
-                  {
-                    color:
-                      props.agencyData.cp_type === 1
-                        ? PRIMARY_THEME_COLOR
-                        : BLACK_COLOR,
-                  },
-                ]}
-              >
-                {strings.individualText}
-              </Text>
-            </View>
-          </View>
-        )} */}
 
         <View
           style={[
@@ -791,42 +691,6 @@ const AgentBasicInfoView = (props: any) => {
           />
         </View>
 
-        {/* <View style={styles.inputWrap}>
-          <InputField
-            require={true}
-            placeholderText={"3675 9834 6012"}
-            inputType={'aadhaar'}
-            handleInputBtnPress={() => { }}
-            headingText={strings.aadhaar}
-            valueshow={props.agencyData?.adhar_no}
-            keyboardtype={'number-pad'}
-            onChangeText={(val: any) => {
-              props.setAgencyData({
-                ...props.agencyData,
-                adhar_no: val,
-              });
-            }}
-            maxLength={14}
-          />
-        </View> */}
-        {/* <View style={styles.inputWrap}>
-          <InputField
-            // require={true}
-            disableSpecialCharacters={true}
-            placeholderText={"BNZAA2318JM"}
-            handleInputBtnPress={() => { }}
-            headingText={strings.pancard + " " + strings.shortNum}
-            valueshow={props.agencyData?.pancard_no}
-            onChangeText={(val: any) => {
-              props.setAgencyData({
-                ...props.agencyData,
-                pancard_no: val,
-              });
-            }}
-            maxLength={10}
-          />
-        </View> */}
-
         <View style={styles.inputWrap}>
           <InputField
             // require={true}
@@ -886,10 +750,6 @@ const AgentBasicInfoView = (props: any) => {
                 location: data?.description,
                 latitude: detail?.geometry?.location?.lat,
                 longitude: detail?.geometry?.location?.lng,
-                // zip: zipcode[0]?.short_name,
-                // city: city[0]?.short_name,
-                // state_code: state[0]?.short_name,
-                // country_code: country[0]?.short_name,
               });
             }}
           />
@@ -1019,56 +879,6 @@ const AgentBasicInfoView = (props: any) => {
                 }}
               />
             </View>
-
-            {/* <View style={styles.workingView}>
-              <View
-                style={{
-                  top: props.agencyData?.working_location?.length > 0 ? 5 : 0,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <Text style={styles.workTxt}>{strings.workingLocation}</Text>
-              </View>
-              <TouchableOpacity
-                onPress={() => props.setLocationModel(true)}
-                style={styles.addBtn}
-              >
-                <Text style={styles.addTxt}>+ {strings.addLocation}</Text>
-              </TouchableOpacity>
-            </View> */}
-            {/* {props.agencyData?.working_location?.length > 0 ? (
-              <View style={styles.inputBoxVw}>
-                {props.agencyData?.working_location?.map(
-                  (item: any, index: any) => {
-                    return (
-                      <View
-                        style={[
-                          styles.inputBoxItmVw,
-                          {
-                            borderBottomWidth:
-                              props?.agencyData?.working_location?.length -
-                                1 ===
-                              index
-                                ? 0
-                                : 0.6,
-                          },
-                        ]}
-                      >
-                        <Text style={styles.inputBoxItmTxt}>
-                          {item.location}
-                        </Text>
-                        <TouchableOpacity
-                          onPress={() => handleDelete(item, index)}
-                        >
-                          <Image source={images.close} style={styles.crossVw} />
-                        </TouchableOpacity>
-                      </View>
-                    );
-                  }
-                )}
-              </View>
-            ) : null} */}
           </>
         ) : (
           <>

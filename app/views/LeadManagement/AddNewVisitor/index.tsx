@@ -5,8 +5,6 @@ import {
   addVisitorRemove,
   addVisitorWithoutProperty,
   CheckVisitAvailRemove,
-  editVisitor,
-  getVisitorDetail,
 } from "app/Redux/Actions/LeadsActions";
 import { getAllMaster } from "app/Redux/Actions/MasterActions";
 import { getAssignCPList } from "app/Redux/Actions/SourcingManagerActions";
@@ -34,9 +32,6 @@ import AddNewVisitorForm from "./Components/AddNewVisitorForm";
 const AddNewVisitorScreen = ({ navigation, route }: any) => {
   const { type, data } = route?.params || {};
   const dispatch: any = useDispatch();
-  const { response = {}, detail = "" } = useSelector(
-    (state: any) => state.visitorData
-  );
   const [formData, setFormData] = useState<any>({
     first_name: "",
     adhar_no: "",
@@ -99,7 +94,6 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
   });
   const masterData = useSelector((state: any) => state.masterData) || {};
   const propertyData = useSelector((state: any) => state.propertyData) || {};
-  const companyData = useSelector((state: any) => state.companyData) || {};
   const employeeData = useSelector((state: any) => state.employeeData) || {};
   const editData = useSelector((state: any) => state.editVisitorData) || {};
   const addData = useSelector((state: any) => state.addVisitorData) || {};
@@ -121,15 +115,6 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
   const [isCpLoading, setIsCpLoading] = useState(false);
 
   useEffect(() => {
-    if (type === "edit") {
-      if (data?._id) {
-        dispatch(
-          getVisitorDetail({
-            lead_id: data._id,
-          })
-        );
-      }
-    }
     if (type === "propertySelect") {
       setFormData({
         ...formData,
@@ -138,7 +123,8 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
         property_title: data?.property_title,
       });
     }
-  }, [detail, type]);
+  }, [type]);
+
   useEffect(() => {
     if (
       type == "propertySelect" &&
@@ -342,10 +328,7 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
       let isError = true;
       let errorMessage: any = "";
 
-      if (
-        formData?.first_name?.trim() === "" ||
-        formData?.first_name?.trim() === undefined
-      ) {
+      if (!formData?.first_name?.trim()) {
         isError = false;
         errorMessage = "Please fill visitor name";
       } else if (
@@ -353,18 +336,10 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
       ) {
         isError = false;
         errorMessage = strings.NameCorrectlyVal;
-      } else if (
-        formData?.country_code === "" ||
-        formData?.country_code === undefined ||
-        formData?.country_code === null
-      ) {
+      } else if (!formData?.country_code) {
         isError = false;
         errorMessage = "Please enter country code";
-      } else if (
-        formData?.mobile === "" ||
-        formData?.mobile === undefined ||
-        formData?.mobile === null
-      ) {
+      } else if (!formData?.mobile) {
         isError = false;
         errorMessage = "Please fill mobile number";
       } else if (
@@ -381,44 +356,31 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
       ) {
         isError = false;
         errorMessage = "Please Enter valid mobile number";
-      } else if (
-        formData?.visit_confirmation_status === "" ||
-        formData?.visit_confirmation_status === undefined
-      ) {
+      } else if (!formData?.visit_confirmation_status) {
         isError = false;
         errorMessage = "Please check entered mobile number";
-      } else if (
-        formData?.lead_source === "" ||
-        formData.lead_source === undefined
-      ) {
+      } else if (!formData?.lead_source) {
         isError = false;
         errorMessage = "Please enter Lead Source";
-      } else if (
-        type != "edit" &&
-        formData?.property_id === "" &&
-        formData?.property_type_title === ""
-      ) {
+      } else if (!formData?.property_id && !formData?.property_type_title) {
         isError = false;
         errorMessage = "Please select property name";
-      } else if (formData.gender == undefined || formData.gender == "") {
+      } else if (!formData.gender) {
         isError = false;
         errorMessage = strings.genderReqVal;
       } else if (
         formData?.adhar_no &&
-        Regexs.AadharRegex.test(formData?.adhar_no) === false
+        !Regexs.AadharRegex.test(formData?.adhar_no)
       ) {
         isError = false;
         errorMessage = "Please enter valid Aadhaar number";
       } else if (
         formData?.pancard_no &&
-        Regexs.panRegex.test(formData?.pancard_no) === false
+        !Regexs.panRegex.test(formData?.pancard_no)
       ) {
         isError = false;
         errorMessage = "Please enter valid Pancard number";
-      } else if (
-        formData?.email &&
-        Regexs.emailRegex.test(formData?.email) === false
-      ) {
+      } else if (formData?.email && !Regexs.emailRegex.test(formData?.email)) {
         isError = false;
         errorMessage = "Please enter valid Email id";
       } else if (
@@ -444,16 +406,13 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
         errorMessage = "Please enter minimum budget also";
       }
       if (formData?.lead_source === CONST_IDS.cp_lead_source_id) {
-        if (formData.cp_type == undefined || formData.cp_type == "") {
+        if (!formData.cp_type) {
           isError = false;
           errorMessage = "Please Enter Channel Partner type";
-        } else if (
-          formData.cp_lead_type == undefined ||
-          formData.cp_lead_type == ""
-        ) {
+        } else if (!formData.cp_lead_type) {
           isError = false;
           errorMessage = "Please Enter Channel Partner Lead type";
-        } else if (formData.cp_id == undefined || formData.cp_id == "") {
+        } else if (!formData.cp_id) {
           isError = false;
           errorMessage =
             formData.cp_type === 1
@@ -465,22 +424,15 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
         formData?.lead_source === CONST_IDS?.ref_lead_source_id ||
         formData?.lead_source === CONST_IDS?.ref_partner_lead_source_id
       ) {
-        if (
-          formData?.referrer_name?.trim() === "" ||
-          formData?.referrer_name?.trim() === undefined
-        ) {
+        if (!formData?.referrer_name?.trim()) {
           isError = false;
           errorMessage = "Please fill refferrer name";
         } else if (
-          Regexs.oneSpaceRegex.test(formData?.referrer_name?.trim()) === false
+          !Regexs.oneSpaceRegex.test(formData?.referrer_name?.trim())
         ) {
           isError = false;
           errorMessage = "Please enter refferrer name Correctly";
-        } else if (
-          formData?.referrer_contact === "" ||
-          formData?.referrer_contact === undefined ||
-          formData?.referrer_contact === null
-        ) {
+        } else if (!formData?.referrer_contact) {
           isError = false;
           errorMessage = "Please fill refferrer mobile number";
         } else if (
@@ -727,7 +679,10 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
     }
   };
 
-  const checkMobileExistWithSameProperty = async (propertyId: string) => {
+  const checkMobileExistWithSameProperty = async (
+    propertyId: string,
+    type: number
+  ) => {
     let params: any = {
       mobile: formData?.mobile,
       property_id: propertyId,
@@ -748,12 +703,19 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
         setMobileError(res?.data?.message);
         setOkIsVisible(true);
         setTimeout(() => {
-          setFormData({
-            ...formData,
-            property_id: "",
-            property_type_title: "",
-            property_title: "",
-          });
+          if (type == 0) {
+            setFormData({
+              ...formData,
+              mobile: "",
+            });
+          } else {
+            setFormData({
+              ...formData,
+              property_id: "",
+              property_type_title: "",
+              property_title: "",
+            });
+          }
         }, 500);
         dispatch({ type: STOP_LOADING });
         return false;
@@ -862,49 +824,49 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
       });
     }
   };
+
   const OnpressCreateEdit = async () => {
     if (validation()) {
-      if (type === "edit") {
-        let edit_params: any = {
-          lead_id: formData?.lead_id,
+      if (formData?.cp_id) {
+        var isValidMobile: any = await handleCheckEmailMobile();
+      } else {
+        var isValidMobile: any = true;
+      }
+      if (isValidMobile) {
+        let add_params: any = {
           first_name: formData?.first_name?.trim(),
           email: formData?.email,
           mobile: formData?.mobile,
           gender: formData?.gender,
           birth_date: formData?.birth_date,
-          address: formData?.address,
+          address: formData.location,
           location: formData?.location,
-          latitude: formData?.latitude,
-          longitude: formData?.longitude,
-          city: formData?.city,
+          latitude: "",
+          longitude: "",
+          city: formData?.location,
           occupation: formData?.occupation,
           coumpany_name: formData?.coumpany_name,
           desigantion: formData?.desigantion,
           office_address: formData?.office_address,
           configuration_id: formData?.configuration_id,
-          configuration: formData?.configuration,
+          configuration: formData?.configuration ?? "",
           areain_sqlft: formData?.areain_sqlft,
-          income: formData?.income,
-          budget: formData?.max_budget
-            ? formData?.max_budget
-            : formData?.budget && "",
+          budget: formData.max_budget,
           funding_type: formData?.funding_type,
           purpose: formData?.purpose,
-          whenby: formData?.whenby,
-          agent_code: formData?.agent_code, //not in add time
           adhar_no: formData?.adhar_no,
           pancard_no: formData?.pancard_no,
           whatsapp_no: formData?.whatsapp_no,
-          funding_emi_type: formData?.funding_emi_type,
+          funding_emi_type: "",
           min_budget: formData?.min_budget,
           min_budget_type: formData?.min_budget_type,
           max_budget: formData?.max_budget,
           max_budget_type: formData?.max_budget_type,
           expected_possession_date: formData?.expected_possession_date,
           property_id: formData?.property_id,
-          property_type_title: "",
+          property_type_title: formData.property_type_title,
           min_emi_budget: formData?.min_emi_budget
-            ? formData.min_emi_budget
+            ? formData?.min_emi_budget
             : "",
           min_emi_budget_type: formData?.min_emi_budget_type
             ? formData?.min_emi_budget_type
@@ -923,43 +885,48 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
               : formData?.lead_source == CONST_IDS?.ref_partner_lead_source_id
               ? CONST_IDS?.ref_lead_source_id
               : formData?.lead_source,
-          lead_source_title: formData?.lead_source_title,
+
           marital_status: formData?.marital_status,
           no_of_family_member: formData?.no_of_family_member,
           current_stay: formData?.current_stay,
           property_type: formData?.property_type,
           preferred_bank: formData?.preferred_bank,
           country_code: formData?.country_code,
-          // visit_confirmation_status: formData?.visit_confirmation_status,
+          visit_confirmation_status: formData?.visit_confirmation_status,
           // cp_type: formData?.cp_type,
           // cp_id: formData?.cp_id,
-          // cp_emp_id: formData?.cp_emp_id,
         };
         if (formData?.cp_emp_id) {
-          edit_params = {
-            ...edit_params,
+          add_params = {
+            ...add_params,
             cp_emp_id: formData?.cp_emp_id,
           };
         }
         if (formData?.cp_type) {
-          edit_params = {
-            ...edit_params,
+          add_params = {
+            ...add_params,
             cp_type: formData?.cp_type,
           };
         }
         if (formData?.cp_lead_type) {
-          edit_params = {
-            ...edit_params,
+          add_params = {
+            ...add_params,
             cp_lead_type: formData?.cp_lead_type,
           };
         }
 
+        if (formData?.cp_id) {
+          add_params = {
+            ...add_params,
+            cp_id: formData?.cp_id,
+          };
+        }
         if (
           formData?.lead_source === CONST_IDS?.ref_lead_source_id ||
           formData?.lead_source === CONST_IDS?.ref_partner_lead_source_id
         ) {
-          edit_params = {
-            ...edit_params,
+          add_params = {
+            ...add_params,
             referrer_name: formData?.referrer_name,
             referrer_email: formData?.referrer_email,
             referrer_contact: formData?.referrer_contact,
@@ -967,120 +934,10 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
           };
         }
 
-        dispatch(editVisitor(edit_params));
-      } else {
-        if (formData?.cp_id) {
-          var isValidMobile: any = await handleCheckEmailMobile();
+        if (formData?.property_id !== "") {
+          dispatch(addVisitor(add_params));
         } else {
-          var isValidMobile: any = true;
-        }
-        if (isValidMobile) {
-          let add_params: any = {
-            first_name: formData?.first_name?.trim(),
-            email: formData?.email,
-            mobile: formData?.mobile,
-            gender: formData?.gender,
-            birth_date: formData?.birth_date,
-            address: formData.location,
-            location: formData?.location,
-            latitude: "",
-            longitude: "",
-            city: formData?.location,
-            occupation: formData?.occupation,
-            coumpany_name: formData?.coumpany_name,
-            desigantion: formData?.desigantion,
-            office_address: formData?.office_address,
-            configuration_id: formData?.configuration_id,
-            configuration: formData?.configuration ?? "",
-            areain_sqlft: formData?.areain_sqlft,
-            budget: formData.max_budget,
-            funding_type: formData?.funding_type,
-            purpose: formData?.purpose,
-            adhar_no: formData?.adhar_no,
-            pancard_no: formData?.pancard_no,
-            whatsapp_no: formData?.whatsapp_no,
-            funding_emi_type: "",
-            min_budget: formData?.min_budget,
-            min_budget_type: formData?.min_budget_type,
-            max_budget: formData?.max_budget,
-            max_budget_type: formData?.max_budget_type,
-            expected_possession_date: formData?.expected_possession_date,
-            property_id: formData?.property_id,
-            property_type_title: formData.property_type_title,
-            min_emi_budget: formData?.min_emi_budget
-              ? formData?.min_emi_budget
-              : "",
-            min_emi_budget_type: formData?.min_emi_budget_type
-              ? formData?.min_emi_budget_type
-              : "",
-            max_emi_budget: formData?.max_emi_budget
-              ? formData?.max_emi_budget
-              : "",
-            max_emi_budget_type: formData?.max_emi_budget_type
-              ? formData?.max_emi_budget_type
-              : "",
-            locality: formData?.locality,
-            remark: formData?.remark,
-            lead_source:
-              formData?.lead_source == CONST_IDS?.ref_lead_source_id
-                ? formData?.lead_source
-                : formData?.lead_source == CONST_IDS?.ref_partner_lead_source_id
-                ? CONST_IDS?.ref_lead_source_id
-                : formData?.lead_source,
-
-            marital_status: formData?.marital_status,
-            no_of_family_member: formData?.no_of_family_member,
-            current_stay: formData?.current_stay,
-            property_type: formData?.property_type,
-            preferred_bank: formData?.preferred_bank,
-            country_code: formData?.country_code,
-            visit_confirmation_status: formData?.visit_confirmation_status,
-            // cp_type: formData?.cp_type,
-            // cp_id: formData?.cp_id,
-          };
-          if (formData?.cp_emp_id) {
-            add_params = {
-              ...add_params,
-              cp_emp_id: formData?.cp_emp_id,
-            };
-          }
-          if (formData?.cp_type) {
-            add_params = {
-              ...add_params,
-              cp_type: formData?.cp_type,
-            };
-          }
-          if (formData?.cp_lead_type) {
-            add_params = {
-              ...add_params,
-              cp_lead_type: formData?.cp_lead_type,
-            };
-          }
-
-          if (formData?.cp_id) {
-            add_params = {
-              ...add_params,
-              cp_id: formData?.cp_id,
-            };
-          }
-          if (
-            formData?.lead_source === CONST_IDS?.ref_lead_source_id ||
-            formData?.lead_source === CONST_IDS?.ref_partner_lead_source_id
-          ) {
-            add_params = {
-              ...add_params,
-              referrer_name: formData?.referrer_name,
-              referrer_email: formData?.referrer_email,
-              referrer_contact: formData?.referrer_contact,
-              referrel_partner: formData.referrel_partner,
-            };
-          }
-
-          if (formData?.property_id !== "") {
-            dispatch(addVisitor(add_params));
-          } else {
-            dispatch(addVisitorWithoutProperty(add_params));
-          }
+          dispatch(addVisitorWithoutProperty(add_params));
         }
       }
     }
@@ -1107,6 +964,7 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
       setCountryData(CountryArray);
     }
   }
+
   async function selectCountryData(countryCode: any, flag: any) {
     setCountryData(CountryArray);
     setCountryCode(countryCode);
@@ -1116,10 +974,12 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
     });
     setCountyPicker(false);
   }
+
   const handleCloseCountry = () => {
     setCountyPicker(!countyPicker);
     setCountryData(CountryArray);
   };
+
   return (
     <AddNewVisitorForm
       handleBackPress={handleBackPress}
@@ -1161,9 +1021,7 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
       disabled={disabled}
       handleLeadSourcePressWhenNoCp={getAllPropertyData}
       checkPhoneNumberIsValid={checkPhoneNumberIsValid}
-      checkMobileExistWithSameProperty={(propertyId: string) =>
-        checkMobileExistWithSameProperty(propertyId)
-      }
+      checkMobileExistWithSameProperty={checkMobileExistWithSameProperty}
       checkRefferrerNumberExist={checkRefferrerNumberExist}
     />
   );

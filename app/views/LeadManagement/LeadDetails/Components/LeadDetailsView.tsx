@@ -1,5 +1,10 @@
-import { View, Text, StatusBar } from "react-native";
+import usePermission from "app/components/utilities/UserPermissions";
 import React from "react";
+import { View } from "react-native";
+import { useSelector } from "react-redux";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import Header from "../../../../components/Header";
 import {
   Isios,
   PRIMARY_THEME_COLOR,
@@ -7,14 +12,9 @@ import {
   ROLE_IDS,
   WHITE_COLOR,
 } from "../../../../components/utilities/constant";
-import Header from "../../../../components/Header";
-import images from "../../../../assets/images";
 import strings from "../../../../components/utilities/Localization";
-import styles from "./Styles";
 import LeadDetailsIteam from "./LeadDetailsIteam";
-import Button from "../../../../components/Button";
-import usePermission from "app/components/utilities/UserPermissions";
-import { useSelector } from "react-redux";
+import styles from "./Styles";
 
 const LeadDetailsView = (props: any) => {
   const { userData = {} } = useSelector((state: any) => state.userData);
@@ -43,7 +43,6 @@ const LeadDetailsView = (props: any) => {
       <View style={styles.leadDetailsItemView}>
         <LeadDetailsIteam items={props?.allDetails} />
       </View>
-      {/* {props?.allDetails?.lead_status === 1 || props?.allDetails?.lead_status === 2 || props?.allDetails?.lead_status === 3 ? */}
       <View
         style={[
           styles.btnContainer,
@@ -55,7 +54,6 @@ const LeadDetailsView = (props: any) => {
       >
         {(create && props?.allDetails?.lead_status === 1) ||
         props?.allDetails?.lead_status === 2 ||
-        // props?.allDetails?.lead_status !== 3 ||
         props?.allDetails?.booking_status === 4 ||
         props?.allDetails?.appointment_status === 4 ||
         props?.allDetails?.appointment_status === 5 ||
@@ -88,7 +86,6 @@ const LeadDetailsView = (props: any) => {
           </>
         )}
       </View>
-      {/* : null}  */}
     </View>
   );
 };

@@ -1,30 +1,25 @@
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
-import React, { useEffect, useState } from "react";
-import Modal from "react-native-modal";
-import styles from "../../../../components/Modals/styles";
-import images from "../../../../assets/images";
-import strings from "../../../../components/utilities/Localization";
-import Button from "../../../../components/Button";
-import InputField from "../../../../components/InputField";
-import DropdownInput from "../../../../components/DropDown";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllMaster } from "app/Redux/Actions/MasterActions";
-import InputCalender from "app/components/InputCalender";
-import moment from "moment";
-import { DATE_FORMAT, Isios } from "app/components/utilities/constant";
-import { normalizeSpacing } from "app/components/scaleFontSize";
-import Styles from "../../../../components/Modals/styles";
 import { getAllProperty } from "app/Redux/Actions/propertyActions";
-import { VisitStatus, leadTypes } from "app/components/utilities/DemoData";
+import InputCalender from "app/components/InputCalender";
+import { normalizeSpacing } from "app/components/scaleFontSize";
+import { VisitStatus } from "app/components/utilities/DemoData";
+import { DATE_FORMAT, Isios } from "app/components/utilities/constant";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import Modal from "react-native-modal";
+import { useDispatch, useSelector } from "react-redux";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import DropdownInput from "../../../../components/DropDown";
+import InputField from "../../../../components/InputField";
+import { default as Styles, default as styles } from "../../../../components/Modals/styles";
+import strings from "../../../../components/utilities/Localization";
 
 const FilterModal = (props: any) => {
   const dispatch: any = useDispatch();
   const [allProperty, setAllProperty] = useState<any>([]);
 
   useEffect(() => {
-    // dispatch(getAllMaster({
-    //   type: 2
-    // }))
     if (props?.Visible || propertyData?.length == 0) {
       dispatch(
         getAllProperty({
@@ -34,15 +29,12 @@ const FilterModal = (props: any) => {
       );
     }
   }, [props?.Visible]);
-  const { response = { data: [] } } =
-    useSelector((state: any) => state.masterData) || {};
   const propertyData = useSelector((state: any) => state.propertyData) || {};
 
   const datavisitingscore = [
     { label: "High to low", value: 2 },
     { label: "Low to high", value: 1 },
   ];
-  const dataconfiguration = response?.data?.length > 0 ? response?.data : [];
   const resetFilter = () => {
     props.setFilterData({
       startdate: "",
@@ -54,7 +46,6 @@ const FilterModal = (props: any) => {
     });
     props.setIsVisible(false);
     props.getVisitorsListApi(0, []);
-    // props.setVisiitorList([]);
     props.flatListRef?.current?.scrollToOffset({
       animated: true,
       offset: 0,
@@ -77,14 +68,6 @@ const FilterModal = (props: any) => {
       setAllProperty([]);
     }
   }, [propertyData, setAllProperty]);
-
-  const configRender = (item: any) => {
-    return (
-      <View style={styles.item}>
-        <Text style={styles.textItem}>{item.title}</Text>
-      </View>
-    );
-  };
 
   const visitorRender = (item: any) => {
     return (
@@ -202,32 +185,6 @@ const FilterModal = (props: any) => {
                 }}
               />
             </View>
-            {/* <View style={[styles.inputWrap, { top: normalizeSpacing(10) }]}>
-              <DropdownInput
-                headingText={strings.leadType}
-                placeholder={strings.leadType}
-                data={leadTypes}
-                inputWidth={'100%'}
-                paddingLeft={16}
-                maxHeight={300}
-                labelField="label"
-                valueField={'value'}
-                value={props?.filterData?.visit_status}
-                onChange={(item: any) => {
-                  props.setFilterData({
-                    ...props.filterData,
-                    visit_status: item.value,
-                  })
-                }}
-                newRenderItem={(item: any) => {
-                  return (
-                    <View style={Styles.item}>
-                      <Text style={Styles.textItem}>{item.label}</Text>
-                    </View>
-                  );
-                }}
-              />
-            </View> */}
             <View style={[styles.inputWrap, { top: normalizeSpacing(10) }]}>
               <DropdownInput
                 headingText={"Search by status"}
@@ -254,28 +211,6 @@ const FilterModal = (props: any) => {
                 }}
               />
             </View>
-            {/* <View style={styles.inputWrap}>
-              <DropdownInput
-                style={styles.dropdown}
-                placeholderStyle={styles.placeholderStyle}
-                selectedTextStyle={styles.selectedTextStyle}
-                iconStyle={styles.iconStyle}
-                data={dataconfiguration}
-                maxHeight={300}
-                labelField="title"
-                valueField={'_id'}
-                placeholder="By Configuration"
-                value={props.filterData.search_configuration}
-                onChange={(item: any) => {
-                  props.setFilterData({
-                    ...props.filterData,
-                    search_configuration: item._id
-                  })
-                  // set
-                }}
-                newRenderItem={configRender}
-              />
-            </View> */}
             <View style={[styles.inputWrap, { top: normalizeSpacing(10) }]}>
               <DropdownInput
                 style={styles.dropdown}
@@ -310,7 +245,6 @@ const FilterModal = (props: any) => {
               <Button
                 width={135}
                 handleBtnPress={() => {
-                  // props.setVisiitorList([]);
                   props.setIsVisible(false);
                   props.getVisitorsList(0, props.filterData);
                 }}

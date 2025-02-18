@@ -86,7 +86,6 @@ const LeadManagementScreen = ({ navigation, route }: any) => {
       response?.status
     );
     if (response?.status === 200) {
-      console.log("🚀 ~ file: index.tsx:65 ~ offSET:", offSET);
       if (offSET === 0) {
         setVisiitorList(response?.data);
       } else {

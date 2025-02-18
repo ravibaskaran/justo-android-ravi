@@ -98,46 +98,6 @@ const AddNewVisitorForm = (props: any) => {
   });
 
   useEffect(() => {
-    if (props.type == "edit") {
-      if (response?.status === 200) {
-        props.setFormData({
-          ...response?.data[0]?.customer_detail,
-          expected_possession_date: response?.data[0]?.expected_possession_date,
-          lead_id: response?.data[0]?._id,
-          property_id: response?.data[0]?.property_id,
-          property_title: response?.data[0]?.property_title,
-          remark: response?.data[0]?.remark,
-          lead_source: response?.data[0]?.lead_source,
-          lead_source_title: response?.data[0]?.lead_source_title,
-          property_type_title: response?.data[0]?.property_type_title,
-          locality: response?.data[0]?.customer_detail?.locality
-            ? response?.data[0]?.customer_detail?.locality
-            : "",
-          configuration_id: response?.data[0]?.configuration_id,
-          configuration: response?.data[0]?.configuration,
-          areain_sqlft: response?.data[0]?.areain_sqlft,
-          min_budget: response?.data[0]?.min_budget,
-          min_budget_type: response?.data[0]?.min_budget_type,
-          max_budget: response?.data[0]?.max_budget,
-          max_budget_type: response?.data[0]?.max_budget_type,
-          funding_type: response?.data[0]?.funding_type,
-          funding_emi_type: response?.data[0]?.funding_emi_type,
-          purpose: response?.data[0]?.purpose,
-          min_emi_budget: response?.data[0]?.min_emi_budget,
-          min_emi_budget_type: response?.data[0]?.min_emi_budget_type,
-          max_emi_budget: response?.data[0]?.max_emi_budget,
-          max_emi_budget_type: response?.data[0]?.max_emi_budget_type,
-          marital_status: "",
-          no_of_family_member: "",
-          current_stay: "",
-          property_type: "",
-          preferred_bank: "",
-        });
-      }
-    }
-  }, [response]);
-
-  useEffect(() => {
     if (props?.formData?.property_id) {
       let property = props?.allProperty.filter(
         (item: any) => item.property_id == props?.formData?.property_id
@@ -200,9 +160,7 @@ const AddNewVisitorForm = (props: any) => {
   return (
     <View style={styles.mainContainer}>
       <Header
-        headerText={
-          props.type == "edit" ? strings.editVisitor : strings.addnewvisitor
-        }
+        headerText={strings.addnewvisitor}
         headerStyle={styles.headerStyle}
         leftImageSrc={images.backArrow}
         leftImageIconStyle={styles.RightFirstIconStyle}
@@ -282,10 +240,9 @@ const AddNewVisitorForm = (props: any) => {
                 handleInputBtnPress={() => {}}
                 onChangeText={(data: any) => {
                   if (
-                    props.type == "edit" ||
-                    (props.type == "propertySelect" &&
-                      props?.formData?.lead_source !==
-                        CONST_IDS?.cp_lead_source_id)
+                    props.type == "propertySelect" &&
+                    props?.formData?.lead_source !==
+                      CONST_IDS?.cp_lead_source_id
                       ? true
                       : false
                   ) {
@@ -325,6 +282,17 @@ const AddNewVisitorForm = (props: any) => {
                       ...props.emailMobvalidation,
                       mobile: null,
                     });
+                  }
+                }}
+                onBlur={(val: any) => {
+                  if (
+                    Regexs.mobilenumRegex.test(props?.formData?.mobile) &&
+                    props.type == "propertySelect"
+                  ) {
+                    props.checkMobileExistWithSameProperty(
+                      props?.formData?.property_id,
+                      0
+                    );
                   }
                 }}
               />
@@ -586,9 +554,8 @@ const AddNewVisitorForm = (props: any) => {
                 (item: any) => item.status == true
               )}
               disable={
-                props.type == "edit" ||
-                (props.type == "propertySelect" &&
-                  props?.formData?.lead_source !== CONST_IDS?.cp_lead_source_id)
+                props.type == "propertySelect" &&
+                props?.formData?.lead_source !== CONST_IDS?.cp_lead_source_id
                   ? true
                   : false
               }
@@ -607,7 +574,7 @@ const AddNewVisitorForm = (props: any) => {
                     property_type_title: item.property_type,
                     property_title: item.property_title,
                   });
-                  props.checkMobileExistWithSameProperty(item.property_id);
+                  props.checkMobileExistWithSameProperty(item.property_id, 1);
                 }
               }}
               newRenderItem={(item: any) => {
@@ -1710,51 +1677,36 @@ const AddNewVisitorForm = (props: any) => {
               !Cmteam ? {} : { justifyContent: "center" },
             ]}
           >
-            {props.type == "edit" ? (
+            <>
               <Button
-                width={150}
-                height={45}
-                buttonText={strings.editVisitor}
-                btnTxtsize={16}
+                width={Cmteam ? 300 : 150}
                 disabled={props.disabled}
                 handleBtnPress={() => {
                   Isios && Keyboard.dismiss();
                   props.setNavigationType(1);
                   props.OnpressCreateEdit();
                 }}
+                height={45}
+                buttonText={strings.createVisitor}
+                btnTxtsize={16}
               />
-            ) : (
-              <>
-                <Button
-                  width={Cmteam ? 300 : 150}
-                  disabled={props.disabled}
-                  handleBtnPress={() => {
-                    Isios && Keyboard.dismiss();
-                    props.setNavigationType(1);
-                    props.OnpressCreateEdit();
-                  }}
-                  height={45}
-                  buttonText={strings.createVisitor}
-                  btnTxtsize={16}
-                />
-                {!Cmteam
-                  ? create && (
-                      <Button
-                        width={150}
-                        disabled={props.disabled}
-                        handleBtnPress={() => {
-                          Isios && Keyboard.dismiss();
-                          props.setNavigationType(2);
-                          props.OnpressseheduleVisit();
-                        }}
-                        height={45}
-                        buttonText={strings.createandschedule}
-                        btnTxtsize={14}
-                      />
-                    )
-                  : null}
-              </>
-            )}
+              {!Cmteam
+                ? create && (
+                    <Button
+                      width={150}
+                      disabled={props.disabled}
+                      handleBtnPress={() => {
+                        Isios && Keyboard.dismiss();
+                        props.setNavigationType(2);
+                        props.OnpressseheduleVisit();
+                      }}
+                      height={45}
+                      buttonText={strings.createandschedule}
+                      btnTxtsize={14}
+                    />
+                  )
+                : null}
+            </>
           </View>
           <VisitConfirmModal
             Visible={props.visitCheckModal}

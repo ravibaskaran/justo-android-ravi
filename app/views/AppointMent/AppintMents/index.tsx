@@ -77,20 +77,6 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
   );
 
   useEffect(() => {
-    // if (getLoginType?.response?.data?.role_title === 'Closing Manager') {
-    //     if (appointMentList?.response?.status === 200) {
-    //         if (offSET == 0) {
-    //             setAppointmentList(appointMentList?.response?.data)
-    //         } else {
-    //             setAppointmentList([...appointmentList,
-    //             ...appointMentList?.response?.data])
-    //         }
-    //     } else {
-    //         setAppointmentList([])
-    //     }
-    // } else {
-    // console.log(JSON.stringify(response));
-    // _apiRefresing = false;
     setApiRefresing(false);
     // console.log(response)
     if (response?.status === 200) {
@@ -127,18 +113,6 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
   const getAppointmentList = (offset: any, data: any) => {
     if (_apiRefresing) return;
     setApiRefresing(true);
-    // if (getLoginType?.response?.data?.role_title === 'Closing Manager') {
-    //     setOffset(offset)
-    //     dispatch(getAllPickupList({
-    //         offset: offset,
-    //         limit: 10,
-    //         start_date: data?.start_date ? data?.start_date : '',
-    //         end_date: data?.end_date ? data?.end_date : '',
-    //         customer_name: data?.customer_name ? data?.customer_name : '',
-    //         status: data?.status ? data?.status : '',
-    //         appointment_type: 2
-    //     }))
-    // } else {
     setOffset(offset);
     dispatch(
       getAllAppointmentList({
@@ -153,7 +127,6 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
         appointment_type: 2,
       })
     );
-    // }
   };
 
   const onPressView = async (items: any) => {

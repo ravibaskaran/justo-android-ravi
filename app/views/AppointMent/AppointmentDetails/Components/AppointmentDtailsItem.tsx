@@ -1,22 +1,20 @@
-import { View, Text, ScrollView, Image } from "react-native";
-import React from "react";
-import styles from "./Styles";
-import images from "../../../../assets/images";
-import moment from "moment";
-import {
-  YELLOW_COLOR,
-  BLACK_COLOR,
-  PRIMARY_THEME_COLOR,
-  WHITE_COLOR,
-  GREEN_COLOR,
-  DATE_FORMAT,
-  DATE_BY_DAY,
-  Isios,
-  getCPLeadType,
-} from "app/components/utilities/constant";
-import strings from "app/components/utilities/Localization";
 import Button from "app/components/Button";
 import { normalizeSpacing } from "app/components/scaleFontSize";
+import {
+  BLACK_COLOR,
+  DATE_BY_DAY,
+  DATE_FORMAT,
+  GREEN_COLOR,
+  Isios,
+  PRIMARY_THEME_COLOR,
+  WHITE_COLOR,
+  getCPLeadType
+} from "app/components/utilities/constant";
+import strings from "app/components/utilities/Localization";
+import moment from "moment";
+import React from "react";
+import { ScrollView, Text, View } from "react-native";
+import styles from "./Styles";
 
 const AppointmentDtailsItem = (props: any) => {
   const item = props?.item || {};
@@ -357,43 +355,6 @@ const AppointmentDtailsItem = (props: any) => {
           </View>
         </View>
       ) : null}
-
-      {/* <View style={styles.Txtview}>
-        <View style={styles.projectContainer}>
-          <Text style={styles.projectTxt}>Created By Role </Text>
-        </View>
-        <View>
-          <Text>:</Text>
-        </View>
-        <View style={styles.nameContainer}>
-          <Text style={styles.nameTxt}>
-            {item?.created_by_role === "" ||
-            item?.created_by_role === undefined ||
-            item?.created_by_role === null
-              ? strings.notfount
-              : item?.created_by_role}
-          </Text>
-        </View>
-      </View> */}
-      {/* {item?.resion &&
-        (<View style={styles.Txtview}>
-          <View style={styles.projectContainer}>
-            <Text style={styles.projectTxt}>{strings.resion}</Text>
-          </View>
-          <View><Text>:</Text></View>
-          <View style={styles.nameContainer}>
-            <Text style={styles.nameTxt}>{item?.resion ? item?.resion : strings.notfount}</Text>
-          </View>
-        </View>)} */}
-      {/* <View style={styles.Txtview}>
-        <View style={styles.projectContainer}>
-          <Text style={styles.projectTxt}>{strings.pickup}</Text>
-        </View>
-        <View><Text>:</Text></View>
-        <View style={styles.nameContainer}>
-          <Text style={styles.nameTxt}>{item?.pickup ? item?.pickup : strings.notfount}</Text>
-        </View>
-      </View> */}
       <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
           <Text style={styles.projectTxt}>{strings.remark}</Text>

@@ -1,30 +1,25 @@
-import { View, Text, StatusBar } from "react-native";
+import JustForOkModal from "app/components/Modals/JustForOkModal";
+import { Isios, ROLE_IDS } from "app/components/utilities/constant";
+import usePermission from "app/components/utilities/UserPermissions";
 import React, { useState } from "react";
-import styles from "./Styles";
+import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Header from "../../../../components/Header";
+import { useSelector } from "react-redux";
 import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import Header from "../../../../components/Header";
 import strings from "../../../../components/utilities/Localization";
 import AppointmentDtailsItem from "./AppointmentDtailsItem";
-import Button from "../../../../components/Button";
-import { useSelector } from "react-redux";
-import ReadyToBookModal from "./ReadyToBookModal";
 import CancelModal from "./CancelBooking";
-import usePermission from "app/components/utilities/UserPermissions";
 import CheckedinModel from "./CheckedinModel";
-import { Isios, ROLE_IDS } from "app/components/utilities/constant";
-import JustForOkModal from "app/components/Modals/JustForOkModal";
+import ReadyToBookModal from "./ReadyToBookModal";
+import styles from "./Styles";
 
 const AppointmentDetailsView = (props: any) => {
   const { detailsData, getDetail } = props;
-  const getLoginType = useSelector((state: any) => state.login);
   const { userData = {} } = useSelector((state: any) => state.userData) || [];
-  const insets = useSafeAreaInsets();
   const [readyToBooK, setReadyToBooK] = useState(false);
-  const [cancelAppoitment, setCancelAppoitment] = useState(false);
   const [CpChecking, setCpChecking] = useState(false);
-  const { response = {}, detail = "" } =
-    useSelector((state: any) => state.appointment) || [];
   const data = detailsData?.length > 0 ? detailsData[0] : [];
 
   const { edit, status, create, approve } = usePermission({
@@ -56,67 +51,6 @@ const AppointmentDetailsView = (props: any) => {
           data={data}
         />
       </View>
-      {/* {userData?.data?.role_title === "Closing Manager" ? (
-        data?.assign_appoinment ? (
-          <View style={styles.bntView}>
-            {data?.status !== 5 && data?.status !== 6 && data?.status !== 4 && data?.status !== 3 ? (
-              <>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  // {edit && (
-                  //   <Button
-                  //     buttonText={strings.Statusupdate}
-                  //     // btnTxtsize={13}
-                  //     handleBtnPress={() => setCancelAppoitment(true)}
-                  //     width={150}
-                  //   />
-                  // )}
-                  {status && (
-                    <Button
-                      buttonText={strings.schedule}
-                      handleBtnPress={() => props.handleUpdateStatus()}
-                      width={150}
-                    />
-                  )}
-                </View>
-                <View style={{ marginVertical: 10 }} />
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  {create &&
-                    (userData?.data?.role_title === "Closing Manager" ||
-                      userData?.data?.role_title === "Closing TL" ||
-                      getLoginType?.response?.data?.role_title ===
-                      "Closing Manager" ? (
-                      <Button
-                        buttonText={strings.bookNow}
-                        handleBtnPress={() => props.onPressBookNow()}
-                        width={150}
-                      />
-                    ) : null)}
-
-                  {approve && (
-                    <Button
-                      buttonText={strings.readytoBookHeader}
-                      handleBtnPress={() => setReadyToBooK(true)}
-                      width={150}
-                    />
-                  )}
-                </View>
-              </>
-            ) : null}
-          </View>
-        ) : null
-      ) : ( */}
       {data?.checkin_status === true ? (
         <View style={styles.bntView}>
           {data?.status === 1 || data?.status === 10 ? (
@@ -176,13 +110,6 @@ const AppointmentDetailsView = (props: any) => {
                   width={150}
                 />
 
-                {/* {approve && (
-                  <Button
-                    buttonText={strings.readytoBookHeader}
-                    handleBtnPress={() => setReadyToBooK(true)}
-                    width={150}
-                  />
-                )} */}
               </View>
             </>
           ) : null}

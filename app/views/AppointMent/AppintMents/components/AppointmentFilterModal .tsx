@@ -1,23 +1,18 @@
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
-import React, { useState } from "react";
-import Modal from "react-native-modal";
-import styles from "../../../../components/Modals/styles";
-import images from "../../../../assets/images";
-import strings from "../../../../components/utilities/Localization";
-import Button from "../../../../components/Button";
-import InputField from "../../../../components/InputField";
-import DropdownInput from "../../../../components/DropDown";
 import InputCalender from "app/components/InputCalender";
-import moment from "moment";
+import { normalizeSpacing } from "app/components/scaleFontSize";
 import { DATE_FORMAT, Isios } from "app/components/utilities/constant";
-import { normalize, normalizeSpacing } from "app/components/scaleFontSize";
-import { Dropdown } from "react-native-element-dropdown";
+import moment from "moment";
+import React from "react";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import Modal from "react-native-modal";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import DropdownInput from "../../../../components/DropDown";
+import InputField from "../../../../components/InputField";
+import styles from "../../../../components/Modals/styles";
+import strings from "../../../../components/utilities/Localization";
 
 const AppointmentFilterModal = (props: any) => {
-  const appointmentWith = [
-    { type_name: strings.STSSiteLeadVisit, value: 1 },
-    { type_name: strings.STSClientVisit, value: 2 },
-  ];
   const statusData = [
     { type_name: "No Show", value: 1 },
     { type_name: "Revisit", value: 2 },

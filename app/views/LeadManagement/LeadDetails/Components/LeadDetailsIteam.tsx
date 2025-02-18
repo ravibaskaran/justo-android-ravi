@@ -1,25 +1,24 @@
 import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  Linking,
-} from "react-native";
-import React from "react";
-import styles from "./Styles";
-import Button from "../../../../components/Button";
-import {
-  normalize,
-  normalizeWidth,
-} from "../../../../components/scaleFontSize";
-import strings from "../../../../components/utilities/Localization";
-import moment from "moment";
-import {
   BLACK_COLOR,
   DATE_TIME_FORMAT,
   getCPLeadType,
   Isios,
 } from "app/components/utilities/constant";
+import moment from "moment";
+import React from "react";
+import {
+  Linking,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import {
+  normalize,
+  normalizeWidth,
+} from "../../../../components/scaleFontSize";
+import strings from "../../../../components/utilities/Localization";
+import styles from "./Styles";
 
 const LeadDetailsIteam = (props: any) => {
   const item = props?.items || {};
@@ -198,19 +197,6 @@ const LeadDetailsIteam = (props: any) => {
               },
             ]}
           >
-            {/* {item?.lead_status === 1
-              ? "New Lead"
-              : item?.lead_status === 2
-              ? "In Follow up"
-              : item?.lead_status === 3
-              ? "Ready to Visit"
-              : item?.lead_status === 4
-              ? "Booking"
-              : item?.lead_status === 5
-              ? "Registration"
-              : item?.lead_status === 6
-              ? "Not interested"
-              : item?.lead_status === 7 && "Ready To Book"} */}
             {appointment_status === 1
               ? "Ready to visit"
               : appointment_status === 2

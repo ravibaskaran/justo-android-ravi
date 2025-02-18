@@ -1,4 +1,3 @@
-import { useFocusEffect } from "@react-navigation/native";
 import ErrorMessage from "app/components/ErrorMessage";
 import ConfirmModal from "app/components/Modals/ConfirmModal";
 import apiEndPoints from "app/components/utilities/apiEndPoints";
@@ -23,10 +22,7 @@ import {
   removeAgency,
 } from "app/Redux/Actions/AgencyActions";
 import { getAllProperty } from "app/Redux/Actions/propertyActions";
-import {
-  assignCPSM,
-  getAssignCPList,
-} from "app/Redux/Actions/SourcingManagerActions";
+import { getAssignCPList } from "app/Redux/Actions/SourcingManagerActions";
 import { START_LOADING, STOP_LOADING } from "app/Redux/types";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Keyboard } from "react-native";
@@ -64,7 +60,6 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
   const [selectedProperty, setSelectedProperty] = useState<any>([]);
   const [selectedPropertyIds, setSelectedPropertyIds] = useState<any>([]);
   const [finalPropertyList, setFinalPropertyList] = useState<any>([]);
-  const [cpId, setcpId] = useState<any>("");
 
   const [agencyData, setAgencyData] = useState({
     profile_picture: type === "edit" ? "" : "",
@@ -131,14 +126,10 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
   const emailAndMobileData = useSelector(
     (state: any) => state.emailAndMobileData
   );
-  const registrationData = useSelector((state: any) => state.agencyForm);
   const { response = {}, detail } =
     useSelector((state: any) => state.agency) || [];
   const [isVisible, setIsVisible] = useState(false);
-  const getLoginType = useSelector((state: any) => state.login);
   const addEditAgency = useSelector((state: any) => state.addEditAgency) || [];
-  const SmCpList = useSelector((state: any) => state.SourcingManager) || [];
-  const [agentList, setAgentList] = useState<any>([]);
   const [cplgId, setCplgId] = useState("");
   const [reraExist, setReraExist] = useState(false);
 
@@ -257,11 +248,6 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
             start_date: response?.data[0]?.rera_start_date ?? "",
             end_date: response?.data[0]?.rera_end_date ?? "",
             pincode: response?.data[0]?.pin_code ?? "",
-            // state_code: response?.data[0]?.state_code ?? "",
-            // country_code: response?.data[0]?.country_code ?? "",
-            // city: response?.data[0]?.city ?? "",
-            // zip: response?.data[0]?.zip ?? "",
-
             norera_register:
               handleValues(allDatas?.rera_certificate_no) &&
               handleValues(allDatas?.rera_certificate) === false
@@ -288,41 +274,8 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
           }
         }
       }
-      // setAgencyData({ ...registrationData.response, sourcing_manager: userData?.data?._id })
     }
   }, [response]);
-
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     if (SmCpList?.response?.message == "CP allocate successfull.") {
-  //       getAgencyList(0, {});
-  //     }
-  //     return () => {};
-  //   }, [navigation, , type, SmCpList])
-  // );
-
-  const getAgencyList = (offset: any, filterData: any) => {
-    dispatch(
-      getAssignCPList({
-        user_id: userData?.data?.user_id,
-        startdate: "",
-        enddate: "",
-        search_by_name: "",
-        mobile_no: "",
-        rera_no: "",
-        search_by_location: "",
-        status: "",
-      })
-    );
-  };
-
-  useEffect(() => {
-    if (SmCpList?.response?.status === 200) {
-      setAgentList(SmCpList?.response?.data);
-    } else {
-      setAgentList([]);
-    }
-  }, [SmCpList]);
 
   const propertyData = useSelector((state: any) => state.propertyData) || {};
 
@@ -375,6 +328,7 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
       rera_certificate_no: null,
     });
   }, [navigation]);
+
   useEffect(() => {
     if (addEditAgency?.response?.status === 200) {
       dispatch(removeAgency());
@@ -413,14 +367,7 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
           ) {
             isError = false;
             errorMessage = strings.agentNameReqVal;
-          }
-          // else if (
-          //   Regexs.oneSpaceRegex.test(agencyData.owner_name?.trim()) === false
-          // ) {
-          //   isError = false;
-          //   errorMessage = strings.NameCorrectlyVal;
-          // }
-          else if (
+          } else if (
             agencyData.primary_mobile == undefined ||
             agencyData.primary_mobile == ""
           ) {
@@ -491,22 +438,10 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
           } else if (agencyData.pincode.replace(/\s+/g, "")?.length < 6) {
             isError = false;
             errorMessage = strings.pincodeError;
-          }
-          // else if (
-          //   agencyData.location == undefined ||
-          //   agencyData.location == ""
-          // ) {
-          //   isError = false;
-          //   errorMessage = strings.addressReqVal;
-          // }
-          // else if (
-          //   agencyData.zip == undefined ||
-          //   agencyData.zip == ""
-          // ) {
-          //   isError = false;
-          //   errorMessage = strings.correctAddress;
-          // }
-          else if (agencyData.gender == undefined || agencyData.gender == "") {
+          } else if (
+            agencyData.gender == undefined ||
+            agencyData.gender == ""
+          ) {
             isError = false;
             errorMessage = strings.genderReqVal;
           } else if (
@@ -517,22 +452,6 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
             isError = false;
             errorMessage = strings.whatsappNoValidReqVal;
           }
-          // else if (
-          //   agencyData.adhar_no == undefined ||
-          //   agencyData.adhar_no == ""
-          // ) {
-          //   isError = false;
-          //   errorMessage = strings.aadharReqVal;
-          // } else if (Regexs.AadharRegex.test(agencyData.adhar_no) === false) {
-          //   isError = false;
-          //   errorMessage = strings.aadharValidVal;
-          // } else if (
-          //   agencyData.pancard_no !== "" &&
-          //   Regexs.panRegex.test(agencyData.pancard_no) === false
-          // ) {
-          //   isError = false;
-          //   errorMessage = strings.pancardValidVal;
-          // }
         } else if (agencyData?.cp_type === 2) {
           if (
             agencyData.owner_name == undefined ||
@@ -540,14 +459,7 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
           ) {
             isError = false;
             errorMessage = strings.agentNameReqVal;
-          }
-          //  else if (
-          //   Regexs.oneSpaceRegex.test(agencyData.owner_name?.trim()) === false
-          // ) {
-          //   isError = false;
-          //   errorMessage = strings.NameCorrectlyVal;
-          // }
-          else if (
+          } else if (
             agencyData.primary_mobile == undefined ||
             agencyData.primary_mobile == ""
           ) {
@@ -619,17 +531,6 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
             isError = false;
             errorMessage = strings.pincodeError;
           }
-          // else if (
-          //   agencyData.location == undefined ||
-          //   agencyData.location == ""
-          // ) {
-          //   isError = false;
-          //   errorMessage = strings.addressReqVal;
-          // }
-          // else if (employees?.length === 0 && type !== "edit") {
-          //   isError = false;
-          //   errorMessage = strings.employeesReqVal;
-          // }
         }
       } else if (formType === 1) {
         if (agencyData?.cp_type === 1) {
@@ -639,91 +540,16 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
           ) {
             isError = false;
             errorMessage = strings.gstReqVal;
-          }
-          // else if (
-          //   agencyData.gstApplicable == 2 &&
-          //   (agencyData?.propidership_declaration_letter == null ||
-          //     agencyData?.propidership_declaration_letter == undefined ||
-          //     agencyData?.propidership_declaration_letter == "")
-          // ) {
-          //   isError = false;
-          //   errorMessage = strings.DeclrLttrImgReqVal;
-          // }
-          else if (selectedProperty?.length === 0) {
+          } else if (selectedProperty?.length === 0) {
             isError = false;
             errorMessage = strings.propertyReqVal;
-          }
-          // if (
-          //   agencyData.rera_certificate_no == "" ||
-          //   agencyData.rera_certificate_no == undefined
-          // ) {
-          //   isError = false;
-          //   errorMessage = strings.reraCertNoReqVal;
-          // } else if (
-          //   agencyData.rera_certificate == null ||
-          //   agencyData.rera_certificate == "" ||
-          //   agencyData.rera_certificate == undefined
-          // ) {
-          //   isError = false;
-          //   errorMessage = strings.reraCertImgReqVal;
-          // }
-          //  if (agencyData.norera_register === null) {
-          //   isError = false;
-          //   errorMessage = strings.noReraRegReqVal;
-          // }
-          // else if (
-          //   agencyData.bank_name == "" ||
-          //   agencyData.bank_name == undefined
-          // ) {
-          //   isError = false;
-          //   errorMessage = strings.bankNameReqVal;
-          // }
-          // else if (
-          //   agencyData.branch_name == "" ||
-          //   agencyData.branch_name == undefined
-          // ) {
-          //   isError = false;
-          //   errorMessage = strings.branchNameReqVal;
-          // } else if (
-          //   agencyData.account_no == "" ||
-          //   agencyData.account_no == undefined
-          // ) {
-          //   isError = false;
-          //   errorMessage = strings.accountNoReqVal;
-          // }
-          // else if (
-          //   agencyData.account_no !== "" &&
-          //   Regexs.accountnumRegex.test(agencyData.account_no) === false
-          // ) {
-          //   isError = false;
-          //   errorMessage = strings.accountNoValidVal;
-          // }
-          // if (
-          //   agencyData.account_no !== "" ||
-          //   agencyData.account_no == undefined
-          // ) {
-          else if (
+          } else if (
             agencyData.account_no !== "" &&
             Regexs.accountnumRegex.test(agencyData.account_no) === false
           ) {
             isError = false;
             errorMessage = strings.accountNoValidVal;
           }
-          // }
-          //  else if (
-          //   agencyData.ifsc_code == "" ||
-          //   agencyData.ifsc_code == undefined
-          // ) {
-          //   isError = false;
-          //   errorMessage = strings.ifscReqVal;
-          // }
-          // else if (
-          //   agencyData.ifsc_code !== "" &&
-          //   Regexs.ifscRegex.test(agencyData.ifsc_code) === false
-          // ) {
-          //   isError = false;
-          //   errorMessage = strings.ifscValidVal;
-          // }
           if (
             agencyData.ifsc_code !== "" &&
             Regexs.ifscRegex.test(agencyData.ifsc_code) === false
@@ -731,14 +557,6 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
             isError = false;
             errorMessage = strings.ifscValidVal;
           }
-          //  else if (
-          //   agencyData.cancel_cheaque == null ||
-          //   agencyData.cancel_cheaque == undefined ||
-          //   agencyData.cancel_cheaque == ''
-          // ) {
-          //   isError = false;
-          //   errorMessage = strings.cancelChqImgReqVal;
-          // }
         } else if (agencyData?.cp_type === 2) {
           if (
             agencyData.gst !== "" &&
@@ -746,33 +564,16 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
           ) {
             isError = false;
             errorMessage = strings.gstReqVal;
-          }
-          // else if (
-          //   agencyData.gstApplicable == 2 &&
-          //   (agencyData?.propidership_declaration_letter == null ||
-          //     agencyData?.propidership_declaration_letter == undefined ||
-          //     agencyData?.propidership_declaration_letter == "")
-          // ) {
-          //   isError = false;
-          //   errorMessage = strings.DeclrLttrImgReqVal;
-          // }
-          else if (selectedProperty?.length === 0) {
+          } else if (selectedProperty?.length === 0) {
             isError = false;
             errorMessage = strings.propertyReqVal;
-          }
-          // else if (
-          //   agencyData.account_no !== "" ||
-          //   agencyData.account_no == undefined
-          // ) {
-          else if (
+          } else if (
             agencyData.account_no !== "" &&
             Regexs.accountnumRegex.test(agencyData.account_no) === false
           ) {
             isError = false;
             errorMessage = strings.accountNoValidVal;
-          }
-          // }
-          else if (
+          } else if (
             agencyData.ifsc_code !== "" &&
             Regexs.ifscRegex.test(agencyData.ifsc_code) === false
           ) {
@@ -794,56 +595,13 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
         ) {
           isError = false;
           errorMessage = strings.reraRegstrReqVal;
-        }
-        // else if (
-        //   agencyData.pancard == null ||
-        //   agencyData.pancard == undefined ||
-        //   agencyData.pancard == ''
-        // ) {
-        //   isError = false;
-        //   errorMessage = strings.comPanCardImgReqVal;
-        // } else if (
-        //   agencyData.declaration_letter_of_company == null ||
-        //   agencyData.declaration_letter_of_company == undefined ||
-        //   agencyData.declaration_letter_of_company == ''
-        // ) {
-        //   isError = false;
-        //   errorMessage = strings.declLttrComImgReqVal;
-        // }
-        // else if (
-        //   agencyData.company_bank_name == "" ||
-        //   agencyData.company_bank_name == undefined
-        // ) {
-        //   isError = false;
-        //   errorMessage = strings.bankNameReqVal;
-        // } else if (
-        //   agencyData.company_branch_name == "" ||
-        //   agencyData.company_branch_name == undefined
-        // ) {
-        //   isError = false;
-        //   errorMessage = strings.branchNameReqVal;
-        // } else if (
-        //   agencyData.company_account_no == "" ||
-        //   agencyData.company_account_no == undefined
-        // ) {
-        //   isError = false;
-        //   errorMessage = strings.accountNoReqVal;
-        // }
-        else if (
+        } else if (
           agencyData.company_account_no !== "" &&
           Regexs.accountnumRegex.test(agencyData.company_account_no) === false
         ) {
           isError = false;
           errorMessage = strings.accountNoValidVal;
-        }
-        //  else if (
-        //   agencyData.company_ifsc_code == "" ||
-        //   agencyData.company_ifsc_code == undefined
-        // ) {
-        //   isError = false;
-        //   errorMessage = strings.ifscReqVal;
-        // }
-        else if (
+        } else if (
           agencyData.company_ifsc_code !== "" &&
           Regexs.ifscRegex.test(agencyData.company_ifsc_code) === false
         ) {
@@ -1061,10 +819,6 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
           default:
             break;
         }
-        // ErrorMessage({
-        //   msg: emailAndMobileData?.response?.message,
-        //   backgroundColor: GREEN_COLOR
-        // })
       } else {
         if (emailAndMobileData?.response?.status === 201) {
           switch (emailAndMobileData?.check_type) {
@@ -1178,17 +932,7 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
     dispatch(checkEmailMobile(params));
   };
   const handleVisiblePropertyPress = () => {
-    dispatch(
-      getAllProperty({
-        // offset: 0,
-        // limit: 100,
-        // start_date: data?.start_date ? data?.start_date : '',
-        // end_date: data?.end_date ? data?.end_date : '',
-        // location: data?.location ? data?.location : '',
-        // property_name: data?.property_name ? data?.property_name : '',
-        // property_type: data?.property_type ? data?.property_type : '',
-      })
-    );
+    dispatch(getAllProperty({}));
     setIsPropertyVisible(true);
   };
   const employeeMobileNoSet = (data: any) => {
@@ -1397,20 +1141,6 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
           dispatch(editAgent(formData));
         } else if (type === "add") {
           dispatch(createAgency(formData));
-          // auth()
-          // .createUserWithEmailAndPassword(agencyData?.email, "123456")
-          // .then(() => {
-          //   console.log("User account created & signed in!");
-          // })
-          // .catch((error) => {
-          //   if (error.code === "auth/email-already-in-use") {
-          //     console.log("That email address is already in use!");
-          //   }
-          //   if (error.code === "auth/invalid-email") {
-          //     console.log("That email address is invalid!");
-          //   }
-          //   console.error(error);
-          // });
           dispatch(AgencyCreateFormRemove());
         }
       }
@@ -1572,29 +1302,6 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
           handleClearData={handleClearData}
         />
       ) : (
-        // <CompanyBasicInfoView
-        //   imagePicker={imagePicker}
-        //   setImagePicker={setImagePicker}
-        //   onPressBack={onPressBack}
-        //   onPressNext={onPressNext}
-        //   agencyData={agencyData}
-        //   setAgencyData={setAgencyData}
-        //   setLocationModel={setLocationModel}
-        //   locationModel={locationModel}
-        //   handleCheckEmailMobile={handleCheckEmailMobile}
-        //   setEmailMobValidation={setEmailMobValidation}
-        //   emailMobvalidation={emailMobvalidation}
-        //   type={type}
-        //   emailMobileChng={emailMobileChng}
-        //   setEmailMobileChng={setEmailMobileChng}
-        //   isVisibleAddEmployee={isVisibleAddEmployee}
-        //   setIsVisibleAddEmployee={setIsVisibleAddEmployee}
-        //   handleAddEmployee={handleAddEmployee}
-        //   employeeFormData={employeeFormData}
-        //   setEmployeeFormData={setEmployeeFormData}
-        //   employees={employees}
-        //   handleDeleteEmployee={handleDeleteEmployee}
-        // />
         <>
           {formType == 1 ? (
             <AgentBankInfo
@@ -1614,21 +1321,6 @@ const AgentBasicInfo = ({ navigation, route }: any) => {
               handleVisiblePropertyPress={handleVisiblePropertyPress}
             />
           ) : (
-            // <CompanyBankInfo
-            //   agencyData={agencyData}
-            //   setAgencyData={setAgencyData}
-            //   onPressNext={onPressNext}
-            //   setFormType={setFormType}
-            //   type={type}
-            //   isPropertyVisible={isPropertyVisible}
-            //   setIsPropertyVisible={setIsPropertyVisible}
-            //   handleSearch={handleSearch}
-            //   finalPropertyList={finalPropertyList}
-            //   handleSelects={handleSelects}
-            //   handleDelete={handleDelete}
-            //   selectedProperty={selectedProperty}
-            //   handleAllocateProperty={handleAllocateProperty}
-            // />
             <CompanyDetails
               agencyData={agencyData}
               setAgencyData={setAgencyData}

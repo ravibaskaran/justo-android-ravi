@@ -193,7 +193,7 @@ const AgentBankInfo = ({ navigation, route }: any) => {
   return (
     <View style={styles.mainContainer}>
       <Header
-        headerText={strings.rerainfo}
+        headerText={"RERA Info"}
         headerStyle={styles.headerStyle}
         headerTextStyle={styles.headerTextStyle}
         leftImageSrc={images.backArrow}

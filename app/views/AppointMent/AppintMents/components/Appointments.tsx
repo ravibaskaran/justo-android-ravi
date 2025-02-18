@@ -37,17 +37,6 @@ const AppointmentListView = (props: any) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      // if (props.type === 'today') {
-      //     props.getAppointmentList(0, props.todayAppointment)
-      // } else if (props.type === 'todayComplete') {
-      //     props.getAppointmentList(0, { ...props.todayAppointment, status: 3 })
-      // } else {
-      //     if (indexData?.index === 0) {
-      //         props.getAppointmentList(0, props.todayAppointment)
-      //     } else {
-      //         props.getAppointmentList(0, {})
-      //     }
-      // }
       setTimeout(() => {
         if (indexData?.index === 0) {
           // Nested coditions for filter data with types

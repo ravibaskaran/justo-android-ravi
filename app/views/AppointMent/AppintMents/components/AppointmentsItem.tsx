@@ -1,37 +1,30 @@
+import usePermission from "app/components/utilities/UserPermissions";
+import moment from "moment";
+import React from "react";
 import {
-  View,
-  Text,
-  TouchableOpacity,
   Image,
   Linking,
   Pressable,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import React from "react";
-import styles from "./styles";
+import { useSelector } from "react-redux";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
 import strings from "../../../../components/utilities/Localization";
 import {
   BLACK_COLOR,
   CALL_COLOR,
-  GRAY_COLOR,
-  GRAY_LIGHT_COLOR,
+  DATE_BY_DAY,
+  DATE_FORMAT,
+  DATE_TIME_FORMAT,
+  getCPLeadType,
   GREEN_COLOR,
   PRIMARY_THEME_COLOR,
-  BG_MAIN_COLOUR,
-  WHITE_COLOR,
-  WHITE_COLOR_LIGHT,
-  YELLOW_COLOR,
-  RED_COLOR,
-  DATE_FORMAT,
-  TIME_FORMAT,
-  DATE_TIME_FORMAT,
-  DATE_BY_DAY,
-  getCPLeadType,
+  WHITE_COLOR
 } from "../../../../components/utilities/constant";
-import images from "../../../../assets/images";
-import Button from "../../../../components/Button";
-import moment from "moment";
-import { useSelector } from "react-redux";
-import usePermission from "app/components/utilities/UserPermissions";
+import styles from "./styles";
 
 const AppointmentItem = (props: any) => {
   const { userData = {} } = useSelector((state: any) => state.userData);
@@ -132,16 +125,7 @@ const AppointmentItem = (props: any) => {
           <Text style={styles.nameTxt}>{props.items.property_title}</Text>
         </View>
       </View>
-      {/* <View style={styles.Txtview}>
-        <View style={styles.projectContainer}>
-          <Text style={styles.projectTxt}>{strings.dateTime} :</Text>
-        </View>
-        <View style={styles.nameContainer}>
-          <Text style={styles.nameTxt}>{`${moment
-            .utc(props.items.appointment_date)
-            .format("DD-MM-YYYY")} ${props.items.appointment_time}`}</Text>
-        </View>
-      </View> */}
+     
       <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
           <Text style={styles.projectTxt}>Created Date</Text>
@@ -176,14 +160,7 @@ const AppointmentItem = (props: any) => {
           </Text>
         </View>
       </View>
-      {/* <View style={styles.Txtview}>
-                <View style={styles.projectContainer}>
-                    <Text style={styles.projectTxt}>{strings.pickup} :</Text>
-                </View>
-                <View style={styles.nameContainer}>
-                    <Text style={styles.nameTxt}>{props.items.pickup ? props.items.pickup : strings.notfount}</Text>
-                </View>
-            </View> */}
+    
       <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
           <Text style={styles.projectTxt}>Lead Source</Text>
@@ -355,20 +332,7 @@ const AppointmentItem = (props: any) => {
           </Text>
         </View>
       </View>
-      {/* <View style={styles.Txtview}>
-                <View style={styles.projectContainer}>
-                    <Text style={styles.projectTxt}>{strings.visit + " " + strings.status}</Text>
-                </View>
-                <View><Text>:</Text></View>
-                <View style={styles.nameContainer}>
-                    <Text style={[styles.nameTxt,
-                    {
-                        color: props?.items?.visit_status === strings.hot ? GREEN_COLOR
-                            : props?.items?.visit_status === strings.warm ? YELLOW_COLOR
-                                : props?.items?.visit_status === strings.cold ? RED_COLOR : BLACK_COLOR
-                    }]}>{props?.items?.visit_status ? props?.items?.visit_status : strings.notfount}</Text>
-                </View>
-            </View> */}
+      
       {/* props.items.status === 10 FOLLOW-UP */}
       <View style={styles.buttonContainer}>
         {props.items.status === 1 ||
@@ -404,24 +368,6 @@ const AppointmentItem = (props: any) => {
         userData?.data?.role_title === "Closing Head") &&
       (props.items.status === 1 || props.items.status === 10) ? (
         <View style={[styles.buttonContainer, { justifyContent: "center" }]}>
-          {/* {props.items.pickup === "Yes" && !checkinStaus ? (
-            <Button
-              width={150}
-              height={30}
-              bgcolor={WHITE_COLOR}
-              bordercolor={PRIMARY_THEME_COLOR}
-              borderWidth={1}
-              btnTxtcolor={PRIMARY_THEME_COLOR}
-              buttonText={strings.dropLocation}
-              btnTxtsize={14}
-              border={10}
-              handleBtnPress={() => {
-                props.setappointmentid(props?.items?._id);
-                props.setLocationModel(true);
-              }}
-              textTransform={"uppercase"}
-            />
-          ) : null} */}
           {allocate && (
             <Button
               width={100}

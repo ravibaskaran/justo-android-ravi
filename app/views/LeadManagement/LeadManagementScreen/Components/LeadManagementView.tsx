@@ -1,17 +1,16 @@
-import { View, FlatList, Text } from "react-native";
-import React, { useRef, useState } from "react";
-import styles from "./Styles";
+import { useNavigation } from "@react-navigation/native";
+import Button from "app/components/Button";
+import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
+import usePermission from "app/components/utilities/UserPermissions";
+import React, { useState } from "react";
+import { FlatList, Text, View } from "react-native";
 import images from "../../../../assets/images";
+import Header from "../../../../components/Header";
 import { PRIMARY_THEME_COLOR } from "../../../../components/utilities/constant";
 import strings from "../../../../components/utilities/Localization";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Header from "../../../../components/Header";
 import LeadManagementItem from "./LeadManagementItem";
-import { useNavigation } from "@react-navigation/native";
 import FilterModal from "./LeadManagementModal";
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
-import Button from "app/components/Button";
-import usePermission from "app/components/utilities/UserPermissions";
+import styles from "./Styles";
 
 const LeadManagementView = (props: any) => {
   const loadingref = false;

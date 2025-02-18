@@ -1,35 +1,32 @@
+import CheckBox from "@react-native-community/checkbox";
+import ErrorMessage from "app/components/ErrorMessage";
+import PicturePickerModal from "app/components/Modals/PicturePicker";
+import { normalize, } from "app/components/scaleFontSize";
+import React, { useState } from "react";
 import {
-  View,
+  Linking,
+  ScrollView,
   Text,
   TouchableOpacity,
-  ScrollView,
-  Linking,
+  View,
 } from "react-native";
-import React, { useState } from "react";
-import styles from "./styles";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import Header from "../../../../components/Header";
+import InputField from "../../../../components/InputField";
 import {
   BLACK_COLOR,
   Isios,
   PRIMARY_THEME_COLOR,
   RED_COLOR,
 } from "../../../../components/utilities/constant";
-import Header from "../../../../components/Header";
 import strings from "../../../../components/utilities/Localization";
-import InputField from "../../../../components/InputField";
-import Button from "../../../../components/Button";
-import images from "../../../../assets/images";
-import { normalize, } from "app/components/scaleFontSize";
-import PicturePickerModal from "app/components/Modals/PicturePicker";
-import ErrorMessage from "app/components/ErrorMessage";
-import { RequiredStart } from "app/components/utilities/GlobalFuncations";
-import CheckBox from "@react-native-community/checkbox";
+import styles from "./styles";
 
 const CompanyDetails = (props: any) => {
   const [visible, setVisible] = useState(false);
   const [docType, setDocType] = useState('')
   const [panvisible, setpanVisible] = useState(false);
-  const [lettervisible, setletterVisible] = useState(false);
-
   const validation = () => {
     let isError = true;
     let errorMessage: any = "";
@@ -168,7 +165,6 @@ const CompanyDetails = (props: any) => {
             <TouchableOpacity
               style={styles.browseVw}
               onPress={() => {
-                setletterVisible(true);
                 setVisible(true);
                 setDocType('all')
               }}
@@ -275,9 +271,6 @@ const CompanyDetails = (props: any) => {
             <Text style={styles.spanText}> {strings.termsAndCondition} </Text>
           </TouchableOpacity>
           <Text style={styles.bottomText}> {strings.applicable} </Text>
-          {/* <TouchableOpacity style={styles.spanTouch}>
-                    <Text style={styles.spanText}> {strings.privacyPolicy} </Text>
-                    </TouchableOpacity> */}
         </View>
         <View style={styles.buttonContainer}>
           <Button
@@ -311,7 +304,6 @@ const CompanyDetails = (props: any) => {
               ...props?.agencyData,
               declaration_letter_of_company: data,
             });
-            setletterVisible(false);
           }
         }}
       />

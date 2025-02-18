@@ -1,6 +1,13 @@
-import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
+import AddPropertyModel from "app/components/Modals/AddPropertyModel";
+import PicturePickerModal from "app/components/Modals/PicturePicker";
+import { normalize } from "app/components/scaleFontSize";
+import { RequiredStart } from "app/components/utilities/GlobalFuncations";
 import React, { useState } from "react";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { RadioButton } from "react-native-paper";
 import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import Header from "../../../../components/Header";
 import InputField from "../../../../components/InputField";
 import {
   BLACK_COLOR,
@@ -9,20 +16,11 @@ import {
 } from "../../../../components/utilities/constant";
 import strings from "../../../../components/utilities/Localization";
 import styles from "./styles";
-import Button from "../../../../components/Button";
-import Header from "../../../../components/Header";
-import PicturePickerModal from "app/components/Modals/PicturePicker";
-import { normalize } from "app/components/scaleFontSize";
-import { RequiredStart } from "app/components/utilities/GlobalFuncations";
-import { RadioButton } from "react-native-paper";
-import { handleValues } from "app/components/utilities/handleValues";
-import AddPropertyModel from "app/components/Modals/AddPropertyModel";
 
 const AgentBankInfo = (props: any) => {
   const [reravisible, setreraVisible] = useState(false);
   const [lettervisible, setletterVisible] = useState(false);
   const [pancardVisible, setPancardVisible] = useState(false);
-  const [cheaquevisible, setcheaqueVisible] = useState(false);
   const [visible, setVisible] = useState(false);
   const renderProperty = (item: any, index: any) => {
     return (
@@ -53,24 +51,6 @@ const AgentBankInfo = (props: any) => {
         automaticallyAdjustKeyboardInsets={Isios ? true : false}
         contentContainerStyle={styles.wrap}
       >
-        {/* <View style={styles.inputWrap}>
-          <InputField
-            require={true}
-            placeholderText={strings.reraCertificate + " " + strings.shortNum}
-            handleInputBtnPress={() => { }}
-            headingText={strings.reraCertificate + " " + strings.shortNum}
-            maxLength={20}
-            valueshow={props.agencyData?.rera_certificate_no}
-            onChangeText={(val: any) => {
-              props.setAgencyData({
-                ...props.agencyData,
-                rera_certificate_no: val,
-                norera_register: (val === "" && handleValues(props?.agencyData?.rera_certificate) === false) ? null : ""
-              })
-
-            }}
-          />
-        </View> */}
         <Text style={styles.applicableTxt}>{strings.areYouGstAppl}</Text>
         <View style={styles.TypeView}>
           {/* <RequiredStart /> */}
@@ -212,68 +192,6 @@ const AgentBankInfo = (props: any) => {
             </View>
           </View>
         )}
-
-        {/* <View
-          style={[
-            styles.inputWrap,
-            {
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-               {/* <View
-          style={[
-            styles.inputWrap,
-            {
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-            },
-          ]}
-        >
-          <View
-            style={{
-              flex: 1,
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Text style={styles.headingText}>
-              {props?.agencyData?.cp_type === 1
-                ? strings.CpreraCertificate
-                : strings.compReraCertificate}
-            </Text>
-          </View>
-          <View style={{ flex: 0.5 }}>
-            <TouchableOpacity
-              style={styles.browseVw}
-              onPress={() => {
-                setreraVisible(true);
-                setVisible(true);
-              }}
-            >
-              <Text
-                style={{
-                  color: props.agencyData?.rera_certificate
-                    ? BLACK_COLOR
-                    : PRIMARY_THEME_COLOR,
-                  fontSize: normalize(15),
-                }}
-              >
-                {strings.browse}
-              </Text>
-            </TouchableOpacity>
-            {(typeof props.agencyData?.rera_certificate === "string" &&
-              props.agencyData?.rera_certificate?.includes("no_image.png")) ||
-            props.agencyData?.rera_certificate === null ||
-            props.agencyData?.rera_certificate === "" ||
-            props.agencyData?.rera_certificate === undefined ? null : (
-              <Text style={styles.addedTxt}>
-                {strings.reraCertificate + " " + strings.added}
-              </Text>
-            )}
-          </View>
-        </View> */}
 
         {props?.agencyData?.cp_type === 2 ? (
           <View
@@ -498,7 +416,6 @@ const AgentBankInfo = (props: any) => {
                 },
               ]}
               onPress={() => {
-                setcheaqueVisible(true);
                 setVisible(true);
               }}
             >
@@ -569,7 +486,6 @@ const AgentBankInfo = (props: any) => {
               ...props.agencyData,
               cancel_cheaque: data,
             });
-            setcheaqueVisible(false);
           }
         }}
       />

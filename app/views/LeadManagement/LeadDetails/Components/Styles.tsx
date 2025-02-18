@@ -13,12 +13,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   propertyListView: {
-    // flex: 1,
     marginTop: normalizeSpacing(2),
   },
   leadDetailsItemView: {
     flex: 1,
-    //marginVertical: normalizeSpacing(10),
     backgroundColor:WHITE_COLOR
   },
   topDetailsView: {
@@ -55,7 +53,6 @@ const styles = StyleSheet.create({
   },
   Txtview: {
     flexDirection: 'row',
-    // justifyContent: 'center',
     alignItems: 'center',
     borderBottomColor: GRAY_COLOR,
     borderBottomWidth: 1,

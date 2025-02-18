@@ -19,12 +19,6 @@ const LeadManagementItem = (props: any) => {
     view: "view_visitor",
     edit: "edit_visitor",
   });
-  const appointment_status =
-    props?.items?.appointment_status?.length > 0 &&
-    props?.items?.appointment_status[
-      props?.items?.appointment_status?.length - 1
-    ];
-
   const leadSource =
     props.items?.lead_source === "Reference" &&
     props.items?.referrel_partner === 1
@@ -205,40 +199,9 @@ const LeadManagementItem = (props: any) => {
               : props.items.lead_status === 8
               ? "Cancel visit"
               : props.items.lead_status === 7 && "Ready To Book"}
-
-              {/* {appointment_status === 1
-              ? "Ready to visit"
-              : appointment_status === 2
-              ? "Visited"
-              : appointment_status === 3
-              ? "Booking"
-              : appointment_status === 4
-              ? "Cancel visit"
-              : appointment_status === 5
-              ? "Reschedule"
-              : appointment_status === 6
-              ? "Not interested"
-              : "New Lead"} */}
           </Text>
         </View>
       </View>
-      {/* <View style={styles.Txtview}>
-        <View style={styles.projectContainer}>
-          <Text style={styles.projectTxt}>visit status :</Text>
-        </View>
-        <View style={styles.nameContainer}>
-          <Text style={[styles.nameTxt, {
-            color:
-              props.items.visit_status === strings.hot ? GREEN_COLOR
-                : props.items.visit_status === strings.warm ? YELLOW_COLOR
-                  : props.items.visit_status === strings.cold ? RED_COLOR : BLACK_COLOR
-          }]}>{
-              props.items.visit_status ?
-                props.items.visit_status
-                : strings.notfount
-            }</Text>
-        </View>
-      </View> */}
       <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
           <Text style={styles.projectTxt}>Acquisition Source :</Text>
