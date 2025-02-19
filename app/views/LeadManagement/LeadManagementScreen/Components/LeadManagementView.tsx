@@ -32,7 +32,15 @@ const LeadManagementView = (props: any) => {
       visit_status: "",
       lead_status: "",
     });
-    props.getVisitorsList(0, {});
+
+    if (props.params?.fromReport) {
+      props.getVisitorsList(0, {
+        startdate: props.params?.sDate,
+        enddate: props.params?.eDate,
+      });
+    } else {
+      props.getVisitorsList(0, {});
+    }
     props.setVisiitorList([]);
   };
   const onPressView = (data: any) => {
@@ -52,12 +60,13 @@ const LeadManagementView = (props: any) => {
   return (
     <View style={styles.mainContainer}>
       <Header
-        leftImageSrc={images.menu}
+        leftImageSrc={props.params?.fromReport ? images.backArrow : images.menu}
         rightFirstImageScr={images.filter}
         rightSecondImageScr={images.notification}
         headerText={strings.visitor}
         handleOnLeftIconPress={props.handleDrawerPress}
         headerStyle={styles.headerStyle}
+        leftImageIconStyle={styles.RightFirstIconStyle}
         RightFirstIconStyle={styles.RightFirstIconStyle}
         handleOnRightFirstIconPress={() => setFilterisVisible(true)}
         statusBarColor={PRIMARY_THEME_COLOR}
@@ -67,22 +76,27 @@ const LeadManagementView = (props: any) => {
         Count : {props?.moreData ? props?.moreData : 0}
       </Text>
       <View style={styles.propertyListView}>
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Button
-            height={30}
-            width={150}
-            buttonText={strings.resetFilter}
-            handleBtnPress={() => props.getVisitorsList(0, {})}
-          />
-          {create && (
+        {!props.params?.fromReport && (
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
             <Button
               height={30}
-              width={160}
-              buttonText={"Add New Visit"}
-              handleBtnPress={() => onPressCreatevisit()}
+              width={150}
+              buttonText={strings.resetFilter}
+              handleBtnPress={() => props.getVisitorsList(0, {})}
             />
-          )}
-        </View>
+            {create && (
+              <Button
+                height={30}
+                width={160}
+                buttonText={"Add New Visit"}
+                handleBtnPress={() => onPressCreatevisit()}
+              />
+            )}
+          </View>
+        )}
+
         <FlatList
           data={props?.visitorList}
           showsVerticalScrollIndicator={false}

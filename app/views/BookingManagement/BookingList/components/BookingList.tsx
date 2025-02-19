@@ -29,7 +29,7 @@ const BookingListView = (props: any) => {
   return (
     <View style={styles.mainContainer}>
       <Header
-        leftImageSrc={images.menu}
+        leftImageSrc={props.fromReport ? images.backArrow : images.menu}
         headerText={
           props?.type === "readyToBook"
             ? strings.readytoBookHeader
@@ -37,6 +37,7 @@ const BookingListView = (props: any) => {
             ? strings.registrationReqHead
             : strings.bookingRequestHead
         }
+        leftImageIconStyle={{ tintColor: WHITE_COLOR }}
         handleOnLeftIconPress={props.handleDrawerPress}
         headerStyle={styles.headerStyle}
         rightSecondImageScr={images.notification}
@@ -47,18 +48,23 @@ const BookingListView = (props: any) => {
       <Text style={styles.count}>
         Count : {props?.moreData ? props?.moreData : 0}
       </Text>
-      <View style={{ alignItems: "flex-end", marginTop: normalizeSpacing(10) }}>
-        <Button
-          width={120}
-          height={40}
-          buttonText={"Reset"}
-          handleBtnPress={() => {
-            props.navigation.setParams({ onpressType: "" });
-            props.setDatatype("");
-            onReset();
-          }}
-        />
-      </View>
+      {!props.fromReport && (
+        <View
+          style={{ alignItems: "flex-end", marginTop: normalizeSpacing(10) }}
+        >
+          <Button
+            width={120}
+            height={40}
+            buttonText={"Reset"}
+            handleBtnPress={() => {
+              props.navigation.setParams({ onpressType: "" });
+              props.setDatatype("");
+              onReset();
+            }}
+          />
+        </View>
+      )}
+
       <View style={styles.listView}>
         <FlatList
           data={Array.isArray(props.DATA) ? props.DATA : []}

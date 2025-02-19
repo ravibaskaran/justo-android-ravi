@@ -3,6 +3,8 @@ import { getUserAppointmentList } from "app/Redux/Actions/AppiontmentWithUserAct
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AppointmentView from "./Components/AppointmentView";
+import CPAppointmentsForReport from "./Components/CPAppointmentsForReport";
+import { BackHandler } from "react-native";
 
 const AppointmentScreenCPSM = ({ navigation, route }: any) => {
   const [appointmentList, setAppointmentList] = useState<any>([]);
@@ -68,22 +70,58 @@ const AppointmentScreenCPSM = ({ navigation, route }: any) => {
       })
     );
   };
+
+  useEffect(() => {
+    const backAction = () => {
+      handleDrawerPress();
+      return true;
+    };
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+    return () => backHandler.remove();
+  }, [route?.params?.fromReport]);
+
   const handleDrawerPress = () => {
-    navigation.toggleDrawer();
+    if (route?.params?.fromReport) {
+      navigation.navigate("Report", { backToReport: true });
+    } else {
+      navigation.toggleDrawer();
+    }
   };
+
+
   return (
-    <AppointmentView
-      handleDrawerPress={handleDrawerPress}
-      appointmentList={appointmentList}
-      offSET={offSET}
-      getAppointmentList={getAppointmentList}
-      setFilterData={setFilterData}
-      filterData={filterData}
-      role={role}
-      list={list}
-      edit={edit}
-      route={route}
-    />
+    <>
+      {route?.params?.fromReport ? (
+        <CPAppointmentsForReport
+          handleDrawerPress={handleDrawerPress}
+          appointmentList={appointmentList}
+          offSET={offSET}
+          getAppointmentList={getAppointmentList}
+          setFilterData={setFilterData}
+          filterData={filterData}
+          role={role}
+          list={list}
+          edit={edit}
+          route={route}
+        />
+      ) : (
+        <AppointmentView
+          handleDrawerPress={handleDrawerPress}
+          appointmentList={appointmentList}
+          offSET={offSET}
+          getAppointmentList={getAppointmentList}
+          setFilterData={setFilterData}
+          filterData={filterData}
+          role={role}
+          list={list}
+          edit={edit}
+          route={route}
+        />
+      )}
+    </>
   );
 };
 

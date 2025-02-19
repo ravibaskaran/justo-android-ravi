@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import BookingListView from "./components/BookingList";
 import { todayDate } from "app/components/utilities/constant";
+import { BackHandler } from "react-native";
 
 const BookingListScreen = ({ navigation, route }: any) => {
   const { type = "", onpressType = "" } = route?.params || {};
@@ -105,9 +106,25 @@ const BookingListScreen = ({ navigation, route }: any) => {
       );
     }
   };
-  const handleDrawerPress = () => {
-    navigation.toggleDrawer();
-  };
+ useEffect(() => {
+     const backAction = () => {
+       handleDrawerPress();
+       return true;
+     };
+     const backHandler = BackHandler.addEventListener(
+       "hardwareBackPress",
+       backAction
+     );
+     return () => backHandler.remove();
+   }, [route?.params?.fromReport]);
+ 
+   const handleDrawerPress = () => {
+     if (route?.params?.fromReport) {
+       navigation.navigate("Report", { backToReport: true });
+     } else {
+       navigation.toggleDrawer();
+     }
+   };
 
   const handleView = (data: any) => {
     navigation.navigate("BookingDetails", { data: data, type: type });
@@ -128,6 +145,7 @@ const BookingListScreen = ({ navigation, route }: any) => {
         setDatatype={setDatatype}
         filterData={filterData}
         setFilterData={setFilterData}
+        fromReport={route?.params?.fromReport}
       />
     </>
   );

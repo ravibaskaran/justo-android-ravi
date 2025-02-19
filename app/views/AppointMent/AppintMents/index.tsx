@@ -26,6 +26,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AppointmentView from "./components/Appointments";
 import AppointmentsForReport from "./components/AppointmentsForReport";
+import { BackHandler } from "react-native";
 
 const AppointmentsScreen = ({ navigation, route }: any) => {
   const [dropLocisVisible, setDropLocisVisible] = useState(false);
@@ -176,7 +177,7 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
         : getClosingManagerList;
     dispatch(action({ property_id: property_Id }));
   };
-          
+
   const handleAllocateCM = async () => {
     dispatch({ type: START_LOADING });
     const res = await apiCall("post", apiEndPoints.ALLOCATE_CM, allocatedCM);
@@ -194,13 +195,33 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
       dispatch({ type: STOP_LOADING });
     }
   };
+
+  useEffect(() => {
+    const backAction = () => {
+      handleDrawerPress();
+      return true;
+    };
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+    return () => backHandler.remove();
+  }, [route?.params?.fromReport]);
+
+  const handleDrawerPress = () => {
+    if (route?.params?.fromReport) {
+      navigation.navigate("Report", { backToReport: true });
+    } else {
+      navigation.toggleDrawer();
+    }
+  };
   return (
     <>
       {route.params?.fromReport ? (
         <AppointmentsForReport
           filterisVisible={filterisVisible}
           setFilterisVisible={setFilterisVisible}
-          // handleDrawerPress={handleDrawerPress}
+          handleDrawerPress={handleDrawerPress}
           onPressView={onPressView}
           DATA={appointmentList}
           dropLocisVisible={dropLocisVisible}
@@ -228,7 +249,7 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
         <AppointmentView
           filterisVisible={filterisVisible}
           setFilterisVisible={setFilterisVisible}
-          // handleDrawerPress={handleDrawerPress}
+          handleDrawerPress={handleDrawerPress}
           onPressView={onPressView}
           DATA={appointmentList}
           handleScanQr={handleScanQr}

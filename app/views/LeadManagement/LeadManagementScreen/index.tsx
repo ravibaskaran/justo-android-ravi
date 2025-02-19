@@ -7,6 +7,7 @@ import { DATE_FORMAT } from "react-native-gifted-chat";
 import { useDispatch, useSelector } from "react-redux";
 import LeadManagementView from "./Components/LeadManagementView";
 import { ROLE_IDS } from "app/components/utilities/constant";
+import { BackHandler } from "react-native";
 
 const LeadManagementScreen = ({ navigation, route }: any) => {
   const dispatch: any = useDispatch();
@@ -97,7 +98,7 @@ const LeadManagementScreen = ({ navigation, route }: any) => {
   }, [response]);
 
   const getVisitorsList = (offset: any, data: any) => {
-    const { params } = route ?? {}; 
+    const { params } = route ?? {};
     setOffset(offset);
     dispatch(
       getAllLeadsList({
@@ -127,9 +128,27 @@ const LeadManagementScreen = ({ navigation, route }: any) => {
       })
     );
   };
+
+  useEffect(() => {
+    const backAction = () => {
+      handleDrawerPress();
+      return true;
+    };
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+    return () => backHandler.remove();
+  }, [route?.params?.fromReport]);
+
   const handleDrawerPress = () => {
-    navigation.toggleDrawer();
+    if (route?.params?.fromReport) {
+      navigation.navigate("Report", { backToReport: true });
+    } else {
+      navigation.toggleDrawer();
+    }
   };
+
   return (
     <LeadManagementView
       handleDrawerPress={handleDrawerPress}
@@ -141,6 +160,7 @@ const LeadManagementScreen = ({ navigation, route }: any) => {
       setVisiitorList={setVisiitorList}
       offSET={offSET}
       flatListRef={flatListRef}
+      params={route?.params}
     />
   );
 };

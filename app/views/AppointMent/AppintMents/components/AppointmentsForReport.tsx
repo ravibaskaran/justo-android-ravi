@@ -48,18 +48,15 @@ const AppointmentsForReport = (props: any) => {
       );
     }
   };
-  const handleDrawerPress = () => {
-    props.navigation.toggleDrawer();
-  };
-
   return (
     <View style={styles.mainContainer}>
       <Header
-        leftImageSrc={images.menu}
+        leftImageSrc={images.backArrow}
         headerText={strings.appointmentHeader}
         rightSecondImageScr={images.notification}
         RightFirstIconStyle={styles.RightFirstIconStyle}
-        handleOnLeftIconPress={handleDrawerPress}
+        handleOnLeftIconPress={props.handleDrawerPress}
+        leftImageIconStyle={styles.RightFirstIconStyle}
         headerStyle={styles.headerStyle}
         handleOnRightFirstIconPress={() => props.setFilterisVisible(true)}
       />

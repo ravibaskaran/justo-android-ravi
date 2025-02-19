@@ -107,35 +107,6 @@ const AppointmentView = (props: any) => {
       }
     );
   }, []);
-  useFocusEffect(
-    React.useCallback(() => {
-      if (props?.route?.params?.fromReport) {
-        setIndexData({
-          index: 1,
-          routes: [
-            {
-              key: "first",
-              title:
-                roleId === ROLE_IDS.sourcingtl_id ||
-                roleId === ROLE_IDS.sourcing_head_id
-                  ? "My Appointment"
-                  : "Today Appointment",
-            },
-            {
-              key: "second",
-              title:
-                roleId === ROLE_IDS.sourcingtl_id ||
-                roleId === ROLE_IDS.sourcing_head_id
-                  ? "SM Appointment With CP"
-                  : "All Appointment",
-            },
-          ],
-        });
-      }
-
-      return () => {};
-    }, [props?.route])
-  );
 
   useFocusEffect(
     React.useCallback(() => {
@@ -153,20 +124,7 @@ const AppointmentView = (props: any) => {
         if (isSourcingRole) {
           props.getAppointmentList(3, {});
         } else {
-          if (props?.route?.params?.fromReport) {
-            props.setFilterData({
-              start_date: props?.route?.params.sDate,
-              end_date: props?.route?.params.eDate,
-              customer_name: "",
-              status: "",
-            });
-            props.getAppointmentList(2, {
-              start_date: props?.route?.params.sDate,
-              end_date: props?.route?.params.eDate,
-            });
-          } else {
-            props.getAppointmentList(2, {});
-          }
+          props.getAppointmentList(2, {});
         }
       } else {
         if (isSourcingRole) {

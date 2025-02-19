@@ -18,12 +18,12 @@ import {
 } from "app/components/utilities/constant";
 import moment from "moment";
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { Keyboard } from "react-native";
+import { BackHandler, Keyboard } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import ReportView from "./components/ReportView";
 import strings from "app/components/utilities/Localization";
 
-const ReportScreen = ({ navigation }: any) => {
+const ReportScreen = ({ navigation, route }: any) => {
   const [reportData, setReportData] = useState([]);
   const [filterModalVisible, setIsFilterModalVisible] = useState(false);
   const [filterData, setFilterData] = useState({
@@ -39,9 +39,6 @@ const ReportScreen = ({ navigation }: any) => {
   const [propertyListForFilter, setPropertyListForFilter] = useState([]);
   const [clusterheadListForFilter, setClusterheadListForFilter] = useState([]);
   const dispatch: any = useDispatch();
-  const handleDrawerPress = () => {
-    navigation.toggleDrawer();
-  };
   const isFocused = useIsFocused();
   const { userData = {} } = useSelector((state: any) => state.userData);
   const ReportData = useSelector((state: any) => state.reportData);
@@ -80,10 +77,30 @@ const ReportScreen = ({ navigation }: any) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      getData(today, today);
+      if (!route?.params?.backToReport) {
+        getData(today, today);
+      }
       return () => {};
+    }, [navigation, route?.params])
+  );
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const backAction = () => {
+        handleDrawerPress();
+        return true;
+      };
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+      );
+      return () => backHandler.remove();
     }, [navigation])
   );
+
+  const handleDrawerPress = () => {
+    navigation.toggleDrawer();
+  };
 
   useEffect(() => {
     if (ReportData?.response?.data?.length > 0) {
