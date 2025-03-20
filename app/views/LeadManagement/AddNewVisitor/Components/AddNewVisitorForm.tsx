@@ -257,6 +257,7 @@ const AddNewVisitorForm = (props: any) => {
                       property_id: "",
                       property_type_title: "",
                       property_title: "",
+                      for_sm_id: "",
                     });
                   }
 
@@ -299,299 +300,740 @@ const AddNewVisitorForm = (props: any) => {
             </View>
           </View>
 
-          <View style={[styles.inputWrap]}>
-            <DropdownInput
-              headingText={"Lead Source"}
-              placeholder={
-                props.formData?.lead_source_title
-                  ? props.formData?.lead_source_title
-                  : "Lead Source"
-              }
-              data={
-                leadsourcefilteredData?.length > 0 &&
-                Array.isArray(leadsourcefilteredData)
-                  ? leadsourcefilteredData
-                  : []
-              }
-              onFocus={() => props.handleDropdownPress(13)}
-              inputWidth={"100%"}
-              require
-              paddingLeft={Isios ? 6 : 10}
-              maxHeight={300}
-              labelField={"title"}
-              valueField={"_id"}
-              value={props?.formData?.lead_source}
-              onChange={(item: any) => {
-                if (
-                  props?.formData?.lead_source === CONST_IDS?.cp_lead_source_id
-                ) {
-                  props.handleLeadSourcePressWhenNoCp();
-                }
-                props.setFormData({
-                  ...props.formData,
-                  lead_source: item._id,
-                  lead_source_title: item.title,
-                  cp_type: item._id === CONST_IDS?.cp_lead_source_id ? 2 : "",
-                  cp_id: "",
-                  cp_emp_id: "",
-                  referrer_name: "",
-                  referrer_email: "",
-                  referrer_contact: "",
-                  property_id: "",
-                  property_type_title: "",
-                  property_title: "",
-                  cp_lead_type: "",
-                  referrel_partner:
-                    item._id === CONST_IDS?.ref_lead_source_id
-                      ? 2
-                      : item._id === CONST_IDS?.ref_partner_lead_source_id
-                      ? 1
-                      : "",
-                });
-              }}
-              newRenderItem={(item: any) => {
-                return (
-                  item.title !== "" && (
-                    <>
-                      <View style={Styles.item}>
-                        <Text style={Styles.textItem}>{item.title}</Text>
-                      </View>
-                    </>
-                  )
-                );
-              }}
-            />
-          </View>
-          {props?.formData?.lead_source === CONST_IDS?.cp_lead_source_id ? (
-            <>
-              <View style={styles.inputWrap}>
-                <DropdownInput
-                  headingText={"CP Lead type"}
-                  placeholder={"Select CP Lead type"}
-                  data={CpLeadType}
-                  require
-                  inputWidth={"100%"}
-                  paddingLeft={Isios ? 6 : 10}
-                  maxHeight={300}
-                  labelField="label"
-                  valueField={"value"}
-                  value={props?.formData?.cp_lead_type}
-                  onChange={(item: any) => {
+          {Cmteam ? (
+            <View
+              style={[
+                styles.genderView,
+                { marginLeft: normalizeSpacing(10), marginBottom: 0 },
+              ]}
+            >
+              <Text style={styles.headingsTxt}>Lead for Sourcing Manager </Text>
+              <CheckBox
+                value={props?.formData?.for_sm}
+                // disabled={true}
+                tintColors={{ true: PRIMARY_THEME_COLOR }}
+                style={{
+                  transform: Isios
+                    ? [{ scaleX: 0.8 }, { scaleY: 0.8 }]
+                    : [{ scaleX: 1 }, { scaleY: 1 }],
+                }}
+                onValueChange={(newValue) => {
+                  if (props.type == "propertySelect") {
                     props.setFormData({
                       ...props.formData,
-                      cp_lead_type: item.value,
-                    });
-                  }}
-                  newRenderItem={(item: any) => {
-                    return (
-                      <View style={Styles.item}>
-                        <Text style={Styles.textItem}>{item.label}</Text>
-                      </View>
-                    );
-                  }}
-                />
-              </View>
-
-              <View style={styles.inputWrap}>
-                <DropdownInput
-                  headingText={"CP Company Name"}
-                  placeholder={"Select CP Company Name"}
-                  search={true}
-                  searchPlaceholder={strings.search + " " + strings.company}
-                  data={props.agentList}
-                  require
-                  inputWidth={"100%"}
-                  paddingLeft={Isios ? 6 : 10}
-                  maxHeight={300}
-                  labelField="agent_name"
-                  valueField={"_id"}
-                  onFocus={() => props.handleCompanyDropdownPress()}
-                  value={props?.formData?.cp_id}
-                  onChange={(item: any) => {
-                    props.setFormData({
-                      ...props.formData,
-                      cp_id: item._id,
+                      for_sm: !props?.formData?.for_sm,
+                      for_sm_id: "",
+                      lead_source: "",
+                      lead_source_title: "",
+                      cp_type: "",
+                      cp_id: "",
                       cp_emp_id: "",
+                      referrer_name: "",
+                      referrer_email: "",
+                      referrer_contact: "",
+                      cp_lead_type: "",
+                      referrel_partner: "",
+                    });
+                  } else {
+                    props.setFormData({
+                      ...props.formData,
+                      for_sm: !props?.formData?.for_sm,
+                      for_sm_id: "",
                       property_id: "",
                       property_type_title: "",
                       property_title: "",
+                      lead_source: "",
+                      lead_source_title: "",
+                      cp_type: "",
+                      cp_id: "",
+                      cp_emp_id: "",
+                      referrer_name: "",
+                      referrer_email: "",
+                      referrer_contact: "",
+                      cp_lead_type: "",
+                      referrel_partner: "",
                     });
-                    props.handleGetProperty(item._id);
+                  }
+                }}
+              />
+            </View>
+          ) : null}
+
+          {props?.formData?.for_sm ? (
+            <>
+              <View style={[styles.inputWrap]}>
+                <DropdownInput
+                  require={true}
+                  headingText={"Property"}
+                  placeholder={
+                    props.formData?.property_title
+                      ? props.formData?.property_title
+                      : "Property"
+                  }
+                  data={props?.allProperty.filter(
+                    (item: any) => item.status == true
+                  )}
+                  disable={
+                    props.type == "propertySelect" &&
+                    props?.formData?.lead_source !==
+                      CONST_IDS?.cp_lead_source_id
+                      ? true
+                      : false
+                  }
+                  inputWidth={"100%"}
+                  paddingLeft={16}
+                  maxHeight={300}
+                  labelField="property_title"
+                  valueField={"_id"}
+                  value={props?.formData?.property_id}
+                  onFocus={() => props.checkPhoneNumberIsValid(1)}
+                  onChange={(item: any) => {
+                    if (props?.allProperty?.length > 0) {
+                      props.setFormData({
+                        ...props.formData,
+                        property_id: item.property_id,
+                        property_type_title: item.property_type,
+                        property_title: item.property_title,
+                        for_sm_id: "",
+                        lead_source: "",
+                        lead_source_title: "",
+                        cp_type: "",
+                        cp_id: "",
+                        cp_emp_id: "",
+                        referrer_name: "",
+                        referrer_email: "",
+                        referrer_contact: "",
+                        cp_lead_type: "",
+                        referrel_partner: "",
+                      });
+                      props.checkMobileExistWithSameProperty(
+                        item.property_id,
+                        1
+                      );
+                    }
                   }}
                   newRenderItem={(item: any) => {
                     return (
-                      <View style={Styles.item}>
-                        <Text style={Styles.textItem}>{item.agent_name}</Text>
-                      </View>
+                      <>
+                        {canShowProperty() ? (
+                          <View style={Styles.item}>
+                            <Text style={Styles.textItem}>
+                              {item.property_title}
+                            </Text>
+                          </View>
+                        ) : null}
+                      </>
                     );
                   }}
                 />
               </View>
-
-              {props?.formData?.cp_id !== "" ? (
+              {props?.formData?.property_id ? (
                 <View style={styles.inputWrap}>
                   <DropdownInput
-                    headingText={"Company Employee name"}
-                    placeholder={"Select Employee name"}
-                    search={true}
-                    searchPlaceholder={strings.search + " " + strings.employee}
-                    data={props.employeeList}
+                    headingText={"Select SM"}
+                    placeholder={"Select SM"}
+                    data={props.sourcingManagerList}
+                    require
                     inputWidth={"100%"}
                     paddingLeft={Isios ? 6 : 10}
                     maxHeight={300}
-                    labelField="employee_name"
-                    valueField={"user_id"}
-                    onFocus={() => props.handleEmployeeDropdownPress()}
-                    value={props?.formData?.cp_emp_id}
+                    labelField="user_name"
+                    valueField={"_id"}
+                    value={props?.formData?.for_sm_id}
+                    onFocus={() => props.getSourcingManagerList()}
                     onChange={(item: any) => {
                       props.setFormData({
                         ...props.formData,
-                        cp_emp_id: item.user_id,
+                        for_sm_id: item._id,
+                        lead_source: "",
+                        lead_source_title: "",
+                        cp_type: "",
+                        cp_id: "",
+                        cp_emp_id: "",
+                        referrer_name: "",
+                        referrer_email: "",
+                        referrer_contact: "",
+                        cp_lead_type: "",
+                        referrel_partner: "",
                       });
                     }}
                     newRenderItem={(item: any) => {
                       return (
                         <View style={Styles.item}>
-                          <Text style={Styles.textItem}>
-                            {item.employee_name}
-                          </Text>
+                          <Text style={Styles.textItem}>{item.user_name}</Text>
                         </View>
                       );
                     }}
                   />
                 </View>
               ) : null}
+
+              {props?.formData?.for_sm_id ? (
+                <>
+                  <View style={[styles.inputWrap]}>
+                    <DropdownInput
+                      headingText={"Lead Source"}
+                      placeholder={
+                        props.formData?.lead_source_title
+                          ? props.formData?.lead_source_title
+                          : "Lead Source"
+                      }
+                      data={masterDatas.filter((item: any) => {
+                        return [
+                          CONST_IDS.cp_lead_source_id,
+                          CONST_IDS.ref_partner_lead_source_id,
+                        ].includes(item?._id);
+                      })}
+                      onFocus={() => props.handleDropdownPress(13)}
+                      inputWidth={"100%"}
+                      require
+                      paddingLeft={Isios ? 6 : 10}
+                      maxHeight={300}
+                      labelField={"title"}
+                      valueField={"_id"}
+                      value={props?.formData?.lead_source}
+                      onChange={(item: any) => {
+                        if (item._id === CONST_IDS?.cp_lead_source_id) {
+                          props.handleLeadSourcePressForSm();
+                        }
+                        props.setFormData({
+                          ...props.formData,
+                          lead_source: item._id,
+                          lead_source_title: item.title,
+                          cp_type:
+                            item._id === CONST_IDS?.cp_lead_source_id ? 2 : "",
+                          cp_id: "",
+                          cp_emp_id: "",
+                          referrer_name: "",
+                          referrer_email: "",
+                          referrer_contact: "",
+                          cp_lead_type: "",
+                          referrel_partner:
+                            item._id === CONST_IDS?.ref_lead_source_id
+                              ? 2
+                              : item._id ===
+                                CONST_IDS?.ref_partner_lead_source_id
+                              ? 1
+                              : "",
+                        });
+                      }}
+                      newRenderItem={(item: any) => {
+                        return (
+                          item.title !== "" && (
+                            <>
+                              <View style={Styles.item}>
+                                <Text style={Styles.textItem}>
+                                  {item.title}
+                                </Text>
+                              </View>
+                            </>
+                          )
+                        );
+                      }}
+                    />
+                  </View>
+
+                  {props?.formData?.lead_source ===
+                  CONST_IDS?.cp_lead_source_id ? (
+                    <>
+                      <View style={styles.inputWrap}>
+                        <DropdownInput
+                          headingText={"CP Lead type"}
+                          placeholder={"Select CP Lead type"}
+                          data={CpLeadType}
+                          require
+                          inputWidth={"100%"}
+                          paddingLeft={Isios ? 6 : 10}
+                          maxHeight={300}
+                          labelField="label"
+                          valueField={"value"}
+                          value={props?.formData?.cp_lead_type}
+                          onChange={(item: any) => {
+                            props.setFormData({
+                              ...props.formData,
+                              cp_lead_type: item.value,
+                            });
+                          }}
+                          newRenderItem={(item: any) => {
+                            return (
+                              <View style={Styles.item}>
+                                <Text style={Styles.textItem}>
+                                  {item.label}
+                                </Text>
+                              </View>
+                            );
+                          }}
+                        />
+                      </View>
+
+                      <View style={styles.inputWrap}>
+                        <DropdownInput
+                          headingText={"CP Company Name"}
+                          placeholder={"Select CP Company Name"}
+                          search={true}
+                          searchPlaceholder={
+                            strings.search + " " + strings.company
+                          }
+                          data={props.agentList}
+                          require
+                          inputWidth={"100%"}
+                          paddingLeft={Isios ? 6 : 10}
+                          maxHeight={300}
+                          labelField="agency_name"
+                          valueField={"_id"}
+                          value={props?.formData?.cp_id}
+                          onChange={(item: any) => {
+                            props.setFormData({
+                              ...props.formData,
+                              cp_id: item._id,
+                              cp_emp_id: "",
+                            });
+                          }}
+                          newRenderItem={(item: any) => {
+                            return (
+                              <View style={Styles.item}>
+                                <Text style={Styles.textItem}>
+                                  {item.agency_name}
+                                </Text>
+                              </View>
+                            );
+                          }}
+                        />
+                      </View>
+
+                      {props?.formData?.cp_id !== "" ? (
+                        <View style={styles.inputWrap}>
+                          <DropdownInput
+                            headingText={"Company Employee name"}
+                            placeholder={"Select Employee name"}
+                            search={true}
+                            searchPlaceholder={
+                              strings.search + " " + strings.employee
+                            }
+                            data={props.employeeList}
+                            inputWidth={"100%"}
+                            paddingLeft={Isios ? 6 : 10}
+                            maxHeight={300}
+                            labelField="employee_name"
+                            valueField={"user_id"}
+                            onFocus={() => props.handleEmployeeDropdownPress()}
+                            value={props?.formData?.cp_emp_id}
+                            onChange={(item: any) => {
+                              props.setFormData({
+                                ...props.formData,
+                                cp_emp_id: item.user_id,
+                              });
+                            }}
+                            newRenderItem={(item: any) => {
+                              return (
+                                <View style={Styles.item}>
+                                  <Text style={Styles.textItem}>
+                                    {item.employee_name}
+                                  </Text>
+                                </View>
+                              );
+                            }}
+                          />
+                        </View>
+                      ) : null}
+                    </>
+                  ) : null}
+
+                  {props?.formData?.lead_source ===
+                    CONST_IDS?.ref_lead_source_id ||
+                  props?.formData?.lead_source ===
+                    CONST_IDS?.ref_partner_lead_source_id ? (
+                    <>
+                      <View style={styles.inputWrap}>
+                        <InputField
+                          require={true}
+                          disableSpecialCharacters={true}
+                          placeholderText={strings.referrerNumber}
+                          handleInputBtnPress={() => {}}
+                          onChangeText={(data: any) => {
+                            props.setFormData({
+                              ...props.formData,
+                              referrer_contact: data,
+                              referrer_name: "",
+                              referrer_email: "",
+                              referrerNmbrExist: false,
+                              referrerEmailExist: false,
+                            });
+                          }}
+                          valueshow={props?.formData?.referrer_contact}
+                          headingText={strings.referrerNumber}
+                          keyboardtype={"number-pad"}
+                          maxLength={10}
+                        />
+                      </View>
+                      <View style={styles.inputWrap}>
+                        <Pressable
+                          onPress={() => props.checkPhoneNumberIsValid(2)}
+                        >
+                          <InputField
+                            require={true}
+                            disableSpecialCharacters={true}
+                            placeholderText={strings.referrerName}
+                            headingText={strings.referrerName}
+                            editable={
+                              !props?.formData?.referrerNmbrExist &&
+                              Regexs.mobilenumRegex.test(
+                                props?.formData?.referrer_contact
+                              )
+                            }
+                            onFocus={() => props.checkRefferrerNumberExist()}
+                            handleInputBtnPress={() => {}}
+                            onChangeText={(data: any) => {
+                              props.setFormData({
+                                ...props.formData,
+                                referrer_name: data,
+                              });
+                            }}
+                            valueshow={props?.formData?.referrer_name}
+                          />
+                        </Pressable>
+                      </View>
+                      <View style={styles.inputWrap}>
+                        <Pressable
+                          onPress={() => props.checkPhoneNumberIsValid(2)}
+                        >
+                          <InputField
+                            placeholderText={"Referrer Email"}
+                            headingText={"Referrer Email"}
+                            editable={
+                              !props?.formData?.referrerEmailExist &&
+                              Regexs.mobilenumRegex.test(
+                                props?.formData?.referrer_contact
+                              )
+                            }
+                            keyboardtype={"email-address"}
+                            onFocus={() => props.checkRefferrerNumberExist()}
+                            handleInputBtnPress={() => {}}
+                            onChangeText={(data: any) => {
+                              props.setFormData({
+                                ...props.formData,
+                                referrer_email: data,
+                              });
+                            }}
+                            valueshow={props?.formData?.referrer_email}
+                          />
+                        </Pressable>
+                      </View>
+                    </>
+                  ) : null}
+                </>
+              ) : null}
             </>
-          ) : null}
-          {props?.formData?.lead_source === CONST_IDS?.ref_lead_source_id ||
-          props?.formData?.lead_source ===
-            CONST_IDS?.ref_partner_lead_source_id ? (
+          ) : (
             <>
-              <View style={styles.inputWrap}>
-                <InputField
-                  require={true}
-                  disableSpecialCharacters={true}
-                  placeholderText={strings.referrerNumber}
-                  handleInputBtnPress={() => {}}
-                  onChangeText={(data: any) => {
+              <View style={[styles.inputWrap]}>
+                <DropdownInput
+                  headingText={"Lead Source"}
+                  placeholder={
+                    props.formData?.lead_source_title
+                      ? props.formData?.lead_source_title
+                      : "Lead Source"
+                  }
+                  data={
+                    leadsourcefilteredData?.length > 0 &&
+                    Array.isArray(leadsourcefilteredData)
+                      ? leadsourcefilteredData
+                      : []
+                  }
+                  onFocus={() => props.handleDropdownPress(13)}
+                  inputWidth={"100%"}
+                  require
+                  paddingLeft={Isios ? 6 : 10}
+                  maxHeight={300}
+                  labelField={"title"}
+                  valueField={"_id"}
+                  value={props?.formData?.lead_source}
+                  onChange={(item: any) => {
+                    if (
+                      props?.formData?.lead_source ===
+                      CONST_IDS?.cp_lead_source_id
+                    ) {
+                      props.handleLeadSourcePressWhenNoCp();
+                    }
                     props.setFormData({
                       ...props.formData,
-                      referrer_contact: data,
+                      lead_source: item._id,
+                      lead_source_title: item.title,
+                      cp_type:
+                        item._id === CONST_IDS?.cp_lead_source_id ? 2 : "",
+                      cp_id: "",
+                      cp_emp_id: "",
                       referrer_name: "",
                       referrer_email: "",
-                      referrerNmbrExist: false,
-                      referrerEmailExist: false,
+                      referrer_contact: "",
+                      property_id: "",
+                      property_type_title: "",
+                      property_title: "",
+                      cp_lead_type: "",
+                      referrel_partner:
+                        item._id === CONST_IDS?.ref_lead_source_id
+                          ? 2
+                          : item._id === CONST_IDS?.ref_partner_lead_source_id
+                          ? 1
+                          : "",
                     });
                   }}
-                  valueshow={props?.formData?.referrer_contact}
-                  headingText={strings.referrerNumber}
-                  keyboardtype={"number-pad"}
-                  maxLength={10}
+                  newRenderItem={(item: any) => {
+                    return (
+                      item.title !== "" && (
+                        <>
+                          <View style={Styles.item}>
+                            <Text style={Styles.textItem}>{item.title}</Text>
+                          </View>
+                        </>
+                      )
+                    );
+                  }}
                 />
               </View>
-              <View style={styles.inputWrap}>
-                <Pressable onPress={() => props.checkPhoneNumberIsValid(2)}>
-                  <InputField
-                    require={true}
-                    disableSpecialCharacters={true}
-                    placeholderText={strings.referrerName}
-                    headingText={strings.referrerName}
-                    editable={
-                      !props?.formData?.referrerNmbrExist &&
-                      Regexs.mobilenumRegex.test(
-                        props?.formData?.referrer_contact
-                      )
-                    }
-                    onFocus={() => props.checkRefferrerNumberExist()}
-                    handleInputBtnPress={() => {}}
-                    onChangeText={(data: any) => {
+
+              {props?.formData?.lead_source === CONST_IDS?.cp_lead_source_id ? (
+                <>
+                  <View style={styles.inputWrap}>
+                    <DropdownInput
+                      headingText={"CP Lead type"}
+                      placeholder={"Select CP Lead type"}
+                      data={CpLeadType}
+                      require
+                      inputWidth={"100%"}
+                      paddingLeft={Isios ? 6 : 10}
+                      maxHeight={300}
+                      labelField="label"
+                      valueField={"value"}
+                      value={props?.formData?.cp_lead_type}
+                      onChange={(item: any) => {
+                        props.setFormData({
+                          ...props.formData,
+                          cp_lead_type: item.value,
+                        });
+                      }}
+                      newRenderItem={(item: any) => {
+                        return (
+                          <View style={Styles.item}>
+                            <Text style={Styles.textItem}>{item.label}</Text>
+                          </View>
+                        );
+                      }}
+                    />
+                  </View>
+
+                  <View style={styles.inputWrap}>
+                    <DropdownInput
+                      headingText={"CP Company Name"}
+                      placeholder={"Select CP Company Name"}
+                      search={true}
+                      searchPlaceholder={strings.search + " " + strings.company}
+                      data={props.agentList}
+                      require
+                      inputWidth={"100%"}
+                      paddingLeft={Isios ? 6 : 10}
+                      maxHeight={300}
+                      labelField="agent_name"
+                      valueField={"_id"}
+                      onFocus={() => props.handleCompanyDropdownPress()}
+                      value={props?.formData?.cp_id}
+                      onChange={(item: any) => {
+                        props.setFormData({
+                          ...props.formData,
+                          cp_id: item._id,
+                          cp_emp_id: "",
+                          property_id: "",
+                          property_type_title: "",
+                          property_title: "",
+                        });
+                        props.handleGetProperty(item._id);
+                      }}
+                      newRenderItem={(item: any) => {
+                        return (
+                          <View style={Styles.item}>
+                            <Text style={Styles.textItem}>
+                              {item.agent_name}
+                            </Text>
+                          </View>
+                        );
+                      }}
+                    />
+                  </View>
+
+                  {props?.formData?.cp_id !== "" ? (
+                    <View style={styles.inputWrap}>
+                      <DropdownInput
+                        headingText={"Company Employee name"}
+                        placeholder={"Select Employee name"}
+                        search={true}
+                        searchPlaceholder={
+                          strings.search + " " + strings.employee
+                        }
+                        data={props.employeeList}
+                        inputWidth={"100%"}
+                        paddingLeft={Isios ? 6 : 10}
+                        maxHeight={300}
+                        labelField="employee_name"
+                        valueField={"user_id"}
+                        onFocus={() => props.handleEmployeeDropdownPress()}
+                        value={props?.formData?.cp_emp_id}
+                        onChange={(item: any) => {
+                          props.setFormData({
+                            ...props.formData,
+                            cp_emp_id: item.user_id,
+                          });
+                        }}
+                        newRenderItem={(item: any) => {
+                          return (
+                            <View style={Styles.item}>
+                              <Text style={Styles.textItem}>
+                                {item.employee_name}
+                              </Text>
+                            </View>
+                          );
+                        }}
+                      />
+                    </View>
+                  ) : null}
+                </>
+              ) : null}
+
+              {props?.formData?.lead_source === CONST_IDS?.ref_lead_source_id ||
+              props?.formData?.lead_source ===
+                CONST_IDS?.ref_partner_lead_source_id ? (
+                <>
+                  <View style={styles.inputWrap}>
+                    <InputField
+                      require={true}
+                      disableSpecialCharacters={true}
+                      placeholderText={strings.referrerNumber}
+                      handleInputBtnPress={() => {}}
+                      onChangeText={(data: any) => {
+                        props.setFormData({
+                          ...props.formData,
+                          referrer_contact: data,
+                          referrer_name: "",
+                          referrer_email: "",
+                          referrerNmbrExist: false,
+                          referrerEmailExist: false,
+                        });
+                      }}
+                      valueshow={props?.formData?.referrer_contact}
+                      headingText={strings.referrerNumber}
+                      keyboardtype={"number-pad"}
+                      maxLength={10}
+                    />
+                  </View>
+                  <View style={styles.inputWrap}>
+                    <Pressable onPress={() => props.checkPhoneNumberIsValid(2)}>
+                      <InputField
+                        require={true}
+                        disableSpecialCharacters={true}
+                        placeholderText={strings.referrerName}
+                        headingText={strings.referrerName}
+                        editable={
+                          !props?.formData?.referrerNmbrExist &&
+                          Regexs.mobilenumRegex.test(
+                            props?.formData?.referrer_contact
+                          )
+                        }
+                        onFocus={() => props.checkRefferrerNumberExist()}
+                        handleInputBtnPress={() => {}}
+                        onChangeText={(data: any) => {
+                          props.setFormData({
+                            ...props.formData,
+                            referrer_name: data,
+                          });
+                        }}
+                        valueshow={props?.formData?.referrer_name}
+                      />
+                    </Pressable>
+                  </View>
+                  <View style={styles.inputWrap}>
+                    <Pressable onPress={() => props.checkPhoneNumberIsValid(2)}>
+                      <InputField
+                        placeholderText={"Referrer Email"}
+                        headingText={"Referrer Email"}
+                        editable={
+                          !props?.formData?.referrerEmailExist &&
+                          Regexs.mobilenumRegex.test(
+                            props?.formData?.referrer_contact
+                          )
+                        }
+                        keyboardtype={"email-address"}
+                        onFocus={() => props.checkRefferrerNumberExist()}
+                        handleInputBtnPress={() => {}}
+                        onChangeText={(data: any) => {
+                          props.setFormData({
+                            ...props.formData,
+                            referrer_email: data,
+                          });
+                        }}
+                        valueshow={props?.formData?.referrer_email}
+                      />
+                    </Pressable>
+                  </View>
+                </>
+              ) : null}
+
+              <View style={[styles.inputWrap]}>
+                <DropdownInput
+                  require={true}
+                  headingText={"Property"}
+                  placeholder={
+                    props.formData?.property_title
+                      ? props.formData?.property_title
+                      : "Property"
+                  }
+                  data={props?.allProperty.filter(
+                    (item: any) => item.status == true
+                  )}
+                  disable={
+                    props.type == "propertySelect" &&
+                    props?.formData?.lead_source !==
+                      CONST_IDS?.cp_lead_source_id
+                      ? true
+                      : false
+                  }
+                  inputWidth={"100%"}
+                  paddingLeft={16}
+                  maxHeight={300}
+                  labelField="property_title"
+                  valueField={"_id"}
+                  value={props?.formData?.property_id}
+                  onFocus={() => props.checkPhoneNumberIsValid(1)}
+                  onChange={(item: any) => {
+                    if (props?.allProperty?.length > 0) {
                       props.setFormData({
                         ...props.formData,
-                        referrer_name: data,
+                        property_id: item.property_id,
+                        property_type_title: item.property_type,
+                        property_title: item.property_title,
                       });
-                    }}
-                    valueshow={props?.formData?.referrer_name}
-                  />
-                </Pressable>
-              </View>
-              <View style={styles.inputWrap}>
-                <Pressable onPress={() => props.checkPhoneNumberIsValid(2)}>
-                  <InputField
-                    placeholderText={"Referrer Email"}
-                    headingText={"Referrer Email"}
-                    editable={
-                      !props?.formData?.referrerEmailExist &&
-                      Regexs.mobilenumRegex.test(
-                        props?.formData?.referrer_contact
-                      )
+                      props.checkMobileExistWithSameProperty(
+                        item.property_id,
+                        1
+                      );
                     }
-                    keyboardtype={"email-address"}
-                    onFocus={() => props.checkRefferrerNumberExist()}
-                    handleInputBtnPress={() => {}}
-                    onChangeText={(data: any) => {
-                      props.setFormData({
-                        ...props.formData,
-                        referrer_email: data,
-                      });
-                    }}
-                    valueshow={props?.formData?.referrer_email}
-                  />
-                </Pressable>
+                  }}
+                  newRenderItem={(item: any) => {
+                    return (
+                      <>
+                        {canShowProperty() ? (
+                          <View style={Styles.item}>
+                            <Text style={Styles.textItem}>
+                              {item.property_title}
+                            </Text>
+                          </View>
+                        ) : null}
+                      </>
+                    );
+                  }}
+                />
               </View>
             </>
-          ) : null}
+          )}
 
-          <View style={[styles.inputWrap]}>
-            <DropdownInput
-              require={true}
-              headingText={"Property"}
-              placeholder={
-                props.formData?.property_title
-                  ? props.formData?.property_title
-                  : "Property"
-              }
-              data={props?.allProperty.filter(
-                (item: any) => item.status == true
-              )}
-              disable={
-                props.type == "propertySelect" &&
-                props?.formData?.lead_source !== CONST_IDS?.cp_lead_source_id
-                  ? true
-                  : false
-              }
-              inputWidth={"100%"}
-              paddingLeft={16}
-              maxHeight={300}
-              labelField="property_title"
-              valueField={"_id"}
-              value={props?.formData?.property_id}
-              onFocus={() => props.checkPhoneNumberIsValid(1)}
-              onChange={(item: any) => {
-                if (props?.allProperty?.length > 0) {
-                  props.setFormData({
-                    ...props.formData,
-                    property_id: item.property_id,
-                    property_type_title: item.property_type,
-                    property_title: item.property_title,
-                  });
-                  props.checkMobileExistWithSameProperty(item.property_id, 1);
-                }
-              }}
-              newRenderItem={(item: any) => {
-                return (
-                  <>
-                    {canShowProperty() ? (
-                      <View style={Styles.item}>
-                        <Text style={Styles.textItem}>
-                          {item.property_title}
-                        </Text>
-                      </View>
-                    ) : null}
-                  </>
-                );
-              }}
-            />
-          </View>
           <View
             style={[styles.genderView, { marginLeft: normalizeSpacing(20) }]}
           >

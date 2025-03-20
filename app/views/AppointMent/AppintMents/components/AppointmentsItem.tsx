@@ -22,7 +22,7 @@ import {
   getCPLeadType,
   GREEN_COLOR,
   PRIMARY_THEME_COLOR,
-  WHITE_COLOR
+  WHITE_COLOR,
 } from "../../../../components/utilities/constant";
 import styles from "./styles";
 
@@ -99,7 +99,7 @@ const AppointmentItem = (props: any) => {
         </View>
         <View style={styles.nameContainer}>
           <Text style={styles.nameTxt}>
-          {checkinStaus
+            {checkinStaus
               ? moment(checkinStaus).format(DATE_TIME_FORMAT)
               : strings.notfount}
           </Text>
@@ -125,7 +125,7 @@ const AppointmentItem = (props: any) => {
           <Text style={styles.nameTxt}>{props.items.property_title}</Text>
         </View>
       </View>
-     
+
       <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
           <Text style={styles.projectTxt}>Created Date</Text>
@@ -187,14 +187,14 @@ const AppointmentItem = (props: any) => {
             <Text style={styles.projectTxt}>Referrer</Text>
           </View>
           <View>
-          <Text>:</Text>
-        </View>
+            <Text>:</Text>
+          </View>
           <View style={styles.nameContainer}>
             <Text style={styles.nameTxt}>{props.items?.referrer_name}</Text>
           </View>
         </View>
       ) : null}
-      
+
       {props.items?.lead_source == "Channel Partner" ? (
         <View style={styles.Txtview}>
           <View style={styles.projectContainer}>
@@ -332,7 +332,7 @@ const AppointmentItem = (props: any) => {
           </Text>
         </View>
       </View>
-      
+
       {/* props.items.status === 10 FOLLOW-UP */}
       <View style={styles.buttonContainer}>
         {props.items.status === 1 ||

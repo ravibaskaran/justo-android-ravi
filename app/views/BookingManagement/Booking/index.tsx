@@ -22,6 +22,8 @@ interface FlatBooking {
   saleable_area: number;
   carpet_area: number;
   booking_amount: string;
+  agreement_value: string;
+  rate_achieved: string;
   payment_type: string;
   cheque_image: any;
   description: string;
@@ -71,6 +73,8 @@ const BookingScreen = ({ navigation, route }: any) => {
         saleable_area: 0,
         carpet_area: 0,
         booking_amount: "",
+        agreement_value: "",
+        rate_achieved: "",
         payment_type: "",
         cheque_image: "",
         description: "",
@@ -170,6 +174,19 @@ const BookingScreen = ({ navigation, route }: any) => {
         isError = false;
         errorMessage = "Payment Type is require. Please select payment type";
       } else if (
+        flatBooking.agreement_value == undefined ||
+        flatBooking.agreement_value == ""
+      ) {
+        isError = false;
+        errorMessage =
+          "Agreement value Amount is require. Please enter Agreement value";
+      } else if (
+        flatBooking.rate_achieved == undefined ||
+        flatBooking.rate_achieved == ""
+      ) {
+        isError = false;
+        errorMessage = "Rate achieved is require. Please enter Rate achieved";
+      } else if (
         typeof flatBooking.cheque_image != "object" ||
         flatBooking.cheque_image == ""
       ) {
@@ -220,6 +237,8 @@ const BookingScreen = ({ navigation, route }: any) => {
             saleable_area: 0,
             carpet_area: 0,
             booking_amount: "",
+            agreement_value: "",
+            rate_achieved: "",
             payment_type: "",
             cheque_image: "",
             description: "",
@@ -320,6 +339,8 @@ const BookingScreen = ({ navigation, route }: any) => {
     // newFormdata.append("configuration_id", bookingData.configuration_id);
     // newFormdata.append("quantity", bookingData.quantity);
     newFormdata.append("booking_amount", flatBooking.booking_amount);
+    newFormdata.append("agreement_value", flatBooking.agreement_value);
+    newFormdata.append("rate_achieved", flatBooking.rate_achieved);
     // newFormdata.append(
     //   "tranjection_upi_cheque_number",
     //   bookingData.tranjection_upi_cheque_number

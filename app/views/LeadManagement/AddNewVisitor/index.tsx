@@ -14,6 +14,7 @@ import ErrorMessage from "app/components/ErrorMessage";
 import strings from "app/components/utilities/Localization";
 import apiEndPoints from "app/components/utilities/apiEndPoints";
 import {
+  BLACK_COLOR,
   CONST_IDS,
   GREEN_COLOR,
   RED_COLOR,
@@ -83,6 +84,8 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
     referrerNmbrExist: false,
     referrel_partner: "",
     referrerEmailExist: false,
+    for_sm: false,
+    for_sm_id: "",
   });
   const [NavigationType, setNavigationType] = useState(0);
   const [dropDownType, setDropDownType] = useState(0);
@@ -113,6 +116,7 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
   const [countyPicker, setCountyPicker] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [isCpLoading, setIsCpLoading] = useState(false);
+  const [sourcingManagerList, setSourcingManagerList] = useState<any>([]);
 
   useEffect(() => {
     if (type === "propertySelect") {
@@ -359,6 +363,12 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
       } else if (!formData?.visit_confirmation_status) {
         isError = false;
         errorMessage = "Please check entered mobile number";
+      } else if (!formData?.property_id && !formData?.property_type_title) {
+        isError = false;
+        errorMessage = "Please select property name";
+      } else if (formData?.for_sm && !formData?.for_sm_id) {
+        isError = false;
+        errorMessage = "Please select sourcing manager";
       } else if (!formData?.lead_source) {
         isError = false;
         errorMessage = "Please enter Lead Source";
@@ -679,6 +689,55 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
     }
   };
 
+  const getCPByProperty = async () => {
+    dispatch({ type: START_LOADING });
+    const params = {
+      property_id: formData?.property_id,
+      sm_id: formData.for_sm_id,
+    };
+    const res = await apiCall("post", apiEndPoints.CP_UNDERPROPERTY, params);
+    const response: any = res?.data;
+
+    if (response?.status === 200) {
+      if (response?.data?.length > 0) {
+        setAgentList(response?.data);
+        dispatch({ type: STOP_LOADING });
+      } else {
+        dispatch({ type: STOP_LOADING });
+      }
+    } else {
+      dispatch({ type: STOP_LOADING });
+      ErrorMessage({
+        msg: response?.message,
+        backgroundColor: BLACK_COLOR,
+      });
+    }
+  };
+
+  const getSourcingManagerList = async () => {
+    try {
+      dispatch({ type: START_LOADING });
+      console.log("Fetching sourcing manager list...");
+      // Simulate API call with a delay
+      const res = await apiCall("post", apiEndPoints.GET_PROPERTY_BASE_SM, {
+        property_id: formData?.property_id,
+      });
+      if (res?.data?.status === 200) {
+        dispatch({ type: STOP_LOADING });
+        setSourcingManagerList(res?.data?.data);
+      } else if (res?.data?.status === 201) {
+        ErrorMessage({
+          msg: res?.data?.message,
+          backgroundColor: RED_COLOR,
+        });
+        dispatch({ type: STOP_LOADING });
+        return false;
+      }
+    } catch (error) {
+      console.error("Error fetching sourcing manager list:", error);
+    }
+  };
+
   const checkMobileExistWithSameProperty = async (
     propertyId: string,
     type: number
@@ -896,6 +955,12 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
           // cp_type: formData?.cp_type,
           // cp_id: formData?.cp_id,
         };
+        if (formData?.for_sm_id) {
+          add_params = {
+            ...add_params,
+            for_sm_id: formData?.for_sm_id,
+          };
+        }
         if (formData?.cp_emp_id) {
           add_params = {
             ...add_params,
@@ -1023,6 +1088,9 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
       checkPhoneNumberIsValid={checkPhoneNumberIsValid}
       checkMobileExistWithSameProperty={checkMobileExistWithSameProperty}
       checkRefferrerNumberExist={checkRefferrerNumberExist}
+      sourcingManagerList={sourcingManagerList}
+      handleLeadSourcePressForSm={getCPByProperty}
+      getSourcingManagerList={getSourcingManagerList}
     />
   );
 };

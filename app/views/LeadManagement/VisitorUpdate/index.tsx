@@ -102,6 +102,7 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
     referrer_email: "",
     referrer_contact: "",
     referrel_partner: "",
+    created_for_sm_name: "",
   });
   const [allProperty, setAllProperty] = useState<any>([]);
   const id = userData?.data?.role_id;
@@ -202,6 +203,7 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
         country_code: response?.data[0]?.customer_detail?.country_code
           ? response?.data[0]?.customer_detail?.country_code
           : "+91",
+        created_for_sm_name: response?.data[0]?.created_for_sm_name,
       });
       if (response?.data[0]?.configurations?.length > 0) {
         setConfiguration(response?.data[0]?.configurations);

@@ -50,6 +50,8 @@ export default {
   ASSIGNCP_SM: "/userManage/cpAssignSorcingManager",
   GET_USERS_LIST_FOR_SH: "/userManage/getUserListForSitehead",
   ADD_CP_BUCKET: "/userManage/addCpToBucket",
+  GET_PROPERTY_BASE_SM: "/property/getPropertyBasedSM",
+
 
   // property Start
   ADDPROPERTY: "/property/addProperty",

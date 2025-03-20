@@ -128,6 +128,20 @@ const LeadDetailsIteam = (props: any) => {
           </Text>
         </View>
       </View>
+
+      {item?.created_for_sm_name?.length > 0 && (
+        <View style={styles.Txtview}>
+          <View style={styles.projectContainer}>
+            <Text style={styles.projectTxt}>Created for</Text>
+          </View>
+          <View>
+            <Text>:</Text>
+          </View>
+          <View style={styles.nameContainer}>
+            <Text style={styles.nameTxt}>{item?.created_for_sm_name}</Text>
+          </View>
+        </View>
+      )}
       <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
           <Text style={styles.projectTxt}>Lead Source</Text>
@@ -147,8 +161,8 @@ const LeadDetailsIteam = (props: any) => {
             <Text style={styles.projectTxt}>Referrer</Text>
           </View>
           <View>
-          <Text>:</Text>
-        </View>
+            <Text>:</Text>
+          </View>
           <View style={styles.nameContainer}>
             <Text style={styles.nameTxt}>{item?.referrer_name}</Text>
           </View>

@@ -104,6 +104,20 @@ const LeadManagementItem = (props: any) => {
           </Text>
         </View>
       </View>
+
+      {props?.items?.created_for_sm_name?.length > 0 && (
+        <View style={styles.Txtview}>
+          <View style={styles.projectContainer}>
+            <Text style={styles.projectTxt}>Created for :</Text>
+          </View>
+          <View style={styles.nameContainer}>
+            <Text style={styles.nameTxt}>
+              {props?.items?.created_for_sm_name}
+            </Text>
+          </View>
+        </View>
+      )}
+
       <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
           <Text style={styles.projectTxt}>Lead Source :</Text>

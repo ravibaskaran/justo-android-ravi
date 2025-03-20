@@ -152,6 +152,37 @@ const ConfigurationsItem = (props: any) => {
           </View>
         </View>
 
+        <View style={styles.sectionContainer}>
+          <View style={[styles.inputContainer, {}]}>
+            <InputField
+              disableSpecialCharacters={true}
+              require={true}
+              placeholderText={"Amount"}
+              onChangeText={(data: any) => {
+                props.flatBooking.agreement_value = data;
+                setUpdateState(updateState + 1);
+              }}
+              valueshow={props?.flatBooking?.agreement_value}
+              keyboardtype={"number-pad"}
+              headingText={"Agreement value"}
+            />
+          </View>
+          <View style={[styles.inputContainer, { marginLeft: 20 }]}>
+            <InputField
+              disableSpecialCharacters={true}
+              require={true}
+              placeholderText={"Amount"}
+              onChangeText={(data: any) => {
+                props.flatBooking.rate_achieved = data;
+                setUpdateState(updateState + 1);
+              }}
+              valueshow={props?.flatBooking?.rate_achieved}
+              keyboardtype={"number-pad"}
+              headingText={"Rate achieved"}
+            />
+          </View>
+        </View>
+
         <View style={styles.straightVw}>
           <View style={{ flexDirection: "row" }}>
             <Text

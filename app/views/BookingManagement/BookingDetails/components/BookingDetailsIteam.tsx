@@ -1,20 +1,4 @@
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  Linking,
-  Image,
-  FlatList,
-} from "react-native";
-import React from "react";
-import styles from "./styles";
-import Button from "../../../../components/Button";
-import {
-  normalize,
-  normalizeWidth,
-} from "../../../../components/scaleFontSize";
-import strings from "../../../../components/utilities/Localization";
+import images from "app/assets/images";
 import {
   BLACK_COLOR,
   CONST_IDS,
@@ -24,9 +8,23 @@ import {
   Isios,
   ROLE_IDS,
 } from "app/components/utilities/constant";
-import { useSelector } from "react-redux";
 import moment from "moment";
-import images from "app/assets/images";
+import React from "react";
+import {
+  Image,
+  Linking,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { useSelector } from "react-redux";
+import {
+  normalize,
+  normalizeWidth,
+} from "../../../../components/scaleFontSize";
+import strings from "../../../../components/utilities/Localization";
+import styles from "./styles";
 
 const BookingDetailsItem = (props: any) => {
   const getLoginType = useSelector((state: any) => state.login);
@@ -151,10 +149,26 @@ const BookingDetailsItem = (props: any) => {
           </View>
           <View style={styles.nameContainer}>
             <Text style={styles.nameTxt}>
-              {item?.visit_create_by?.user_name}
+              {item?.visit_create_by?.user_name} (
+              {item?.visit_create_by?.role_title})
             </Text>
           </View>
         </View>
+
+        {item?.created_for_sm_name?.length > 0 && (
+          <View style={styles.Txtview}>
+            <View style={styles.projectContainer}>
+              <Text style={styles.projectTxt}>Created for</Text>
+            </View>
+            <View>
+              <Text>:</Text>
+            </View>
+            <View style={styles.nameContainer}>
+              <Text style={styles.nameTxt}>{item?.created_for_sm_name}</Text>
+            </View>
+          </View>
+        )}
+
         <View style={styles.Txtview}>
           <View style={styles.projectContainer}>
             <Text style={styles.projectTxt}>{strings.configurations}</Text>
@@ -350,13 +364,10 @@ const BookingDetailsItem = (props: any) => {
             </View>
             <View style={styles.nameContainer}>
               <Text style={styles.nameTxt}>
-                {props.type === "cancel"
-                  ? item?.cancel_by_name
-                    ? item?.cancel_by_name
-                    : strings.notfount
-                  : item?.booking_by_name
+                {item?.booking_by_name
                   ? item?.booking_by_name
-                  : strings.notfount}
+                  : strings.notfount}{" "}
+                ({item?.creaters?.role_title})
               </Text>
             </View>
           </View>
@@ -387,6 +398,24 @@ const BookingDetailsItem = (props: any) => {
               </Text>
             </View>
           </View>
+
+          <View style={styles.Txtview}>
+            <View style={styles.projectContainer}>
+              <Text style={styles.projectTxt}>Agreement Value</Text>
+            </View>
+            <View>
+              <Text>:</Text>
+            </View>
+            <View style={styles.nameContainer}>
+              <Text style={styles.nameTxt}>
+                {item?.agreement_value === "" ||
+                item?.agreement_value === null ||
+                item?.agreement_value === undefined
+                  ? strings.notfount
+                  : item?.agreement_value}
+              </Text>
+            </View>
+          </View>
           <View style={styles.Txtview}>
             <View style={styles.projectContainer}>
               <Text style={styles.projectTxt}>Booking Amount</Text>
@@ -401,6 +430,23 @@ const BookingDetailsItem = (props: any) => {
                 item?.booking_amount === undefined
                   ? strings.notfount
                   : item?.booking_amount}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.Txtview}>
+            <View style={styles.projectContainer}>
+              <Text style={styles.projectTxt}>Rate achieved</Text>
+            </View>
+            <View>
+              <Text>:</Text>
+            </View>
+            <View style={styles.nameContainer}>
+              <Text style={styles.nameTxt}>
+                {item?.rate_achieved === "" ||
+                item?.rate_achieved === null ||
+                item?.rate_achieved === undefined
+                  ? strings.notfount
+                  : item?.rate_achieved}
               </Text>
             </View>
           </View>

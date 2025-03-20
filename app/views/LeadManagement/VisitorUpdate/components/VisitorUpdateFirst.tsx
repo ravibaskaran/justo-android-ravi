@@ -39,6 +39,7 @@ import {
 } from "../../../../components/utilities/constant";
 import strings from "../../../../components/utilities/Localization";
 import styles from "./styles";
+import CheckBox from "@react-native-community/checkbox";
 
 const VisitorUpdateView = (props: any) => {
   const { userData = {} } = useSelector((state: any) => state.userData);
@@ -89,7 +90,6 @@ const VisitorUpdateView = (props: any) => {
     }
     return lead_source;
   };
-
   return (
     <View style={styles.mainContainer}>
       <Header
@@ -219,6 +219,40 @@ const VisitorUpdateView = (props: any) => {
             />
           </View>
         </View>
+
+        {props?.updateForm?.created_for_sm_name ? (
+          <>
+            <View
+              style={[
+                styles.genderView,
+                { marginLeft: normalizeSpacing(10), marginBottom: 0 },
+              ]}
+            >
+              <Text style={styles.headingsTxt}>Lead for Sourcing Manager </Text>
+              <CheckBox
+                value={true}
+                disabled={true}
+                tintColors={{ true: PRIMARY_THEME_COLOR }}
+                style={{
+                  transform: Isios
+                    ? [{ scaleX: 0.8 }, { scaleY: 0.8 }]
+                    : [{ scaleX: 1 }, { scaleY: 1 }],
+                }}
+              />
+            </View>
+            <View style={[styles.inputWrap]}>
+              <DropdownInput
+                headingText={"Select SM"}
+                placeholder={props?.updateForm?.created_for_sm_name}
+                disable={true}
+                inputWidth={"100%"}
+                require
+                paddingLeft={Isios ? 6 : 10}
+              />
+            </View>
+          </>
+        ) : null}
+
         <View style={[styles.inputWrap]}>
           <DropdownInput
             headingText={"Lead Source"}
