@@ -157,6 +157,11 @@ const AddNewVisitorForm = (props: any) => {
     }
   };
 
+  const showOnlySchedule =
+    props?.formData?.lead_source &&
+    props.formData.lead_source === CONST_IDS.direct_Walk_in_lead_source_id &&
+    create;
+
   return (
     <View style={styles.mainContainer}>
       <Header
@@ -2113,13 +2118,27 @@ const AddNewVisitorForm = (props: any) => {
             </TouchableOpacity>
             <Text style={styles.bottomText}> {strings.applicable} </Text>
           </View>
-          <View
-            style={[
-              styles.btnView,
-              !Cmteam ? {} : { justifyContent: "center" },
-            ]}
-          >
-            <>
+
+          {showOnlySchedule ? (
+            <Button
+              width={Cmteam ? 300 : 150}
+              disabled={props.disabled}
+              handleBtnPress={() => {
+                Isios && Keyboard.dismiss();
+                props.setNavigationType(1);
+                props.OnpressCreateEdit();
+              }}
+              height={45}
+              buttonText={strings.createVisitor}
+              btnTxtsize={16}
+            />
+          ) : (
+            <View
+              style={[
+                styles.btnView,
+                !Cmteam ? {} : { justifyContent: "center" },
+              ]}
+            >
               <Button
                 width={Cmteam ? 300 : 150}
                 disabled={props.disabled}
@@ -2148,8 +2167,8 @@ const AddNewVisitorForm = (props: any) => {
                     />
                   )
                 : null}
-            </>
-          </View>
+            </View>
+          )}
           <VisitConfirmModal
             Visible={props.visitCheckModal}
             setIsVisible={props.setVisitCheckModal}
