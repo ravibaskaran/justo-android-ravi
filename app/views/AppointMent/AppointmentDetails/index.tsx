@@ -13,6 +13,7 @@ import { GREEN_COLOR } from "app/components/utilities/constant";
 import { removeEditUser } from "app/Redux/Actions/AppointmentWithCpActions";
 import { apiCall } from "app/components/utilities/httpClient";
 import apiEndPoints from "app/components/utilities/apiEndPoints";
+import { appointmentBackSubject } from "app/observables/backNavigationSubject";
 
 const AppointmentDetails = ({ navigation, route }: any) => {
   const data = route?.params || {};
@@ -32,16 +33,16 @@ const AppointmentDetails = ({ navigation, route }: any) => {
   const addedBookingData =
     useSelector((state: any) => state.addedBooking) || {};
 
-  useFocusEffect(
-    React.useCallback(() => {
-      dispatch(
-        getAppointmentDetail({
-          appointment_id: data?._id,
-        })
-      );
-      return () => {};
-    }, [navigation])
-  );
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     dispatch(
+  //       getAppointmentDetail({
+  //         appointment_id: data?._id,
+  //       })
+  //     );
+  //     return () => {};
+  //   }, [navigation])
+  // );
 
   const getDetail = async () => {
     const res = await apiCall("post", apiEndPoints.GET_APPOINTMENT_DETAILS, {
@@ -88,6 +89,7 @@ const AppointmentDetails = ({ navigation, route }: any) => {
     const backAction = () => {
       if (data?.fromVisitorPage) navigation.goBack();
       navigation.goBack();
+      appointmentBackSubject.next(true);
       return true;
     };
 
@@ -102,6 +104,7 @@ const AppointmentDetails = ({ navigation, route }: any) => {
   const handleBackPress = () => {
     if (data?.fromVisitorPage) navigation.goBack();
     navigation.goBack();
+    appointmentBackSubject.next(true);
   };
   const handleVistorUpdate = (data: any) => {
     navigation.navigate("VisitorUpdate", data);

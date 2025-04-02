@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import LeadManagementView from "./Components/LeadManagementView";
 import { ROLE_IDS } from "app/components/utilities/constant";
 import { BackHandler } from "react-native";
+import { visiterBackSubject } from "app/observables/backNavigationSubject";
 
 const LeadManagementScreen = ({ navigation, route }: any) => {
   const dispatch: any = useDispatch();
@@ -38,48 +39,96 @@ const LeadManagementScreen = ({ navigation, route }: any) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      const { params } = route ?? {}; // Destructure route params
-      const defaultFilterData = {
-        startdate: "",
-        enddate: "",
-        search_by_visisor_name: "",
-        search_configuration: "",
-        visit_score: "",
-        property_id: "",
-        property_type_title: "",
-        property_title: "",
-        visit_status: strings.warm,
-        lead_status: "",
-      };
-
-      let filterData = { ...defaultFilterData };
-
-      if (params === "today") {
-        filterData = {
-          ...filterData,
-          startdate: todayDate.startdate,
-          enddate: todayDate.enddate,
+      if (!visiterBackSubject.getValue()) {
+        const { params } = route ?? {}; // Destructure route params
+        const defaultFilterData = {
+          startdate: "",
+          enddate: "",
+          search_by_visisor_name: "",
+          search_configuration: "",
+          visit_score: "",
+          property_id: "",
+          property_type_title: "",
+          property_title: "",
+          visit_status: strings.warm,
+          lead_status: "",
         };
-        getVisitorsList(0, todayDate);
-      } else if (params?.fromReport) {
-        filterData = {
-          ...filterData,
-          startdate: params.sDate,
-          enddate: params.eDate,
-        };
-        getVisitorsList(0, {
-          startdate: params.sDate,
-          enddate: params.eDate,
-        });
+
+        let filterData = { ...defaultFilterData };
+
+        if (params === "today") {
+          filterData = {
+            ...filterData,
+            startdate: todayDate.startdate,
+            enddate: todayDate.enddate,
+          };
+          getVisitorsList(0, todayDate);
+        } else if (params?.fromReport) {
+          filterData = {
+            ...filterData,
+            startdate: params.sDate,
+            enddate: params.eDate,
+          };
+          getVisitorsList(0, {
+            startdate: params.sDate,
+            enddate: params.eDate,
+          });
+        } else {
+          getVisitorsList(0, {});
+        }
+
+        setFilterData(filterData);
       } else {
-        getVisitorsList(0, {});
+        visiterBackSubject.next(false);
       }
-
-      setFilterData(filterData);
-
       return () => {};
-    }, [navigation, route])
+    }, [navigation, route, visiterBackSubject])
   );
+
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     const { params } = route ?? {}; // Destructure route params
+  //     const defaultFilterData = {
+  //       startdate: "",
+  //       enddate: "",
+  //       search_by_visisor_name: "",
+  //       search_configuration: "",
+  //       visit_score: "",
+  //       property_id: "",
+  //       property_type_title: "",
+  //       property_title: "",
+  //       visit_status: strings.warm,
+  //       lead_status: "",
+  //     };
+
+  //     let filterData = { ...defaultFilterData };
+
+  //     if (params === "today") {
+  //       filterData = {
+  //         ...filterData,
+  //         startdate: todayDate.startdate,
+  //         enddate: todayDate.enddate,
+  //       };
+  //       getVisitorsList(0, todayDate);
+  //     } else if (params?.fromReport) {
+  //       filterData = {
+  //         ...filterData,
+  //         startdate: params.sDate,
+  //         enddate: params.eDate,
+  //       };
+  //       getVisitorsList(0, {
+  //         startdate: params.sDate,
+  //         enddate: params.eDate,
+  //       });
+  //     } else {
+  //       getVisitorsList(0, {});
+  //     }
+
+  //     setFilterData(filterData);
+
+  //     return () => {};
+  //   }, [navigation, route])
+  // );
 
   useEffect(() => {
     console.log(

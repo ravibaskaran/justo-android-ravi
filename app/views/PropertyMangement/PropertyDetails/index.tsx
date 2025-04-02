@@ -3,6 +3,7 @@ import React, { useLayoutEffect, useState } from 'react'
 import PropertyDetailView from './components/PropertyDetailView';
 import { useDispatch, useSelector } from 'react-redux';
 import { getManagerList, getPropertyDetail } from '../../../Redux/Actions/propertyActions';
+import { propertyBackSubject } from 'app/observables/backNavigationSubject';
 
 const PropertyDetails = ({ navigation, route }: any) => {
   const [isloading, setIsloading] = useState(false)
@@ -15,6 +16,7 @@ const PropertyDetails = ({ navigation, route }: any) => {
     }))
   }, [])
   const handleBackPress = () => {
+    propertyBackSubject.next(true);
     navigation.goBack();
   };
   const onPressCreatevisit = () => {

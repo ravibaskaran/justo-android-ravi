@@ -42,7 +42,7 @@ export const ONE_MONTH_DATES = new Date(
 );
 
 // export const GLOBAL_URL = "http://192.168.1.52:3002"; // localhost server Aswin
-// export const GLOBAL_URL = "http://192.168.1.48:3002"; // localhost server clint
+// export const GLOBAL_URL = "http://192.168.1.76:3002"; // localhost server clint
 // export const GLOBAL_URL = 'https://prodapi.justoverse.com:3002' //prod
 // export const GLOBAL_URL = "https://demoapi.inexoftworld.com:3002"; // localhost server
 export const GLOBAL_URL = "https://api.justoverse.com:3000"; //New localhost serve*

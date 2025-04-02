@@ -45,25 +45,28 @@ const BookingListView = (props: any) => {
         RightFirstIconStyle={{ tintColor: WHITE_COLOR }}
         handleOnRightFirstIconPress={() => setisVisable(true)}
       />
-      <Text style={styles.count}>
-        Count : {props?.moreData ? props?.moreData : 0}
-      </Text>
-      {!props.fromReport && (
-        <View
-          style={{ alignItems: "flex-end", marginTop: normalizeSpacing(10) }}
-        >
-          <Button
-            width={120}
-            height={40}
-            buttonText={"Reset"}
-            handleBtnPress={() => {
-              props.navigation.setParams({ onpressType: "" });
-              props.setDatatype("");
-              onReset();
-            }}
-          />
-        </View>
-      )}
+
+      <View
+        style={styles.subHeadContainer}
+      >
+        {!props.fromReport && (
+          <View style={{}}>
+            <Button
+              width={120}
+              height={40}
+              buttonText={"Reset"}
+              handleBtnPress={() => {
+                props.navigation.setParams({ onpressType: "" });
+                props.setDatatype("");
+                onReset();
+              }}
+            />
+          </View>
+        )}
+        <Text style={[styles.count, { textAlign: "right", flex: 1 }]}>
+          Count : {props?.moreData ? props?.moreData : 0}
+        </Text>
+      </View>
 
       <View style={styles.listView}>
         <FlatList

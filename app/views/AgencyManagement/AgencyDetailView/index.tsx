@@ -2,6 +2,7 @@ import { getAgencyDetail } from "app/Redux/Actions/AgencyActions";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AgentDetailView from "./components/AgentDetailView";
+import { cpManageBackSubject } from "app/observables/backNavigationSubject";
 
 const AgentDetail = ({ navigation, route }: any) => {
   const dispatch: any = useDispatch();
@@ -11,9 +12,10 @@ const AgentDetail = ({ navigation, route }: any) => {
   const { data = {} } = route?.params || {};
   useLayoutEffect(() => {
     if (data?.cp_id) {
-      dispatch(getAgencyDetail({
-        cp_id: data.cp_id,
-      })
+      dispatch(
+        getAgencyDetail({
+          cp_id: data.cp_id,
+        })
       );
     }
   }, [navigation, detail]);
@@ -23,11 +25,12 @@ const AgentDetail = ({ navigation, route }: any) => {
         setAllDetails(response?.data[0]);
       }
     } else {
-      setAllDetails({})
+      setAllDetails({});
     }
   }, [response]);
 
   const handleBackPress = () => {
+    cpManageBackSubject.next(true);
     navigation.goBack();
   };
   // console.log(allDetails)

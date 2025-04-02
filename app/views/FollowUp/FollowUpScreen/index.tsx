@@ -4,6 +4,7 @@ import FollowUpView from "./Components/FollowUpView";
 import { useDispatch, useSelector } from "react-redux";
 import { useFocusEffect } from "@react-navigation/native";
 import { getAllFollowUpList } from "app/Redux/Actions/FollowUpActions";
+import { followUpBackSubject } from "app/observables/backNavigationSubject";
 
 const FollowUpScreen = ({ navigation }: any) => {
   const [followUpList, setFollowUpList] = useState<any>([]);
@@ -16,30 +17,50 @@ const FollowUpScreen = ({ navigation }: any) => {
   const [filterData, setFilterData] = useState({
     startdate: "",
     enddate: "",
-    followup_for: '',
-    lead_id: ''
+    followup_for: "",
+    lead_id: "",
   });
   const handleDrawerPress = () => {
     navigation.toggleDrawer();
   };
 
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     getFollowupList(offSET, {});
+  //     return () => { };
+  //   }, [navigation, list])
+  // );
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     setFilterData({
+  //       startdate: "",
+  //       enddate: "",
+  //       followup_for: '',
+  //       lead_id: ''
+  //     })
+  //     return () => { };
+  //   }, [navigation])
+  // );
+
   useFocusEffect(
     React.useCallback(() => {
-      getFollowupList(offSET, {});
-      return () => { };
-    }, [navigation, list])
+      console.log("!followUpBackSubject.getValue()",!followUpBackSubject.getValue());
+      
+      if (!followUpBackSubject.getValue()) {
+        setFilterData({
+          startdate: "",
+          enddate: "",
+          followup_for: "",
+          lead_id: "",
+        });
+        getFollowupList(offSET, {});
+      } else {
+        followUpBackSubject.next(false);
+      }
+      return () => {};
+    }, [navigation, list, followUpBackSubject])
   );
-  useFocusEffect(
-    React.useCallback(() => {
-      setFilterData({
-        startdate: "",
-        enddate: "",
-        followup_for: '',
-        lead_id: ''
-      })
-      return () => { };
-    }, [navigation])
-  );
+
   useEffect(() => {
     if (response?.status === 200) {
       if (response?.data?.length > 0) {
@@ -60,10 +81,10 @@ const FollowUpScreen = ({ navigation }: any) => {
       getAllFollowUpList({
         offset: offset,
         limit: 10,
-        start_date: data?.startdate ? data?.startdate : '',
-        end_date: data?.enddate ? data?.enddate : '',
-        followup_for: data?.followup_for ? data?.followup_for : '',
-        lead_id: data?.lead_id ? data?.lead_id : ''
+        start_date: data?.startdate ? data?.startdate : "",
+        end_date: data?.enddate ? data?.enddate : "",
+        followup_for: data?.followup_for ? data?.followup_for : "",
+        lead_id: data?.lead_id ? data?.lead_id : "",
       })
     );
   };

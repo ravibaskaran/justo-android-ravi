@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import BookingListView from "./components/BookingList";
 import { todayDate } from "app/components/utilities/constant";
 import { BackHandler } from "react-native";
+import { bookingBackSubject } from "app/observables/backNavigationSubject";
 
 const BookingListScreen = ({ navigation, route }: any) => {
   const { type = "", onpressType = "" } = route?.params || {};
@@ -29,23 +30,24 @@ const BookingListScreen = ({ navigation, route }: any) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      setFilterData({
-        start_date: "",
-        end_date: "",
-        status: "",
-        customer_name: "",
-      });
-      return () => {};
-    }, [navigation])
-  );
-  useFocusEffect(
-    React.useCallback(() => {
       // getBookingLits(0, []);
-      setBookingList([]);
-      handleonpressType();               
+      if (!bookingBackSubject.getValue()) {
+        setFilterData({
+          start_date: "",
+          end_date: "",
+          status: "",
+          customer_name: "",
+        });
+
+        setBookingList([]);
+        handleonpressType();
+      } else {
+        bookingBackSubject.next(false);
+      }
       return () => {};
-    }, [navigation, list, route])
+    }, [navigation, route, bookingBackSubject])
   );
+
   useEffect(() => {
     if (response?.status === 200) {
       if (response?.data?.length > 0) {
@@ -66,6 +68,11 @@ const BookingListScreen = ({ navigation, route }: any) => {
     const { params } = route ?? {}; // Destructure route params
     if (params?.fromReport) {
       getBookingLits(0, { start_date: params.sDate, end_date: params.eDate });
+      setFilterData({
+        ...filterData,
+        start_date: params.sDate,
+        end_date: params.eDate,
+      });
     } else if (onpressType === "today") {
       getBookingLits(0, todayDate);
     } else {
@@ -106,25 +113,25 @@ const BookingListScreen = ({ navigation, route }: any) => {
       );
     }
   };
- useEffect(() => {
-     const backAction = () => {
-       handleDrawerPress();
-       return true;
-     };
-     const backHandler = BackHandler.addEventListener(
-       "hardwareBackPress",
-       backAction
-     );
-     return () => backHandler.remove();
-   }, [route?.params?.fromReport]);
- 
-   const handleDrawerPress = () => {
-     if (route?.params?.fromReport) {
-       navigation.navigate("Report", { backToReport: true });
-     } else {
-       navigation.toggleDrawer();
-     }
-   };
+  useEffect(() => {
+    const backAction = () => {
+      handleDrawerPress();
+      return true;
+    };
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+    return () => backHandler.remove();
+  }, [route?.params?.fromReport]);
+
+  const handleDrawerPress = () => {
+    if (route?.params?.fromReport) {
+      navigation.navigate("Report", { backToReport: true });
+    } else {
+      navigation.toggleDrawer();
+    }
+  };
 
   const handleView = (data: any) => {
     navigation.navigate("BookingDetails", { data: data, type: type });

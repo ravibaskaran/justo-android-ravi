@@ -1,4 +1,11 @@
-import { View, Text, Image, TouchableOpacity, ScrollView, Keyboard } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  Keyboard,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import Modal from "react-native-modal";
 import styles from "../../../../components/Modals/styles";
@@ -13,37 +20,38 @@ import { DATE_FORMAT, Isios } from "app/components/utilities/constant";
 import { normalize, normalizeSpacing } from "app/components/scaleFontSize";
 import { getAllProperty } from "app/Redux/Actions/propertyActions";
 import { useDispatch, useSelector } from "react-redux";
-import Styles from '../../../../components/Modals/styles'
-
+import Styles from "../../../../components/Modals/styles";
 
 const FilterModal = (props: any) => {
   const appointmentWith = [
-    { type_name: 'Site lead visit', value: 1 },
-    { type_name: 'Client visit', value: 2 }]
+    { type_name: "Site lead visit", value: 1 },
+    { type_name: "Client visit", value: 2 },
+  ];
   const statusData = [
-    { type_name: 'No Show', value: 1 },
-    { type_name: 'Revisit', value: 2 },
-    { type_name: 'Complete', value: 3 },
-    { type_name: 'Visit Cancelled', value: 4 },
-    { type_name: 'Reschedule', value: 5 },
-    { type_name: 'Not Fit for Sale', value: 6 },
-    { type_name: strings.followup, value: 10 }
-  ]
-  const dispatch: any = useDispatch()
+    { type_name: "No Show", value: 1 },
+    { type_name: "Revisit", value: 2 },
+    { type_name: "Complete", value: 3 },
+    { type_name: "Visit Cancelled", value: 4 },
+    { type_name: "Reschedule", value: 5 },
+    { type_name: "Not Fit for Sale", value: 6 },
+    { type_name: strings.followup, value: 10 },
+  ];
+  const dispatch: any = useDispatch();
 
   const [allProperty, setAllProperty] = useState<any>([]);
   const propertyData = useSelector((state: any) => state.propertyData) || {};
 
-
   useEffect(() => {
-    dispatch(
-      getAllProperty({
-        offset: 0,
-        limit: "",
-      })
-    );
-    getAllPropertyData();
-  }, [props.Visible])
+    if (props.Visible) {
+      dispatch(
+        getAllProperty({
+          offset: 0,
+          limit: "",
+        })
+      );
+      getAllPropertyData();
+    }
+  }, [props.Visible]);
 
   const getAllPropertyData = () => {
     if (propertyData?.response?.status === 200) {
@@ -57,23 +65,23 @@ const FilterModal = (props: any) => {
       } else {
         setAllProperty([]);
       }
-    }else {
+    } else {
       setAllProperty([]);
     }
   };
 
-
-
   const handleApply = () => {
-    props.setIsVisible(false)
-    props?.getAppointmentList(0, props.filterData)
-    props.setSiteAppointments([])
-  }
+    props.setIsVisible(false);
+    props?.getAppointmentList(0, props.filterData);
+    props.setSiteAppointments([]);
+  };
   return (
     <Modal isVisible={props.Visible}>
-      <ScrollView keyboardShouldPersistTaps={'handled'}
-      automaticallyAdjustKeyboardInsets={Isios ? true : false}
-        contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
+      <ScrollView
+        keyboardShouldPersistTaps={"handled"}
+        automaticallyAdjustKeyboardInsets={Isios ? true : false}
+        contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+      >
         <View style={styles.mainContainer}>
           <View style={styles.topContainer}>
             <Text style={styles.topTxt}>{strings.searchappointment}</Text>
@@ -109,7 +117,8 @@ const FilterModal = (props: any) => {
             </View>
             <View style={styles.inputWrap}>
               <InputCalender
-                mode={"date"} DATE_FORMAT
+                mode={"date"}
+                DATE_FORMAT
                 leftIcon={images.event}
                 headingText={strings.endDate}
                 placeholderText={strings.endDate}
@@ -133,7 +142,7 @@ const FilterModal = (props: any) => {
               <InputField
                 headingText={"Search by Name"}
                 placeholderText={"Search by Name"}
-                handleInputBtnPress={() => { }}
+                handleInputBtnPress={() => {}}
                 valueshow={props.filterData?.customer_name}
                 onChangeText={(data: any) => {
                   props.setFilterData({
@@ -158,14 +167,14 @@ const FilterModal = (props: any) => {
             </View> */}
             <View style={[styles.inputWrap, { top: normalizeSpacing(10) }]}>
               <DropdownInput
-                headingText={'Search by Property'}
-                placeholder={'Select Property'}
+                headingText={"Search by Property"}
+                placeholder={"Select Property"}
                 data={allProperty}
-                inputWidth={'100%'}
+                inputWidth={"100%"}
                 paddingLeft={16}
                 maxHeight={300}
                 labelField="property_title"
-                valueField={'_id'}
+                valueField={"_id"}
                 value={props?.filterData?.property_id}
                 onChange={(item: any) => {
                   props.setFilterData({
@@ -173,13 +182,15 @@ const FilterModal = (props: any) => {
                     property_id: item.property_id,
                     property_type_title: item.property_type,
                     property_name: item.property_title,
-                  })
+                  });
                 }}
                 newRenderItem={(item: any) => {
                   return (
                     <>
                       <View style={Styles.item}>
-                        <Text style={Styles.textItem}>{item.property_title}</Text>
+                        <Text style={Styles.textItem}>
+                          {item.property_title}
+                        </Text>
                       </View>
                     </>
                   );
@@ -221,26 +232,26 @@ const FilterModal = (props: any) => {
             </View> */}
             <View style={[styles.inputWrap, { top: normalizeSpacing(10) }]}>
               <DropdownInput
-                headingText={'Search by Status'}
-                placeholder={'Select Status'}
+                headingText={"Search by Status"}
+                placeholder={"Select Status"}
                 value={props.filterData.status}
                 setValue={(item: any) => {
                   props.setFilterData({
                     ...props.filterData,
-                    status: item.value
-                  })
+                    status: item.value,
+                  });
                 }}
                 data={statusData}
-                inputWidth={'100%'}
+                inputWidth={"100%"}
                 paddingLeft={16}
                 maxHeight={300}
                 labelField="type_name"
-                valueField={'value'}
+                valueField={"value"}
                 onChange={(item: any) => {
                   props.setFilterData({
                     ...props.filterData,
-                    status: item.value
-                  })
+                    status: item.value,
+                  });
                 }}
                 newRenderItem={(item: any) => {
                   return (
@@ -255,19 +266,23 @@ const FilterModal = (props: any) => {
             </View>
           </View>
           <View style={{ marginVertical: 20 }}>
-            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+            <View style={{ flexDirection: "row", justifyContent: "center" }}>
               <Button
                 width={135}
                 buttonText={strings.reset}
                 handleBtnPress={() => {
-                  Keyboard.dismiss()
-                  props.onReset()}} />
+                  Keyboard.dismiss();
+                  props.onReset();
+                }}
+              />
               <Button
                 width={135}
                 handleBtnPress={() => {
-                  Keyboard.dismiss()
-                  handleApply()}}
-                buttonText={strings.apply} />
+                  Keyboard.dismiss();
+                  handleApply();
+                }}
+                buttonText={strings.apply}
+              />
             </View>
           </View>
         </View>

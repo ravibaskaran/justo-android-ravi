@@ -16,6 +16,7 @@ import apiEndPoints from "app/components/utilities/apiEndPoints";
 import { START_LOADING, STOP_LOADING } from "app/Redux/types";
 import { apiCall } from "app/components/utilities/httpClient";
 import { handleApiError } from "app/components/ErrorMessage/HandleApiErrors";
+import { cpManageBackSubject } from "app/observables/backNavigationSubject";
 
 const AgencyListing = ({ navigation, route }: any) => {
   const { type } = route?.params || {};
@@ -49,29 +50,30 @@ const AgencyListing = ({ navigation, route }: any) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      setAgentList([]);
-      if (type === "active") {
-        getAgencyList(0, {
-          status: 2,
+      if (!cpManageBackSubject.getValue()) {
+        setFilterData({
+          startdate: "",
+          enddate: "",
+          search_by_name: "",
+          search_by_location: "",
+          status: "",
+          mobile_no: "",
+          rera_no: "",
         });
+        setAgentList([]);
+        if (type === "active") {
+          getAgencyList(0, {
+            status: 2,
+          });
+        } else {
+          getAgencyList(0, {});
+        }
       } else {
-        getAgencyList(0, {});
+        cpManageBackSubject.next(false);
       }
+
       return () => {};
-    }, [navigation, statusUpdate, type])
-  );
-  useFocusEffect(
-    React.useCallback(() => {
-      setFilterData({
-        startdate: "",
-        enddate: "",
-        search_by_name: "",
-        search_by_location: "",
-        status: "",
-        mobile_no: "",
-        rera_no: "",
-      });
-    }, [navigation])
+    }, [navigation, statusUpdate, type, cpManageBackSubject])
   );
 
   useEffect(() => {
@@ -98,7 +100,7 @@ const AgencyListing = ({ navigation, route }: any) => {
     dispatch(
       getAssignCPList({
         offset: offset,
-        limit: 5,
+        limit: 10,
         user_id: userData?.data?.user_id,
         startdate: filterData.startdate,
         enddate: filterData.enddate,

@@ -80,6 +80,13 @@ const styles = StyleSheet.create({
     width: normalizeWidth(30),
     height: normalizeHeight(30),
   },
-  count: {alignSelf: "flex-end", marginRight: 10,marginVertical:2,fontWeight:'700'},
+  count: { fontWeight: "700" },
+  subHeadContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: normalizeSpacing(10),
+    marginRight: normalizeSpacing(10),
+    alignItems: "center",
+  },
 });
 export default styles;

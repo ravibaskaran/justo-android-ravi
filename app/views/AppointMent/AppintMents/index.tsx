@@ -27,6 +27,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AppointmentView from "./components/Appointments";
 import AppointmentsForReport from "./components/AppointmentsForReport";
 import { BackHandler } from "react-native";
+import { appointmentBackSubject } from "app/observables/backNavigationSubject";
 
 const AppointmentsScreen = ({ navigation, route }: any) => {
   const [dropLocisVisible, setDropLocisVisible] = useState(false);
@@ -67,12 +68,14 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
   );
   useFocusEffect(
     React.useCallback(() => {
-      setFilterData({
-        start_date: "",
-        end_date: "",
-        customer_name: "",
-        status: "",
-      });
+      if (!appointmentBackSubject.getValue()) {
+        setFilterData({
+          start_date: "",
+          end_date: "",
+          customer_name: "",
+          status: "",
+        });
+      }
       return () => {};
     }, [navigation, route])
   );
@@ -112,22 +115,26 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
   }, [CMList]);
 
   const getAppointmentList = (offset: any, data: any) => {
-    if (_apiRefresing) return;
-    setApiRefresing(true);
-    setOffset(offset);
-    dispatch(
-      getAllAppointmentList({
-        offset: offset,
-        limit: 10,
-        start_date: data?.start_date ? data?.start_date : "",
-        end_date: data?.end_date ? data?.end_date : "",
-        customer_name: data?.customer_name?.trim()
-          ? data?.customer_name?.trim()
-          : "",
-        status: data?.status ? data?.status : "",
-        appointment_type: 2,
-      })
-    );
+    if (!appointmentBackSubject.getValue()) {
+      if (_apiRefresing) return;
+      setApiRefresing(true);
+      setOffset(offset);
+      dispatch(
+        getAllAppointmentList({
+          offset: offset,
+          limit: 10,
+          start_date: data?.start_date ? data?.start_date : "",
+          end_date: data?.end_date ? data?.end_date : "",
+          customer_name: data?.customer_name?.trim()
+            ? data?.customer_name?.trim()
+            : "",
+          status: data?.status ? data?.status : "",
+          appointment_type: 2,
+        })
+      );
+    } else {
+      appointmentBackSubject.next(false);
+    }
   };
 
   const onPressView = async (items: any) => {

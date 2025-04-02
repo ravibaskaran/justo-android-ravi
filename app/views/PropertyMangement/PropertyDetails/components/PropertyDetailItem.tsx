@@ -174,7 +174,7 @@ const PropertyDetailItem = (props: any) => {
         <View style={styles.nameContainer}>
           {props.configurations.map((configuration: any) => (
             <Text
-              key={configuration._id}
+              key={configuration.configuration_id}
               style={[
                 styles.nameTxt,
                 {

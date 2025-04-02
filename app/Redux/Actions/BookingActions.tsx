@@ -4,7 +4,6 @@ import { apiCall } from "app/components/utilities/httpClient";
 import { BOOKINGREGISTER_DETAIL, BOOKINGREGISTER_DETAIL_ERROR, BOOKING_CANCEL, BOOKING_CANCEL_ERROR, BOOKING_DETAIL, BOOKING_DETAIL_ERROR, BOOKING_LIST, BOOKING_LIST_ERROR, BOOKING_STATUS_UPDATE, BOOKING_STATUS_UPDATE_ERROR, REGISTER_BOOKING, REGISTER_BOOKING_ERROR, REGISTER_BOOKING_LIST, REGISTER_BOOKING_LIST_ERROR, REMOVE_BOOKING, START_LOADING, STOP_LOADING } from "../types";
 
 export const getBookingList = (params: any) => async (dispatch: any) => {
-    console.log('params======>>>>>>.: ', params);
     dispatch({ type: START_LOADING })
     try {
         const res = await apiCall("post", apiEndPoints.GET_BOOKINGLIST, params);

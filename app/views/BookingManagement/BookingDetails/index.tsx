@@ -8,6 +8,9 @@ import React, { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import BookingDetailsView from './components/BookingDetails'
+import { bookingBackSubject } from "app/observables/backNavigationSubject";
+import { apiCall } from "app/components/utilities/httpClient";
+import apiEndPoints from "app/components/utilities/apiEndPoints";
 
 const BookingDetailsScreen = ({ navigation, route }: any) => {
     const { data = {}, type = '' } = route?.params || {}
@@ -17,7 +20,7 @@ const BookingDetailsScreen = ({ navigation, route }: any) => {
     const [cancelBookingModel, setCancelBookingModel] = useState(false)
     const [reAllocateModel, setReAllocateModel] = useState(false)
     const [registerModal, setRegisterModal] = useState(false)
-   
+    const [BookingData, setBookingData] = useState<any>({});
     const [cancelValue, setCancelValue] = useState({
         reason: '',
         property_id: '',
@@ -45,18 +48,23 @@ const BookingDetailsScreen = ({ navigation, route }: any) => {
                 }
             } else {
                 if (data?._id) {
-                    dispatch(
-                        getBookingDetail({
-                            booking_id: data?._id
-                        })
-                    )
+                    getDetail()
                 }
             }
             return () => { };
-        }, [navigation, detail, cancelAddBookingData])
+        }, [navigation, cancelAddBookingData])
     );
+
+  const getDetail = async () => {
+    const res = await apiCall("post", apiEndPoints.GET_BOOKINGDETAIL, {
+        booking_id: data?._id
+    });
+    setBookingData(res?.data?.data);
+  };
+
     const handleBackPress = () => {
         navigation.goBack()
+        bookingBackSubject.next(true);
     }
     const handleStatusUpdate = () => {
         navigation.navigate('FollUpAdd', response?.data?.length > 0 ? response?.data[0] : [])
@@ -116,6 +124,7 @@ const BookingDetailsScreen = ({ navigation, route }: any) => {
                 reAllocateData={reAllocateData}
                 setReAllocateData={setReAllocateData}
                 handleRegister={handleRegister}
+                bookingData={BookingData}
             />
         </>
     )

@@ -30,11 +30,14 @@ import ViewShot from "react-native-view-shot";
 import BookingViewShot from "./BookingViewShot";
 
 const BookingDetailsView = (props: any) => {
+  const { bookingData } = props;
   const getLoginType = useSelector((state: any) => state.login);
   const { response = {}, detail = "" } = useSelector(
     (state: any) => state.booking
   );
-  const detailData = response?.data?.length > 0 ? response?.data[0] : {};
+  // const detailData = response?.data?.length > 0 ? response?.data[0] : {};
+  const detailData = bookingData?.length > 0 ? bookingData[0] : [];
+
   const navigation: any = useNavigation();
   const viewShotRef = useRef<ViewShot | null>(null);
   const onPressBookNow = () => {

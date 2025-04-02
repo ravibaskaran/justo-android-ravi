@@ -1,29 +1,21 @@
-import {
-  View,
-  Text,
-  StatusBar,
-  useWindowDimensions,
-  FlatList,
-  BackHandler,
-} from "react-native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import usePermission from "app/components/utilities/UserPermissions";
+import { START_LOADING } from "app/Redux/types";
 import React, { useEffect, useState } from "react";
+import { BackHandler, useWindowDimensions, View } from "react-native";
+import { TabBar, TabView } from "react-native-tab-view";
+import { useDispatch } from "react-redux";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import Header from "../../../../components/Header";
 import {
-  DATE_FORMAT,
   PRIMARY_THEME_COLOR_DARK,
   TABBAR_COLOR,
 } from "../../../../components/utilities/constant";
-import Header from "../../../../components/Header";
-import images from "../../../../assets/images";
 import strings from "../../../../components/utilities/Localization";
-import styles from "./Styles";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import FilterModal from "./AppointmentModal";
-import Button from "../../../../components/Button";
-import usePermission from "app/components/utilities/UserPermissions";
-import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import FirstRoute from "./FirstRoute";
-import { START_LOADING } from "app/Redux/types";
-import { useDispatch } from "react-redux";
+import styles from "./Styles";
 
 const AppointmentView = (props: any) => {
   const loadingref = false;
@@ -41,29 +33,6 @@ const AppointmentView = (props: any) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      props.setFilterData({
-        appointment_with: "",
-        status: "",
-        start_date: "",
-        end_date: "",
-        customer_name: "",
-        property_name: "",
-      });
-      // if (indexData?.index === 0) {
-      //   // Nested coditions for filter data with types
-      //   if (props.type === "today") {
-      //     props.getAppointmentList(0, props.todayAppointment);
-      //   } else if (props.type === "followup") {
-      //     props.getAppointmentList(0, {
-      //       ...props.todayAppointment,
-      //       status: 10,
-      //     });
-      //   } else {
-      //     props.getAppointmentList(0, props.todayAppointment);
-      //   }
-      // } else {
-      //   props.getAppointmentList(0, {});
-      // }
       setTimeout(() => {
         if (indexData?.index === 0) {
           // Nested coditions for filter data with types
@@ -182,6 +151,7 @@ const AppointmentView = (props: any) => {
             moreData={props.moreData}
             keyType={route.key}
             settype={props.settype}
+            filterData={props.filterData}
           />
         );
       default:
