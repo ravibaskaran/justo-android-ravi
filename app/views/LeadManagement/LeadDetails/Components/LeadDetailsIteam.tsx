@@ -132,7 +132,7 @@ const LeadDetailsIteam = (props: any) => {
       {item?.created_for_sm_name?.length > 0 && (
         <View style={styles.Txtview}>
           <View style={styles.projectContainer}>
-            <Text style={styles.projectTxt}>Created for</Text>
+            <Text style={styles.projectTxt}>Sourced by</Text>
           </View>
           <View>
             <Text>:</Text>

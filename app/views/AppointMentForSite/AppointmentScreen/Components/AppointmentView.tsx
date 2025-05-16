@@ -246,6 +246,7 @@ const AppointmentView = (props: any) => {
             start_date: "",
             end_date: "",
             customer_name: "",
+            customer_number:"",
             property_name: "",
           });
           props.getAppointmentList(0, {});

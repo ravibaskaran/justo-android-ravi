@@ -59,7 +59,7 @@ const CheckedinModel = (props: any) => {
                     <View style={styles.bookingModelVw}>
                         <View style={{ padding: normalizeSpacing(20), alignItems: 'center' }}>
                             <Text style={styles.bottomTxt}>
-                                {strings.cpcheckinMSG}
+                                {props?.alreadyCheckIn ? "Visitor already checked in for this property on another open appointment" : strings.cpcheckinMSG}
                             </Text>
                         </View>
                         <View style={{ flexDirection: 'row',alignItems: 'center', justifyContent: 'center', marginVertical: normalizeSpacing(20) }}>
@@ -68,16 +68,17 @@ const CheckedinModel = (props: any) => {
                                 handleBtnPress={() => {
                                     props.setIsVisible(false)
                                 }}
-                                buttonText={strings.no}
+                                buttonText={props?.alreadyCheckIn ? "OK" : strings.no}
                             />
+                            {!props?.alreadyCheckIn && (
                             <Button
                                 width={120}
                                 handleBtnPress={() => {
                                     handleQrScan()
-                                    
                                 }}
                                 buttonText={strings.yes}
                             />
+                            )}
                         </View>
                     </View>
                 </ScrollView>

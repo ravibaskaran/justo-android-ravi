@@ -20,7 +20,7 @@ const AppointmentFilterModal = (props: any) => {
     { type_name: "Visit Cancelled", value: 4 },
     { type_name: "Reschedule", value: 5 },
     { type_name: "Not Fit for Sale", value: 6 },
-    { type_name: strings.followup, value: 10 }
+    { type_name: strings.followup, value: 10 },
   ];
   const handleApply = () => {
     props.setIsVisible(false);
@@ -110,6 +110,23 @@ const AppointmentFilterModal = (props: any) => {
                 }}
               />
             </View>
+            <View style={[styles.inputWrap, { top: normalizeSpacing(10) }]}>
+              <InputField
+                headingText={strings.searchBy + " " + strings.mobileNo}
+                placeholderText={strings.searchBy + " " + strings.mobileNo}
+                handleInputBtnPress={() => {}}
+                valueshow={props.filterData?.customer_number}
+                maxLength={10}
+                keyboardtype={"number-pad"}
+                disableSpecialCharacters={true}
+                onChangeText={(data: any) => {
+                  props.setFilterData({
+                    ...props.filterData,
+                    customer_number: data,
+                  });
+                }}
+              />
+            </View>
             <View style={[styles.inputWrap, { top: normalizeSpacing(15) }]}>
               <DropdownInput
                 headingText={strings.searchBy + " " + strings.status}
@@ -164,6 +181,7 @@ const AppointmentFilterModal = (props: any) => {
                   start_date: "",
                   end_date: "",
                   customer_name: "",
+                  customer_number: "",
                   status: "",
                 });
               }}

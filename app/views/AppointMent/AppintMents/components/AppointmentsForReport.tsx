@@ -34,7 +34,12 @@ const AppointmentsForReport = (props: any) => {
     props.getAppointmentList(offset, {
       start_date: props.params.sDate,
       end_date: props.params.eDate,
-      status: props.params.routeName == "Site Visit Created" ? "" : 11,
+      status:
+        props.params.routeName == "Site Visit Created"
+          ? ""
+          : props.params.routeName == "Revisit Completed"
+          ? 12
+          : 11,
     });
   };
 

@@ -109,6 +109,7 @@ export default {
   UPDATE_USER_APPOINTMENT_STATUS:
     "/userAppointment/userAppointmentStatusUpdate",
   CHECKIN_APPOINTMENT: "/appointment/checkInAppointmentProperty",
+  CHECK_ALREADY_CHECKIN: "/appointment/checkAlreadyCheckIn",
 
   // BOOKING
   ADD_BOOKING: "/booking/addBooking",

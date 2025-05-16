@@ -21,6 +21,8 @@ const getLabel = (label: any) => {
       return "Direct Walk-In Visits";
     case "ReferenceVisitsCount":
       return "Reference Visits";
+    case "ReferralPartnerVisitsCount":
+      return "Referral Partner Visits";
     case "PreSalesVisitsCount":
       return "Pre-Sales Visits";
     case "ExhibitionVisitsCount":
@@ -35,6 +37,8 @@ const getLabel = (label: any) => {
       return "Direct Walk-In Revisits";
     case "ReferenceRevisitsCount":
       return "Reference Revisits";
+    case "ReferralPartnerRevisitsCount":
+      return "Referral Partner Revisits";
     case "PreSalesRevisitsCount":
       return "Pre-Sales Revisits";
     case "ExhibitionRevisitsCount":
@@ -72,7 +76,7 @@ const ProjectReportList = ({ items, date }: { items: any; date: any }) => {
   const getValues = (data: any, field: string) => [
     data?.ftd?.[field],
     data?.mtd?.[field],
-    // data?.ytd?.[field],
+    data?.ytd?.[field],
   ];
   function formatDateString(dateString: any) {
     const [year, month, day] = dateString.split("-");
@@ -101,8 +105,8 @@ const ProjectReportList = ({ items, date }: { items: any; date: any }) => {
     data += `*Property: ${property_name}*\n\n`;
 
     // Define the types (FTD, MTD, YTD)
-    // const types = ["ftd", "mtd", "ytd"];
-    const types = ["ftd", "mtd"];
+    const types = ["ftd", "mtd", "ytd"];
+    // const types = ["ftd", "mtd"];
 
     // Loop over the booking types and site visit data
     types.forEach((type) => {
@@ -118,6 +122,7 @@ const ProjectReportList = ({ items, date }: { items: any; date: any }) => {
         `Total Site Visits: ${siteVisitData?.SiteVisits}\n` +
         `Channel Partner Visits: ${siteVisitData?.ChannelPartnerVisitsCount}\n` +
         `Direct Walk-In Visits: ${siteVisitData?.DirectWalkInVisitsCount}\n` +
+        `Referral Partner Visits: ${siteVisitData?.ReferralPartnerVisitsCount}\n` +
         `Reference Visits: ${siteVisitData?.ReferenceVisitsCount}\n` +
         `Pre-Sales Visits: ${siteVisitData?.PreSalesVisitsCount}\n` +
         `Exhibition Visits: ${siteVisitData?.ExhibitionVisitsCount}\n` +
@@ -126,6 +131,7 @@ const ProjectReportList = ({ items, date }: { items: any; date: any }) => {
         `Total Revisits: ${siteVisitData?.Revisits}\n` +
         `Channel Partner Revisits: ${siteVisitData?.ChannelPartnerRevisitsCount}\n` +
         `Direct Walk-In Revisits: ${siteVisitData?.DirectWalkInRevisitsCount}\n` +
+        `Referral Partner Revisits: ${siteVisitData?.ReferralPartnerRevisitsCount}\n` +
         `Reference Revisits: ${siteVisitData?.ReferenceRevisitsCount}\n` +
         `Pre-Sales Revisits: ${siteVisitData?.PreSalesRevisitsCount}\n` +
         `Exhibition Revisits: ${siteVisitData?.ExhibitionRevisitsCount}\n` +
@@ -148,7 +154,7 @@ const ProjectReportList = ({ items, date }: { items: any; date: any }) => {
         <Text style={styles.itemText}></Text>
         <Text style={[styles.itemText, { flex: 0.6 }]}>FTD</Text>
         <Text style={[styles.itemText, { flex: 0.6 }]}>MTD</Text>
-        {/* <Text style={[styles.itemText, { flex: 0.6 }]}>YTD</Text> */}
+        <Text style={[styles.itemText, { flex: 0.6 }]}>YTD</Text>
       </View>
 
       <Text style={styles.subHead}>Bookings</Text>
@@ -167,6 +173,7 @@ const ProjectReportList = ({ items, date }: { items: any; date: any }) => {
         "SiteVisits",
         "ChannelPartnerVisitsCount",
         "DirectWalkInVisitsCount",
+        "ReferralPartnerVisitsCount",
         "ReferenceVisitsCount",
         "PreSalesVisitsCount",
         "ExhibitionVisitsCount",
@@ -185,6 +192,7 @@ const ProjectReportList = ({ items, date }: { items: any; date: any }) => {
         "Revisits",
         "ChannelPartnerRevisitsCount",
         "DirectWalkInRevisitsCount",
+        "ReferralPartnerRevisitsCount",
         "ReferenceRevisitsCount",
         "PreSalesRevisitsCount",
         "ExhibitionRevisitsCount",

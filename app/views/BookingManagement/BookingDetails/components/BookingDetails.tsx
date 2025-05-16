@@ -87,13 +87,13 @@ const BookingDetailsView = (props: any) => {
   const getShareData = () => {
     let data =
       `*Booking Details*\n\n` +
-      `*Project:* ${detailData.properties?.property_title || "NA"}\n` +
-      `*Booking Date:* ${moment
+      `Project: ${detailData.properties?.property_title || "NA"}\n` +
+      `Booking Date: ${moment
         .utc(detailData?.booking_date)
         .format(DATE_TIME_FORMAT)}\n\n` +
       `*Customer Details*\n` +
-      `*Customer Name:* ${detailData?.leads?.customer?.first_name || "NA"}\n` +
-      `*Booking Status:* ${
+      `Customer Name: ${detailData?.leads?.customer?.first_name || "NA"}\n` +
+      `Booking Status: ${
         detailData?.leads?.lead_status === 5 || props?.type === "register"
           ? "Registered"
           : detailData?.booking_status === 1
@@ -107,21 +107,21 @@ const BookingDetailsView = (props: any) => {
           : "NA"
       }\n\n` +
       `*Property Details*\n` +
-      `*Configurations:* ${detailData.configuration || "NA"}\n` +
-      `*Flat Number:* ${detailData.flat_no || "NA"}\n` +
-      `*Carpet Area:* ${detailData.carpet_area || "NA"} sqft\n` +
-      `*Agreement Value:* ${detailData.agreement_value || "NA"}\n` +
-      `*Booking Amount:* ${detailData.booking_amount || "NA"}\n` +
-      `*Rate Achieved:* ${detailData.rate_achieved || "NA"}\n\n` +
+      `Configurations: ${detailData.configuration || "NA"}\n` +
+      `Flat Number: ${detailData.flat_no || "NA"}\n` +
+      `Carpet Area: ${detailData.carpet_area || "NA"} sqft\n` +
+      `Agreement Value: ${detailData.agreement_value || "NA"}\n` +
+      `Booking Amount: ${detailData.booking_amount || "NA"}\n` +
+      `Rate Achieved: ${detailData.rate_achieved || "NA"}\n\n` +
       `*Lead Information*\n` +
-      `*Lead Source:* ${
+      `*Lead Source: ${
         detailData?.lead_source_name
           ? detailData?.lead_source_name == "Reference" &&
             detailData?.referrel_partner == 1
             ? "Referral Partner"
             : detailData?.lead_source_name
           : strings.notfount
-      } ${getCPLeadType(detailData?.cp_lead_type)}\n` +
+      } ${getCPLeadType(detailData?.cp_lead_type)}*\n` +
       `${
         detailData?.leads?.lead_source === CONST_IDS.cp_lead_source_id
           ? `*CP Name:* ${detailData.cp_name || "NA"}\n` +
@@ -133,12 +133,18 @@ const BookingDetailsView = (props: any) => {
           : ""
       }\n` +
       `*Team Information*\n` +
-      `*Lead By:* ${detailData?.visit_create_by?.user_name} (${detailData?.visit_create_by?.role_title})\n` +
-      `*Closed By:* ${
+      `${
+        detailData?.created_for_sm_name?.length > 0
+          ? `*Sourced by: ${detailData?.created_for_sm_name} (${detailData?.created_for_sm_role})*` +
+            `\n`
+          : ""
+      }` +
+      `*Lead Created By: ${detailData?.visit_create_by?.user_name} (${detailData?.visit_create_by?.role_title})*\n` +
+      `*Closed By: ${
         props.type === "cancel"
           ? detailData?.booking_by_name
           : detailData?.booking_by_name
-      } (${detailData?.creaters?.role_title})\n`;
+      } (${detailData?.creaters?.role_title})*\n`;
 
     console.log(data);
     return data;

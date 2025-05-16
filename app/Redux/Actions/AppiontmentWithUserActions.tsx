@@ -81,6 +81,11 @@ export const getUserAppointmentList = (params: any) => async (dispatch: any) => 
 export const updateUserAppointmentStatus = (params: any) => async (dispatch: any) => {
     dispatch({ type: START_LOADING })
     try {
+        // const header = {
+        //     "Content-Type": "multipart/form-data",
+        //     "access-control-allow-origin": "*",
+        // };
+        // const res = await apiCall("post", apiEndPoints.UPDATE_USER_APPOINTMENT_STATUS, params,header);
         const res = await apiCall("post", apiEndPoints.UPDATE_USER_APPOINTMENT_STATUS, params);
         if (res.data.status == 200) {
             dispatch({

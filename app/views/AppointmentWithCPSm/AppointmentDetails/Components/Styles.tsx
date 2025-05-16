@@ -98,6 +98,11 @@ const styles = StyleSheet.create({
     color: BLACK_COLOR,
     marginHorizontal: normalizeSpacing(10),
   },
+  Img: {
+    width: normalizeWidth(100),
+    height: normalizeHeight(100),
+    borderRadius: normalize(8)
+  }
 });
 
 export default styles;

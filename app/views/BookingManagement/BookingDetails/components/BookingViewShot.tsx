@@ -40,7 +40,7 @@ const BookingViewShot = (props: any) => {
         <View style={[styles.Txtview, { paddingVertical: 5 }]}>
           <View style={styles.projectContainer}>
             <Text style={[styles.projectTxt, { fontSize: normalize(12) }]}>
-              Lead By
+              Lead Created By
             </Text>
           </View>
           <View>
@@ -58,7 +58,7 @@ const BookingViewShot = (props: any) => {
           <View style={[styles.Txtview, { paddingVertical: 5 }]}>
             <View style={styles.projectContainer}>
               <Text style={[styles.projectTxt, { fontSize: normalize(12) }]}>
-                Created for
+                Sourced by
               </Text>
             </View>
             <View>
@@ -66,7 +66,7 @@ const BookingViewShot = (props: any) => {
             </View>
             <View style={styles.nameContainer}>
               <Text style={[styles.nameTxt, { fontSize: normalize(12) }]}>
-                {item?.created_for_sm_name}
+                {item?.created_for_sm_name} ({item?.created_for_sm_role})
               </Text>
             </View>
           </View>

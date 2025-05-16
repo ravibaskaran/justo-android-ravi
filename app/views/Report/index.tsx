@@ -364,6 +364,7 @@ const ReportScreen = ({ navigation, route }: any) => {
       rote === "Booking" ||
       rote === "Walk-ins" ||
       rote === "Site Visit Created" ||
+      rote === "Revisit Completed" ||
       rote === "CP Appointments"
     ) {
       navigation.navigate(
@@ -374,6 +375,8 @@ const ReportScreen = ({ navigation, route }: any) => {
           : rote == "Walk-ins"
           ? "Appointments"
           : rote == "Site Visit Created"
+          ? "Appointments"
+          : rote == "Revisit Completed"
           ? "Appointments"
           : "AppointmentScreenCPSM", // For CP Appointments
         {

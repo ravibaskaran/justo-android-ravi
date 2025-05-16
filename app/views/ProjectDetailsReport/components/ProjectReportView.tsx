@@ -50,19 +50,19 @@ const ProjectReportView = (props: any) => {
           "Gross Bookings:",
           bookings?.ftd?.GrossBookings,
           bookings?.mtd?.GrossBookings,
-          // bookings?.ytd?.GrossBookings,
+          bookings?.ytd?.GrossBookings,
         ]);
         sheetData.push([
           "Cancellations:",
           bookings?.ftd?.Cancellation,
           bookings?.mtd?.Cancellation,
-          // bookings?.ytd?.Cancellation,
+          bookings?.ytd?.Cancellation,
         ]);
         sheetData.push([
           "Net Bookings:",
           bookings?.ftd?.NetBookings,
           bookings?.mtd?.NetBookings,
-          // bookings?.ytd?.NetBookings,
+          bookings?.ytd?.NetBookings,
         ]);
         const siteVisits = data?.siteVisits[0] || {};
         sheetData.push(["Site Visits", null, null, null]);
@@ -70,86 +70,98 @@ const ProjectReportView = (props: any) => {
           "Total Site Visits:",
           siteVisits?.ftd?.SiteVisits,
           siteVisits?.mtd?.SiteVisits,
-          // siteVisits?.ytd?.SiteVisits,
+          siteVisits?.ytd?.SiteVisits,
         ]);
         sheetData.push([
           "Channel Partner Visits:",
           siteVisits?.ftd?.ChannelPartnerVisitsCount,
           siteVisits?.mtd?.ChannelPartnerVisitsCount,
-          // siteVisits?.ytd?.ChannelPartnerVisitsCount,
+          siteVisits?.ytd?.ChannelPartnerVisitsCount,
         ]);
         sheetData.push([
           "Direct Walk-In Visits:",
           siteVisits?.ftd?.DirectWalkInVisitsCount,
           siteVisits?.mtd?.DirectWalkInVisitsCount,
-          // siteVisits?.ytd?.DirectWalkInVisitsCount,
+          siteVisits?.ytd?.DirectWalkInVisitsCount,
+        ]);
+        sheetData.push([
+          "Referral Partner Visits:",
+          siteVisits?.ftd?.ReferralPartnerVisitsCount,
+          siteVisits?.mtd?.ReferralPartnerVisitsCount,
+          siteVisits?.ytd?.ReferralPartnerVisitsCount,
         ]);
         sheetData.push([
           "Reference Visits:",
           siteVisits?.ftd?.ReferenceVisitsCount,
           siteVisits?.mtd?.ReferenceVisitsCount,
-          // siteVisits?.ytd?.ReferenceVisitsCount,
+          siteVisits?.ytd?.ReferenceVisitsCount,
         ]);
         sheetData.push([
           "Pre-Sales Visits:",
           siteVisits?.ftd?.PreSalesVisitsCount,
           siteVisits?.mtd?.PreSalesVisitsCount,
-          // siteVisits?.ytd?.PreSalesVisitsCount,
+          siteVisits?.ytd?.PreSalesVisitsCount,
         ]);
         sheetData.push([
           "Exhibition Visits:",
           siteVisits?.ftd?.ExhibitionVisitsCount,
           siteVisits?.mtd?.ExhibitionVisitsCount,
-          // siteVisits?.ytd?.ExhibitionVisitsCount,
+          siteVisits?.ytd?.ExhibitionVisitsCount,
         ]);
         sheetData.push([
           "Other Visits:",
           siteVisits?.ftd?.OtherVisitsCount,
           siteVisits?.mtd?.OtherVisitsCount,
-          // siteVisits?.ytd?.OtherVisitsCount,
+          siteVisits?.ytd?.OtherVisitsCount,
         ]);
         sheetData.push(["Site Revisits", null, null, null]);
         sheetData.push([
           "Total Revisits:",
           siteVisits?.ftd?.Revisits,
           siteVisits?.mtd?.Revisits,
-          // siteVisits?.ytd?.Revisits,
+          siteVisits?.ytd?.Revisits,
         ]);
         sheetData.push([
           "ChannelPartner Revisits:",
           siteVisits?.ftd?.ChannelPartnerRevisitsCount,
           siteVisits?.mtd?.ChannelPartnerRevisitsCount,
-          // siteVisits?.ytd?.ChannelPartnerRevisitsCount,
+          siteVisits?.ytd?.ChannelPartnerRevisitsCount,
         ]);
         sheetData.push([
           "Direct Walk-In Revisits:",
           siteVisits?.ftd?.DirectWalkInRevisitsCount,
           siteVisits?.mtd?.DirectWalkInRevisitsCount,
-          // siteVisits?.ytd?.DirectWalkInRevisitsCount,
+          siteVisits?.ytd?.DirectWalkInRevisitsCount,
+        ]);
+        sheetData.push([
+          "Referral Partner Revisits:",
+          siteVisits?.ftd?.ReferralPartnerRevisitsCount,
+          siteVisits?.mtd?.ReferralPartnerRevisitsCount,
+          siteVisits?.ytd?.ReferralPartnerRevisitsCount,
         ]);
         sheetData.push([
           "Reference Revisits:",
           siteVisits?.ftd?.ReferenceRevisitsCount,
           siteVisits?.mtd?.ReferenceRevisitsCount,
-          // siteVisits?.ytd?.ReferenceRevisitsCount,
+          siteVisits?.ytd?.ReferenceRevisitsCount,
         ]);
         sheetData.push([
           "Pre-Sales Revisits:",
           siteVisits?.ftd?.PreSalesRevisitsCount,
           siteVisits?.mtd?.PreSalesRevisitsCount,
-          // siteVisits?.ytd?.PreSalesRevisitsCount,
+          siteVisits?.ytd?.PreSalesRevisitsCount,
         ]);
         sheetData.push([
           "Exhibition Revisits:",
           siteVisits?.ftd?.ExhibitionRevisitsCount,
           siteVisits?.mtd?.ExhibitionRevisitsCount,
-          // siteVisits?.ytd?.ExhibitionRevisitsCount,
+          siteVisits?.ytd?.ExhibitionRevisitsCount,
         ]);
         sheetData.push([
           "Other Revisits:",
           siteVisits?.ftd?.OtherRevisitsCount,
           siteVisits?.mtd?.OtherRevisitsCount,
-          // siteVisits?.ytd?.OtherRevisitsCount,
+          siteVisits?.ytd?.OtherRevisitsCount,
         ]);
         sheetData.push([null, null, null, null]);
       }

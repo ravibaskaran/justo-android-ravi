@@ -98,6 +98,9 @@ const PropertyView = (props: any) => {
     props.setCurrentProperty(items?.property_id);
   };
 
+  console.log(propertyList?.length);
+  
+
   return (
     <View style={styles.mainContainer}>
       <Header

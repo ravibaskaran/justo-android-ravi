@@ -146,121 +146,126 @@ const MyAppointment = (props: any) => {
       </View>
 
       <View style={styles.buttonContainer}>
-        <View
-          style={[
-            styles.buttonContainer,
-            {
-              justifyContent:
-                props.items.appointment_status == 3 || 4
-                  ? "flex-end"
-                  : "space-between",
-            },
-          ]}
-        >
-          {props.items.appointment_status === 1 ? (
-            <>
-              {edit && (
-                <Button
-                  width={80}
-                  height={30}
-                  bgcolor={null}
-                  bordercolor={PURPLE_COLOR}
-                  borderWidth={1}
-                  btnTxtcolor={PURPLE_COLOR}
-                  buttonText={strings.edit}
-                  btnTxtsize={14}
-                  border={10}
-                  handleBtnPress={() => props.onPressEdit()}
-                />
-              )}
-              {status && (
-                <Button
-                  width={80}
-                  height={30}
-                  bgcolor={null}
-                  bordercolor={CALL_COLOR}
-                  borderWidth={1}
-                  btnTxtcolor={CALL_COLOR}
-                  buttonText={strings.cancel}
-                  btnTxtsize={14}
-                  border={10}
-                  handleBtnPress={() =>
-                    props.handleOptionPress(props.items._id, 4)
-                  }
-                />
-              )}
+        {props?.route?.params?.fromReport ? (
+          <View style={{ flex: 1 }}></View>
+        ) : (
+          <View
+            style={[
+              styles.buttonContainer,
+              {
+                justifyContent:
+                  props.items.appointment_status == 3 || 4
+                    ? "flex-end"
+                    : "space-between",
+              },
+            ]}
+          >
+            {props.items.appointment_status === 1 ? (
+              <>
+                {edit && (
+                  <Button
+                    width={80}
+                    height={30}
+                    bgcolor={null}
+                    bordercolor={PURPLE_COLOR}
+                    borderWidth={1}
+                    btnTxtcolor={PURPLE_COLOR}
+                    buttonText={strings.edit}
+                    btnTxtsize={14}
+                    border={10}
+                    handleBtnPress={() => props.onPressEdit()}
+                  />
+                )}
+                {status && (
+                  <Button
+                    width={80}
+                    height={30}
+                    bgcolor={null}
+                    bordercolor={CALL_COLOR}
+                    borderWidth={1}
+                    btnTxtcolor={CALL_COLOR}
+                    buttonText={strings.cancel}
+                    btnTxtsize={14}
+                    border={10}
+                    handleBtnPress={() =>
+                      props.handleOptionPress(props.items._id, 4)
+                    }
+                  />
+                )}
 
-              {/* {status && getConfirmButton() ? (
-                <Button
-                  width={80}
-                  height={30}
-                  bgcolor={null}
-                  bordercolor={PURPLE_COLOR}
-                  borderWidth={1}
-                  btnTxtcolor={PURPLE_COLOR}
-                  buttonText={strings.confirm}
-                  btnTxtsize={14}
-                  border={10}
-                  handleBtnPress={() =>
-                    props.handleOptionPress(props.items._id, 2)
-                  }
-                />
-              ) : null} */}
+                {/* {status && getConfirmButton() ? (
+        <Button
+          width={80}
+          height={30}
+          bgcolor={null}
+          bordercolor={PURPLE_COLOR}
+          borderWidth={1}
+          btnTxtcolor={PURPLE_COLOR}
+          buttonText={strings.confirm}
+          btnTxtsize={14}
+          border={10}
+          handleBtnPress={() =>
+            props.handleOptionPress(props.items._id, 2)
+          }
+        />
+      ) : null} */}
 
-              {status && (
-                <Button
-                  width={80}
-                  height={30}
-                  bgcolor={null}
-                  bordercolor={GREEN_COLOR}
-                  borderWidth={1}
-                  btnTxtcolor={GREEN_COLOR}
-                  buttonText={strings.done}
-                  btnTxtsize={14}
-                  border={10}
-                  handleBtnPress={() =>
-                    props.handleOptionPress(props.items._id, 3)
-                  }
-                />
-              )}
-            </>
-          ) : props.items.appointment_status === 2 ? (
-            <>
-              {status && (
-                <Button
-                  width={80}
-                  height={30}
-                  bgcolor={null}
-                  bordercolor={CALL_COLOR}
-                  borderWidth={1}
-                  btnTxtcolor={CALL_COLOR}
-                  buttonText={strings.cancel}
-                  btnTxtsize={14}
-                  border={10}
-                  handleBtnPress={() =>
-                    props.handleOptionPress(props.items._id, 4)
-                  }
-                />
-              )}
-              {status && (
-                <Button
-                  width={80}
-                  height={30}
-                  bgcolor={null}
-                  bordercolor={GREEN_COLOR}
-                  borderWidth={1}
-                  btnTxtcolor={GREEN_COLOR}
-                  buttonText={strings.done}
-                  btnTxtsize={14}
-                  border={10}
-                  handleBtnPress={() =>
-                    props.handleOptionPress(props.items._id, 3)
-                  }
-                />
-              )}
-            </>
-          ) : null}
-        </View>
+                {status && (
+                  <Button
+                    width={80}
+                    height={30}
+                    bgcolor={null}
+                    bordercolor={GREEN_COLOR}
+                    borderWidth={1}
+                    btnTxtcolor={GREEN_COLOR}
+                    buttonText={strings.done}
+                    btnTxtsize={14}
+                    border={10}
+                    handleBtnPress={() =>
+                      props.handleOptionPress(props.items._id, 3)
+                    }
+                  />
+                )}
+              </>
+            ) : props.items.appointment_status === 2 ? (
+              <>
+                {status && (
+                  <Button
+                    width={80}
+                    height={30}
+                    bgcolor={null}
+                    bordercolor={CALL_COLOR}
+                    borderWidth={1}
+                    btnTxtcolor={CALL_COLOR}
+                    buttonText={strings.cancel}
+                    btnTxtsize={14}
+                    border={10}
+                    handleBtnPress={() =>
+                      props.handleOptionPress(props.items._id, 4)
+                    }
+                  />
+                )}
+                {status && (
+                  <Button
+                    width={80}
+                    height={30}
+                    bgcolor={null}
+                    bordercolor={GREEN_COLOR}
+                    borderWidth={1}
+                    btnTxtcolor={GREEN_COLOR}
+                    buttonText={strings.done}
+                    btnTxtsize={14}
+                    border={10}
+                    handleBtnPress={() =>
+                      props.handleOptionPress(props.items._id, 3)
+                    }
+                  />
+                )}
+              </>
+            ) : null}
+          </View>
+        )}
+
         {view && (
           <TouchableOpacity
             style={styles.Viewbutton}

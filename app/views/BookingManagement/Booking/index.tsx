@@ -17,7 +17,7 @@ import { START_LOADING, STOP_LOADING } from "app/Redux/types";
 
 interface FlatBooking {
   flat_type: string;
-  floor: number;
+  floor: string;
   flat_name: string;
   saleable_area: number;
   carpet_area: number;
@@ -68,7 +68,7 @@ const BookingScreen = ({ navigation, route }: any) => {
     flatBooking: [
       {
         flat_type: "",
-        floor: 0,
+        floor: "",
         flat_name: "",
         saleable_area: 0,
         carpet_area: 0,
@@ -198,7 +198,7 @@ const BookingScreen = ({ navigation, route }: any) => {
       ) {
         isError = false;
         errorMessage = "Configuration is require. Please select configuration";
-      } else if (flatBooking.floor == undefined || flatBooking.floor == 0) {
+      } else if (flatBooking.floor == undefined || flatBooking.floor == "") {
         isError = false;
         errorMessage = "Floor is require. Please enter floor";
       } else if (
@@ -232,7 +232,7 @@ const BookingScreen = ({ navigation, route }: any) => {
           ...prevState.flatBooking,
           {
             flat_type: "",
-            floor: 0,
+            floor: "",
             flat_name: "",
             saleable_area: 0,
             carpet_area: 0,

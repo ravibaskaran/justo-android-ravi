@@ -44,6 +44,7 @@ const RouteScreen = (props: any) => {
             start_date: "",
             end_date: "",
             customer_name: "",
+            customer_number:"",
             status: "",
           });
           props.setAppointmentList([]);

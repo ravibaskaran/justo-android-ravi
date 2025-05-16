@@ -1,5 +1,5 @@
 import { View, Text, Alert, BackHandler } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import AppointmentDetailsView from "./Components/AppointmentDetailsView";
 import { useFocusEffect } from "@react-navigation/native";
 import { getAppointmentDetail } from "app/Redux/Actions/AppointmentWithCpActions";
@@ -85,21 +85,22 @@ const AppointmentDetails = ({ navigation, route }: any) => {
     }
   }, [addedBookingData, closeAppointment]);
 
-  useEffect(() => {
-    const backAction = () => {
-      if (data?.fromVisitorPage) navigation.goBack();
-      navigation.goBack();
-      appointmentBackSubject.next(true);
-      return true;
-    };
-
-    const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      backAction
-    );
-
-    return () => backHandler.remove();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      const backAction = () => {
+        console.log("Back pressed on this screen");
+        if (data?.fromVisitorPage) navigation.goBack();
+        navigation.goBack();
+        appointmentBackSubject.next(true);
+        return true; // prevents default behavior
+      };
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+      );
+      return () => backHandler.remove(); // cleanup on screen blur
+    }, [data])
+  );
 
   const handleBackPress = () => {
     if (data?.fromVisitorPage) navigation.goBack();
@@ -184,7 +185,7 @@ const AppointmentDetails = ({ navigation, route }: any) => {
     navigation.navigate("AppointmentAddS", data);
   };
   const handleNotInterestedPress = (data: any) => {
-    navigation.navigate("CloseAppointment");
+    navigation.navigate("CloseAppointment", data);
   };
 
   return (

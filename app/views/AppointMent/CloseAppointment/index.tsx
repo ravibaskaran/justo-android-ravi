@@ -28,7 +28,7 @@ const CloseAppointment = ({navigation, route}: any) => {
             backgroundColor: GREEN_COLOR
           })
           dispatch(getAppointmentDetail({
-            appointment_id: response?.data?.length > 0 ? response?.data[0]?._id : []
+            appointment_id: response?.data?.length > 0 ? route?.params?._id : []
           }))
           navigation.goBack()
         }
@@ -36,14 +36,15 @@ const CloseAppointment = ({navigation, route}: any) => {
       
       const onpressCloseVisit = (data: any) => {
         const params = {
-          lead_id: response?.data?.length > 0 ? response?.data[0]?.lead_id : [],
-          appointment_id: response?.data?.length > 0 ? response?.data[0]?._id : [],
+          lead_id: route?.params?.lead_id ? route?.params?.lead_id : [],
+          appointment_id:  route?.params?._id  ? route?.params?._id : [],
           appointment_status: cancelValue?.appointment_status,
           resion: cancelValue?.resion,
           comment: cancelValue?.remark,
           property_id: cancelValue?.property_id,
           property_name: cancelValue?.property_name,
         }
+        console.log(params)
         dispatch(closeVisit(params))
       }
       const handleBackPress = () => {

@@ -4,7 +4,7 @@ import usePermission from "app/components/utilities/UserPermissions";
 import React, { useState } from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import images from "../../../../assets/images";
 import Button from "../../../../components/Button";
 import Header from "../../../../components/Header";
@@ -14,6 +14,9 @@ import CancelModal from "./CancelBooking";
 import CheckedinModel from "./CheckedinModel";
 import ReadyToBookModal from "./ReadyToBookModal";
 import styles from "./Styles";
+import { apiCall } from "app/components/utilities/httpClient";
+import apiEndPoints from "app/components/utilities/apiEndPoints";
+import { START_LOADING, STOP_LOADING } from "app/Redux/types";
 
 const AppointmentDetailsView = (props: any) => {
   const { detailsData, getDetail } = props;
@@ -21,6 +24,8 @@ const AppointmentDetailsView = (props: any) => {
   const [readyToBooK, setReadyToBooK] = useState(false);
   const [CpChecking, setCpChecking] = useState(false);
   const data = detailsData?.length > 0 ? detailsData[0] : [];
+  const [alreadyCheckIn, setAlreadyCheckIn] = useState(false);
+  const dispatch: any = useDispatch();
 
   const { edit, status, create, approve } = usePermission({
     edit: "close_appointment",
@@ -32,6 +37,29 @@ const AppointmentDetailsView = (props: any) => {
     data?.assign_appointment?.length > 0
       ? data?.assign_appointment[0]?.assign_by_role
       : "";
+
+  const checkAlreadyCheckIn = async () => {
+    try {
+      dispatch({ type: START_LOADING });
+      setCpChecking(true);
+      const response = await apiCall(
+        "post",
+        apiEndPoints.CHECK_ALREADY_CHECKIN,
+        {
+          property_id: data?.property_id,
+          customer_mobile_number: data?.customer_mobile_number,
+        }
+      );
+      const { status } = response?.data || {};
+      console.log(response?.data);
+      setAlreadyCheckIn(status === 201);
+    } catch (error) {
+      console.error("Check-in status fetch failed:", error);
+      setAlreadyCheckIn(false);
+    } finally {
+      dispatch({ type: STOP_LOADING });
+    }
+  };
 
   return (
     <View style={styles.mainContainer}>
@@ -68,7 +96,7 @@ const AppointmentDetailsView = (props: any) => {
                     buttonText={strings.notInterested}
                     // btnTxtsize={13}
                     // handleBtnPress={() => setCancelAppoitment(true)}
-                    handleBtnPress={() => props.handleNotInterestedPress()}
+                    handleBtnPress={() => props.handleNotInterestedPress(data)}
                     width={150}
                   />
                 )}
@@ -109,7 +137,6 @@ const AppointmentDetailsView = (props: any) => {
                   handleBtnPress={() => props.onPressFollowUp()}
                   width={150}
                 />
-
               </View>
             </>
           ) : null}
@@ -136,7 +163,7 @@ const AppointmentDetailsView = (props: any) => {
                 {/* Checked In */}
                 <Button
                   buttonText={strings.visitorCheckin}
-                  handleBtnPress={() => setCpChecking(true)}
+                  handleBtnPress={() => checkAlreadyCheckIn()}
                   width={Isios ? 180 : 160}
                 />
               </View>
@@ -162,14 +189,14 @@ const AppointmentDetailsView = (props: any) => {
               {/* Checked In */}
               <Button
                 buttonText={strings.visitorCheckin}
-                handleBtnPress={() => setCpChecking(true)}
+                handleBtnPress={() => checkAlreadyCheckIn()}
                 width={Isios ? 180 : 160}
               />
             </View>
           </View>
         )
       ) : null}
-      
+
       {/* Ready To Book Model */}
       <ReadyToBookModal
         Visible={readyToBooK}
@@ -183,7 +210,11 @@ const AppointmentDetailsView = (props: any) => {
       {/* Cp Check-In Model */}
       <CheckedinModel
         Visible={CpChecking}
-        setIsVisible={() => setCpChecking(false)}
+        alreadyCheckIn={alreadyCheckIn}
+        setIsVisible={() => {
+          setCpChecking(false);
+          setAlreadyCheckIn(false);
+        }}
         data={data}
         getDetail={getDetail}
       />

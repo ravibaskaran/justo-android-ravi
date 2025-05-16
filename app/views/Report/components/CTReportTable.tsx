@@ -231,6 +231,16 @@ const CTReportTable = (props: any) => {
                 byDirect={data[0]?.booking_direct}
                 total={data[0]?.total_booking}
               />
+              {/* <TouchableOpacity
+                // disabled={true}
+                onPress={() => props.onCardPress("Revisit Completed")}
+                style={[styles.childContainer,{width: "50%",}]}
+              >
+                <Text style={[styles.cardText, styles.cardText1]}>Revisit Completed</Text>
+                <Text style={[styles.cardText, styles.cardText2]}>
+                  {data[0]?.revisit_completed}
+                </Text>
+              </TouchableOpacity> */}
             </View>
           </View>
 

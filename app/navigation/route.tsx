@@ -129,7 +129,13 @@ const DrawerComponent = () => {
   return (
     <Drawer.Navigator
       initialRouteName="Home"
-      screenOptions={{ headerShown: false, drawerType: "front" }}
+      screenOptions={{
+        headerShown: false,
+        drawerType: "front",
+        drawerStyle: {
+          width: 300, // Set your desired width here
+        },
+      }}
       drawerContent={(props) => customDrawer(props)}
     >
       <Drawer.Screen name="DashboardScreen" component={DashboardScreen} />

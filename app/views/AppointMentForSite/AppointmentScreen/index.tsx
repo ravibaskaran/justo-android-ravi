@@ -22,6 +22,7 @@ const AppointmentScreen = ({ navigation, route }: any) => {
     start_date: "",
     end_date: "",
     customer_name: "",
+    customer_number: "",
     property_name: "",
   });
   const todayAppointment = {
@@ -45,6 +46,7 @@ const AppointmentScreen = ({ navigation, route }: any) => {
           start_date: "",
           end_date: "",
           customer_name: "",
+          customer_number: "",
           property_name: "",
         });
       }
@@ -75,6 +77,9 @@ const AppointmentScreen = ({ navigation, route }: any) => {
           end_date: data?.end_date ? data?.end_date : "",
           customer_name: data?.customer_name?.trim()
             ? data?.customer_name?.trim()
+            : "",
+          customer_number: data?.customer_number?.trim()
+            ? data?.customer_number?.trim()
             : "",
           property_name: data?.property_name ? data?.property_name : "",
           status: data?.status ? data?.status : "",

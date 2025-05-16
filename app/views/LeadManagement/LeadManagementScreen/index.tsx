@@ -21,6 +21,7 @@ const LeadManagementScreen = ({ navigation, route }: any) => {
     startdate: "",
     enddate: "",
     search_by_visisor_name: "",
+    search_by_mobile_number: "",
     search_configuration: "",
     visit_score: "",
     property_id: "",
@@ -45,6 +46,7 @@ const LeadManagementScreen = ({ navigation, route }: any) => {
           startdate: "",
           enddate: "",
           search_by_visisor_name: "",
+          search_by_mobile_number: "",
           search_configuration: "",
           visit_score: "",
           property_id: "",
@@ -157,6 +159,9 @@ const LeadManagementScreen = ({ navigation, route }: any) => {
         end_date: data?.enddate ? data?.enddate : "",
         search_by_visisor_name: data?.search_by_visisor_name
           ? data?.search_by_visisor_name
+          : "",
+        search_by_mobile_number: data?.search_by_mobile_number
+          ? data?.search_by_mobile_number
           : "",
         search_configuration: data?.search_configuration
           ? data?.search_configuration

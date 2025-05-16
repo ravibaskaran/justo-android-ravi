@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     width: normalizeWidth(18),
     tintColor: WHITE_COLOR,
   },
-  redStar:{color: 'red', fontSize: normalize(18)},
+  redStar: { color: "red", fontSize: normalize(18) },
   descTxt: {
     color: BLACK_COLOR,
     fontSize: normalize(18),
@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
   },
   userNameTxt: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
-    maxWidth: '90%'
+    maxWidth: "90%",
   },
   crossVw: {
     width: normalizeWidth(15),
@@ -349,12 +349,12 @@ const styles = StyleSheet.create({
     fontFamily: FONT_FAMILY_REGULAR,
   },
   countyModelCon: {
-    height: Isios ? "90%": '90%',
+    height: Isios ? "90%" : "90%",
     backgroundColor: "#f5f2f2",
     paddingHorizontal: 20,
     borderRadius: 10,
     paddingTop: 10,
-    marginVertical: 20
+    marginVertical: 20,
   },
   searchInputCon: {
     width: "100%",
@@ -370,7 +370,7 @@ const styles = StyleSheet.create({
     fontFamily: FONT_FAMILY_REGULAR,
     paddingBottom: 5,
     paddingLeft: 15,
-    textAlignVertical: 'center'
+    textAlignVertical: "center",
   },
   countryCodeSelect: {
     height: 35,
@@ -379,12 +379,38 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderTopWidth: 0.4,
     borderTopColor: "#a9a9a9",
-    marginBottom: 2
+    marginBottom: 2,
   },
   countrycloseIcon: {
     tintColor: "red",
     width: normalizeWidth(35),
     height: normalizeHeight(35),
+  },
+  attachbtn: {
+    width: normalizeWidth(120),
+    height: normalizeHeight(50),
+    backgroundColor: PRIMARY_THEME_COLOR,
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: 10,
+    borderRadius: 10,
+  },
+  attachTxt1: {
+    color: BLACK_COLOR,
+    fontSize: normalize(13),
+    fontFamily: FONT_FAMILY_MEDIUM,
+    alignSelf:'center',
+  },
+  imageText: {
+    color: WHITE_COLOR,
+    fontSize: normalize(15),
+  },
+  containerCC: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: normalizeSpacing(16),
+    justifyContent: "space-between",
+    marginHorizontal: normalizeSpacing(10),
   },
 });
 

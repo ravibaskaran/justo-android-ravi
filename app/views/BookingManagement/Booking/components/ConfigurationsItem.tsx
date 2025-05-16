@@ -269,7 +269,7 @@ const ConfigurationsItem = (props: any) => {
               maxHeight={300}
               value={props.flatBooking.floor}
               onChange={(item: any) => {
-                props.flatBooking.floor = item;
+                props.flatBooking.floor = item?.toString();
                 props.flatBooking.flat_name = "";
                 props.flatBooking.flat_name = "";
                 setUpdateState(updateState + 1);

@@ -142,7 +142,7 @@ const BookingDetailsItem = (props: any) => {
         </View>
         <View style={styles.Txtview}>
           <View style={styles.projectContainer}>
-            <Text style={styles.projectTxt}>Lead By</Text>
+            <Text style={styles.projectTxt}>Lead Created By</Text>
           </View>
           <View>
             <Text>:</Text>
@@ -158,13 +158,13 @@ const BookingDetailsItem = (props: any) => {
         {item?.created_for_sm_name?.length > 0 && (
           <View style={styles.Txtview}>
             <View style={styles.projectContainer}>
-              <Text style={styles.projectTxt}>Created for</Text>
+              <Text style={styles.projectTxt}>Sourced by</Text>
             </View>
             <View>
               <Text>:</Text>
             </View>
             <View style={styles.nameContainer}>
-              <Text style={styles.nameTxt}>{item?.created_for_sm_name}</Text>
+              <Text style={styles.nameTxt}>{item?.created_for_sm_name} ({item?.created_for_sm_role})</Text>
             </View>
           </View>
         )}

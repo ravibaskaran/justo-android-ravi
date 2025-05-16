@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Image, TouchableOpacity, } from "react-native";
+import { View, Text, Image, TouchableOpacity, Alert, } from "react-native";
 import Modal from "react-native-modal";
 import styles from "./styles";
 import images from "../../assets/images";
@@ -12,109 +12,111 @@ import DocumentPicker from "react-native-document-picker";
 const PicturePickerModal = (props: any) => {
     const handleCameraPress = () => {
         ImagePicker.openCamera({
-            // width: 100,
-            // height: 100,
-            cropping: true,
-            multiple: props.multiple ? props.multiple : false,
-            compressImageQuality: 1,
-            freeStyleCropEnabled: true
+          cropping: true,
+          multiple: props.multiple ? props.multiple : false,
+          compressImageQuality: 1,
+          freeStyleCropEnabled: true,
         }).then((image: any) => {
-            props.setVisible(false);
-            if (props.multiple && image?.length > 0) {
-                const allArray: any = image?.map((itm: any) => {
-                    return {
-                        uri: itm?.path,
-                        type: itm?.mime,
-                        name: itm?.path?.substring(
-                            itm?.path?.lastIndexOf("/") + 1
-                        ),
-                    }
-                })
-                if (props?.value?.length === 0 || typeof props?.value === 'undefined') {
-                    props.imageData(allArray)
-                } else {
-                    var newAdd: any[] = [...props?.value];
-                    const getNew = newAdd.concat(allArray);
-                    props.imageData(getNew)
-                }
-            } else {
-                if (props?.value === '' || props?.value === undefined ||
-                    props?.value === null || props?.value === "undefined" ||
-                    props?.value?.length === 0 && Array.isArray(props?.value)) {
-                    if (props?.value?.length === 0 && Array.isArray(props?.value)) {
-                        props.imageData(
-                            [{
-                                uri: image?.path,
-                                type: image?.mime,
-                                name: image?.path?.substring(
-                                    image?.path?.lastIndexOf("/") + 1
-                                ),
-                            }]
-                        );
-                    } else {
-                        props.imageData({
-                            uri: image?.path,
-                            type: image?.mime,
-                            name: image?.path?.substring(
-                                image?.path?.lastIndexOf("/") + 1
-                            ),
-                        }
-                        );
-                    }
-                } else {
-                    var newAdd: any[] = [...props?.value];
-                    const getNew = newAdd.concat({
-                        uri: image?.path,
-                        type: image?.mime,
-                        name: image?.path?.substring(
-                            image?.path?.lastIndexOf("/") + 1
-                        ),
-                    });
-                    props.imageData(getNew)
-                }
+          props.setVisible(false);
+      
+          const MAX_SIZE = 5 * 1024 * 1024; // 5MB
+          const formatSize = (size: number) => `${(size / (1024 * 1024)).toFixed(2)} MB`;
+      
+          if (props.multiple && image?.length > 0) {
+            const oversized = image.find((img: any) => img.size > MAX_SIZE);
+            if (oversized) {
+              Alert.alert("File Too Large", `Image size: ${formatSize(oversized.size)}. Please upload below 5MB.`);
+              return;
             }
+      
+            const allArray = image.map((itm: any) => ({
+              uri: itm.path,
+              type: itm.mime,
+              name: itm.path.substring(itm.path.lastIndexOf("/") + 1),
+            }));
+      
+            const existing = Array.isArray(props.value) ? props.value : [];
+            props.imageData([...existing, ...allArray]);
+          } else {
+            console.log(image.size)
+            if (image.size > MAX_SIZE) {
+              Alert.alert("File Too Large", `Image size: ${formatSize(image.size)}. Please upload below 5MB.`);
+              return;
+            }
+      
+            const singleImage = {
+              uri: image.path,
+              type: image.mime,
+              name: image.path.substring(image.path.lastIndexOf("/") + 1),
+            };
+      
+            const existing = Array.isArray(props.value) ? props.value : [];
+      
+            if (existing.length > 0) {
+              props.imageData([...existing, singleImage]);
+            } else {
+              props.imageData(props.multiple ? [singleImage] : singleImage);
+            }
+          }
         });
-    }
+      };
+      
     const handleGalleryPress = () => {
         ImagePicker.openPicker({
-            // width: 100,
-            // height: 100,
-            cropping: true,
-            multiple: props.multiple ? props.multiple : false,
-            compressImageQuality: 1,
-            freeStyleCropEnabled: true
+          cropping: true,
+          multiple: props.multiple ? props.multiple : false,
+          compressImageQuality: 1,
+          freeStyleCropEnabled: true,
         }).then((image: any) => {
-            props.setVisible(false);
-            if (props.multiple && image?.length > 0) {
-                const allArray: any = image?.map((itm: any) => {
-                    return {
-                        uri: itm?.path,
-                        type: itm?.mime,
-                        name: itm?.path?.substring(
-                            itm?.path?.lastIndexOf("/") + 1
-                        ),
-                    }
-                })
-                if (props?.value?.length === 0 || typeof props?.value === 'undefined') {
-                    props.imageData(allArray)
-                } else {
-                    var newAdd: any[] = [...props?.value];
-                    const getNew = newAdd.concat(allArray);
-                    props.imageData(getNew)
-                }
-            } else {
-                props.imageData(
-                    {
-                        uri: image?.path,
-                        type: image?.mime,
-                        name: image?.path?.substring(
-                            image?.path?.lastIndexOf("/") + 1
-                        ),
-                    }
-                )
+          props.setVisible(false);
+      
+          const MAX_SIZE = 5 * 1024 * 1024; // 5MB in bytes
+      
+          const formatSize = (size: number) => `${(size / (1024 * 1024)).toFixed(2)} MB`;
+      
+          // Multiple images
+          if (props.multiple && image?.length > 0) {
+            const oversized = image.find((img: any) => img.size > MAX_SIZE);
+            if (oversized) {
+              Alert.alert(
+                "File Too Large",
+                `One or more files exceed 5MB.\nCurrent size: ${formatSize(oversized.size)}`
+              );
+              return;
             }
+      
+            const allArray = image.map((itm: any) => ({
+              uri: itm.path,
+              type: itm.mime,
+              name: itm.path.substring(itm.path.lastIndexOf("/") + 1),
+            }));
+      
+            if (!props?.value || props?.value?.length === 0) {
+              props.imageData(allArray);
+            } else {
+              const newAdd = [...props.value];
+              const getNew = newAdd.concat(allArray);
+              props.imageData(getNew);
+            }
+          } else {
+            // Single image
+            if (image.size > MAX_SIZE) {
+              Alert.alert(
+                "File Too Large",
+                `Please upload images below 5MB.\nCurrent size: ${formatSize(image.size)}`
+              );
+              return;
+            }
+      
+            props.imageData({
+              uri: image.path,
+              type: image.mime,
+              name: image.path.substring(image.path.lastIndexOf("/") + 1),
+            });
+          }
         });
-    }
+      };
+      
     const handleBrowsePress = async () => {
         const result: any = await DocumentPicker.pick({
             type: [DocumentPicker.types.pdf, DocumentPicker.types.images],

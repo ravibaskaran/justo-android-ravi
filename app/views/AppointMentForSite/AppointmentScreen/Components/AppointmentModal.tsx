@@ -152,6 +152,23 @@ const FilterModal = (props: any) => {
                 }}
               />
             </View>
+            <View style={[styles.inputWrap, { top: normalizeSpacing(8) }]}>
+              <InputField
+                headingText={"Search by Mobile No"}
+                placeholderText={"Search by Mobile No"}
+                handleInputBtnPress={() => {}}
+                valueshow={props.filterData?.customer_number}
+                maxLength={10}
+                keyboardtype={"number-pad"}
+                disableSpecialCharacters={true}
+                onChangeText={(data: any) => {
+                  props.setFilterData({
+                    ...props.filterData,
+                    customer_number: data,
+                  });
+                }}
+              />
+            </View>
             {/* <View style={[styles.inputWrap, { top: normalizeSpacing(14) }]}>
               <InputField
                 headingText={"By Property Name"}

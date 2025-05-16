@@ -137,6 +137,7 @@ const CPAppointmentsForReport = (props: any) => {
               onPressEdit={(items: any) => onPressEdit(item)}
               handleOptionPress={handleOptionPress}
               roleId={roleId}
+              route={props?.route}
             />
           )}
           ListEmptyComponent={<EmptyListScreen message={"Appointment"} />}

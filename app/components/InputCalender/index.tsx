@@ -63,31 +63,31 @@ const InputCalender = (props: any) => {
         });
         return false;
       }
-      if (
-        moment(moment(date).format(TIME_FORMAT), "hh:mm A").format("HH:mm") <=
-        moment(moment(currentTime).format(TIME_FORMAT), "hh:mm A").format(
-          "HH:mm"
-        )
-      ) {
-        ErrorMessage({
-          msg: strings.choosecurrentCorrect,
-          backgroundColor: RED_COLOR,
-        });
-        return false;
-      } else if (
-        moment(moment(date).format(TIME_FORMAT), "hh:mm A").format("HH:mm") <
-          moment(moment(minTime).format(TIME_FORMAT), "hh:mm A").format(
-            "HH:mm"
-          ) ||
-        moment(moment(date).format(TIME_FORMAT), "hh:mm A").format("HH:mm") >
-          moment(moment(maxTime).format(TIME_FORMAT), "hh:mm A").format("HH:mm")
-      ) {
-        ErrorMessage({
-          msg: strings.choosetimeCorrect,
-          backgroundColor: RED_COLOR,
-        });
-        return false;
-      }
+      // if (
+      //   moment(moment(date).format(TIME_FORMAT), "hh:mm A").format("HH:mm") <=
+      //   moment(moment(currentTime).format(TIME_FORMAT), "hh:mm A").format(
+      //     "HH:mm"
+      //   )
+      // ) {
+      //   ErrorMessage({
+      //     msg: strings.choosecurrentCorrect,
+      //     backgroundColor: RED_COLOR,
+      //   });
+      //   return false;
+      // } else if (
+      //   moment(moment(date).format(TIME_FORMAT), "hh:mm A").format("HH:mm") <
+      //     moment(moment(minTime).format(TIME_FORMAT), "hh:mm A").format(
+      //       "HH:mm"
+      //     ) ||
+      //   moment(moment(date).format(TIME_FORMAT), "hh:mm A").format("HH:mm") >
+      //     moment(moment(maxTime).format(TIME_FORMAT), "hh:mm A").format("HH:mm")
+      // ) {
+      //   ErrorMessage({
+      //     msg: strings.choosetimeCorrect,
+      //     backgroundColor: RED_COLOR,
+      //   });
+      //   return false;
+      // }
     } else {
       // if (
       //   moment(date).format(DATE_FORMAT) >

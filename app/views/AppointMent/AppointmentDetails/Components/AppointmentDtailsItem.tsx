@@ -8,7 +8,7 @@ import {
   Isios,
   PRIMARY_THEME_COLOR,
   WHITE_COLOR,
-  getCPLeadType
+  getCPLeadType,
 } from "app/components/utilities/constant";
 import strings from "app/components/utilities/Localization";
 import moment from "moment";
@@ -259,6 +259,22 @@ const AppointmentDtailsItem = (props: any) => {
           </Text>
         </View>
       </View>
+
+      {item?.created_for_sm_name?.length > 0 && (
+        <View style={styles.Txtview}>
+          <View style={styles.projectContainer}>
+            <Text style={styles.projectTxt}>Sourced by</Text>
+          </View>
+          <View>
+            <Text>:</Text>
+          </View>
+          <View style={styles.nameContainer}>
+            <Text style={styles.nameTxt}>
+              {item?.created_for_sm_name} ({item?.created_for_sm_role})
+            </Text>
+          </View>
+        </View>
+      )}
       <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
           <Text style={styles.projectTxt}>Assign to</Text>
@@ -319,7 +335,7 @@ const AppointmentDtailsItem = (props: any) => {
           </View>
         </View>
       ) : null}
-      
+
       {item?.lead_source == "Channel Partner" ? (
         <View style={styles.Txtview}>
           <View style={styles.projectContainer}>

@@ -12,7 +12,10 @@ import images from "../../../../assets/images";
 import Button from "../../../../components/Button";
 import DropdownInput from "../../../../components/DropDown";
 import InputField from "../../../../components/InputField";
-import { default as Styles, default as styles } from "../../../../components/Modals/styles";
+import {
+  default as Styles,
+  default as styles,
+} from "../../../../components/Modals/styles";
 import strings from "../../../../components/utilities/Localization";
 
 const FilterModal = (props: any) => {
@@ -40,6 +43,7 @@ const FilterModal = (props: any) => {
       startdate: "",
       enddate: "",
       search_by_visisor_name: "",
+      search_by_mobile_number:"",
       search_configuration: "",
       visit_score: "",
       visit_status: "",
@@ -151,6 +155,23 @@ const FilterModal = (props: any) => {
                   });
                 }}
                 valueshow={props.filterData.search_by_visisor_name}
+              />
+            </View>
+            <View style={[styles.inputWrap, { top: normalizeSpacing(10) }]}>
+              <InputField
+                headingText={"Search by Mobile Number"}
+                placeholderText={"Search by Mobile Number"}
+                handleInputBtnPress={() => {}}
+                onChangeText={(data: any) => {
+                  props.setFilterData({
+                    ...props.filterData,
+                    search_by_mobile_number: data,
+                  });
+                }}
+                maxLength={10}
+                keyboardtype={"number-pad"}
+                disableSpecialCharacters={true}
+                valueshow={props.filterData.search_by_mobile_number}
               />
             </View>
             <View style={[styles.inputWrap, { top: normalizeSpacing(10) }]}>

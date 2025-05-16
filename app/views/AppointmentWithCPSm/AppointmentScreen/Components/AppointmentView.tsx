@@ -7,9 +7,23 @@ import {
   RemoveAppointment,
   updateUserAppointmentStatus,
 } from "app/Redux/Actions/AppiontmentWithUserActions";
+import { START_LOADING, STOP_LOADING } from "app/Redux/types";
 import AppointmentFilterModal from "app/views/AppointMent/AppintMents/components/AppointmentFilterModal ";
 import React, { useEffect, useState } from "react";
-import { FlatList, Text, View, useWindowDimensions } from "react-native";
+import {
+  Alert,
+  FlatList,
+  Keyboard,
+  Linking,
+  Platform,
+  Text,
+  useWindowDimensions,
+  View
+} from "react-native";
+import AndroidOpenSettings from "react-native-android-open-settings";
+import {
+  openSettings
+} from "react-native-permissions";
 import { TabBar, TabView } from "react-native-tab-view";
 import { useDispatch, useSelector } from "react-redux";
 import images from "../../../../assets/images";
@@ -19,6 +33,7 @@ import {
   GREEN_COLOR,
   PRIMARY_THEME_COLOR,
   PRIMARY_THEME_COLOR_DARK,
+  RED_COLOR,
   ROLE_IDS,
   TABBAR_COLOR,
   todayDate,
@@ -76,6 +91,7 @@ const AppointmentView = (props: any) => {
     remark: "",
     latitude: "",
     longitude: "",
+    image: null,
   });
   useEffect(() => {
     if (list) {
@@ -107,6 +123,83 @@ const AppointmentView = (props: any) => {
       }
     );
   }, []);
+
+  const openGPSSettings = () => {
+    if (Platform.OS === "android") {
+      try {
+        AndroidOpenSettings.locationSourceSettings();
+      } catch (e) {
+        Alert.alert(
+          "Error",
+          "Unable to open GPS settings. Please do it manually.",
+          [{ text: "Open App Settings", onPress: () => Linking.openSettings() }]
+        );
+      }
+    } else {
+      Linking.openSettings();
+    }
+  };
+
+  const isGPSEnabled = async (id: any, status: any) => {
+    dispatch({ type: START_LOADING });
+    Geolocation.getCurrentPosition(
+      (position) => {
+        dispatch({ type: STOP_LOADING });
+        const currentLongitude = JSON.stringify(position.coords.longitude);
+        setLong(currentLongitude);
+        const currentLatitude = JSON.stringify(position.coords.latitude);
+        setLat(currentLatitude);
+        setParams({
+          ...params,
+          appointment_id: id,
+          appointment_status: status,
+          latitude: currentLatitude,
+          longitude: currentLongitude,
+          remark: "",
+          image: null,
+        });
+        setIsVisible(true);
+      },
+      // Error callback
+      (error) => {
+        dispatch({ type: STOP_LOADING });
+        if (error.code === 1) {
+          Alert.alert("Permission Denied", "Location access is needed.", [
+            { text: "Open Settings", onPress: () => openSettings() },
+            { text: "Cancel", style: "cancel" },
+          ]);
+        } else if (error.code === 2) {
+          Alert.alert(
+            "Enable GPS",
+            "Please enable device GPS to get your location.",
+            [
+              { text: "Go to GPS Settings", onPress: openGPSSettings },
+              { text: "Cancel", style: "cancel" },
+            ]
+          );
+        } else if (error.code === 3) {
+          Alert.alert("Location Timeout", "Trying again...");
+        }
+      }
+    );
+  };
+
+  // const handleOptionPress = async (id: any, status: any) => {
+  //   if (status === 3) {
+  //     isGPSEnabled(id, status);
+  //     return;
+  //   }
+  //   setParams({
+  //     ...params,
+  //     appointment_id: id,
+  //     appointment_status: status,
+  //     latitude: status === 3 ? lat : "",
+  //     longitude: status === 3 ? long : "",
+  //     remark: "",
+  //     image: null,
+  //   });
+  //   setIsVisible(true);
+  // };
 
   useFocusEffect(
     React.useCallback(() => {
@@ -167,6 +260,53 @@ const AppointmentView = (props: any) => {
       ],
     });
   };
+
+  const validateAppointmentDetails = () => {
+    let hasError = false;
+    let errorMessage = "";
+
+    if (params?.appointment_status === 3 && !params?.image) {
+      hasError = true;
+      errorMessage = "Image is required. Please add an image.";
+    }
+    if (errorMessage) {
+      ErrorMessage({
+        msg: errorMessage,
+        backgroundColor: RED_COLOR,
+      });
+    }
+    if (hasError) {
+      Keyboard.dismiss();
+    }
+    return !hasError;
+  };
+
+  // const handleOnPressYesInModal = async () => {
+  //   const {
+  //     appointment_status,
+  //     longitude,
+  //     latitude,
+  //     remark,
+  //     appointment_id,
+  //     image,
+  //   } = params || {};
+
+  //   const formData: any = new FormData();
+  //   formData.append("appointment_id", appointment_id);
+  //   formData.append("appointment_status", appointment_status);
+  //   formData.append("remark", remark?.trim());
+  //   formData.append("latitude", latitude);
+  //   formData.append("longitude", longitude);
+
+  //   if (appointment_status == 3) {
+  //     formData.append("image", image);
+  //   }
+  //   if (validateAppointmentDetails()) {
+  //     dispatch(updateUserAppointmentStatus(formData));
+  //     setIsVisible(false);
+  //   }
+  // };
+  
   const handleOptionPress = (id: any, status: any) => {
     console.log("status: ", status);
     setParams({
@@ -183,7 +323,8 @@ const AppointmentView = (props: any) => {
   const handleOnPressYesInModal = () => {
     dispatch(updateUserAppointmentStatus(params));
     setIsVisible(false);
-  };
+  }
+
   const onPressApply = (type: any) => {
     const isSourcingRole =
       roleId === ROLE_IDS.sourcingtl_id || roleId === ROLE_IDS.sourcing_head_id;
@@ -205,6 +346,7 @@ const AppointmentView = (props: any) => {
       }
     }
   };
+
   // const getVisitorsList = (offset: any, array: any) => {
   //   dispatch(
   //     getUserVisitList({
