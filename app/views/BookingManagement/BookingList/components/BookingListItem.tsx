@@ -229,7 +229,10 @@ const BookingListItem = (props: any) => {
         )}
         <View style={styles.Txtview}>
           <View style={styles.projectContainer}>
-            <Text style={styles.projectTxt}>Agreement Value:</Text>
+            <Text style={styles.projectTxt}>Agreement Value</Text>
+          </View>
+          <View>
+            <Text>:</Text>
           </View>
           <View style={styles.nameContainer}>
             <Text style={styles.nameTxt}>
@@ -242,7 +245,10 @@ const BookingListItem = (props: any) => {
         {props.type === "request" ? (
           <View style={styles.Txtview}>
             <View style={styles.projectContainer}>
-              <Text style={styles.projectTxt}>Booking Amount :</Text>
+              <Text style={styles.projectTxt}>Booking Amount</Text>
+            </View>
+            <View>
+              <Text>:</Text>
             </View>
             <View style={styles.nameContainer}>
               <Text style={styles.nameTxt}>

@@ -132,7 +132,7 @@ export const INVENTORY_STATUS = {
 
 export function getCPLeadType(cp_lead_type: any) {
   if (cp_lead_type == 1) {
-    return " (Direct)";
+    return " (Walk-in)";
   } else if (cp_lead_type == 2) {
     return " (Tele-calling)";
   } else return "";
