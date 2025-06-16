@@ -11,6 +11,7 @@ const LeadDetails = ({ navigation, route }: any) => {
   );
   const [allDetails, setAllDetails] = useState({});
   const data = route?.params || 0;
+  const isDraft = data?.draft
   useLayoutEffect(() => {
     if (data._id) {
       dispatch(
@@ -47,6 +48,7 @@ const LeadDetails = ({ navigation, route }: any) => {
       handleScheduleVisit={handleScheduleVisit}
       handleBackPress={handleBackPress}
       allDetails={allDetails}
+      isDraft={isDraft}
     />
   );
 };

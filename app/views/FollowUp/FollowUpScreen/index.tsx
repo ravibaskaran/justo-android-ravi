@@ -19,6 +19,7 @@ const FollowUpScreen = ({ navigation }: any) => {
     enddate: "",
     followup_for: "",
     lead_id: "",
+    todayFollowup: false,
   });
   const handleDrawerPress = () => {
     navigation.toggleDrawer();
@@ -44,14 +45,18 @@ const FollowUpScreen = ({ navigation }: any) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      console.log("!followUpBackSubject.getValue()",!followUpBackSubject.getValue());
-      
+      console.log(
+        "!followUpBackSubject.getValue()",
+        !followUpBackSubject.getValue()
+      );
+
       if (!followUpBackSubject.getValue()) {
         setFilterData({
           startdate: "",
           enddate: "",
           followup_for: "",
           lead_id: "",
+          todayFollowup: false,
         });
         getFollowupList(offSET, {});
       } else {
@@ -85,6 +90,7 @@ const FollowUpScreen = ({ navigation }: any) => {
         end_date: data?.enddate ? data?.enddate : "",
         followup_for: data?.followup_for ? data?.followup_for : "",
         lead_id: data?.lead_id ? data?.lead_id : "",
+        todayFollowup: data?.todayFollowup,
       })
     );
   };

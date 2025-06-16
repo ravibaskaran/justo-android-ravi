@@ -1,22 +1,22 @@
-import { View, Text } from "react-native";
-import React, { useEffect, useState } from "react";
-import AddAppointmentView from "./Components/AddAppointmentView";
-import { useDispatch, useSelector } from "react-redux";
-import { getUserVisitList } from "app/Redux/Actions/LeadsActions";
+import ErrorMessage from "app/components/ErrorMessage";
+import { GREEN_COLOR, ROLE_IDS } from "app/components/utilities/constant";
 import strings from "app/components/utilities/Localization";
-import { getAllMaster } from "app/Redux/Actions/MasterActions";
-import {
-  getAssignCPList,
-  getSourcingHeadSMList,
-  getSourcingManagerList,
-} from "app/Redux/Actions/SourcingManagerActions";
 import {
   RemoveAppointment,
   addUserAppointment,
   editUserAppointment,
 } from "app/Redux/Actions/AppiontmentWithUserActions";
-import ErrorMessage from "app/components/ErrorMessage";
-import { GREEN_COLOR, ROLE_IDS } from "app/components/utilities/constant";
+import { getUserVisitList } from "app/Redux/Actions/LeadsActions";
+import { getAllMaster } from "app/Redux/Actions/MasterActions";
+import { getAllProperty } from "app/Redux/Actions/propertyActions";
+import {
+  getAssignCPList,
+  getSourcingHeadSMList,
+  getSourcingManagerList,
+} from "app/Redux/Actions/SourcingManagerActions";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import AddAppointmentView from "./Components/AddAppointmentView";
 
 const AddAppointmentScreen = ({ navigation, route }: any) => {
   const { data, type } = route?.params || {};
@@ -37,6 +37,34 @@ const AddAppointmentScreen = ({ navigation, route }: any) => {
   const [masterDatas, setMasterDatas] = useState<any>([]);
   const [listData, setListData] = useState<any>([]);
   const [role, setRole] = useState<any>("");
+  const [allProperty, setAllProperty] = useState<any>([]);
+  const propertyData = useSelector((state: any) => state.propertyData) || {};
+
+  useEffect(() => {
+    dispatch(
+      getAllProperty({
+        offset: 0,
+        limit: "",
+      })
+    );
+  }, []);
+
+  useEffect(() => {
+    if (propertyData?.response?.status === 200) {
+      if (propertyData?.response?.data?.length > 0) {
+        const activeData = propertyData?.response?.data.filter((el: any) => {
+          return el.status == true;
+        });
+        activeData?.length > 0
+          ? setAllProperty(activeData)
+          : setAllProperty([]);
+      } else {
+        setAllProperty([]);
+      }
+    } else {
+      setAllProperty([]);
+    }
+  }, [propertyData]);
 
   useEffect(() => {
     if (list) {
@@ -157,6 +185,7 @@ const AddAppointmentScreen = ({ navigation, route }: any) => {
       role={role}
       type={type}
       data={data}
+      allProperty={allProperty}
     />
   );
 };

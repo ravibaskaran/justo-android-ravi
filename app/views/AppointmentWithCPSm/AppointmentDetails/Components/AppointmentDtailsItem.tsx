@@ -172,6 +172,20 @@ const AppointmentDtailsItem = (props: any) => {
           <Text style={styles.nameTxt}>{appdetail.receiver_name}</Text>
         </View>
       </View>
+      {appdetail?.property_id ? (
+        <View style={styles.Txtview}>
+          <View style={styles.projectContainer}>
+            <Text style={styles.projectTxt}>Property</Text>
+          </View>
+          <View>
+            <Text>:</Text>
+          </View>
+          <View style={styles.nameContainer}>
+            <Text style={styles.nameTxt}>{appdetail.property_title}</Text>
+          </View>
+        </View>
+      ) : null}
+
       <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
           <Text style={styles.projectTxt}>Status</Text>

@@ -399,7 +399,7 @@ const styles = StyleSheet.create({
     color: BLACK_COLOR,
     fontSize: normalize(13),
     fontFamily: FONT_FAMILY_MEDIUM,
-    alignSelf:'center',
+    alignSelf: "center",
   },
   imageText: {
     color: WHITE_COLOR,
@@ -411,6 +411,11 @@ const styles = StyleSheet.create({
     marginTop: normalizeSpacing(16),
     justifyContent: "space-between",
     marginHorizontal: normalizeSpacing(10),
+  },
+  headingsTxt: {
+    fontSize: normalize(16),
+    color: PRIMARY_THEME_COLOR,
+    fontFamily: FONT_FAMILY_SEMIBOLD,
   },
 });
 

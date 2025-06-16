@@ -53,6 +53,7 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
     end_date: "",
     customer_name: "",
     customer_number: "",
+    property_name: "",
     status: "",
   });
   const todayAppointment = {
@@ -75,6 +76,7 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
           end_date: "",
           customer_name: "",
           customer_number: "",
+          property_name: "",
           status: "",
         });
       }
@@ -133,6 +135,7 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
           customer_number: data?.customer_number?.trim()
             ? data?.customer_number?.trim()
             : "",
+          property_name: data?.property_name ? data?.property_name : "",
           status: data?.status ? data?.status : "",
           appointment_type: 2,
         })

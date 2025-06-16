@@ -142,8 +142,9 @@ const AppointmentListView = (props: any) => {
       start_date: "",
       end_date: "",
       customer_name: "",
-      customer_number:"",
+      customer_number: "",
       status: "",
+      property_name: "",
     });
   };
 
@@ -256,7 +257,7 @@ const AppointmentListView = (props: any) => {
           onIndexChange={(index) => {
             dispatch({ type: START_LOADING });
             setTimeout(() => {
-            handleIndexChange(index);
+              handleIndexChange(index);
             }, 50);
           }}
           initialLayout={{ width: layout.width }}

@@ -117,6 +117,7 @@ import AppointmentCTA from "app/views/ReportCTAManagement/AppointmentCTA";
 import BookingCTA from "app/views/ReportCTAManagement/BookingCTA";
 import TodaysFollowUpScreen from "app/views/FollowUp/TodaysFollowUP";
 import ProjectReportScreen from "app/views/ProjectDetailsReport";
+import DraftVisitorUpdateScreen from "app/views/LeadManagement/DraftVisitorEdit";
 
 const Stack = createNativeStackNavigator();
 const AppStack = createNativeStackNavigator();
@@ -275,6 +276,10 @@ const AppComponent = () => {
       />
       <AppStack.Screen name="FollUpAdd" component={FollUpAddScreen} />
       <AppStack.Screen name="VisitorUpdate" component={VisitorUpdateScreen} />
+      <AppStack.Screen
+        name="DraftVisitorUpdate"
+        component={DraftVisitorUpdateScreen}
+      />
       <AppStack.Screen name="FollowUpAdd" component={FollowUpAddScreen} />
       {/* Recovery  */}
       <AppStack.Screen name="RecoveryDetails" component={RecoveryDetails} />

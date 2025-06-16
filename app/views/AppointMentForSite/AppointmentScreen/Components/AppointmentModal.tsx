@@ -49,11 +49,10 @@ const FilterModal = (props: any) => {
           limit: "",
         })
       );
-      getAllPropertyData();
     }
   }, [props.Visible]);
 
-  const getAllPropertyData = () => {
+  useEffect(() => {
     if (propertyData?.response?.status === 200) {
       if (propertyData?.response?.data?.length > 0) {
         const activeData = propertyData?.response?.data.filter((el: any) => {
@@ -68,7 +67,7 @@ const FilterModal = (props: any) => {
     } else {
       setAllProperty([]);
     }
-  };
+  }, [propertyData]);
 
   const handleApply = () => {
     props.setIsVisible(false);

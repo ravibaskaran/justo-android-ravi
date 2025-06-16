@@ -7,10 +7,16 @@ import strings from "../../../../components/utilities/Localization";
 import Button from "../../../../components/Button";
 import InputCalender from "app/components/InputCalender";
 import moment from "moment";
-import { DATE_FORMAT } from "app/components/utilities/constant";
+import {
+  DATE_FORMAT,
+  Isios,
+  PRIMARY_THEME_COLOR,
+} from "app/components/utilities/constant";
 import DropdownInput from "app/components/DropDown";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserVisitList } from "app/Redux/Actions/LeadsActions";
+import CheckBox from "@react-native-community/checkbox";
+import { normalizeSpacing } from "app/components/scaleFontSize";
 const FilterModal = (props: any) => {
   const dispatch: any = useDispatch();
   const { response = {}, list = "" } =
@@ -62,6 +68,35 @@ const FilterModal = (props: any) => {
           </View>
           <View style={styles.borderView} />
           <View style={{ marginHorizontal: 10 }}>
+            <View
+              style={[
+                {
+                  marginHorizontal: normalizeSpacing(5),
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  marginVertical: normalizeSpacing(15),
+                  width: "100%",
+                },
+              ]}
+            >
+              <Text style={styles.headingsTxt}>Scheduled Follow-up</Text>
+              <CheckBox
+                value={props.filterData.todayFollowup} // ↩️ use filterData here
+                tintColors={{ true: PRIMARY_THEME_COLOR }}
+                style={{
+                  transform: Isios
+                    ? [{ scaleX: 0.8 }, { scaleY: 0.8 }]
+                    : [{ scaleX: 1 }, { scaleY: 1 }],
+                }}
+                onValueChange={(newValue: boolean) => {
+                  props.setFilterData({
+                    ...props.filterData,
+                    todayFollowup: newValue, // ↩️ update that boolean
+                  });
+                }}
+              />
+            </View>
             <View style={styles.inputWrap}>
               <DropdownInput
                 style={styles.dropdown}

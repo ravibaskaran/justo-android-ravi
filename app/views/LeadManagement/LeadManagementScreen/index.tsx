@@ -1,23 +1,32 @@
+// LeadManagementScreen.tsx
+
 import { useFocusEffect } from "@react-navigation/native";
+import moment from "moment";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { BackHandler, useWindowDimensions } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+
 import { getAllLeadsList } from "app/Redux/Actions/LeadsActions";
 import strings from "app/components/utilities/Localization";
-import moment from "moment";
-import React, { useEffect, useRef, useState } from "react";
-import { DATE_FORMAT } from "react-native-gifted-chat";
-import { useDispatch, useSelector } from "react-redux";
-import LeadManagementView from "./Components/LeadManagementView";
 import { ROLE_IDS } from "app/components/utilities/constant";
-import { BackHandler } from "react-native";
 import { visiterBackSubject } from "app/observables/backNavigationSubject";
+import { DATE_FORMAT } from "react-native-gifted-chat";
+
+import LeadManagementView from "./Components/LeadManagementView"; // presentational component
 
 const LeadManagementScreen = ({ navigation, route }: any) => {
   const dispatch: any = useDispatch();
   const flatListRef: any = useRef(null);
+
+  // Grab Redux state for paginated visitor/lead data:
   const { response = {}, list = "" } = useSelector(
     (state: any) => state.visitorDataList
   );
+  // total number of items (for pagination)
   const moreData = response?.total_data || 0;
-  const [filterData, setFilterData] = useState({
+
+  // “filterData” now includes a `draft` boolean (default = false)
+  const [filterData, setFilterData] = useState<any>({
     startdate: "",
     enddate: "",
     search_by_visisor_name: "",
@@ -29,19 +38,50 @@ const LeadManagementScreen = ({ navigation, route }: any) => {
     property_title: "",
     visit_status: strings.warm,
     lead_status: "",
+    // NEW:
+    draft: false,
   });
-  const [visitorList, setVisiitorList] = useState<any>([]);
-  const [offSET, setOffset] = useState(0);
-  const { userData = {} } = useSelector((state: any) => state.userData) || [];
+
+  // The actual array of visitor objects that we display
+  const [visitorList, setVisitorList] = useState<any[]>([]);
+  // “Pagination offset” (i.e. page index) remains the same
+  const [offSET, setOffset] = useState<number>(0);
+
+  // Grab the logged-in user’s data from Redux
+  const { userData = {} } = useSelector((state: any) => state.userData) || {};
+
+  // “today” shortcut
   const todayDate = {
     startdate: moment(new Date()).format(DATE_FORMAT),
     enddate: moment(new Date()).format(DATE_FORMAT),
   };
 
+  //
+  // ─── TAB VIEW SETUP ────────────────────────────────────────────────────────────
+  //
+  // We want two tabs: “All Visitors” (key = "all") and “Draft Visitors” (key = "draft").
+  // Initial index = 0 (“All”).
+  //
+  const layout = useWindowDimensions();
+  const [index, setIndex] = useState<number>(0);
+  const [routes] = useState<Array<{ key: string; title: string }>>([
+    { key: "all", title: "All Visitors" },
+    { key: "draft", title: "Draft Visitors" },
+  ]);
+
+  //
+  // ─── USE FOCUS EFFECT ───────────────────────────────────────────────────────────
+  //
+  // When the screen is focused, fetch the first page of data for whichever tab is active.
+  // We reuse the existing “today” / “fromReport” logic, but ALWAYS remember to append
+  // `draft: index === 1` to filterData.
+  //
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       if (!visiterBackSubject.getValue()) {
-        const { params } = route ?? {}; // Destructure route params
+        const { params } = route ?? {};
+
+        // Base default (no dates, no searches)
         const defaultFilterData = {
           startdate: "",
           enddate: "",
@@ -54,122 +94,83 @@ const LeadManagementScreen = ({ navigation, route }: any) => {
           property_title: "",
           visit_status: strings.warm,
           lead_status: "",
+          draft: index === 1, // if we opened on “Draft Visitors” tab, draft = true
         };
 
-        let filterData = { ...defaultFilterData };
+        // Start with the “all” tab (index = 0) or “draft” (index = 1)
+        let newFilterData = { ...defaultFilterData };
 
         if (params === "today") {
-          filterData = {
-            ...filterData,
+          newFilterData = {
+            ...newFilterData,
             startdate: todayDate.startdate,
             enddate: todayDate.enddate,
           };
-          getVisitorsList(0, todayDate);
+          getVisitorsList(0, {
+            ...todayDate,
+            draft: index === 1,
+          });
         } else if (params?.fromReport) {
-          filterData = {
-            ...filterData,
+          newFilterData = {
+            ...newFilterData,
             startdate: params.sDate,
             enddate: params.eDate,
           };
           getVisitorsList(0, {
             startdate: params.sDate,
             enddate: params.eDate,
+            draft: index === 1,
           });
         } else {
-          getVisitorsList(0, {});
+          // “normal” – no initial date filters
+          getVisitorsList(0, { draft: index === 1 });
         }
 
-        setFilterData(filterData);
+        setFilterData(newFilterData);
       } else {
+        // If we got here because the back button was pressed—just reset the back subject
         visiterBackSubject.next(false);
       }
+
+      // Clean up: no special unsubscribes needed besides returning nothing
       return () => {};
-    }, [navigation, route, visiterBackSubject])
+    }, [navigation, route, index]) // re-run whenever “index” (tab) changes or we refocus
   );
 
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     const { params } = route ?? {}; // Destructure route params
-  //     const defaultFilterData = {
-  //       startdate: "",
-  //       enddate: "",
-  //       search_by_visisor_name: "",
-  //       search_configuration: "",
-  //       visit_score: "",
-  //       property_id: "",
-  //       property_type_title: "",
-  //       property_title: "",
-  //       visit_status: strings.warm,
-  //       lead_status: "",
-  //     };
-
-  //     let filterData = { ...defaultFilterData };
-
-  //     if (params === "today") {
-  //       filterData = {
-  //         ...filterData,
-  //         startdate: todayDate.startdate,
-  //         enddate: todayDate.enddate,
-  //       };
-  //       getVisitorsList(0, todayDate);
-  //     } else if (params?.fromReport) {
-  //       filterData = {
-  //         ...filterData,
-  //         startdate: params.sDate,
-  //         enddate: params.eDate,
-  //       };
-  //       getVisitorsList(0, {
-  //         startdate: params.sDate,
-  //         enddate: params.eDate,
-  //       });
-  //     } else {
-  //       getVisitorsList(0, {});
-  //     }
-
-  //     setFilterData(filterData);
-
-  //     return () => {};
-  //   }, [navigation, route])
-  // );
-
+ 
   useEffect(() => {
-    console.log(
-      "🚀 ~ file: index.tsx:63 ~ response?.status:",
-      response?.status
-    );
     if (response?.status === 200) {
       if (offSET === 0) {
-        setVisiitorList(response?.data);
+        setVisitorList(response?.data || []);
       } else {
-        setVisiitorList([...visitorList, ...response?.data]);
+        // subsequent page → append
+        setVisitorList((prev) => [...prev, ...(response?.data || [])]);
       }
     } else {
-      setVisiitorList([]);
+      setVisitorList([]);
     }
   }, [response]);
 
-  const getVisitorsList = (offset: any, data: any) => {
+  const getVisitorsList = (offset: number, data: any) => {
     const { params } = route ?? {};
     setOffset(offset);
+
     dispatch(
       getAllLeadsList({
         offset: offset,
         limit: 10,
-        start_date: data?.startdate ? data?.startdate : "",
-        end_date: data?.enddate ? data?.enddate : "",
-        search_by_visisor_name: data?.search_by_visisor_name
-          ? data?.search_by_visisor_name
-          : "",
-        search_by_mobile_number: data?.search_by_mobile_number
-          ? data?.search_by_mobile_number
-          : "",
-        search_configuration: data?.search_configuration
-          ? data?.search_configuration
-          : "",
-        visit_score: data?.visit_score ? data?.visit_score : "",
-        property_id: data?.property_id ? data?.property_id : "",
-        visit_status: data?.visit_status ? data?.visit_status : "",
-        lead_status: data?.lead_status ? data?.lead_status : "",
+        start_date: data?.startdate || "",
+        end_date: data?.enddate || "",
+        search_by_visisor_name: data?.search_by_visisor_name || "",
+        search_by_mobile_number: data?.search_by_mobile_number || "",
+        search_configuration: data?.search_configuration || "",
+        visit_score: data?.visit_score || "",
+        property_id: data?.property_id || "",
+        visit_status: data?.visit_status || "",
+        lead_status: data?.lead_status || "",
+        // NEW:
+        draft: data?.draft ? true : undefined,
+        // Keep the existing “reportdata” logic (only for certain roles)
         reportdata:
           userData?.data?.role_id == ROLE_IDS.closingtl_id ||
           userData?.data?.role_id == ROLE_IDS.closing_head_id ||
@@ -203,6 +204,15 @@ const LeadManagementScreen = ({ navigation, route }: any) => {
     }
   };
 
+  useEffect(() => {
+    // Build a brand-new filterData with the current tab’s `draft` flag:
+    const newFd = { ...filterData, draft: index === 1 };
+    setFilterData(newFd);
+    // Clear list & fetch page 0
+    setVisitorList([]);
+    getVisitorsList(0, newFd);
+  }, [index]);
+
   return (
     <LeadManagementView
       handleDrawerPress={handleDrawerPress}
@@ -211,10 +221,15 @@ const LeadManagementScreen = ({ navigation, route }: any) => {
       getVisitorsList={getVisitorsList}
       filterData={filterData}
       setFilterData={setFilterData}
-      setVisiitorList={setVisiitorList}
+      setVisitorList={setVisitorList}
       offSET={offSET}
       flatListRef={flatListRef}
       params={route?.params}
+      index={index}
+      setIndex={setIndex}
+      routes={routes}
+      layout={layout}
+      onTabIndexChange={(i: number) => setIndex(i)}
     />
   );
 };

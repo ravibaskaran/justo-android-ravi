@@ -2,7 +2,7 @@ import InputCalender from "app/components/InputCalender";
 import { normalizeSpacing } from "app/components/scaleFontSize";
 import { DATE_FORMAT, Isios } from "app/components/utilities/constant";
 import moment from "moment";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Modal from "react-native-modal";
 import images from "../../../../assets/images";
@@ -11,6 +11,8 @@ import DropdownInput from "../../../../components/DropDown";
 import InputField from "../../../../components/InputField";
 import styles from "../../../../components/Modals/styles";
 import strings from "../../../../components/utilities/Localization";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllProperty } from "app/Redux/Actions/propertyActions";
 
 const AppointmentFilterModal = (props: any) => {
   const statusData = [
@@ -22,6 +24,40 @@ const AppointmentFilterModal = (props: any) => {
     { type_name: "Not Fit for Sale", value: 6 },
     { type_name: strings.followup, value: 10 },
   ];
+  const dispatch: any = useDispatch();
+
+  const [allProperty, setAllProperty] = useState<any>([]);
+  const propertyData = useSelector((state: any) => state.propertyData) || {};
+
+  useEffect(() => {
+    if (props.Visible) {
+      dispatch(
+        getAllProperty({
+          offset: 0,
+          limit: "",
+        })
+      );
+    }
+  }, [props.Visible]);
+
+  useEffect(() => {
+    if (propertyData?.response?.status === 200) {
+      if (propertyData?.response?.data?.length > 0) {
+        const activeData = propertyData?.response?.data.filter((el: any) => {
+          return el.status == true;
+        });
+        activeData?.length > 0
+          ? setAllProperty(activeData)
+          : setAllProperty([]);
+      } else {
+        setAllProperty([]);
+      }
+    } else {
+      setAllProperty([]);
+    }
+  }, [propertyData]);
+
+
   const handleApply = () => {
     props.setIsVisible(false);
     props?.getAppointmentList(0, props.filterData);
@@ -124,6 +160,38 @@ const AppointmentFilterModal = (props: any) => {
                     ...props.filterData,
                     customer_number: data,
                   });
+                }}
+              />
+            </View>
+            <View style={[styles.inputWrap, { top: normalizeSpacing(10) }]}>
+              <DropdownInput
+                headingText={"Search by Property"}
+                placeholder={"Select Property"}
+                data={allProperty}
+                inputWidth={"100%"}
+                paddingLeft={16}
+                maxHeight={300}
+                labelField="property_title"
+                valueField={"_id"}
+                value={props?.filterData?.property_id}
+                onChange={(item: any) => {
+                  props.setFilterData({
+                    ...props.filterData,
+                    property_id: item.property_id,
+                    property_type_title: item.property_type,
+                    property_name: item.property_title,
+                  });
+                }}
+                newRenderItem={(item: any) => {
+                  return (
+                    <>
+                      <View style={styles.item}>
+                        <Text style={styles.textItem}>
+                          {item.property_title}
+                        </Text>
+                      </View>
+                    </>
+                  );
                 }}
               />
             </View>

@@ -51,7 +51,7 @@ export default {
   GET_USERS_LIST_FOR_SH: "/userManage/getUserListForSitehead",
   ADD_CP_BUCKET: "/userManage/addCpToBucket",
   GET_PROPERTY_BASE_SM: "/property/getPropertyBasedSM",
-
+  GET_PROPERTY_BASE_CM: "/property/getPropertyBasedCM",
 
   // property Start
   ADDPROPERTY: "/property/addProperty",

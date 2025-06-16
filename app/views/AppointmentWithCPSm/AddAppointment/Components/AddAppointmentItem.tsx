@@ -150,6 +150,38 @@ const AddAppointmentItem = (props: any) => {
             }}
           />
         </View>
+
+        <View style={styles.inputWrap}>
+          <DropdownInput
+            headingText={"Search by Property"}
+            // require={true}
+            placeholder={
+              props?.addAppointmentForm?.property_id
+                ? props?.addAppointmentForm?.property_id
+                : "Select Property"
+            }
+            data={props.allProperty}
+            inputWidth={"100%"}
+            paddingLeft={16}
+            maxHeight={300}
+            labelField="property_title"
+            valueField={"_id"}
+            value={props?.addAppointmentForm?.property_id}
+            onChange={(item: any) => {
+              props.setAddAppointmentForm({
+                ...props.addAppointmentForm,
+                property_id: item._id,
+              });
+            }}
+            newRenderItem={(item: any) => {
+              return (
+                <View style={Styles.item}>
+                  <Text style={Styles.textItem}>{item.property_title}</Text>
+                </View>
+              );
+            }}
+          />
+        </View>
         <View style={[styles.genderView, { marginLeft: normalizeSpacing(20) }]}>
           <Text style={styles.headingsTxt}>Justo CP</Text>
           <RequiredStart />
@@ -211,8 +243,7 @@ const AddAppointmentItem = (props: any) => {
                 styles.radioTxt,
                 {
                   color:
-                    props?.addAppointmentForm?.registered_cp ===
-                    REGISTERD_CP.NO
+                    props?.addAppointmentForm?.registered_cp === REGISTERD_CP.NO
                       ? PRIMARY_THEME_COLOR
                       : BLACK_COLOR,
                 },

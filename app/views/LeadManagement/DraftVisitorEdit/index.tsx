@@ -23,8 +23,9 @@ import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Keyboard } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import VisitorUpdateFirstView from "./components/VisitorUpdateFirst";
+import { getAllMaster } from "app/Redux/Actions/MasterActions";
 
-const VisitorUpdateScreen = ({ navigation, route }: any) => {
+const DraftVisitorUpdateScreen = ({ navigation, route }: any) => {
   const data = route?.params || 0;
   const dispatch: any = useDispatch();
   const { response = {}, detail = "" } = useSelector(
@@ -36,7 +37,6 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
   const { userData = {} } = useSelector((state: any) => state.userData) || [];
   const employeeData = useSelector((state: any) => state.employeeData) || {};
   const [masterDatas, setMasterDatas] = useState<any>([]);
-  const [agentList, setAgentList] = useState<any>([]);
   const [companyList, setCompanyList] = useState<any>([]);
   const [employeeList, setEmployeeList] = useState<any>([]);
   const [dropDownType, setDropDownType] = useState(0);
@@ -46,6 +46,9 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
   const [okIsVisible, setOkIsVisible] = useState(false);
   const [mobileerror, setMobileError] = useState<any>("");
   const [configuration, setConfiguration] = useState<any>([]);
+  const [sourcingManagerList, setSourcingManagerList] = useState<any>([]);
+  const [closingManagerList, setClosingManagerList] = useState<any>([]);
+
   const [updateForm, setUpdateForm] = React.useState<any>({
     lead_id: "",
     first_name: "",
@@ -103,7 +106,11 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
     referrer_contact: "",
     referrel_partner: "",
     created_for_sm_name: "",
+    referrerEmailExist: false,
+    referrerNmbrExist: false,
+    for_sm: false,
     for_sm_id: "",
+    new_cm_id: "",
   });
   const [allProperty, setAllProperty] = useState<any>([]);
   const id = userData?.data?.role_id;
@@ -205,9 +212,6 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
           ? response?.data[0]?.customer_detail?.country_code
           : "+91",
         created_for_sm_name: response?.data[0]?.created_for_sm_name,
-        for_sm_id: response?.data[0]?.for_sm_id
-          ? response?.data[0]?.for_sm_id
-          : null,
       });
       if (response?.data[0]?.configurations?.length > 0) {
         setConfiguration(response?.data[0]?.configurations);
@@ -218,19 +222,25 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
 
   const getCPByProperty = async (property_id: any) => {
     dispatch({ type: START_LOADING });
-    console.log(property_id);
-    const params = { property_id: property_id };
+    // const params = { property_id: property_id ,};
+    const params = {
+      property_id: property_id ? property_id : updateForm.property_id,
+      sm_id: updateForm.for_sm_id,
+    };
+
     const res = await apiCall("post", apiEndPoints.CP_UNDERPROPERTY, params);
     const response: any = res?.data;
 
     if (response?.status === 200) {
       if (response?.data?.length > 0) {
-        setAgentList(response?.data);
+        setCompanyList(response?.data);
         dispatch({ type: STOP_LOADING });
       } else {
+        setCompanyList([]);
         dispatch({ type: STOP_LOADING });
       }
     } else {
+      setCompanyList([]);
       dispatch({ type: STOP_LOADING });
       ErrorMessage({
         msg: response?.message,
@@ -246,10 +256,6 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
       setEmployeeList([]);
     }
   }, [employeeData]);
-
-  const handleCompanyDropdownPress = () => {
-    setCompanyList(agentList);
-  };
 
   const handleEmployeeDropdownPress = () => {
     dispatch(
@@ -290,17 +296,14 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
     setCountryData(CountryArray);
   };
 
-  useEffect(() => {
-    if (masterData?.response?.status === 200) {
-      if (masterData?.response?.data?.length > 0) {
-        if (dropDownType != 2) {
-          setMasterDatas(masterData?.response?.data);
-        }
-      }
-    } else {
-      setMasterDatas([]);
-    }
-  }, [masterData, dropDownType]);
+  const handleDropdownPress = (type: any) => {
+    setDropDownType(type);
+    dispatch(
+      getAllMaster({
+        type: type,
+      })
+    );
+  };
 
   useEffect(() => {
     if (masterData?.response?.status === 200) {
@@ -365,9 +368,20 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
     ) {
       isError = false;
       errorMessage = "Please Enter valid mobile number";
-    }
-
-    if (updateForm?.lead_source_id === CONST_IDS.cp_lead_source_id) {
+    } else if (updateForm?.for_sm && !updateForm?.for_sm_id) {
+      isError = false;
+      errorMessage = "Please select sourcing manager";
+    } else if (!updateForm?.lead_source) {
+      isError = false;
+      errorMessage = "Please enter Lead Source";
+    } else if (updateForm?.lead_source_id === CONST_IDS.cp_lead_source_id) {
+      if (
+        updateForm.cp_lead_type == undefined ||
+        updateForm.cp_lead_type == ""
+      ) {
+        isError = false;
+        errorMessage = "Please Enter Channel Partner Lead type";
+      }
       if (updateForm.cp_id == undefined || updateForm.cp_id == "") {
         isError = false;
         errorMessage =
@@ -375,8 +389,10 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
             ? "Please Enter CP Name"
             : "Please Enter CP Company Name";
       }
-    }
-    if (updateForm?.lead_source_id === CONST_IDS?.ref_lead_source_id) {
+    } else if (
+      updateForm?.lead_source_id === CONST_IDS?.ref_lead_source_id ||
+      updateForm?.lead_source_id == CONST_IDS?.ref_partner_lead_source_id
+    ) {
       if (
         updateForm?.referrer_name?.trim() === "" ||
         updateForm?.referrer_name?.trim() === undefined
@@ -409,32 +425,27 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
         isError = false;
         errorMessage = "Please enter valid referrer email id";
       }
-    }
-    if (updateForm?.adhar_no) {
+    } else if (updateForm?.adhar_no) {
       if (Regexs.AadharRegex.test(updateForm?.adhar_no) === false) {
         isError = false;
         errorMessage = "Please enter valid Aadhaar number";
       }
-    }
-    if (updateForm?.pancard_no) {
+    } else if (updateForm?.pancard_no) {
       if (Regexs.panRegex.test(updateForm?.pancard_no) === false) {
         isError = false;
         errorMessage = "Please enter valid Pancard number";
       }
-    }
-    if (updateForm?.email) {
+    } else if (updateForm?.email) {
       if (Regexs.emailRegex.test(updateForm?.email) === false) {
         isError = false;
         errorMessage = "Please enter valid Email id";
       }
-    }
-    if (updateForm?.no_of_family_member) {
+    } else if (updateForm?.no_of_family_member) {
       if (updateForm?.no_of_family_member?.length > 2) {
         isError = false;
         errorMessage = "Please enter valid family member";
       }
-    }
-    if (updateForm?.min_budget && !updateForm.max_budget) {
+    } else if (updateForm?.min_budget && !updateForm.max_budget) {
       isError = false;
       errorMessage = "Please enter Maximum budget";
     } else if (updateForm?.max_budget && !updateForm.min_budget) {
@@ -446,8 +457,7 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
     } else if (updateForm?.min_emi_budget && !updateForm.max_emi_budget) {
       isError = false;
       errorMessage = "Please enter Maximum EMI budget";
-    }
-    if (updateForm?.min_budget && updateForm.max_budget) {
+    } else if (updateForm?.min_budget && updateForm.max_budget) {
       let tempMinVal: any;
       updateForm?.min_budget_type === "K"
         ? (tempMinVal = updateForm?.min_budget * 1000)
@@ -470,8 +480,7 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
         isError = false;
         errorMessage = "Maximum budget should more than Minimum budget";
       }
-    }
-    if (updateForm?.min_emi_budget && updateForm.max_emi_budget) {
+    } else if (updateForm?.min_emi_budget && updateForm.max_emi_budget) {
       let tempMinVal: any;
       updateForm?.min_emi_budget_type === "K"
         ? (tempMinVal = updateForm?.min_emi_budget * 1000)
@@ -504,10 +513,57 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
     return isError;
   };
   const handleBackPress = () => {
-    // if (validation()) {
     navigation.goBack();
-    // }
   };
+
+  const getSourcingManagerList = async () => {
+    try {
+      dispatch({ type: START_LOADING });
+      console.log("Fetching sourcing manager list...");
+      // Simulate API call with a delay
+      const res = await apiCall("post", apiEndPoints.GET_PROPERTY_BASE_SM, {
+        property_id: updateForm?.property_id,
+      });
+      if (res?.data?.status === 200) {
+        dispatch({ type: STOP_LOADING });
+        setSourcingManagerList(res?.data?.data);
+      } else if (res?.data?.status === 201) {
+        ErrorMessage({
+          msg: res?.data?.message,
+          backgroundColor: RED_COLOR,
+        });
+        dispatch({ type: STOP_LOADING });
+        return false;
+      }
+    } catch (error) {
+      console.error("Error fetching sourcing manager list:", error);
+    }
+  };
+
+  const getClosingManagerList = async () => {
+    try {
+      dispatch({ type: START_LOADING });
+      console.log("Fetching CLOSING manager list...");
+      // Simulate API call with a delay
+      const res = await apiCall("post", apiEndPoints.GET_PROPERTY_BASE_CM, {
+        property_id: updateForm?.property_id,
+      });
+      if (res?.data?.status === 200) {
+        dispatch({ type: STOP_LOADING });
+        setClosingManagerList(res?.data?.data);
+      } else if (res?.data?.status === 201) {
+        ErrorMessage({
+          msg: res?.data?.message,
+          backgroundColor: RED_COLOR,
+        });
+        dispatch({ type: STOP_LOADING });
+        return false;
+      }
+    } catch (error) {
+      console.error("Error fetching sourcing manager list:", error);
+    }
+  };
+
   const onPressNext = (type: any) => {
     if (validation()) {
       let edit_params: any = {
@@ -567,11 +623,30 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
         current_stay: updateForm?.current_stay,
         property_type: updateForm?.property_type,
         preferred_bank: updateForm?.preferred_bank,
-        lead_source: updateForm?.lead_source_id,
+        lead_source:
+          updateForm?.lead_source_id == CONST_IDS?.ref_lead_source_id
+            ? updateForm?.lead_source_id
+            : updateForm?.lead_source_id ==
+              CONST_IDS?.ref_partner_lead_source_id
+            ? CONST_IDS?.ref_lead_source_id
+            : updateForm?.lead_source_id,
         lead_source_title: updateForm?.lead_source_title,
         cp_name: updateForm?.cp_name,
         country_code: updateForm?.country_code,
+        draft: true,
       };
+      if (updateForm?.new_cm_id) {
+        edit_params = {
+          ...edit_params,
+          new_cm_id: updateForm?.new_cm_id,
+        };
+      }
+      if (updateForm?.for_sm_id) {
+        edit_params = {
+          ...edit_params,
+          for_sm_id: updateForm?.for_sm_id,
+        };
+      }
       if (updateForm?.cp_emp_id) {
         edit_params = {
           ...edit_params,
@@ -596,13 +671,10 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
           cp_id: updateForm?.cp_id,
         };
       }
-      if (updateForm?.for_sm_id) {
-        edit_params = {
-          ...edit_params,
-          for_sm_id: updateForm?.for_sm_id,
-        };
-      }
-      if (updateForm?.lead_source_id == CONST_IDS?.ref_lead_source_id) {
+      if (
+        updateForm?.lead_source_id == CONST_IDS?.ref_lead_source_id ||
+        updateForm?.lead_source_id == CONST_IDS?.ref_partner_lead_source_id
+      ) {
         edit_params = {
           ...edit_params,
           referrer_name: updateForm?.referrer_name,
@@ -611,8 +683,9 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
           referrel_partner: updateForm?.referrel_partner,
         };
       }
-
-      console.log(edit_params?.cp_lead_type);
+      console.log(updateForm?.lead_source_id);
+      console.log(edit_params);
+      // return;
       dispatch(editVisitor(edit_params));
     }
   };
@@ -657,6 +730,72 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
     setOkIsVisible(false);
   };
 
+  const checkPhoneNumberIsValid = async (type: any) => {
+    const isMobile = type === 1;
+    const number = isMobile ? updateForm?.mobile : updateForm?.referrer_contact;
+    const phType = isMobile ? "mobile" : "referrer";
+
+    if (!number) {
+      return ErrorMessage({
+        msg: `Please fill ${phType} number`,
+        backgroundColor: RED_COLOR,
+      });
+    }
+
+    const isValid =
+      (countryCode === "+91" && Regexs.mobilenumRegex.test(number)) ||
+      (countryCode !== "+91" && number.length >= 10);
+
+    if (!isValid) {
+      return ErrorMessage({
+        msg: `Please enter a valid ${phType} number`,
+        backgroundColor: RED_COLOR,
+      });
+    }
+  };
+
+  const checkRefferrerNumberExist = async () => {
+    dispatch({ type: START_LOADING });
+    try {
+      const res = await apiCall(
+        "post",
+        apiEndPoints.CHECK_REFERENCE_NMBR_EXIST,
+        { referrer_contact: updateForm?.referrer_contact }
+      );
+      if (res?.data?.status === 200) {
+        dispatch({ type: STOP_LOADING });
+        setUpdateForm({
+          ...updateForm,
+          referrer_name: res?.data?.data,
+          referrer_email: res?.data?.referrer_email,
+          referrerNmbrExist: true,
+          referrerEmailExist: res?.data?.referrer_email ? true : false,
+        });
+        // setTimeout(() => {
+        if (!updateForm?.referrer_name) {
+          ErrorMessage({
+            msg: "This referrer number is associated with " + res?.data?.data,
+            backgroundColor: GREEN_COLOR,
+          });
+        }
+
+        // }, 500);
+      } else if (res?.data?.status === 201) {
+        dispatch({ type: STOP_LOADING });
+        setUpdateForm({
+          ...updateForm,
+          referrerEmailExist: false,
+          referrerNmbrExist: false,
+        });
+        return false;
+      }
+    } catch (e) {
+      dispatch({
+        type: STOP_LOADING,
+      });
+    }
+  };
+
   return (
     <>
       <VisitorUpdateFirstView
@@ -667,7 +806,7 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
         allProperty={allProperty}
         masterDatas={masterDatas}
         companyList={companyList}
-        handleCompanyDropdownPress={handleCompanyDropdownPress}
+        // handleCompanyDropdownPress={handleCompanyDropdownPress}
         employeeList={employeeList}
         handleEmployeeDropdownPress={handleEmployeeDropdownPress}
         configuration={configuration}
@@ -684,8 +823,17 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
         okIsVisible={okIsVisible}
         mobileerror={mobileerror}
         onPressRightButton={onPressRightButton}
+        setAllProperty={setAllProperty}
+        handleLeadSourcePressForSm={getCPByProperty}
+        handleDropdownPress={handleDropdownPress}
+        getSourcingManagerList={getSourcingManagerList}
+        sourcingManagerList={sourcingManagerList}
+        checkPhoneNumberIsValid={checkPhoneNumberIsValid}
+        checkRefferrerNumberExist={checkRefferrerNumberExist}
+        getClosingManagerList={getClosingManagerList}
+        closingManagerList={closingManagerList}
       />
     </>
   );
 };
-export default VisitorUpdateScreen;
+export default DraftVisitorUpdateScreen;

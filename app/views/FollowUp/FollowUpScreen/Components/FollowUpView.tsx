@@ -33,6 +33,7 @@ const FollowUpView = (props: any) => {
       enddate: "",
       followup_for: "",
       lead_id: "",
+      todayFollowup: false,
     });
     props.getFollowupList(0, {});
     props.setFollowUpList([]);
@@ -49,11 +50,11 @@ const FollowUpView = (props: any) => {
         RightFirstIconStyle={styles.RightFirstIconStyle}
         handleOnRightFirstIconPress={() => setFilterisVisible(true)}
       />
-     
+
       <View style={styles.followupItemView}>
-      <Text style={styles.count}>
-        Count : {props?.moreData ? props?.moreData : 0}
-      </Text>
+        <Text style={styles.count}>
+          Count : {props?.moreData ? props?.moreData : 0}
+        </Text>
         <FlatList
           data={Array.isArray(props?.followUpList) ? props?.followUpList : []}
           showsVerticalScrollIndicator={false}

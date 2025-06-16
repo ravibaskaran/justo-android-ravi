@@ -54,7 +54,7 @@ const MyAppointment = (props: any) => {
     }
     return response;
   };
-
+  // console.log(props.items)
   return (
     <View style={styles.IteamView}>
       <View style={styles.Txtview}>
@@ -103,6 +103,17 @@ const MyAppointment = (props: any) => {
           <Text style={styles.nameTxt}>{props.items.receiver_name}</Text>
         </View>
       </View>
+      {props.items?.property_id ? (
+        <View style={styles.Txtview}>
+          <View style={styles.projectContainer}>
+            <Text style={styles.projectTxt}>Property :</Text>
+          </View>
+          <View style={styles.nameContainer}>
+            <Text style={styles.nameTxt}>{props.items.property_title}</Text>
+          </View>
+        </View>
+      ) : null}
+
       {/*  <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
           <Text style={styles.projectTxt}>SM Name :</Text>

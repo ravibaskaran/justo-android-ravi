@@ -29,6 +29,7 @@ const AddAppointmentView = (props: any) => {
     non_reg_cp_name: props?.data?.receiver_name,
     non_reg_cp_mobile: props?.data?.non_reg_cp_mobile,
     non_reg_cp_email: props?.data?.non_reg_cp_email,
+    property_id: props?.data?.property_id,
   });
 
   // registered_cp == 1 "registered cp"
@@ -161,6 +162,7 @@ const AddAppointmentView = (props: any) => {
           masterDatas={props.masterDatas}
           listData={props.listData}
           role={props.role}
+          allProperty={props.allProperty}
         />
       </View>
     </View>

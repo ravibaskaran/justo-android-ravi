@@ -260,7 +260,7 @@ const LeadManagementItem = (props: any) => {
               bordercolor={PURPLE_COLOR}
               borderWidth={1}
               btnTxtcolor={PURPLE_COLOR}
-              buttonText={strings.edit}
+              buttonText={props.isDraft ? "Verify" : strings.edit}
               btnTxtsize={14}
               textTransform={null}
               border={10}

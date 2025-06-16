@@ -52,7 +52,7 @@ const LeadDetailsView = (props: any) => {
           },
         ]}
       >
-        {(create && props?.allDetails?.lead_status === 1) ||
+        {(create && !props.isDraft && props?.allDetails?.lead_status === 1) ||
         props?.allDetails?.lead_status === 2 ||
         props?.allDetails?.booking_status === 4 ||
         props?.allDetails?.appointment_status === 4 ||
@@ -69,7 +69,7 @@ const LeadDetailsView = (props: any) => {
             handleBtnPress={() => props.handleScheduleVisit()}
           />
         ) : null}
-        {status && (
+        {status && !props.isDraft && (
           <>
             {props?.allDetails?.lead_status === 5 ? null : (
               <Button
