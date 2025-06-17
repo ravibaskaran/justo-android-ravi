@@ -141,4 +141,5 @@ export function getCPLeadType(cp_lead_type: any) {
 export const REGISTERD_CP = {
   YES: 1,
   NO: 2,
+  REFERRAL: 3,
 };

@@ -34,6 +34,8 @@ const AddAppointmentView = (props: any) => {
 
   // registered_cp == 1 "registered cp"
   // registered_cp == 2 "non -registered cp"
+  // registered_cp == 3 "non -Referral Partner"
+
   const validation = () => {
     let isError = true;
     let errorMessage: any = "";

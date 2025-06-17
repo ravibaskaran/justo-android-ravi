@@ -69,7 +69,7 @@ const AppointmentDtailsItem = (props: any) => {
       appdetail.latitude !== "" &&
       appdetail.longitude !== ""
     ) {
-      getAddressFromCoordinates(appdetail.latitude, appdetail.longitude);
+      // getAddressFromCoordinates(appdetail.latitude, appdetail.longitude);
     }
   }, [appdetail?.latitude, appdetail?.longitude]);
 
@@ -115,18 +115,23 @@ const AppointmentDtailsItem = (props: any) => {
 
       <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
-          <Text style={styles.projectTxt}>Justo CP</Text>
+          <Text style={styles.projectTxt}>CP Type</Text>
         </View>
         <View>
           <Text>:</Text>
         </View>
         <View style={styles.nameContainer}>
           <Text style={styles.nameTxt}>
-            {appdetail?.registered_cp == REGISTERD_CP.NO ? "No" : "Yes"}
+            {appdetail?.registered_cp == REGISTERD_CP.NO
+              ? "Other CP"
+              : appdetail?.registered_cp == REGISTERD_CP.REFERRAL
+              ? "Referral Partner"
+              : "Justo CP"}
           </Text>
         </View>
       </View>
-      {appdetail?.registered_cp == REGISTERD_CP.NO && (
+      {appdetail?.registered_cp == REGISTERD_CP.NO ||
+      appdetail?.registered_cp == REGISTERD_CP.REFERRAL ? (
         <>
           <View style={styles.Txtview}>
             <View style={styles.projectContainer}>
@@ -159,7 +164,7 @@ const AppointmentDtailsItem = (props: any) => {
             </View>
           </View>
         </>
-      )}
+      ) : null}
 
       <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
@@ -262,7 +267,7 @@ const AppointmentDtailsItem = (props: any) => {
             </View>
           )}
 
-          {(appdetail.appointment_status === 3 ||
+          {/* {(appdetail.appointment_status === 3 ||
             appdetail.appointment_status === 4) &&
           location !== "" ? (
             <View style={styles.Txtview}>
@@ -278,7 +283,7 @@ const AppointmentDtailsItem = (props: any) => {
                 </Text>
               </View>
             </View>
-          ) : null}
+          ) : null} */}
           {appdetail?.confirm_remark !== null ? (
             <View style={styles.Txtview}>
               <View style={styles.projectContainer}>
@@ -297,7 +302,7 @@ const AppointmentDtailsItem = (props: any) => {
             </View>
           ) : null}
 
-          {appdetail?.image !== null ? (
+          {/* {appdetail?.image !== null ? (
             <View style={styles.Txtview}>
               <View style={styles.projectContainer}>
                 <Text style={styles.projectTxt}>Image </Text>
@@ -324,7 +329,7 @@ const AppointmentDtailsItem = (props: any) => {
                 </TouchableOpacity>
               )}
             </View>
-          ) : null}
+          ) : null} */}
 
           {appdetail?.compleate_remark !== null ? (
             <View style={styles.Txtview}>

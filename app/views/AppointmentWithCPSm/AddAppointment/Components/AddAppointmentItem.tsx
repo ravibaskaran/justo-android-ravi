@@ -38,6 +38,13 @@ const AddAppointmentItem = (props: any) => {
   const totalMillisecondsToAdd =
     millisecondsInTwoHours + millisecondsInFiveMinutes;
   const getAheadTime = new Date(Date.now() + totalMillisecondsToAdd);
+
+  const data = [
+    { label: "Justo CP", value: 1 },
+    { label: "Other CP", value: 2 },
+    { label: "Referral Partner", value: 3 },
+  ];
+
   return (
     <ScrollView keyboardShouldPersistTaps={"handled"}>
       <View style={styles.wrap}>
@@ -182,77 +189,55 @@ const AddAppointmentItem = (props: any) => {
             }}
           />
         </View>
-        <View style={[styles.genderView, { marginLeft: normalizeSpacing(20) }]}>
-          <Text style={styles.headingsTxt}>Justo CP</Text>
-          <RequiredStart />
-          <View style={styles.radioView}>
-            <RadioButton.Android
-              disabled={props.type === strings.edit}
-              value="1"
-              status={
-                props?.addAppointmentForm?.registered_cp === REGISTERD_CP.YES
-                  ? "checked"
-                  : "unchecked"
-              }
-              onPress={() =>
-                props.setAddAppointmentForm({
-                  ...props.addAppointmentForm,
-                  registered_cp: REGISTERD_CP.YES,
-                  non_reg_cp_name: "",
-                  non_reg_cp_mobile: "",
-                  non_reg_cp_email: "",
-                })
-              }
-              color={PRIMARY_THEME_COLOR}
-            />
-            <Text
-              style={[
-                styles.radioTxt,
-                {
-                  color:
-                    props?.addAppointmentForm?.registered_cp ===
-                    REGISTERD_CP.YES
-                      ? PRIMARY_THEME_COLOR
-                      : BLACK_COLOR,
-                },
-              ]}
-            >
-              {strings.yes}
-            </Text>
-          </View>
-          <View style={styles.radioView}>
-            <RadioButton.Android
-              disabled={props.type === strings.edit}
-              value="2"
-              status={
-                props?.addAppointmentForm?.registered_cp === REGISTERD_CP.NO
-                  ? "checked"
-                  : "unchecked"
-              }
-              onPress={() =>
-                props.setAddAppointmentForm({
-                  ...props.addAppointmentForm,
-                  registered_cp: REGISTERD_CP.NO,
-                  appointment_with: "",
-                })
-              }
-              color={PRIMARY_THEME_COLOR}
-            />
-            <Text
-              style={[
-                styles.radioTxt,
-                {
-                  color:
-                    props?.addAppointmentForm?.registered_cp === REGISTERD_CP.NO
-                      ? PRIMARY_THEME_COLOR
-                      : BLACK_COLOR,
-                },
-              ]}
-            >
-              {strings.no}
-            </Text>
-          </View>
+
+        <View style={styles.inputWrap}>
+          <DropdownInput
+            require={true}
+            headingText={strings.cpType}
+            disable={props.type === strings.edit}
+            placeholder={strings.cpType}
+            data={data}
+            inputWidth={"100%"}
+            paddingLeft={16}
+            maxHeight={300}
+            labelField="label"
+            valueField={"value"}
+            value={props.addAppointmentForm?.registered_cp}
+            onChange={(item: any) => {
+              console.log(item);
+              props.setAddAppointmentForm({
+                ...props.addAppointmentForm,
+                registered_cp: item.value,
+                non_reg_cp_name: "",
+                non_reg_cp_mobile: "",
+                non_reg_cp_email: "",
+              });
+            }}
+            newRenderItem={(item: any) => {
+              return (
+                <View
+                  style={{
+                    padding: 17,
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Text
+                    style={{
+                      flex: 1,
+                      fontSize: 16,
+                      color: GRAY_LIGHT_COLOR,
+                    }}
+                  >
+                    {item.label}
+                  </Text>
+                </View>
+              );
+            }}
+          />
         </View>
+
         {props?.addAppointmentForm?.registered_cp === REGISTERD_CP.YES ? (
           <View style={styles.inputWrap}>
             <DropdownInput

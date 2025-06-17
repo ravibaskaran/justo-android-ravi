@@ -87,11 +87,15 @@ const MyAppointment = (props: any) => {
       </View>
       <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
-          <Text style={styles.projectTxt}>Justo CP :</Text>
+          <Text style={styles.projectTxt}>CP Type :</Text>
         </View>
         <View style={styles.nameContainer}>
           <Text style={styles.nameTxt}>
-            {props.items?.registered_cp == REGISTERD_CP.NO ? "No" : "Yes"}
+            {props.items?.registered_cp == REGISTERD_CP.NO
+              ? "Other CP"
+              : props.items?.registered_cp == REGISTERD_CP.REFERRAL
+              ? "Referral Partner"
+              : "Justo CP"}
           </Text>
         </View>
       </View>
