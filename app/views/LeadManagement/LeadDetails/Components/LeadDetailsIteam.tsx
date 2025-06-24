@@ -1,5 +1,6 @@
 import {
   BLACK_COLOR,
+  capitalizeWords,
   DATE_TIME_FORMAT,
   getCPLeadType,
   Isios,
@@ -29,7 +30,6 @@ const LeadDetailsIteam = (props: any) => {
       ? "Referral Partner"
       : item?.lead_source || strings.notfount;
   const cpLeadType = getCPLeadType(item?.cp_lead_type);
-
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.topDetailsView}>
@@ -242,6 +242,43 @@ const LeadDetailsIteam = (props: any) => {
           </Text>
         </View>
       </View>
+
+      <View style={styles.Txtview}>
+        <View style={styles.projectContainer}>
+          <Text style={styles.projectTxt}>Lead Status</Text>
+        </View>
+        <View>
+          <Text>:</Text>
+        </View>
+        <View style={styles.nameContainer}>
+          <Text style={[styles.nameTxt]}>
+            {item?.qualified === true
+              ? "Qualified"
+              : item?.qualified === false
+              ? "Unqualified"
+              : strings.notfount}
+          </Text>
+        </View>
+      </View>
+      <View style={styles.Txtview}>
+        <View style={styles.projectContainer}>
+          <Text style={styles.projectTxt}>Lead Priority</Text>
+        </View>
+        <View>
+          <Text>:</Text>
+        </View>
+        <View style={styles.nameContainer}>
+          <Text style={styles.nameTxt}>
+            {item?.lead_priority === "" ||
+            item?.lead_priority === undefined ||
+            item?.lead_priority === null ||
+            item?.lead_priority === "undefined"
+              ? strings.notfount
+              : capitalizeWords(item?.lead_priority)}
+          </Text>
+        </View>
+      </View>
+
       {/* Property Required */}
       <>
         <View style={styles.headdingView}>
@@ -291,9 +328,16 @@ const LeadDetailsIteam = (props: any) => {
           </View>
           <View style={styles.nameContainer}>
             <Text style={styles.nameTxt}>
-              {item?.min_budget || item?.max_budget
-                ? `${item?.min_budget} ${item?.min_budget_type} - ${item?.max_budget} ${item?.max_budget_type}`
+              {item?.budget_amount
+                ? item.budget_amount
+                : item?.min_budget || item?.max_budget
+                ? `${item?.min_budget || ""} ${item?.min_budget_type || ""} - ${
+                    item?.max_budget || ""
+                  } ${item?.max_budget_type || ""}`
                 : strings.notfount}
+              {/* {item?.min_budget || item?.max_budget
+                ? `${item?.min_budget} ${item?.min_budget_type} - ${item?.max_budget} ${item?.max_budget_type}`
+                : strings.notfount} */}
             </Text>
           </View>
         </View>
@@ -356,7 +400,7 @@ const LeadDetailsIteam = (props: any) => {
         </View>
         <View style={styles.Txtview}>
           <View style={styles.projectContainer}>
-            <Text style={styles.projectTxt}>Location</Text>
+            <Text style={styles.projectTxt}>Resident Location</Text>
           </View>
           <View>
             <Text>:</Text>
@@ -372,7 +416,7 @@ const LeadDetailsIteam = (props: any) => {
             </Text>
           </View>
         </View>
-        <View style={styles.Txtview}>
+        {/* <View style={styles.Txtview}>
           <View style={styles.projectContainer}>
             <Text style={styles.projectTxt}>Age</Text>
           </View>
@@ -389,7 +433,7 @@ const LeadDetailsIteam = (props: any) => {
                 : item?.customer_detail?.age}
             </Text>
           </View>
-        </View>
+        </View> */}
         <View style={styles.Txtview}>
           <View style={styles.projectContainer}>
             <Text style={styles.projectTxt}>Gender</Text>
@@ -412,6 +456,42 @@ const LeadDetailsIteam = (props: any) => {
         </View>
         <View style={styles.Txtview}>
           <View style={styles.projectContainer}>
+            <Text style={styles.projectTxt}>Ethnicity</Text>
+          </View>
+          <View>
+            <Text>:</Text>
+          </View>
+          <View style={styles.nameContainer}>
+            <Text style={styles.nameTxt}>
+              {item?.customer_detail?.ethnicity === "" ||
+              item?.customer_detail?.ethnicity === undefined ||
+              item?.customer_detail?.ethnicity === "undefined" ||
+              item?.customer_detail?.ethnicity === null
+                ? strings.notfount
+                : item?.customer_detail?.ethnicity}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.Txtview}>
+          <View style={styles.projectContainer}>
+            <Text style={styles.projectTxt}>Visiting With</Text>
+          </View>
+          <View>
+            <Text>:</Text>
+          </View>
+          <View style={styles.nameContainer}>
+            <Text style={styles.nameTxt}>
+              {item?.customer_detail?.visit_with === "" ||
+              item?.customer_detail?.visit_with === undefined ||
+              item?.customer_detail?.visit_with === "undefined" ||
+              item?.customer_detail?.visit_with === null
+                ? strings.notfount
+                : capitalizeWords(item?.customer_detail?.visit_with)}
+            </Text>
+          </View>
+        </View>
+        {/* <View style={styles.Txtview}>
+          <View style={styles.projectContainer}>
             <Text style={styles.projectTxt}>Locality</Text>
           </View>
           <View>
@@ -426,13 +506,13 @@ const LeadDetailsIteam = (props: any) => {
                 : strings.notfount}
             </Text>
           </View>
-        </View>
+        </View> */}
       </>
       {/* Company Details */}
       <>
-        <View style={styles.headdingView}>
+        {/* <View style={styles.headdingView}>
           <Text style={styles.headdingTxt}>{strings.ocupacion}</Text>
-        </View>
+        </View> */}
         <View style={styles.Txtview}>
           <View style={styles.projectContainer}>
             <Text style={styles.projectTxt}>Nature of Occupation</Text>
@@ -447,11 +527,12 @@ const LeadDetailsIteam = (props: any) => {
               item?.customer_detail?.occupation === "undefined" ||
               item?.customer_detail?.occupation === null
                 ? strings.notfount
-                : item?.customer_detail?.occupation}
+                : capitalizeWords(item?.customer_detail?.occupation)}
             </Text>
           </View>
         </View>
-        <View style={styles.Txtview}>
+
+        {/* <View style={styles.Txtview}>
           <View style={styles.projectContainer}>
             <Text style={styles.projectTxt}>Company Name</Text>
           </View>
@@ -486,10 +567,10 @@ const LeadDetailsIteam = (props: any) => {
                 : item?.customer_detail?.desigantion}
             </Text>
           </View>
-        </View>
+        </View> */}
         <View style={styles.Txtview}>
           <View style={styles.projectContainer}>
-            <Text style={styles.projectTxt}>Office Address</Text>
+            <Text style={styles.projectTxt}>Work Location</Text>
           </View>
           <View>
             <Text>:</Text>

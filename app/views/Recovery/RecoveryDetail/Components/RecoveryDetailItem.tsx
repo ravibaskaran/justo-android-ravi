@@ -78,9 +78,7 @@ const RecoveryDetailItem = (props: any) => {
         </View>
         <View style={styles.nameContainer}>
           <Text style={styles.nameTxt}>
-            {appdetail?.area
-              ? appdetail?.area
-              : strings.notfount}
+            {appdetail?.area ? appdetail?.area : strings.notfount}
           </Text>
         </View>
       </View>
@@ -93,12 +91,20 @@ const RecoveryDetailItem = (props: any) => {
         </View>
         <View style={styles.nameContainer}>
           <Text style={styles.nameTxt}>
-            {appdetail?.leads?.budget?.min_budget || appdetail?.leads?.budget?.max_budget
-              ? `${appdetail?.leads?.budget?.min_budget} ${appdetail?.leads?.budget?.min_budget_type} - ${appdetail?.leads?.budget?.max_budget} ${appdetail?.leads?.budget?.max_budget_type}`
+            {appdetail?.leads?.budget_amount
+              ? appdetail.leads.budget_amount
+              : appdetail?.leads?.budget?.min_budget ||
+                appdetail?.leads?.budget?.max_budget
+              ? `${appdetail?.leads?.budget?.min_budget || ""} ${
+                  appdetail?.leads?.budget?.min_budget_type || ""
+                } - ${appdetail?.leads?.budget?.max_budget || ""} ${
+                  appdetail?.leads?.budget?.max_budget_type || ""
+                }`
               : strings.notfount}
           </Text>
         </View>
       </View>
+
       <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
           <Text style={styles.projectTxt}>Current Status</Text>
@@ -149,7 +155,9 @@ const RecoveryDetailItem = (props: any) => {
         </View>
         <View style={styles.nameContainer}>
           <Text style={styles.nameTxt}>
-            {appdetail?.leads?.visitcreateby?.user_name ? appdetail?.leads?.visitcreateby?.user_name : strings.notfount}
+            {appdetail?.leads?.visitcreateby?.user_name
+              ? appdetail?.leads?.visitcreateby?.user_name
+              : strings.notfount}
           </Text>
         </View>
       </View>
@@ -161,7 +169,9 @@ const RecoveryDetailItem = (props: any) => {
           <Text>:</Text>
         </View>
         <View style={styles.nameContainer}>
-          <Text style={styles.nameTxt}>{appdetail.closingDate ? appdetail.closingDate : strings.notfount}</Text>
+          <Text style={styles.nameTxt}>
+            {appdetail.closingDate ? appdetail.closingDate : strings.notfount}
+          </Text>
         </View>
       </View>
     </ScrollView>

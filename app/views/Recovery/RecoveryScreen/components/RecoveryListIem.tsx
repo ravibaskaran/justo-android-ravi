@@ -4,7 +4,11 @@ import styles from "./styles";
 import strings from "../../../../components/utilities/Localization";
 import images from "../../../../assets/images";
 import Button from "../../../../components/Button";
-import { WHITE_COLOR, CALL_COLOR, DATE_TIME_FORMAT } from "app/components/utilities/constant";
+import {
+  WHITE_COLOR,
+  CALL_COLOR,
+  DATE_TIME_FORMAT,
+} from "app/components/utilities/constant";
 import moment from "moment";
 
 const RecoveryListIem = (props: any) => {
@@ -15,7 +19,11 @@ const RecoveryListIem = (props: any) => {
           <Text style={styles.projectTxt}>Booking Date :</Text>
         </View>
         <View style={styles.nameContainer}>
-          <Text style={styles.nameTxt}>{props.items?.booking_date ? moment(props.items?.booking_date).format(DATE_TIME_FORMAT) : strings.notfount}</Text>
+          <Text style={styles.nameTxt}>
+            {props.items?.booking_date
+              ? moment(props.items?.booking_date).format(DATE_TIME_FORMAT)
+              : strings.notfount}
+          </Text>
         </View>
       </View>
       <View style={styles.Txtview}>
@@ -31,7 +39,7 @@ const RecoveryListIem = (props: any) => {
           <Text style={styles.projectTxt}>Booking Status :</Text>
         </View>
         <View style={styles.nameContainer}>
-          <Text style={styles.nameTxt}>{'Recovery'}</Text>
+          <Text style={styles.nameTxt}>{"Recovery"}</Text>
         </View>
       </View>
       <View style={styles.Txtview}>
@@ -39,7 +47,11 @@ const RecoveryListIem = (props: any) => {
           <Text style={styles.projectTxt}>{strings.configurations} :</Text>
         </View>
         <View style={styles.nameContainer}>
-          <Text style={styles.nameTxt}>{props.items?.configuration ? props.items?.configuration : strings.notfount}</Text>
+          <Text style={styles.nameTxt}>
+            {props.items?.configuration
+              ? props.items?.configuration
+              : strings.notfount}
+          </Text>
         </View>
       </View>
       <View style={styles.Txtview}>
@@ -47,11 +59,18 @@ const RecoveryListIem = (props: any) => {
           <Text style={styles.projectTxt}>Budget :</Text>
         </View>
         <View style={styles.nameContainer}>
-        <Text style={styles.nameTxt}>
-          {props.items?.budget?.min_budget || props.items?.budget?.max_budget
-                ? `${props.items?.budget?.min_budget} ${props.items?.budget?.min_budget_type} - ${props.items?.budget?.max_budget} ${props.items?.budget?.max_budget_type}`
-                : strings.notfount}
-        </Text>
+          <Text style={styles.nameTxt}>
+            {props.items?.budget_amount
+              ? props.items.budget_amount
+              : props.items?.budget?.min_budget ||
+                props.items?.budget?.max_budget
+              ? `${props.items?.budget?.min_budget || ""} ${
+                  props.items?.budget?.min_budget_type || ""
+                } - ${props.items?.budget?.max_budget || ""} ${
+                  props.items?.budget?.max_budget_type || ""
+                }`
+              : strings.notfount}
+          </Text>
         </View>
       </View>
       <View style={styles.buttonContainer}>

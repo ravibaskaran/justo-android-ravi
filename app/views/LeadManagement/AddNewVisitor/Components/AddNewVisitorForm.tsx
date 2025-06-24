@@ -1129,7 +1129,7 @@ const AddNewVisitorForm = (props: any) => {
               headingText={strings.email + " " + strings.address}
             />
           </View>
-          <View style={styles.inputWrap}>
+          {/* <View style={styles.inputWrap}>
             <InputField
               placeholderText={"3675 9834 6012"}
               handleInputBtnPress={() => {}}
@@ -1145,8 +1145,8 @@ const AddNewVisitorForm = (props: any) => {
               keyboardtype={"number-pad"}
               maxLength={14}
             />
-          </View>
-          <View style={styles.inputWrap}>
+          </View> */}
+          {/* <View style={styles.inputWrap}>
             <InputField
               disableSpecialCharacters={true}
               placeholderText={"BNZAA2318JM"}
@@ -1161,8 +1161,8 @@ const AddNewVisitorForm = (props: any) => {
               headingText={"Pancard No."}
               maxLength={10}
             />
-          </View>
-          <View style={styles.inputWrap}>
+          </View> */}
+          {/* <View style={styles.inputWrap}>
             <InputCalender
               mode={"date"}
               leftIcon={images.event}
@@ -1189,11 +1189,11 @@ const AddNewVisitorForm = (props: any) => {
                   : moment(props?.formData?.birth_date).format(DATE_FORMAT)
               }
             />
-          </View>
+          </View> */}
 
           <View style={styles.inputWrap}>
             <InputField
-              placeholderText={"Location"}
+              placeholderText={"Resident Location"}
               handleInputBtnPress={() => {}}
               onChangeText={(data: any) => {
                 props.setFormData({
@@ -1202,7 +1202,7 @@ const AddNewVisitorForm = (props: any) => {
                 });
               }}
               valueshow={props?.formData?.location}
-              headingText={"Location"}
+              headingText={"Resident Location"}
               inputType={"location"}
               onPressSelect={(data: any, detail: any) => {
                 props.setFormData({
@@ -1214,7 +1214,22 @@ const AddNewVisitorForm = (props: any) => {
               }}
             />
           </View>
+
           <View style={styles.inputWrap}>
+            <InputField
+              placeholderText={"Work Location"}
+              handleInputBtnPress={() => {}}
+              onChangeText={(data: any) => {
+                props.setFormData({
+                  ...props.formData,
+                  office_address: data,
+                });
+              }}
+              valueshow={props?.formData?.office_address}
+              headingText={"Work Location"}
+            />
+          </View>
+          {/* <View style={styles.inputWrap}>
             <InputField
               disableSpecialCharacters={true}
               placeholderText={"Locality"}
@@ -1228,7 +1243,41 @@ const AddNewVisitorForm = (props: any) => {
               valueshow={props?.formData?.locality}
               headingText={"Locality"}
             />
+          </View> */}
+          <View style={[styles.inputWrap]}>
+            <DropdownInput
+              headingText={"Ethnicity"}
+              placeholder={
+                props.formData?.ethnicity
+                  ? props.formData?.ethnicity
+                  : "Ethnicity"
+              }
+              data={masterDatas}
+              inputWidth={"100%"}
+              paddingLeft={Isios ? 6 : 10}
+              maxHeight={300}
+              labelField={"title"}
+              valueField={"_id"}
+              value={props?.formData?.ethnicity_id}
+              onFocus={() => props.handleDropdownPress(15)}
+              onChange={(item: any) => {
+                console.log(item);
+                props.setFormData({
+                  ...props.formData,
+                  ethnicity_id: item._id,
+                  ethnicity: item.title,
+                });
+              }}
+              newRenderItem={(item: any) => {
+                return (
+                  <View style={Styles.item}>
+                    <Text style={Styles.textItem}>{item.title}</Text>
+                  </View>
+                );
+              }}
+            />
           </View>
+
           <View style={[styles.inputWrap]}>
             <DropdownInput
               headingText={"Marital Status"}
@@ -1262,7 +1311,141 @@ const AddNewVisitorForm = (props: any) => {
               }}
             />
           </View>
-          <View
+
+          <View style={[styles.radioBtnView, { marginBottom: 0 }]}>
+            <Text style={styles.headingsTxt}>Visiting With</Text>
+            <View
+              style={{
+                flexDirection: "row",
+                width: "100%",
+                flexWrap: "wrap",
+                alignSelf: "center",
+              }}
+            >
+              <View style={styles.radioView}>
+                <RadioButton.Android
+                  value="family"
+                  status={
+                    props?.formData?.visit_with === "family"
+                      ? "checked"
+                      : "unchecked"
+                  }
+                  onPress={() =>
+                    props.setFormData({
+                      ...props.formData,
+                      visit_with: "family",
+                    })
+                  }
+                  color={PRIMARY_THEME_COLOR}
+                />
+                <Text
+                  style={[
+                    styles.radioTxt,
+                    {
+                      color:
+                        props?.formData?.visit_with === "family"
+                          ? PRIMARY_THEME_COLOR
+                          : BLACK_COLOR,
+                    },
+                  ]}
+                >
+                  Family
+                </Text>
+              </View>
+              <View style={styles.radioView}>
+                <RadioButton.Android
+                  value="couple"
+                  status={
+                    props?.formData?.visit_with === "couple"
+                      ? "checked"
+                      : "unchecked"
+                  }
+                  onPress={() =>
+                    props.setFormData({
+                      ...props.formData,
+                      visit_with: "couple",
+                    })
+                  }
+                  color={PRIMARY_THEME_COLOR}
+                />
+                <Text
+                  style={[
+                    styles.radioTxt,
+                    {
+                      color:
+                        props?.formData?.visit_with === "couple"
+                          ? PRIMARY_THEME_COLOR
+                          : BLACK_COLOR,
+                    },
+                  ]}
+                >
+                  Couple
+                </Text>
+              </View>
+              <View style={styles.radioView}>
+                <RadioButton.Android
+                  value="friend"
+                  status={
+                    props?.formData?.visit_with === "friend"
+                      ? "checked"
+                      : "unchecked"
+                  }
+                  onPress={() =>
+                    props.setFormData({
+                      ...props.formData,
+                      visit_with: "friend",
+                    })
+                  }
+                  color={PRIMARY_THEME_COLOR}
+                />
+                <Text
+                  style={[
+                    styles.radioTxt,
+                    {
+                      color:
+                        props?.formData?.visit_with === "friend"
+                          ? PRIMARY_THEME_COLOR
+                          : BLACK_COLOR,
+                    },
+                  ]}
+                >
+                  Friend
+                </Text>
+              </View>
+              <View style={styles.radioView}>
+                <RadioButton.Android
+                  value="single"
+                  status={
+                    props?.formData?.visit_with === "single"
+                      ? "checked"
+                      : "unchecked"
+                  }
+                  onPress={() =>
+                    props.setFormData({
+                      ...props.formData,
+                      visit_with: "single",
+                    })
+                  }
+                  color={PRIMARY_THEME_COLOR}
+                />
+                <Text
+                  style={[
+                    styles.radioTxt,
+                    {
+                      color:
+                        props?.formData?.visit_with === "single"
+                          ? PRIMARY_THEME_COLOR
+                          : BLACK_COLOR,
+                    },
+                  ]}
+                >
+                  Single
+                </Text>
+              </View>
+            </View>
+          </View>
+
+          {/* <View
             style={[
               styles.inputWrap,
               {
@@ -1295,7 +1478,7 @@ const AddNewVisitorForm = (props: any) => {
               placeholder="No. of family member"
               style={styles.budgetInput}
             />
-          </View>
+          </View> */}
 
           <View style={[styles.inputWrap]}>
             <DropdownInput
@@ -1330,7 +1513,7 @@ const AddNewVisitorForm = (props: any) => {
               }}
             />
           </View>
-          <View style={[styles.inputWrap]}>
+          {/* <View style={[styles.inputWrap]}>
             <DropdownInput
               headingText={"Property Type"}
               placeholder={
@@ -1365,8 +1548,8 @@ const AddNewVisitorForm = (props: any) => {
                 );
               }}
             />
-          </View>
-          <View style={styles.radioBtnView}>
+          </View> */}
+          {/* <View style={styles.radioBtnView}>
             <Text style={styles.headingsTxt}>Preferred Bank</Text>
             <View style={{ flexDirection: "row" }}>
               <View style={styles.radioView}>
@@ -1430,7 +1613,233 @@ const AddNewVisitorForm = (props: any) => {
                 </Text>
               </View>
             </View>
+          </View> */}
+          <View style={[styles.inputWrap]}>
+            <DropdownInput
+              headingText={strings.ocupacion}
+              placeholder={
+                props?.formData?.occupation
+                  ? props?.formData?.occupation
+                  : strings.ocupacion
+              }
+              data={[
+                { label: "Salaried", value: "salaried" },
+                { label: "Business", value: "business" },
+                { label: "Professional", value: "professional" },
+                { label: "Retired", value: "retired" },
+                { label: "Home Maker", value: "home maker" },
+                {
+                  label: "Self Employed",
+                  value: "self employee",
+                },
+                { label: "Other", value: "other" },
+              ]}
+              inputWidth={"100%"}
+              paddingLeft={16}
+              maxHeight={300}
+              labelField={"label"}
+              valueField={"value"}
+              value={props?.formData?.occupation}
+              onChange={(item: any) => {
+                props.setFormData({
+                  ...props.formData,
+                  occupation: item.value,
+                });
+              }}
+              newRenderItem={(item: any) => {
+                return (
+                  <View style={Styles.item}>
+                    <Text style={Styles.textItem}>{item.label}</Text>
+                  </View>
+                );
+              }}
+            />
           </View>
+
+          <View style={[styles.radioBtnView, { marginBottom: 0 }]}>
+            <Text style={styles.headingsTxt}>Lead Status</Text>
+            <View
+              style={{
+                flexDirection: "row",
+                width: "100%",
+                flexWrap: "wrap",
+                alignSelf: "center",
+              }}
+            >
+              {/* Qualified */}
+              <View style={styles.radioView}>
+                <RadioButton.Android
+                  value="true"
+                  status={
+                    props?.formData?.qualified === true
+                      ? "checked"
+                      : "unchecked"
+                  }
+                  onPress={() =>
+                    props.setFormData({
+                      ...props.formData,
+                      qualified: true,
+                    })
+                  }
+                  color={PRIMARY_THEME_COLOR}
+                />
+                <Text
+                  style={[
+                    styles.radioTxt,
+                    {
+                      color:
+                        props?.formData?.qualified === true
+                          ? PRIMARY_THEME_COLOR
+                          : BLACK_COLOR,
+                    },
+                  ]}
+                >
+                  Qualified
+                </Text>
+              </View>
+
+              {/* Unqualified */}
+              <View style={styles.radioView}>
+                <RadioButton.Android
+                  value="false"
+                  status={
+                    props?.formData?.qualified === false
+                      ? "checked"
+                      : "unchecked"
+                  }
+                  onPress={() =>
+                    props.setFormData({
+                      ...props.formData,
+                      qualified: false,
+                    })
+                  }
+                  color={PRIMARY_THEME_COLOR}
+                />
+                <Text
+                  style={[
+                    styles.radioTxt,
+                    {
+                      color:
+                        props?.formData?.qualified === false
+                          ? PRIMARY_THEME_COLOR
+                          : BLACK_COLOR,
+                    },
+                  ]}
+                >
+                  Unqualified
+                </Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={[styles.radioBtnView, { marginBottom: 0 }]}>
+            <Text style={styles.headingsTxt}>Lead Priority</Text>
+            <View
+              style={{
+                flexDirection: "row",
+                width: "100%",
+                flexWrap: "wrap",
+                alignSelf: "center",
+              }}
+            >
+              {/* Hot Lead */}
+              <View style={styles.radioView}>
+                <RadioButton.Android
+                  value="hot"
+                  status={
+                    props?.formData?.lead_priority === "hot"
+                      ? "checked"
+                      : "unchecked"
+                  }
+                  onPress={() =>
+                    props.setFormData({
+                      ...props.formData,
+                      lead_priority: "hot",
+                    })
+                  }
+                  color={PRIMARY_THEME_COLOR}
+                />
+                <Text
+                  style={[
+                    styles.radioTxt,
+                    {
+                      color:
+                        props?.formData?.lead_priority === "hot"
+                          ? PRIMARY_THEME_COLOR
+                          : BLACK_COLOR,
+                    },
+                  ]}
+                >
+                  Hot
+                </Text>
+              </View>
+
+              {/* Warm Lead */}
+              <View style={styles.radioView}>
+                <RadioButton.Android
+                  value="warm"
+                  status={
+                    props?.formData?.lead_priority === "warm"
+                      ? "checked"
+                      : "unchecked"
+                  }
+                  onPress={() =>
+                    props.setFormData({
+                      ...props.formData,
+                      lead_priority: "warm",
+                    })
+                  }
+                  color={PRIMARY_THEME_COLOR}
+                />
+                <Text
+                  style={[
+                    styles.radioTxt,
+                    {
+                      color:
+                        props?.formData?.lead_priority === "warm"
+                          ? PRIMARY_THEME_COLOR
+                          : BLACK_COLOR,
+                    },
+                  ]}
+                >
+                  Warm
+                </Text>
+              </View>
+
+              {/* Cold Lead */}
+              <View style={styles.radioView}>
+                <RadioButton.Android
+                  value="cold"
+                  status={
+                    props?.formData?.lead_priority === "cold"
+                      ? "checked"
+                      : "unchecked"
+                  }
+                  onPress={() =>
+                    props.setFormData({
+                      ...props.formData,
+                      lead_priority: "cold",
+                    })
+                  }
+                  color={PRIMARY_THEME_COLOR}
+                />
+                <Text
+                  style={[
+                    styles.radioTxt,
+                    {
+                      color:
+                        props?.formData?.lead_priority === "cold"
+                          ? PRIMARY_THEME_COLOR
+                          : BLACK_COLOR,
+                    },
+                  ]}
+                >
+                  Cold
+                </Text>
+              </View>
+            </View>
+          </View>
+
           <Text style={[styles.headingText, { marginTop: 20 }]}>
             {strings.propertyrequire}
           </Text>
@@ -1470,7 +1879,44 @@ const AddNewVisitorForm = (props: any) => {
               }}
             />
           </View>
-          <View style={styles.inputWrap}>
+
+          <View style={[styles.inputWrap]}>
+            <DropdownInput
+              headingText={"Expected Possession"}
+              placeholder={
+                props?.formData?.expected_possession_period
+                  ? props?.formData?.expected_possession_period
+                  : "Expected Possession"
+              }
+              data={[
+                { label: "3 – 6 Months", value: "3 – 6 Months" },
+                { label: "6 Months – 1 Year", value: "6 Months – 1 Year" },
+                { label: "1 – 2 Years", value: "1 – 2 Years" },
+                { label: "2 Years and Above", value: "2 Years and Above" },
+              ]}
+              inputWidth={"100%"}
+              paddingLeft={16}
+              maxHeight={300}
+              labelField={"label"}
+              valueField={"value"}
+              value={props?.formData?.expected_possession_period}
+              onChange={(item: any) => {
+                props.setFormData({
+                  ...props.formData,
+                  expected_possession_period: item.value,
+                });
+              }}
+              newRenderItem={(item: any) => {
+                return (
+                  <View style={Styles.item}>
+                    <Text style={Styles.textItem}>{item.label}</Text>
+                  </View>
+                );
+              }}
+            />
+          </View>
+
+          {/* <View style={styles.inputWrap}>
             <InputCalender
               mode={"date"}
               leftIcon={images.event}
@@ -1500,7 +1946,7 @@ const AddNewVisitorForm = (props: any) => {
                     )
               }
             />
-          </View>
+          </View> */}
           <View style={styles.inputWrap}>
             <InputField
               disableSpecialCharacters={true}
@@ -1519,15 +1965,15 @@ const AddNewVisitorForm = (props: any) => {
               // keyboardtype={'phone-pad'}
             />
           </View>
-          <View style={styles.smallCont}>
+          {/* <View style={styles.smallCont}>
             <Text style={[styles.headingsTxt, { width: "56%" }]}>
               Min Budget
             </Text>
             <Text style={[styles.headingsTxt, { width: "50%" }]}>
               Max Budget
             </Text>
-          </View>
-          <View style={styles.inputContVw}>
+          </View> */}
+          {/* <View style={styles.inputContVw}>
             <View style={styles.smallContVw}>
               <TextInput
                 value={props?.formData?.min_budget?.toString()}
@@ -1644,8 +2090,50 @@ const AddNewVisitorForm = (props: any) => {
                 }}
               />
             </View>
+          </View> */}
+
+          <View style={[styles.inputWrap]}>
+            <DropdownInput
+              headingText={"Budget"}
+              placeholder={
+                props?.formData?.budget_amount
+                  ? props?.formData?.budget_amount
+                  : "Budget"
+              }
+              data={[
+                { label: "Below - 50L", value: "Below - 50L" },
+                { label: "50L - 75L", value: "50L - 75L" },
+                { label: "75L - 1Cr", value: "75L - 1Cr" },
+                { label: "1Cr - 1.30Cr", value: "1Cr - 1.30Cr" },
+                { label: "1.31Cr - 1.50Cr", value: "1.31Cr - 1.50Cr" },
+                { label: "1.51Cr - 1.75Cr", value: "1.51Cr - 1.75Cr" },
+                { label: "1.76Cr - 2Cr", value: "1.76Cr - 2Cr" },
+                { label: "2Cr - 2.5Cr", value: "2Cr - 2.5Cr" },
+                { label: "2.5Cr and above", value: "2.5Cr and above" },
+              ]}
+              inputWidth={"100%"}
+              paddingLeft={16}
+              maxHeight={300}
+              labelField={"label"}
+              valueField={"value"}
+              value={props?.formData?.budget_amount}
+              onChange={(item: any) => {
+                props.setFormData({
+                  ...props.formData,
+                  budget_amount: item.value,
+                });
+              }}
+              newRenderItem={(item: any) => {
+                return (
+                  <View style={Styles.item}>
+                    <Text style={Styles.textItem}>{item.label}</Text>
+                  </View>
+                );
+              }}
+            />
           </View>
-          <View style={styles.radioBtnView}>
+
+          <View style={[styles.radioBtnView, { marginBottom: 0 }]}>
             <Text style={styles.headingsTxt}>Nature Of Funding</Text>
             <View style={{ flexDirection: "row" }}>
               <View style={styles.radioView}>
@@ -1740,15 +2228,80 @@ const AddNewVisitorForm = (props: any) => {
               </View>
             </View>
           </View>
-          <View style={styles.smallCont}>
+          <View style={[styles.radioBtnView, { marginBottom: 0 }]}>
+            <Text style={styles.headingsTxt}>Purpose</Text>
+            <View style={{ flexDirection: "row" }}>
+              <View style={styles.radioView}>
+                <RadioButton.Android
+                  value="end user"
+                  status={
+                    props?.formData?.purpose === "end user"
+                      ? "checked"
+                      : "unchecked"
+                  }
+                  onPress={() =>
+                    props.setFormData({
+                      ...props.formData,
+                      purpose: "end user",
+                    })
+                  }
+                  color={PRIMARY_THEME_COLOR}
+                />
+                <Text
+                  style={[
+                    styles.radioTxt,
+                    {
+                      color:
+                        props?.formData?.purpose === "end user"
+                          ? PRIMARY_THEME_COLOR
+                          : BLACK_COLOR,
+                    },
+                  ]}
+                >
+                  End User
+                </Text>
+              </View>
+              <View style={styles.radioView}>
+                <RadioButton.Android
+                  value="invest"
+                  status={
+                    props?.formData?.purpose === "invest"
+                      ? "checked"
+                      : "unchecked"
+                  }
+                  onPress={() =>
+                    props.setFormData({
+                      ...props.formData,
+                      purpose: "invest",
+                    })
+                  }
+                  color={PRIMARY_THEME_COLOR}
+                />
+                <Text
+                  style={[
+                    styles.radioTxt,
+                    {
+                      color:
+                        props?.formData?.purpose === "invest"
+                          ? PRIMARY_THEME_COLOR
+                          : BLACK_COLOR,
+                    },
+                  ]}
+                >
+                  Investment
+                </Text>
+              </View>
+            </View>
+          </View>
+          {/* <View style={styles.smallCont}>
             <Text style={[styles.headingsTxt, { width: "56%" }]}>
               Min EMI Pay
             </Text>
             <Text style={[styles.headingsTxt, { width: "50%" }]}>
               Max EMI Pay
             </Text>
-          </View>
-          <View style={styles.inputContVw}>
+          </View> */}
+          {/* <View style={styles.inputContVw}>
             <View style={styles.smallContVw}>
               <TextInput
                 value={props?.formData?.min_emi_budget?.toString()}
@@ -1867,176 +2420,11 @@ const AddNewVisitorForm = (props: any) => {
                 }}
               />
             </View>
-          </View>
-          <View style={styles.radioBtnView}>
-            <Text style={styles.headingsTxt}>Purpose</Text>
-            <View style={{ flexDirection: "row" }}>
-              <View style={styles.radioView}>
-                <RadioButton.Android
-                  value="end user"
-                  status={
-                    props?.formData?.purpose === "end user"
-                      ? "checked"
-                      : "unchecked"
-                  }
-                  onPress={() =>
-                    props.setFormData({
-                      ...props.formData,
-                      purpose: "end user",
-                    })
-                  }
-                  color={PRIMARY_THEME_COLOR}
-                />
-                <Text
-                  style={[
-                    styles.radioTxt,
-                    {
-                      color:
-                        props?.formData?.purpose === "end user"
-                          ? PRIMARY_THEME_COLOR
-                          : BLACK_COLOR,
-                    },
-                  ]}
-                >
-                  End User
-                </Text>
-              </View>
-              <View style={styles.radioView}>
-                <RadioButton.Android
-                  value="invest"
-                  status={
-                    props?.formData?.purpose === "invest"
-                      ? "checked"
-                      : "unchecked"
-                  }
-                  onPress={() =>
-                    props.setFormData({
-                      ...props.formData,
-                      purpose: "invest",
-                    })
-                  }
-                  color={PRIMARY_THEME_COLOR}
-                />
-                <Text
-                  style={[
-                    styles.radioTxt,
-                    {
-                      color:
-                        props?.formData?.purpose === "invest"
-                          ? PRIMARY_THEME_COLOR
-                          : BLACK_COLOR,
-                    },
-                  ]}
-                >
-                  Investment
-                </Text>
-              </View>
-            </View>
-          </View>
-          <Text style={styles.headingText}>Company Details</Text>
-          <View style={styles.radioBtnView}>
-            <Text style={styles.headingsTxt}>Occupation</Text>
-            <View
-              style={{
-                flexDirection: "row",
-                width: "100%",
-                flexWrap: "wrap",
-                alignSelf: "center",
-              }}
-            >
-              <View style={styles.radioView}>
-                <RadioButton.Android
-                  value="salaried"
-                  status={
-                    props?.formData?.occupation === "salaried"
-                      ? "checked"
-                      : "unchecked"
-                  }
-                  onPress={() =>
-                    props.setFormData({
-                      ...props.formData,
-                      occupation: "salaried",
-                    })
-                  }
-                  color={PRIMARY_THEME_COLOR}
-                />
-                <Text
-                  style={[
-                    styles.radioTxt,
-                    {
-                      color:
-                        props?.formData?.occupation === "salaried"
-                          ? PRIMARY_THEME_COLOR
-                          : BLACK_COLOR,
-                    },
-                  ]}
-                >
-                  Salaried
-                </Text>
-              </View>
-              <View style={styles.radioView}>
-                <RadioButton.Android
-                  value="self employee"
-                  status={
-                    props?.formData?.occupation === "self employee"
-                      ? "checked"
-                      : "unchecked"
-                  }
-                  onPress={() =>
-                    props.setFormData({
-                      ...props.formData,
-                      occupation: "self employee",
-                    })
-                  }
-                  color={PRIMARY_THEME_COLOR}
-                />
-                <Text
-                  style={[
-                    styles.radioTxt,
-                    {
-                      color:
-                        props?.formData?.occupation === "self employee"
-                          ? PRIMARY_THEME_COLOR
-                          : BLACK_COLOR,
-                    },
-                  ]}
-                >
-                  Self Employed
-                </Text>
-              </View>
-              <View style={styles.radioView}>
-                <RadioButton.Android
-                  value="professional"
-                  status={
-                    props?.formData?.occupation === "professional"
-                      ? "checked"
-                      : "unchecked"
-                  }
-                  onPress={() =>
-                    props.setFormData({
-                      ...props.formData,
-                      occupation: "professional",
-                    })
-                  }
-                  color={PRIMARY_THEME_COLOR}
-                />
-                <Text
-                  style={[
-                    styles.radioTxt,
-                    {
-                      color:
-                        props?.formData?.occupation === "professional"
-                          ? PRIMARY_THEME_COLOR
-                          : BLACK_COLOR,
-                    },
-                  ]}
-                >
-                  Professional
-                </Text>
-              </View>
-            </View>
-          </View>
-          <View style={styles.inputWrap}>
+          </View> */}
+
+          {/* <Text style={styles.headingText}>Company Details</Text> */}
+
+          {/* <View style={styles.inputWrap}>
             <InputField
               disableSpecialCharacters={false}
               placeholderText={"Company Name"}
@@ -2050,8 +2438,8 @@ const AddNewVisitorForm = (props: any) => {
               valueshow={props?.formData?.coumpany_name}
               headingText={"Company Name"}
             />
-          </View>
-          <View style={styles.inputWrap}>
+          </View> */}
+          {/* <View style={styles.inputWrap}>
             <InputField
               disableSpecialCharacters={true}
               placeholderText={"Designation"}
@@ -2065,22 +2453,9 @@ const AddNewVisitorForm = (props: any) => {
               valueshow={props?.formData?.desigantion}
               headingText={"Designation"}
             />
-          </View>
-          <View style={styles.inputWrap}>
-            <InputField
-              placeholderText={"Office Address"}
-              handleInputBtnPress={() => {}}
-              onChangeText={(data: any) => {
-                props.setFormData({
-                  ...props.formData,
-                  office_address: data,
-                });
-              }}
-              valueshow={props?.formData?.office_address}
-              headingText={"Office Address"}
-            />
-          </View>
-          <View style={styles.inputWrap}>
+          </View> */}
+
+          {/* <View style={styles.inputWrap}>
             <InputField
               placeholderText={"Remark"}
               handleInputBtnPress={() => {}}
@@ -2093,7 +2468,7 @@ const AddNewVisitorForm = (props: any) => {
               valueshow={props?.formData?.remark}
               headingText={"Remark"}
             />
-          </View>
+          </View> */}
           <View style={styles.bottomView}>
             <View style={styles.bottomContentView}>
               <CheckBox

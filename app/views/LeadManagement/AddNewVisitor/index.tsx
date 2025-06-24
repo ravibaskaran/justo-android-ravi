@@ -54,6 +54,13 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
     funding_emi_type: "",
     purpose: "",
     occupation: "",
+    expected_possession_period: "",
+    budget_amount: "",
+    ethnicity_id: "",
+    ethnicity: "",
+    visit_with: "",
+    qualified: undefined,
+    lead_priority: "",
     desigantion: "",
     office_address: "",
     module_id: "",
@@ -183,6 +190,7 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
 
   const handleDropdownPress = (type: any) => {
     setDropDownType(type);
+    console.log(type);
     dispatch(
       getAllMaster({
         type: type,
@@ -399,22 +407,23 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
       ) {
         isError = false;
         errorMessage = "Please enter valid family member";
-      } else if (formData?.min_budget && !formData.max_budget) {
-        isError = false;
-        errorMessage = "Please enter Maximum budget";
-      } else if (formData?.max_budget && !formData.min_budget) {
-        isError = false;
-        errorMessage = "Please enter Minimum budget";
-      } else if (formData?.max_emi_budget && !formData.min_emi_budget) {
-        isError = false;
-        errorMessage = "Please enter Minimum EMI budget";
-      } else if (formData?.min_emi_budget && !formData.max_emi_budget) {
-        isError = false;
-        errorMessage = "Please enter Maximum EMI budget";
-      } else if (formData?.min_budget === "" && formData?.max_budget !== "") {
-        isError = false;
-        errorMessage = "Please enter minimum budget also";
       }
+      // else if (formData?.min_budget && !formData.max_budget) {
+      //   isError = false;
+      //   errorMessage = "Please enter Maximum budget";
+      // } else if (formData?.max_budget && !formData.min_budget) {
+      //   isError = false;
+      //   errorMessage = "Please enter Minimum budget";
+      // } else if (formData?.max_emi_budget && !formData.min_emi_budget) {
+      //   isError = false;
+      //   errorMessage = "Please enter Minimum EMI budget";
+      // } else if (formData?.min_emi_budget && !formData.max_emi_budget) {
+      //   isError = false;
+      //   errorMessage = "Please enter Maximum EMI budget";
+      // } else if (formData?.min_budget === "" && formData?.max_budget !== "") {
+      //   isError = false;
+      //   errorMessage = "Please enter minimum budget also";
+      // }
       if (formData?.lead_source === CONST_IDS.cp_lead_source_id) {
         if (!formData.cp_type) {
           isError = false;
@@ -460,82 +469,82 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
           errorMessage = "Please enter valid referrer email id";
         }
       }
-      if (formData?.min_budget || formData.max_budget) {
-        let tempMinVal: any;
-        formData?.min_budget_type === "K"
-          ? (tempMinVal = formData?.min_budget * 1000)
-          : formData?.min_budget_type === "L"
-          ? (tempMinVal = formData?.min_budget * 100000)
-          : formData?.min_budget_type === "Cr"
-          ? (tempMinVal = formData?.min_budget * 10000000)
-          : null;
+      // if (formData?.min_budget || formData.max_budget) {
+      //   let tempMinVal: any;
+      //   formData?.min_budget_type === "K"
+      //     ? (tempMinVal = formData?.min_budget * 1000)
+      //     : formData?.min_budget_type === "L"
+      //     ? (tempMinVal = formData?.min_budget * 100000)
+      //     : formData?.min_budget_type === "Cr"
+      //     ? (tempMinVal = formData?.min_budget * 10000000)
+      //     : null;
 
-        let tempMaxVal: any;
-        formData?.max_budget_type === "K"
-          ? (tempMaxVal = formData?.max_budget * 1000)
-          : formData?.max_budget_type === "L"
-          ? (tempMaxVal = formData?.max_budget * 100000)
-          : formData?.max_budget_type === "Cr"
-          ? (tempMaxVal = formData?.max_budget * 10000000)
-          : null;
+      //   let tempMaxVal: any;
+      //   formData?.max_budget_type === "K"
+      //     ? (tempMaxVal = formData?.max_budget * 1000)
+      //     : formData?.max_budget_type === "L"
+      //     ? (tempMaxVal = formData?.max_budget * 100000)
+      //     : formData?.max_budget_type === "Cr"
+      //     ? (tempMaxVal = formData?.max_budget * 10000000)
+      //     : null;
 
-        if (tempMinVal >= tempMaxVal) {
-          isError = false;
-          errorMessage = "Maximum budget should more than Minimum budget";
-        }
-      } else if (
-        formData?.min_emi_budget === "" &&
-        formData?.max_emi_budget !== ""
-      ) {
-        isError = false;
-        errorMessage = "Please enter minimum emi also";
-      }
-      if (formData?.min_emi_budget || formData.max_emi_budget) {
-        let tempMinVal: any;
-        formData?.min_emi_budget_type === "K"
-          ? (tempMinVal = formData?.min_emi_budget * 1000)
-          : formData?.min_emi_budget_type === "L"
-          ? (tempMinVal = formData?.min_emi_budget * 100000)
-          : formData?.min_emi_budget_type === "Cr"
-          ? (tempMinVal = formData?.min_emi_budget * 10000000)
-          : null;
+      //   if (tempMinVal >= tempMaxVal) {
+      //     isError = false;
+      //     errorMessage = "Maximum budget should more than Minimum budget";
+      //   }
+      // } else if (
+      //   formData?.min_emi_budget === "" &&
+      //   formData?.max_emi_budget !== ""
+      // ) {
+      //   isError = false;
+      //   errorMessage = "Please enter minimum emi also";
+      // }
+      // if (formData?.min_emi_budget || formData.max_emi_budget) {
+      //   let tempMinVal: any;
+      //   formData?.min_emi_budget_type === "K"
+      //     ? (tempMinVal = formData?.min_emi_budget * 1000)
+      //     : formData?.min_emi_budget_type === "L"
+      //     ? (tempMinVal = formData?.min_emi_budget * 100000)
+      //     : formData?.min_emi_budget_type === "Cr"
+      //     ? (tempMinVal = formData?.min_emi_budget * 10000000)
+      //     : null;
 
-        let tempMaxVal: any;
-        formData?.max_emi_budget_type === "K"
-          ? (tempMaxVal = formData?.max_emi_budget * 1000)
-          : formData?.max_emi_budget_type === "L"
-          ? (tempMaxVal = formData?.max_emi_budget * 100000)
-          : formData?.max_emi_budget_type === "Cr"
-          ? (tempMaxVal = formData?.max_emi_budget * 10000000)
-          : null;
-        if (tempMinVal >= tempMaxVal) {
-          isError = false;
-          errorMessage = "Maximum Emi should more than Minimum Emi";
-        }
-      }
-      if (formData?.max_budget !== "" && formData?.max_emi_budget !== "") {
-        let tempMaxBudgetVal: any;
-        formData?.max_budget_type === "K"
-          ? (tempMaxBudgetVal = formData?.max_budget * 1000)
-          : formData?.max_budget_type === "L"
-          ? (tempMaxBudgetVal = formData?.max_budget * 100000)
-          : formData?.max_budget_type === "Cr"
-          ? (tempMaxBudgetVal = formData?.max_budget * 10000000)
-          : null;
+      //   let tempMaxVal: any;
+      //   formData?.max_emi_budget_type === "K"
+      //     ? (tempMaxVal = formData?.max_emi_budget * 1000)
+      //     : formData?.max_emi_budget_type === "L"
+      //     ? (tempMaxVal = formData?.max_emi_budget * 100000)
+      //     : formData?.max_emi_budget_type === "Cr"
+      //     ? (tempMaxVal = formData?.max_emi_budget * 10000000)
+      //     : null;
+      //   if (tempMinVal >= tempMaxVal) {
+      //     isError = false;
+      //     errorMessage = "Maximum Emi should more than Minimum Emi";
+      //   }
+      // }
+      // if (formData?.max_budget !== "" && formData?.max_emi_budget !== "") {
+      //   let tempMaxBudgetVal: any;
+      //   formData?.max_budget_type === "K"
+      //     ? (tempMaxBudgetVal = formData?.max_budget * 1000)
+      //     : formData?.max_budget_type === "L"
+      //     ? (tempMaxBudgetVal = formData?.max_budget * 100000)
+      //     : formData?.max_budget_type === "Cr"
+      //     ? (tempMaxBudgetVal = formData?.max_budget * 10000000)
+      //     : null;
 
-        let tempMaxEmiVal: any;
-        formData?.max_emi_budget_type === "K"
-          ? (tempMaxEmiVal = formData?.max_emi_budget * 1000)
-          : formData?.max_emi_budget_type === "L"
-          ? (tempMaxEmiVal = formData?.max_emi_budget * 100000)
-          : formData?.max_emi_budget_type === "Cr"
-          ? (tempMaxEmiVal = formData?.max_emi_budget * 10000000)
-          : null;
-        if (tempMaxEmiVal >= tempMaxBudgetVal) {
-          isError = false;
-          errorMessage = "Maximum Emi should less than maximum budget";
-        }
-      }
+      //   let tempMaxEmiVal: any;
+      //   formData?.max_emi_budget_type === "K"
+      //     ? (tempMaxEmiVal = formData?.max_emi_budget * 1000)
+      //     : formData?.max_emi_budget_type === "L"
+      //     ? (tempMaxEmiVal = formData?.max_emi_budget * 100000)
+      //     : formData?.max_emi_budget_type === "Cr"
+      //     ? (tempMaxEmiVal = formData?.max_emi_budget * 10000000)
+      //     : null;
+      //   if (tempMaxEmiVal >= tempMaxBudgetVal) {
+      //     isError = false;
+      //     errorMessage = "Maximum Emi should less than maximum budget";
+      //   }
+      // }
       if (errorMessage !== "") {
         ErrorMessage({
           msg: errorMessage,
@@ -857,6 +866,28 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
           occupation: res?.data?.data[0]?.occupation
             ? res?.data?.data[0]?.occupation
             : "",
+          expected_possession_period: res?.data?.data[0]
+            ?.expected_possession_period
+            ? res?.data?.data[0]?.expected_possession_period
+            : "",
+          budget_amount: res?.data?.data[0]?.budget_amount
+            ? res?.data?.data[0]?.budget_amount
+            : "",
+          ethnicity_id: res?.data?.data[0]?.ethnicity_id
+            ? res?.data?.data[0]?.ethnicity_id
+            : "",
+          ethnicity: res?.data?.data[0]?.ethnicity
+            ? res?.data?.data[0]?.ethnicity
+            : "",
+          visit_with: res?.data?.data[0]?.visit_with
+            ? res?.data?.data[0]?.visit_with
+            : "",
+          qualified: res?.data?.data[0]?.qualified
+            ? res?.data?.data[0]?.qualified
+            : "",
+          lead_priority: res?.data?.data[0]?.lead_priority
+            ? res?.data?.data[0]?.lead_priority
+            : "",
           office_address: res?.data?.data[0]?.office_address
             ? res?.data?.data[0]?.office_address
             : "",
@@ -904,6 +935,13 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
           longitude: "",
           city: formData?.location,
           occupation: formData?.occupation,
+          expected_possession_period: formData?.expected_possession_period,
+          budget_amount: formData?.budget_amount,
+          ethnicity: formData?.ethnicity,
+          ethnicity_id: formData?.ethnicity_id,
+          visit_with: formData?.visit_with,
+          qualified: formData?.qualified,
+          lead_priority: formData?.lead_priority,
           coumpany_name: formData?.coumpany_name,
           desigantion: formData?.desigantion,
           office_address: formData?.office_address,
@@ -999,6 +1037,7 @@ const AddNewVisitorScreen = ({ navigation, route }: any) => {
           };
         }
 
+        // console.log("add_paramsadd_params",add_params)
         if (formData?.property_id !== "") {
           dispatch(addVisitor(add_params));
         } else {

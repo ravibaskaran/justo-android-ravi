@@ -1,14 +1,13 @@
-import { View, TextInput, Image, TouchableOpacity, Text } from "react-native";
 import React from "react";
-import styles from "./styles";
+import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { normalizeHeight } from "../scaleFontSize";
 import {
-  BLACK_COLOR,
   GRAY_COLOR,
   GRAY_LIGHT_COLOR,
-  Regexs,
+  Regexs
 } from "../utilities/constant";
-import { normalize, normalizeHeight } from "../scaleFontSize";
 import { RequiredStart } from "../utilities/GlobalFuncations";
+import styles from "./styles";
 
 const CommonInput = (props: any) => {
   const onSubmit = (e: any) => {
@@ -40,7 +39,7 @@ const CommonInput = (props: any) => {
               textAlignVertical: "top",
               top: props.topping,
               color: GRAY_LIGHT_COLOR,
-              fontSize: 13,
+              fontSize: 15,
             },
           ]}
           onChangeText={(val: any) => {

@@ -201,7 +201,7 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
         msg: res?.data?.message,
         backgroundColor: GREEN_COLOR,
       });
-      getAppointmentList(0, isTodayAppointment ? todayAppointment : {});
+      getAppointmentList(0, isTodayAppointment ? todayAppointment : filterData);
       dispatch({ type: STOP_LOADING });
     } else {
       setTimeout(() => {

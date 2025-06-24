@@ -164,7 +164,9 @@ const BookingDetailsItem = (props: any) => {
               <Text>:</Text>
             </View>
             <View style={styles.nameContainer}>
-              <Text style={styles.nameTxt}>{item?.created_for_sm_name} ({item?.created_for_sm_role})</Text>
+              <Text style={styles.nameTxt}>
+                {item?.created_for_sm_name} ({item?.created_for_sm_role})
+              </Text>
             </View>
           </View>
         )}
@@ -211,9 +213,15 @@ const BookingDetailsItem = (props: any) => {
             </View>
             <View style={styles.nameContainer}>
               <Text style={styles.nameTxt}>
-                {item?.leads?.budget?.min_budget ||
-                item?.leads?.budget?.max_budget
-                  ? `${item?.leads?.budget?.min_budget} ${item?.leads?.budget?.min_budget_type} - ${item?.leads?.budget?.max_budget} ${item?.leads?.budget?.max_budget_type}`
+                {item?.leads?.budget_amount
+                  ? item.leads.budget_amount
+                  : item?.leads?.budget?.min_budget ||
+                    item?.leads?.budget?.max_budget
+                  ? `${item?.leads?.budget?.min_budget || ""} ${
+                      item?.leads?.budget?.min_budget_type || ""
+                    } - ${item?.leads?.budget?.max_budget || ""} ${
+                      item?.leads?.budget?.max_budget_type || ""
+                    }`
                   : strings.notfount}
               </Text>
             </View>

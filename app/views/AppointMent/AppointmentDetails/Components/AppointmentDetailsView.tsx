@@ -1,9 +1,14 @@
 import JustForOkModal from "app/components/Modals/JustForOkModal";
-import { Isios, ROLE_IDS } from "app/components/utilities/constant";
+import apiEndPoints from "app/components/utilities/apiEndPoints";
+import {
+  Isios,
+  ROLE_IDS
+} from "app/components/utilities/constant";
+import { apiCall } from "app/components/utilities/httpClient";
 import usePermission from "app/components/utilities/UserPermissions";
+import { START_LOADING, STOP_LOADING } from "app/Redux/types";
 import React, { useState } from "react";
 import { View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 import images from "../../../../assets/images";
 import Button from "../../../../components/Button";
@@ -14,9 +19,6 @@ import CancelModal from "./CancelBooking";
 import CheckedinModel from "./CheckedinModel";
 import ReadyToBookModal from "./ReadyToBookModal";
 import styles from "./Styles";
-import { apiCall } from "app/components/utilities/httpClient";
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import { START_LOADING, STOP_LOADING } from "app/Redux/types";
 
 const AppointmentDetailsView = (props: any) => {
   const { detailsData, getDetail } = props;

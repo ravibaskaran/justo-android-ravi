@@ -74,30 +74,32 @@ const AppointmentDtailsItem = (props: any) => {
         </View>
         <View style={styles.nameContainer}>
           <Text style={styles.nameTxt}>
-            {props?.detail?.min_budget && props?.detail?.max_budget ? (
+            {props?.detail?.budget_amount ? (
+              <Text style={styles.nameTxt}>{props.detail.budget_amount}</Text>
+            ) : props?.detail?.min_budget && props?.detail?.max_budget ? (
               <Text style={styles.nameTxt}>
-                {`${props?.detail?.min_budget} ${props?.detail?.min_budget_type}`}{" "}
-                -{" "}
-                {`${props?.detail?.max_budget} ${props?.detail?.max_budget_type}`}
+                {`${props.detail.min_budget} ${props.detail.min_budget_type} - ${props.detail.max_budget} ${props.detail.max_budget_type}`}
               </Text>
             ) : (
-              <Text style={styles.nameTxt}>{strings.notfount} </Text>
+              <Text style={styles.nameTxt}>{strings.notfount}</Text>
             )}
           </Text>
         </View>
       </View>
       <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
-          <Text style={styles.projectTxt}>Expected Possession date</Text>
+          <Text style={styles.projectTxt}>Expected Possession</Text>
         </View>
         <View>
           <Text>:</Text>
         </View>
         <View style={styles.nameContainer}>
           <Text style={styles.nameTxt}>
-            {props?.detail?.expected_possession_date === "" ||
-            props?.detail?.expected_possession_date === undefined ||
-            props?.detail?.expected_possession_date === null
+            {props?.detail?.expected_possession_period
+              ? props?.detail?.expected_possession_period
+              : props?.detail?.expected_possession_date === "" ||
+                props?.detail?.expected_possession_date === undefined ||
+                props?.detail?.expected_possession_date === null
               ? strings.notfount
               : moment
                   .utc(props?.detail?.expected_possession_date)
@@ -347,8 +349,8 @@ const AppointmentDtailsItem = (props: any) => {
             <Text style={styles.projectTxt}>Referrer</Text>
           </View>
           <View>
-          <Text>:</Text>
-        </View>
+            <Text>:</Text>
+          </View>
           <View style={styles.nameContainer}>
             <Text style={styles.nameTxt}>{props.detail?.referrer_name}</Text>
           </View>

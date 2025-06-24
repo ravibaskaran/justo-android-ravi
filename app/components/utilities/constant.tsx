@@ -143,3 +143,10 @@ export const REGISTERD_CP = {
   NO: 2,
   REFERRAL: 3,
 };
+
+export function capitalizeWords(text: string) {
+  return text
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}

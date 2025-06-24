@@ -140,8 +140,8 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         vectorDrawables.useSupportLibrary = true
-        versionCode 65
-        versionName "1.1.51"
+        versionCode 66
+        versionName "1.1.52"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
          missingDimensionStrategy 'react-native-camera', 'mlkit'
         if (isNewArchitectureEnabled()) {

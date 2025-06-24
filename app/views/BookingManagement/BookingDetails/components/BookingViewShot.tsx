@@ -119,9 +119,15 @@ const BookingViewShot = (props: any) => {
             </View>
             <View style={styles.nameContainer}>
               <Text style={[styles.nameTxt, { fontSize: normalize(12) }]}>
-                {item?.leads?.budget?.min_budget ||
-                item?.leads?.budget?.max_budget
-                  ? `${item?.leads?.budget?.min_budget} ${item?.leads?.budget?.min_budget_type} - ${item?.leads?.budget?.max_budget} ${item?.leads?.budget?.max_budget_type}`
+                {item?.leads?.budget_amount
+                  ? item.leads.budget_amount
+                  : item?.leads?.budget?.min_budget ||
+                    item?.leads?.budget?.max_budget
+                  ? `${item?.leads?.budget?.min_budget || ""} ${
+                      item?.leads?.budget?.min_budget_type || ""
+                    } - ${item?.leads?.budget?.max_budget || ""} ${
+                      item?.leads?.budget?.max_budget_type || ""
+                    }`
                   : strings.notfount}
               </Text>
             </View>

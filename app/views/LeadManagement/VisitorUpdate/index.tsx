@@ -23,6 +23,7 @@ import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Keyboard } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import VisitorUpdateFirstView from "./components/VisitorUpdateFirst";
+import { getAllMaster } from "app/Redux/Actions/MasterActions";
 
 const VisitorUpdateScreen = ({ navigation, route }: any) => {
   const data = route?.params || 0;
@@ -59,6 +60,11 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
     longitude: "",
     city: "",
     occupation: "",
+    ethnicity: "",
+    ethnicity_id: "",
+    visit_with: "",
+    qualified: undefined,
+    lead_priority: "",
     coumpany_name: "",
     desigantion: "",
     office_address: "",
@@ -79,6 +85,8 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
     max_budget: "",
     max_budget_type: "",
     expected_possession_date: "",
+    expected_possession_period: "",
+    budget_amount: "",
     min_emi_budget: "",
     min_emi_budget_type: "",
     max_emi_budget: "",
@@ -167,7 +175,12 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
         lead_id: response?.data[0]?._id,
         property_title: response?.data[0]?.property_title,
         expected_possession_date: response?.data[0]?.expected_possession_date,
+        expected_possession_period:
+          response?.data[0]?.expected_possession_period,
+        budget_amount: response?.data[0]?.budget_amount,
         property_id: response?.data[0]?.property_id,
+        lead_priority: response?.data[0]?.lead_priority,
+        qualified: response?.data[0]?.qualified,
         property_type_title: response?.data[0]?.property_type_title,
         locality:
           response?.data[0]?.customer_detail?.locality &&
@@ -310,6 +323,16 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
     }
   }, [masterData]);
 
+  const handleDropdownPress = (type: any) => {
+    setDropDownType(type);
+    console.log(type);
+    dispatch(
+      getAllMaster({
+        type: type,
+      })
+    );
+  };
+
   useEffect(() => {
     if (editData?.update) {
       dispatch(addVisitorRemove());
@@ -434,67 +457,68 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
         errorMessage = "Please enter valid family member";
       }
     }
-    if (updateForm?.min_budget && !updateForm.max_budget) {
-      isError = false;
-      errorMessage = "Please enter Maximum budget";
-    } else if (updateForm?.max_budget && !updateForm.min_budget) {
-      isError = false;
-      errorMessage = "Please enter Minimum budget";
-    } else if (updateForm?.max_emi_budget && !updateForm.min_emi_budget) {
-      isError = false;
-      errorMessage = "Please enter Minimum EMI budget";
-    } else if (updateForm?.min_emi_budget && !updateForm.max_emi_budget) {
-      isError = false;
-      errorMessage = "Please enter Maximum EMI budget";
-    }
-    if (updateForm?.min_budget && updateForm.max_budget) {
-      let tempMinVal: any;
-      updateForm?.min_budget_type === "K"
-        ? (tempMinVal = updateForm?.min_budget * 1000)
-        : updateForm?.min_budget_type === "L"
-        ? (tempMinVal = updateForm?.min_budget * 100000)
-        : updateForm?.min_budget_type === "Cr"
-        ? (tempMinVal = updateForm?.min_budget * 10000000)
-        : null;
 
-      let tempMaxVal: any;
-      updateForm?.max_budget_type === "K"
-        ? (tempMaxVal = updateForm?.max_budget * 1000)
-        : updateForm?.max_budget_type === "L"
-        ? (tempMaxVal = updateForm?.max_budget * 100000)
-        : updateForm?.max_budget_type === "Cr"
-        ? (tempMaxVal = updateForm?.max_budget * 10000000)
-        : null;
+    // if (updateForm?.min_budget && !updateForm.max_budget) {
+    //   isError = false;
+    //   errorMessage = "Please enter Maximum budget";
+    // } else if (updateForm?.max_budget && !updateForm.min_budget) {
+    //   isError = false;
+    //   errorMessage = "Please enter Minimum budget";
+    // } else if (updateForm?.max_emi_budget && !updateForm.min_emi_budget) {
+    //   isError = false;
+    //   errorMessage = "Please enter Minimum EMI budget";
+    // } else if (updateForm?.min_emi_budget && !updateForm.max_emi_budget) {
+    //   isError = false;
+    //   errorMessage = "Please enter Maximum EMI budget";
+    // }
+    // if (updateForm?.min_budget && updateForm.max_budget) {
+    //   let tempMinVal: any;
+    //   updateForm?.min_budget_type === "K"
+    //     ? (tempMinVal = updateForm?.min_budget * 1000)
+    //     : updateForm?.min_budget_type === "L"
+    //     ? (tempMinVal = updateForm?.min_budget * 100000)
+    //     : updateForm?.min_budget_type === "Cr"
+    //     ? (tempMinVal = updateForm?.min_budget * 10000000)
+    //     : null;
 
-      if (tempMinVal >= tempMaxVal) {
-        isError = false;
-        errorMessage = "Maximum budget should more than Minimum budget";
-      }
-    }
-    if (updateForm?.min_emi_budget && updateForm.max_emi_budget) {
-      let tempMinVal: any;
-      updateForm?.min_emi_budget_type === "K"
-        ? (tempMinVal = updateForm?.min_emi_budget * 1000)
-        : updateForm?.min_emi_budget_type === "L"
-        ? (tempMinVal = updateForm?.min_emi_budget * 100000)
-        : updateForm?.min_emi_budget_type === "Cr"
-        ? (tempMinVal = updateForm?.min_emi_budget * 10000000)
-        : null;
+    //   let tempMaxVal: any;
+    //   updateForm?.max_budget_type === "K"
+    //     ? (tempMaxVal = updateForm?.max_budget * 1000)
+    //     : updateForm?.max_budget_type === "L"
+    //     ? (tempMaxVal = updateForm?.max_budget * 100000)
+    //     : updateForm?.max_budget_type === "Cr"
+    //     ? (tempMaxVal = updateForm?.max_budget * 10000000)
+    //     : null;
 
-      let tempMaxVal: any;
-      updateForm?.max_emi_budget_type === "K"
-        ? (tempMaxVal = updateForm?.max_emi_budget * 1000)
-        : updateForm?.max_emi_budget_type === "L"
-        ? (tempMaxVal = updateForm?.max_emi_budget * 100000)
-        : updateForm?.max_emi_budget_type === "Cr"
-        ? (tempMaxVal = updateForm?.max_emi_budget * 10000000)
-        : null;
+    //   if (tempMinVal >= tempMaxVal) {
+    //     isError = false;
+    //     errorMessage = "Maximum budget should more than Minimum budget";
+    //   }
+    // }
+    // if (updateForm?.min_emi_budget && updateForm.max_emi_budget) {
+    //   let tempMinVal: any;
+    //   updateForm?.min_emi_budget_type === "K"
+    //     ? (tempMinVal = updateForm?.min_emi_budget * 1000)
+    //     : updateForm?.min_emi_budget_type === "L"
+    //     ? (tempMinVal = updateForm?.min_emi_budget * 100000)
+    //     : updateForm?.min_emi_budget_type === "Cr"
+    //     ? (tempMinVal = updateForm?.min_emi_budget * 10000000)
+    //     : null;
 
-      if (tempMinVal >= tempMaxVal) {
-        isError = false;
-        errorMessage = "Maximum Emi should more than Minimum Emi";
-      }
-    }
+    //   let tempMaxVal: any;
+    //   updateForm?.max_emi_budget_type === "K"
+    //     ? (tempMaxVal = updateForm?.max_emi_budget * 1000)
+    //     : updateForm?.max_emi_budget_type === "L"
+    //     ? (tempMaxVal = updateForm?.max_emi_budget * 100000)
+    //     : updateForm?.max_emi_budget_type === "Cr"
+    //     ? (tempMaxVal = updateForm?.max_emi_budget * 10000000)
+    //     : null;
+
+    //   if (tempMinVal >= tempMaxVal) {
+    //     isError = false;
+    //     errorMessage = "Maximum Emi should more than Minimum Emi";
+    //   }
+    // }
     if (errorMessage !== "") {
       ErrorMessage({
         msg: errorMessage,
@@ -524,6 +548,11 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
         longitude: updateForm?.longitude,
         city: updateForm?.city,
         occupation: updateForm?.occupation,
+        ethnicity: updateForm?.ethnicity,
+        ethnicity_id: updateForm?.ethnicity_id,
+        visit_with: updateForm?.visit_with,
+        qualified: updateForm?.qualified,
+        lead_priority: updateForm?.lead_priority,
         coumpany_name: updateForm?.coumpany_name,
         desigantion: updateForm?.desigantion,
         office_address: updateForm?.office_address,
@@ -548,6 +577,8 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
         max_budget: updateForm?.max_budget,
         max_budget_type: updateForm?.max_budget_type,
         expected_possession_date: updateForm?.expected_possession_date,
+        expected_possession_period: updateForm?.expected_possession_period,
+        budget_amount: updateForm?.budget_amount,
         property_id: updateForm?.property_id,
         property_type_title: updateForm?.property_type_title,
         min_emi_budget: updateForm?.min_emi_budget
@@ -684,6 +715,7 @@ const VisitorUpdateScreen = ({ navigation, route }: any) => {
         okIsVisible={okIsVisible}
         mobileerror={mobileerror}
         onPressRightButton={onPressRightButton}
+        handleDropdownPress={handleDropdownPress}
       />
     </>
   );

@@ -72,7 +72,12 @@ const LeadManagementItem = (props: any) => {
         </View>
         <View style={styles.nameContainer}>
           <Text style={styles.nameTxt}>
-            {props.items.min_rate || props.items.max_rate
+            {/* {props.items.min_rate || props.items.max_rate
+              ? `${props.items.min_rate} ${props.items.min_rate_type} - ${props.items.max_rate} ${props.items.max_rate_type}`
+              : strings.notfount} */}
+            {props?.items?.budget_amount
+              ? props?.items.budget_amount
+              : props.items.min_rate && props.items.max_rate
               ? `${props.items.min_rate} ${props.items.min_rate_type} - ${props.items.max_rate} ${props.items.max_rate_type}`
               : strings.notfount}
           </Text>

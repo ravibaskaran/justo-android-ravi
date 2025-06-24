@@ -1,3 +1,4 @@
+import images from "app/assets/images";
 import Button from "app/components/Button";
 import { normalizeSpacing } from "app/components/scaleFontSize";
 import {
@@ -13,7 +14,7 @@ import {
 import strings from "app/components/utilities/Localization";
 import moment from "moment";
 import React from "react";
-import { ScrollView, Text, View } from "react-native";
+import { Image, ScrollView, Text, View } from "react-native";
 import styles from "./Styles";
 
 const AppointmentDtailsItem = (props: any) => {
@@ -64,31 +65,39 @@ const AppointmentDtailsItem = (props: any) => {
       </View>
       <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
-          <Text style={styles.projectTxt}>{strings.budget}</Text>
+          <Text style={styles.projectTxt}>Budget</Text>
         </View>
         <View>
           <Text>:</Text>
         </View>
         <View style={styles.nameContainer}>
           <Text style={styles.nameTxt}>
-            {item?.min_budget || item?.max_budget
-              ? `${item?.min_budget} ${item?.min_budget_type} - ${item?.max_budget} ${item?.max_budget_type}`
-              : strings.notfount}
+            {item?.budget_amount ? (
+              <Text style={styles.nameTxt}>{item.budget_amount}</Text>
+            ) : item?.min_budget && item?.max_budget ? (
+              <Text style={styles.nameTxt}>
+                {`${item.min_budget} ${item.min_budget_type} - ${item.max_budget} ${item.max_budget_type}`}
+              </Text>
+            ) : (
+              <Text style={styles.nameTxt}>{strings.notfount}</Text>
+            )}
           </Text>
         </View>
       </View>
       <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
-          <Text style={styles.projectTxt}>Expected Possession date</Text>
+          <Text style={styles.projectTxt}>Expected Possession</Text>
         </View>
         <View>
           <Text>:</Text>
         </View>
         <View style={styles.nameContainer}>
           <Text style={styles.nameTxt}>
-            {item?.expected_possession_date === "" ||
-            item?.expected_possession_date === undefined ||
-            item?.expected_possession_date === null
+            {item?.expected_possession_period
+              ? item?.expected_possession_period
+              : item?.expected_possession_date === "" ||
+                item?.expected_possession_date === undefined ||
+                item?.expected_possession_date === null
               ? strings.notfount
               : moment.utc(item?.expected_possession_date).format(DATE_BY_DAY)}
           </Text>
