@@ -36,6 +36,8 @@ const LeadManagementView = (props: any) => {
       property_title: "",
       visit_status: "",
       lead_status: "",
+      qualified: "",
+      lead_priority: "",
       draft: prev.draft,
     }));
     props.setVisitorList([]);

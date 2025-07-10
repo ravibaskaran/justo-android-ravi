@@ -138,6 +138,10 @@ export default {
   UPDATE_FOLLOWUP: "/followupStatus/updatefollowup",
   ADD_FOLLOWUP: "/followupStatus/addfollowup",
 
+  //ScheduledActivity
+  SCHEDULED_ACTIVITY: "/followupStatus/getScheduleFollowUpList",
+  CLOSE_ACTIVITY: "/followupStatus/markScheduledFollowup",
+
   //Lead Management
   VISITORLIST: "/visit/getVisiterList",
   GET_VISITOR_DETAIL_: "/visit/getVisitDetails",

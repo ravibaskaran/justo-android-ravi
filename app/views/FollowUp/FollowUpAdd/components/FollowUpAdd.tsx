@@ -1,28 +1,36 @@
-import React from "react";
-import { View, Text, Image, FlatList, ScrollView } from "react-native";
+import InputCalender from "app/components/InputCalender";
+import moment from "moment";
+import React, { useEffect } from "react";
+import { ScrollView, Text, View } from "react-native";
 import images from "../../../../assets/images";
 import Button from "../../../../components/Button";
 import DropdownInput from "../../../../components/DropDown";
+import Styles from "../../../../components/DropDown/styles";
 import Header from "../../../../components/Header";
 import InputField from "../../../../components/InputField";
 import {
   DATE_FORMAT,
   Isios,
-  PRIMARY_THEME_COLOR,
-  TIME_FORMAT,
+  PRIMARY_THEME_COLOR
 } from "../../../../components/utilities/constant";
 import strings from "../../../../components/utilities/Localization";
 import styles from "./styles";
-import Styles from "../../../../components/DropDown/styles";
-import FollupListItem from "./FollowupListItem";
-import InputCalender from "app/components/InputCalender";
-import moment from "moment";
-import { leadTypes } from "app/components/utilities/DemoData";
 
 const FollowUpAddView = (props: any) => {
   const today = new Date();
   const nextDay = new Date(today);
-  nextDay.setDate(today.getDate() + 1)
+  nextDay.setDate(today.getDate() + 1);
+
+  useEffect(() => {
+    if (props?.fromAppointmentPage) {
+      props.handleMasterDatas(5);
+      props.setFormData({
+        ...props.formData,
+        followup_status: "6360c6d52ca46e9d3636fbf4",
+      });
+    }
+  }, []);
+
   return (
     <View style={styles.mainContainer}>
       <Header
@@ -47,7 +55,14 @@ const FollowUpAddView = (props: any) => {
               require={true}
               headingText={"Status"}
               placeholder={strings.status}
-              data={props?.masterDatas}
+              disable={props?.fromAppointmentPage}
+              data={
+                props?.fromAppointmentPage
+                  ? props?.masterDatas.filter((item: any) => {
+                      return ["6360c6d52ca46e9d3636fbf4"].includes(item?._id);
+                    })
+                  : props?.masterDatas
+              }
               inputWidth={"100%"}
               paddingLeft={16}
               maxHeight={300}

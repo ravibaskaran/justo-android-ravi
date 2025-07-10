@@ -1,40 +1,37 @@
-import {
-  View,
-  Text,
-  StatusBar,
-  TextInput,
-  ScrollView,
-  Keyboard,
-} from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
+import DropdownInput from "app/components/DropDown";
+import InputCalender from "app/components/InputCalender";
+import { getAllMaster } from "app/Redux/Actions/MasterActions";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
-import styles from "./Styles";
+import {
+  Keyboard,
+  ScrollView,
+  Text,
+  View
+} from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useDispatch, useSelector } from "react-redux";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import Styles from "../../../../components/DropDown/styles";
+import Header from "../../../../components/Header";
+import InputField from "../../../../components/InputField";
 import {
   DATE_FORMAT,
   Isios,
   PRIMARY_THEME_COLOR_DARK,
   RED_COLOR,
-  TIME_FORMAT,
-  WHITE_COLOR,
+  WHITE_COLOR
 } from "../../../../components/utilities/constant";
-import Header from "../../../../components/Header";
-import images from "../../../../assets/images";
 import strings from "../../../../components/utilities/Localization";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import InputField from "../../../../components/InputField";
-import Button from "../../../../components/Button";
-import InputCalender from "app/components/InputCalender";
-import moment from "moment";
-import { useFocusEffect } from "@react-navigation/native";
-import { useDispatch, useSelector } from "react-redux";
-import DropdownInput from "app/components/DropDown";
-import { getAllMaster } from "app/Redux/Actions/MasterActions";
-import Styles from "../../../../components/DropDown/styles";
+import styles from "./Styles";
+
+import ErrorMessage from "app/components/ErrorMessage";
 import {
   getAllFollowUpDetails,
   updateFollowUp,
 } from "app/Redux/Actions/FollowUpActions";
-import { leadTypes } from "app/components/utilities/DemoData";
-import ErrorMessage from "app/components/ErrorMessage";
 
 const EditFollowUp = ({ navigation, route }: any) => {
   const followUpId = route?.params || "";
@@ -177,7 +174,7 @@ const EditFollowUp = ({ navigation, route }: any) => {
                   ...formData,
                   followup_status: item._id,
                   next_followup_date: "",
-                  followup_time: ""
+                  followup_time: "",
                 });
               }}
               newRenderItem={(item: any) => {

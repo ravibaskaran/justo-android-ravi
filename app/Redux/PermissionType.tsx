@@ -74,6 +74,14 @@ export const MENUITEMS = [
         sort: 5
     },
     {
+        title: strings.scheduledActivity,
+        icon: images.calender,
+        path: "ScheduledActivity",
+        permission: true,
+        deploy: true,
+        slug: 'scheduled_activity',
+    },
+    {
         title: strings.readytoBookHeader,
         icon: images.lead,
         path: "BookingList",

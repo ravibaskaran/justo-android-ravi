@@ -118,6 +118,7 @@ import BookingCTA from "app/views/ReportCTAManagement/BookingCTA";
 import TodaysFollowUpScreen from "app/views/FollowUp/TodaysFollowUP";
 import ProjectReportScreen from "app/views/ProjectDetailsReport";
 import DraftVisitorUpdateScreen from "app/views/LeadManagement/DraftVisitorEdit";
+import ScheduledActivityScreen from "app/views/ScheduledActivity";
 
 const Stack = createNativeStackNavigator();
 const AppStack = createNativeStackNavigator();
@@ -177,6 +178,11 @@ const DrawerComponent = () => {
       <Drawer.Screen name="Recovery" component={RecoveryScreen} />
       <Drawer.Screen name="CpChecking" component={CpChecking} />
       <Drawer.Screen name="CancelBooking" component={CancelBookingScreen} />
+      <Drawer.Screen
+        name="ScheduledActivity"
+        component={ScheduledActivityScreen}
+      />
+
       {/* <Drawer.Screen name="profile" component={ProfileScreen}  /> */}
     </Drawer.Navigator>
   );

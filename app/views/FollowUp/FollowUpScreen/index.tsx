@@ -3,8 +3,8 @@ import React, { useEffect, useLayoutEffect, useState } from "react";
 import FollowUpView from "./Components/FollowUpView";
 import { useDispatch, useSelector } from "react-redux";
 import { useFocusEffect } from "@react-navigation/native";
-import { getAllFollowUpList } from "app/Redux/Actions/FollowUpActions";
 import { followUpBackSubject } from "app/observables/backNavigationSubject";
+import { getAllFollowUpList } from "app/Redux/Actions/FollowUpActions";
 
 const FollowUpScreen = ({ navigation }: any) => {
   const [followUpList, setFollowUpList] = useState<any>([]);

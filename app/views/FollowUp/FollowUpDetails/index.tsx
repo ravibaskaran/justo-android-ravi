@@ -1,11 +1,10 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import FollowUpDetailsView from "./Components/FollowUpDetailsView";
-import { useDispatch, useSelector } from "react-redux";
 import { useFocusEffect } from "@react-navigation/native";
-import { getAllFollowUpDetails } from "app/Redux/Actions/FollowUpActions";
-import { followUpBackSubject } from "app/observables/backNavigationSubject";
-import { apiCall } from "app/components/utilities/httpClient";
 import apiEndPoints from "app/components/utilities/apiEndPoints";
+import { apiCall } from "app/components/utilities/httpClient";
+import { followUpBackSubject } from "app/observables/backNavigationSubject";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import FollowUpDetailsView from "./Components/FollowUpDetailsView";
 
 const FollowUpDetails = ({ navigation, route }: any) => {
   const followUpId = route?.params || "";

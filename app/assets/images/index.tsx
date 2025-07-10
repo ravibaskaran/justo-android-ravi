@@ -52,6 +52,7 @@ const images = {
   deleteIcon: require('./deleteIcon.png'),
   media: require('./media.png'),
   verify: require('./verify-icon.png'),
+  calender:require('./calender.png'),
 };
 
 export default images;

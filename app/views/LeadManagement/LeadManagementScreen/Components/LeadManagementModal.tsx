@@ -43,7 +43,7 @@ const FilterModal = (props: any) => {
       startdate: "",
       enddate: "",
       search_by_visisor_name: "",
-      search_by_mobile_number:"",
+      search_by_mobile_number: "",
       search_configuration: "",
       visit_score: "",
       visit_status: "",
@@ -255,6 +255,65 @@ const FilterModal = (props: any) => {
                 renderItem={visitorRender}
               />
             </View>
+          </View>
+          <View style={[styles.inputWrap, { top: normalizeSpacing(10) }]}>
+            <DropdownInput
+              headingText={"Lead Priority"}
+              placeholder={"Lead Priority"}
+              data={[
+                { label: "Hot", value: "hot" },
+                { label: "Warm", value: "warm" },
+                { label: "Cold", value: "cold" },
+              ]}
+              inputWidth={"100%"}
+              paddingLeft={16}
+              maxHeight={300}
+              labelField="label"
+              valueField={"value"}
+              value={props?.filterData?.lead_priority}
+              onChange={(item: any) => {
+                props.setFilterData({
+                  ...props.filterData,
+                  lead_priority: item.value,
+                });
+              }}
+              newRenderItem={(item: any) => {
+                return (
+                  <View style={Styles.item}>
+                    <Text style={Styles.textItem}>{item.label}</Text>
+                  </View>
+                );
+              }}
+            />
+          </View>
+          <View style={[styles.inputWrap, { top: normalizeSpacing(10) }]}>
+            <DropdownInput
+              headingText={"Lead Status"}
+              placeholder={"Lead Status"}
+              data={[
+                { label: "Qualified", value: "true" },
+                { label: "Unqualified", value: "false" },
+              ]}
+              inputWidth={"100%"}
+              paddingLeft={16}
+              maxHeight={300}
+              labelField="label"
+              valueField={"value"}
+              value={props?.filterData?.qualified}
+              onChange={(item: any) => {
+                props.setFilterData({
+                  ...props.filterData,
+                  qualified: item.value,
+                });
+              }}
+              newRenderItem={(item: any) => {
+                return (
+                  <View style={Styles.item}>
+                    <Text style={Styles.textItem}>{item.label}</Text>
+                  </View>
+                );
+              }}
+            />
           </View>
           <View style={{ marginVertical: 20 }}>
             <View style={{ flexDirection: "row", justifyContent: "center" }}>

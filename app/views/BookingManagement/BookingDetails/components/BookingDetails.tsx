@@ -114,14 +114,19 @@ const BookingDetailsView = (props: any) => {
       `Booking Amount: ${detailData.booking_amount || "NA"}\n` +
       `Rate Achieved: ${detailData.rate_achieved || "NA"}\n\n` +
       `*Lead Information*\n` +
-      `*Lead Source: ${
+      `*Lead Source:* ${
         detailData?.lead_source_name
           ? detailData?.lead_source_name == "Reference" &&
             detailData?.referrel_partner == 1
             ? "Referral Partner"
             : detailData?.lead_source_name
           : strings.notfount
-      } ${getCPLeadType(detailData?.cp_lead_type)}*\n` +
+      } ${getCPLeadType(detailData?.cp_lead_type)}\n` +
+      `${
+        detailData?.leads?.lead_source === CONST_IDS.ref_lead_source_id
+          ? `*Referrer:* ${detailData.referrer_name}\n`
+          : ""
+      }` +
       `${
         detailData?.leads?.lead_source === CONST_IDS.cp_lead_source_id
           ? `*CP Name:* ${detailData.cp_name || "NA"}\n` +

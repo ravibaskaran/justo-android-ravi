@@ -38,6 +38,8 @@ const LeadManagementScreen = ({ navigation, route }: any) => {
     property_title: "",
     visit_status: strings.warm,
     lead_status: "",
+    qualified: "",
+    lead_priority: "",
     // NEW:
     draft: false,
   });
@@ -94,6 +96,8 @@ const LeadManagementScreen = ({ navigation, route }: any) => {
           property_title: "",
           visit_status: strings.warm,
           lead_status: "",
+          qualified: "",
+          lead_priority: "",
           draft: index === 1, // if we opened on “Draft Visitors” tab, draft = true
         };
 
@@ -137,7 +141,6 @@ const LeadManagementScreen = ({ navigation, route }: any) => {
     }, [navigation, route, index]) // re-run whenever “index” (tab) changes or we refocus
   );
 
- 
   useEffect(() => {
     if (response?.status === 200) {
       if (offSET === 0) {
@@ -168,6 +171,8 @@ const LeadManagementScreen = ({ navigation, route }: any) => {
         property_id: data?.property_id || "",
         visit_status: data?.visit_status || "",
         lead_status: data?.lead_status || "",
+        qualified: data?.qualified || "",
+        lead_priority: data?.lead_priority || "",
         // NEW:
         draft: data?.draft ? true : undefined,
         // Keep the existing “reportdata” logic (only for certain roles)
@@ -204,14 +209,15 @@ const LeadManagementScreen = ({ navigation, route }: any) => {
     }
   };
 
-  useEffect(() => {
-    // Build a brand-new filterData with the current tab’s `draft` flag:
-    const newFd = { ...filterData, draft: index === 1 };
-    setFilterData(newFd);
-    // Clear list & fetch page 0
-    setVisitorList([]);
-    getVisitorsList(0, newFd);
-  }, [index]);
+  // useEffect(() => {
+  //   // Build a brand-new filterData with the current tab’s `draft` flag:
+  //   const newFd = { ...filterData, draft: index === 1 };
+  //   setFilterData(newFd);
+  //   // Clear list & fetch page 0
+  //   setVisitorList([]);
+  //   console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+  //   getVisitorsList(0, newFd);
+  // }, [index]);
 
   return (
     <LeadManagementView

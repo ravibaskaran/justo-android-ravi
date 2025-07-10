@@ -185,6 +185,14 @@ export const MENUITEMS = [
         slug: 'cancel_booking',
     },
     {
+        title: strings.scheduledActivity,
+        icon: images.calender,
+        path: "ScheduledActivity",
+        permission: true,
+        deploy: true,
+        slug: 'scheduled_activity',
+    },
+    {
         title: strings.recoveryHeader,
         icon: images.property,
         path: "Recovery",

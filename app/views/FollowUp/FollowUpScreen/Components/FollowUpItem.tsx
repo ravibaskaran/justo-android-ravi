@@ -170,7 +170,7 @@ const FollowUpItem = (props: any) => {
       </View>
       {/* && props.items.create_by ===  */}
       <View style={styles.buttonContainer}>
-        {edit &&
+        {/* {edit &&
           props.items.followup_for !== 4 &&
           (props.items?.check_status?.[0] ||
             props.items?.followup_status_id?.[0] !==
@@ -184,7 +184,7 @@ const FollowUpItem = (props: any) => {
                 {strings.edit}
               </Text>
             </TouchableOpacity>
-          )}
+          )} */}
         <TouchableOpacity
           style={[styles.button, { borderColor: PRIMARY_THEME_COLOR }]}
           onPress={() => props.onPressAllFollowUp(props.items)}

@@ -42,17 +42,17 @@ export const ONE_MONTH_DATES = new Date(
 );
 
 // export const GLOBAL_URL = "http://192.168.1.52:3002"; // localhost server Aswin
-// export const GLOBAL_URL = "http://192.168.1.76:3002"; // localhost server clint
+export const GLOBAL_URL = "http://192.168.1.76:3002"; // localhost server clint
 // export const GLOBAL_URL = 'https://prodapi.justoverse.com:3002' //prod
 // export const GLOBAL_URL = "https://demoapi.inexoftworld.com:3002"; // localhost server
-export const GLOBAL_URL = "https://api.justoverse.com:3000"; //New localhost serve*
+// export const GLOBAL_URL = "https://api.justoverse.com:3000"; //New localhost serve*
 
 export const MAP_KEY = "AIzaSyCbDx7Lk4eTMzptrQKXZvOPYgEMggrq8o4";
 
 export const JW_LOGIN = "api";
 
 // export const JW_PASSWORD = "8a09b13792174b21ef6b6d2302ac420f9ac5688b"; //PROD
-export const JW_PASSWORD = "c519013b5310cab0a07d0976411827ca937431ef"; //DEMO API
+export const JW_PASSWORD = "63d66cfda2e08a05e53b95e8767946121096ee7c"; //DEMO API
 
 export const ROLE_IDS = {
   suadminrole_id: "6344049eb4f40996bcf1265a",

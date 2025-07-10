@@ -670,6 +670,7 @@ const strings = new LocalizedStrings({
     cpDirect: "Walk-in",
     cpTelecalling: "Tele-calling",
     projectDetailsReport: "Project Details Report",
+    scheduledActivity:"Scheduled Activity"
   },
 });
 

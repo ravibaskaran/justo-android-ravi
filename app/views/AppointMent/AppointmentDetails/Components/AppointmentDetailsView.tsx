@@ -1,9 +1,6 @@
 import JustForOkModal from "app/components/Modals/JustForOkModal";
 import apiEndPoints from "app/components/utilities/apiEndPoints";
-import {
-  Isios,
-  ROLE_IDS
-} from "app/components/utilities/constant";
+import { Isios, ROLE_IDS } from "app/components/utilities/constant";
 import { apiCall } from "app/components/utilities/httpClient";
 import usePermission from "app/components/utilities/UserPermissions";
 import { START_LOADING, STOP_LOADING } from "app/Redux/types";
@@ -121,6 +118,7 @@ const AppointmentDetailsView = (props: any) => {
               >
                 {/* Book Now */}
                 {create &&
+                  data?.status != 10 &&
                   (userData?.data?.role_id === ROLE_IDS.closingmanager_id ||
                   userData?.data?.role_id === ROLE_IDS.closingtl_id ||
                   userData?.data?.role_id === ROLE_IDS.closing_head_id ||

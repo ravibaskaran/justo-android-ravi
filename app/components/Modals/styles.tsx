@@ -417,6 +417,14 @@ const styles = StyleSheet.create({
     color: PRIMARY_THEME_COLOR,
     fontFamily: FONT_FAMILY_SEMIBOLD,
   },
+  radioBtn: {
+    marginHorizontal: normalizeSpacing(5),
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginVertical: normalizeSpacing(15),
+    width: "100%",
+  },
 });
 
 export default styles;

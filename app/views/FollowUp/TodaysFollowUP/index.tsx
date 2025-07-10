@@ -1,10 +1,10 @@
 import { useFocusEffect } from "@react-navigation/native";
 import { DATE_FORMAT } from "app/components/utilities/constant";
-import { getAllFollowUpList } from "app/Redux/Actions/FollowUpActions";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import FollowUpView from "./FollowUpView";
+import { getAllFollowUpList } from "app/Redux/Actions/FollowUpActions";
 
 const TodaysFollowUpScreen = ({ navigation, route }: any) => {
   const [followUpList, setFollowUpList] = useState<any>([]);

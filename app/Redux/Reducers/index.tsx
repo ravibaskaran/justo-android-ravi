@@ -28,6 +28,7 @@ import { RecoveryReducer } from "./RecoveryReducer";
 import { CompanyReducer, EmployeeReducer } from "./CompanyReducer";
 import { ReportReducer } from "./ReportReducer";
 import { ProjectReportReducer } from "./ProjectReportReducer";
+import { closefollowUpReducer, scheduledActivityReducer } from "./ScheduledActivityReducer";
 
 export default {
     loadingReducer: loadingReducer,
@@ -61,7 +62,9 @@ export default {
     CpCheckingData: CpCheckingReducer,
     editAddAppointment: editAddAppointmentReducer,
     followUp: followUpReducer,
+    scheduledActivity: scheduledActivityReducer,
     AddfollowUp: AddfollowUpReducer,
+    closefollowUP:closefollowUpReducer,
     masterData: masterDataReducer,
     masterRemove: masterRemoveReducer,
     notificationData: notificationListReducer,
