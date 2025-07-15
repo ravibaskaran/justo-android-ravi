@@ -25,7 +25,7 @@ const ViewMoreText = ({
       >
         {text}
       </Text>
-      {text.length > 80 && (
+      {text.length > 40 && (
         <TouchableOpacity
           style={styles.alignRight}
           onPress={() => setShowMore(!showMore)}
