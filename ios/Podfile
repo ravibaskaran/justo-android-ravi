@@ -1,8 +1,19 @@
-require_relative '../node_modules/react-native/scripts/react_native_pods'
-require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+# Resolve react_native_pods.rb with node to allow for hoisting
+require Pod::Executable.execute_command('node', ['-p',
+  'require.resolve(
+    "react-native/scripts/react_native_pods.rb",
+    {paths: [process.argv[1]]},
+  )', __dir__]).strip
 
-platform :ios, '13.0'
-install! 'cocoapods', :deterministic_uuids => false
+
+platform :ios, min_ios_version_supported
+prepare_react_native_project!
+ 
+linkage = ENV['USE_FRAMEWORKS']
+if linkage != nil
+  Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
+  use_frameworks! :linkage => linkage.to_sym
+end
 
 target 'justo' do
   config = use_native_modules!
@@ -20,14 +31,9 @@ target 'justo' do
   # Add React Native File System pod
   pod 'RNFS', :path => '../node_modules/react-native-fs'
 
-  # Flags change depending on the env values
-  flags = get_default_flags()
 
   use_react_native!(
     :path => config[:reactNativePath],
-    :hermes_enabled => true,
-    :fabric_enabled => flags[:fabric_enabled],
-    :flipper_configuration => FlipperConfiguration.enabled,
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
@@ -39,6 +45,7 @@ target 'justo' do
 
   # Post-install hooks to apply bitcode setting and fix any issues
   post_install do |installer|
+    # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
     # Disable bitcode for all targets (app and pods)
     installer.pods_project.targets.each do |target|
       target.build_configurations.each do |config|
@@ -49,10 +56,10 @@ target 'justo' do
     # Call the React Native post-install hook
     react_native_post_install(
       installer,
-      :mac_catalyst_enabled => false
+      config[:reactNativePath],
+      :mac_catalyst_enabled => false,
+      # :ccache_enabled => true
     )
 
-    # Optional: Fix for Xcode 12.5 and M1 Mac issues (if needed)
-    __apply_Xcode_12_5_M1_post_install_workaround(installer)
   end
 end

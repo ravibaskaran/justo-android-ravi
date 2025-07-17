@@ -1,8 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { legacy_createStore as createStore, applyMiddleware, combineReducers, compose } from 'redux'
-import { persistStore, persistCombineReducers } from 'redux-persist';
-import thunk from 'redux-thunk';
+import { applyMiddleware, compose, legacy_createStore as createStore } from 'redux';
+import { persistCombineReducers, persistStore } from 'redux-persist';
+import { thunk } from 'redux-thunk';
 import rootReducers from './Reducers';
+
 
 // const rootReducer = combineReducers(reducers);
 // function saveToLocalStorage(state: any) {
