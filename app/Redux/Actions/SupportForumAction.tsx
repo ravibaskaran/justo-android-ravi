@@ -1,7 +1,7 @@
-import { START_LOADING, STOP_LOADING, USER_STATUS_UPDATE, USER_STATUS_UPDATE_ERROR, STATUS_UPDATER, SUPPORT_FORUM_LIST_ERROR, SUPPORT_FORUM_LIST, UPDATE_SUPPORT_FORUM, UPDATE_SUPPORT_FORUM_ERR, UPDATE_SUPPORTFORUM_REMOVE, SUPPORT_FORUM_DETAIL, SUPPORT_FORUM_DETAIL_ERROR } from "../types";
+import { handleApiError } from "../../components/ErrorMessage/HandleApiErrors";
 import apiEndPoints from "../../components/utilities/apiEndPoints";
-import { apiCall } from "app/components/utilities/httpClient";
-import { handleApiError } from "app/components/ErrorMessage/HandleApiErrors";
+import { apiCall } from "../../components/utilities/httpClient";
+import { START_LOADING, STOP_LOADING, SUPPORT_FORUM_DETAIL, SUPPORT_FORUM_DETAIL_ERROR, SUPPORT_FORUM_LIST, SUPPORT_FORUM_LIST_ERROR } from "../types";
 
 export const supportForumListData = (params: any) => async (dispatch: any) => {
     dispatch({ type: START_LOADING })

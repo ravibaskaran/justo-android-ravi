@@ -1,18 +1,17 @@
+import { Dimensions, StyleSheet } from "react-native";
 import {
   normalize,
   normalizeHeight,
   normalizeSpacing,
   normalizeWidth,
-} from "app/components/scaleFontSize";
+} from "../../../components/scaleFontSize";
 import {
   FONT_FAMILY_EXTRABOLD,
   FONT_FAMILY_SEMIBOLD,
   Isios,
   PRIMARY_THEME_COLOR,
-  WHITE_COLOR,
-  WHITE_COLOR_LIGHT,
-} from "app/components/utilities/constant";
-import { Dimensions, StyleSheet } from "react-native";
+  WHITE_COLOR
+} from "../../../components/utilities/constant";
 
 const { width, height } = Dimensions.get("window");
 

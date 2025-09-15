@@ -1,23 +1,20 @@
-import { View, Text, Image, TouchableOpacity } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
+import { Image, Text, TouchableOpacity, View } from "react-native";
+import DocumentPicker from "react-native-document-picker";
 import {
-  Actions,
   Bubble,
   Composer,
   GiftedChat,
   InputToolbar,
-  Send,
+  Send
 } from "react-native-gifted-chat";
-import styles from "./styles";
-import Header from "app/components/Header";
-import images from "app/assets/images";
+import images from "../../../../assets/images";
+import Header from "../../../../components/Header";
 import {
   PRIMARY_THEME_COLOR,
-  WHITE_COLOR,
-  WHITE_COLOR_LIGHT,
-} from "app/components/utilities/constant";
-import PicturePickerModal from "app/components/Modals/PicturePicker";
-import DocumentPicker from "react-native-document-picker";
+  WHITE_COLOR
+} from "../../../../components/utilities/constant";
+import styles from "./styles";
 
 const ChatScreen = ({ navigation, route }: any) => {
   const item = route.params || {};

@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import {
-  View,
-  Text,
-  useWindowDimensions,
-  Image,
-  TouchableOpacity,
   Linking,
+  Text,
+  TouchableOpacity,
+  useWindowDimensions,
+  View
 } from "react-native";
+import { TabBar, TabView } from "react-native-tab-view";
+import { useSelector } from "react-redux";
 import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
 import Header from "../../../../components/Header";
 import {
   PRIMARY_THEME_COLOR,
@@ -16,13 +18,10 @@ import {
   TABBAR_COLOR,
 } from "../../../../components/utilities/constant";
 import strings from "../../../../components/utilities/Localization";
-import styles from "./styles";
-import { TabView, SceneMap, TabBar } from "react-native-tab-view";
+import usePermission from "../../../../components/utilities/UserPermissions";
 import SmInfoView from "./SMInfo";
 import StatsView from "./StatsViews";
-import Button from "../../../../components/Button";
-import { useSelector } from "react-redux";
-import usePermission from "app/components/utilities/UserPermissions";
+import styles from "./styles";
 
 const SMDetailsView = (props: any) => {
   const { userData = {} } = useSelector((state: any) => state.userData);

@@ -1,9 +1,10 @@
+import { StyleSheet } from "react-native";
 import {
-  normalizeSpacing,
   normalize,
-  normalizeWidth,
   normalizeHeight,
-} from "app/components/scaleFontSize";
+  normalizeSpacing,
+  normalizeWidth,
+} from "../../../../components/scaleFontSize";
 import {
   BLACK_COLOR,
   FONT_FAMILY_EXTRABOLD,
@@ -12,8 +13,7 @@ import {
   GRAY_LIGHT_COLOR,
   PRIMARY_THEME_COLOR,
   WHITE_COLOR,
-} from "app/components/utilities/constant";
-import { StyleSheet } from "react-native";
+} from "../../../../components/utilities/constant";
 
 const styles = StyleSheet.create({
   mainContainer: {

@@ -1,26 +1,23 @@
-import { View, Text, Image, TouchableOpacity, Linking } from "react-native";
+import usePermission from "../../../../components/utilities/UserPermissions";
+import moment from "moment";
 import React from "react";
-import styles from "./Styles";
+import { Image, Linking, Text, TouchableOpacity, View } from "react-native";
 import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
 import strings from "../../../../components/utilities/Localization";
 import {
-  PURPLE_COLOR,
-  CALL_COLOR,
-  WHITE_COLOR,
-  DATE_FORMAT,
-  TIME_FORMAT,
   BLACK_COLOR,
+  CALL_COLOR,
   DATE_BY_DAY,
-  GREEN_COLOR,
-  YELLOW_COLOR,
+  DATE_FORMAT,
   DATE_TIME_FORMAT,
-  RED_COLOR,
+  GREEN_COLOR,
   PRIMARY_THEME_COLOR,
-  getCPLeadType,
+  PURPLE_COLOR,
+  WHITE_COLOR,
+  getCPLeadType
 } from "../../../../components/utilities/constant";
-import Button from "../../../../components/Button";
-import moment from "moment";
-import usePermission from "app/components/utilities/UserPermissions";
+import styles from "./Styles";
 
 const AppointMentForSiteList = (props: any) => {
   const currentDate = `${moment(new Date()).format(

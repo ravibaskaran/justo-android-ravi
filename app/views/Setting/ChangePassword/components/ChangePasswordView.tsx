@@ -1,16 +1,15 @@
-import { View, Text, ScrollView } from "react-native";
 import React from "react";
+import { ScrollView, Text, View } from "react-native";
 import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import Header from "../../../../components/Header";
+import InputField from "../../../../components/InputField";
 import {
   Isios,
-  PRIMARY_THEME_COLOR,
-  WHITE_COLOR,
+  PRIMARY_THEME_COLOR
 } from "../../../../components/utilities/constant";
 import strings from "../../../../components/utilities/Localization";
 import styles from "./styles";
-import Header from "../../../../components/Header";
-import InputField from "../../../../components/InputField";
-import Button from "../../../../components/Button";
 
 const ChangePasswordView = (props: any) => {
   const {

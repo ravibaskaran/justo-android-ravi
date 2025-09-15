@@ -1,13 +1,18 @@
 import { useFocusEffect } from "@react-navigation/native";
-import ErrorMessage from "app/components/ErrorMessage";
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import { GREEN_COLOR, ROLE_IDS } from "app/components/utilities/constant";
-import { apiCall } from "app/components/utilities/httpClient";
-import { userLogout } from "app/Redux/Actions/AuthActions";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { Alert, BackHandler } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import images from "../../assets/images";
+import ErrorMessage from "../../components/ErrorMessage";
+import apiEndPoints from "../../components/utilities/apiEndPoints";
+import { GREEN_COLOR, ROLE_IDS } from "../../components/utilities/constant";
+import { apiCall } from "../../components/utilities/httpClient";
+import { userLogout } from "../../Redux/Actions/AuthActions";
 import {
   getClosHManagerList,
   getClosingManagerList,
-} from "app/Redux/Actions/ClosingManager";
+} from "../../Redux/Actions/ClosingManager";
 import {
   dashboardClosingData,
   dashboardPostSaleData,
@@ -17,19 +22,14 @@ import {
   dashboardSourcingData,
   userStatusUpdateData,
   userStatusUpdater,
-} from "app/Redux/Actions/Dashboard";
-import { getPermission } from "app/Redux/Actions/permissionAction";
+} from "../../Redux/Actions/Dashboard";
+import { getPermission } from "../../Redux/Actions/permissionAction";
 import {
   getAssignCPList,
   getSourcingHeadSMList,
   getSourcingManagerList,
-} from "app/Redux/Actions/SourcingManagerActions";
-import moment from "moment";
-import React, { useEffect, useState } from "react";
-import { Alert, BackHandler } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+} from "../../Redux/Actions/SourcingManagerActions";
 import DashboardView from "./components/DashboardView";
-import images from "app/assets/images";
 
 const DashboardScreen = ({ navigation }: any) => {
   const dispatch: any = useDispatch();

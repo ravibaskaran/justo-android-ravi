@@ -1,14 +1,8 @@
 import React from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
-import styles from "./styles";
-import {
-  BLACK_COLOR,
-  GRAY_COLOR,
-  GRAY_LIGHT_COLOR,
-} from "../../../../components/utilities/constant";
+import { Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import images from "../../../../assets/images";
 import strings from "../../../../components/utilities/Localization";
+import styles from "./styles";
 
 const UserInfoView = (props: any) => {
   const item = props?.items || {};

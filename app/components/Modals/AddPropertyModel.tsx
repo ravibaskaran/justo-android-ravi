@@ -1,24 +1,20 @@
+import { useEffect } from "react";
 import {
-  View,
-  Text,
   Image,
-  TextInput,
-  FlatList,
-  TouchableOpacity,
   SafeAreaView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
 } from "react-native";
-import { Checkbox } from "react-native-paper";
-import { BLACK_COLOR, Isios } from "app/components/utilities/constant";
-import styles from "./styles";
 import { ScrollView } from "react-native-gesture-handler";
-import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import images from "app/assets/images";
-import strings from "../utilities/Localization";
-import Header from "../Header";
-import Button from "../Button";
 import Modal from "react-native-modal";
-import { getAllProperty } from "app/Redux/Actions/propertyActions";
+import { useSelector } from "react-redux";
+import images from "../../assets/images";
+import Button from "../Button";
+import { BLACK_COLOR, Isios } from "../utilities/constant";
+import strings from "../utilities/Localization";
+import styles from "./styles";
 
 const AddPropertyModel = (props: any) => {
   const { userData = {} } = useSelector((state: any) => state.userData);

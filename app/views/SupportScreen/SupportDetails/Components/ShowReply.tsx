@@ -1,14 +1,14 @@
-import { View, Text, ScrollView, FlatList } from 'react-native'
-import React, { useState } from 'react'
-import styles from './styles'
-import Header from 'app/components/Header'
-import images from 'app/assets/images'
-import strings from 'app/components/utilities/Localization'
-import { GREEN_COLOR, PRIMARY_THEME_COLOR, PURPLE_COLOR, RED_COLOR, WHITE_COLOR } from 'app/components/utilities/constant'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
+import React, { useState } from 'react'
+import { FlatList, ScrollView, Text, View } from 'react-native'
 import { useSelector } from 'react-redux'
-import EmptyListScreen from 'app/components/CommonScreen/EmptyListScreen'
-import Button from 'app/components/Button'
+import images from '../../../../assets/images'
+import Button from '../../../../components/Button'
+import EmptyListScreen from '../../../../components/CommonScreen/EmptyListScreen'
+import Header from '../../../../components/Header'
+import strings from '../../../../components/utilities/Localization'
+import { GREEN_COLOR, PRIMARY_THEME_COLOR, PURPLE_COLOR, RED_COLOR, WHITE_COLOR } from '../../../../components/utilities/constant'
+import styles from './styles'
 
 const ShowReply = () => {
   const navigation: any = useNavigation()
@@ -53,6 +53,7 @@ const ShowReply = () => {
         </View>
         <View>
           <FlatList
+removeClippedSubviews={false}
             data={Array.isArray(replyData?.reply_support_ticket) ? replyData?.reply_support_ticket : []}
             renderItem={({ item }: any) => {
               return (

@@ -1,24 +1,22 @@
 
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
-import React, { useEffect, useState } from "react";
-import Modal from "react-native-modal";
-import styles from "app/components/Modals/styles";
-import Styles from './styles'
-import images from "app/assets/images";
-import strings from "app/components/utilities/Localization";
-import Button from "app/components/Button";
-import { AMOUNT_TYPE, DATE_FORMAT, GREEN_COLOR, Isios, PRIMARY_THEME_COLOR, RED_COLOR, WHITE_COLOR } from "app/components/utilities/constant";
-import InputCalender from "app/components/InputCalender";
 import moment from "moment";
-import { normalizeSpacing } from "app/components/scaleFontSize";
-import PicturePickerModal from "app/components/Modals/PicturePicker";
-import InputField from "app/components/InputField";
-import DropdownInput from "app/components/DropDown";
-import ErrorMessage from "app/components/ErrorMessage";
-import { addRegistration, removeBooking } from "app/Redux/Actions/BookingActions";
+import React, { useEffect, useState } from "react";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import Header from "app/components/Header";
-import { RequiredStart } from "app/components/utilities/GlobalFuncations";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import DropdownInput from "../../../../components/DropDown";
+import ErrorMessage from "../../../../components/ErrorMessage";
+import Header from "../../../../components/Header";
+import InputCalender from "../../../../components/InputCalender";
+import InputField from "../../../../components/InputField";
+import PicturePickerModal from "../../../../components/Modals/PicturePicker";
+import styles from "../../../../components/Modals/styles";
+import { normalizeSpacing } from "../../../../components/scaleFontSize";
+import { AMOUNT_TYPE, DATE_FORMAT, GREEN_COLOR, Isios, PRIMARY_THEME_COLOR, RED_COLOR } from "../../../../components/utilities/constant";
+import strings from "../../../../components/utilities/Localization";
+import { addRegistration, removeBooking } from "../../../../Redux/Actions/BookingActions";
+import Styles from './styles';
 
 const RegistrationModal = ({ navigation, route }: any) => {
     const { getBookingData = {}, type = '' } = route?.params || {}

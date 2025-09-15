@@ -1,7 +1,11 @@
-import { View, Text, TouchableOpacity, Image, Linking } from "react-native";
+import moment from "moment";
 import React from "react";
-import styles from "./styles";
+import { Image, Linking, Text, TouchableOpacity, View } from "react-native";
+import { useSelector } from "react-redux";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
 import strings from "../../../../components/utilities/Localization";
+import usePermission from "../../../../components/utilities/UserPermissions";
 import {
   BLACK_COLOR,
   CONST_IDS,
@@ -10,14 +14,9 @@ import {
   GREEN_COLOR,
   PURPLE_COLOR,
   ROLE_IDS,
-  WHITE_COLOR,
-  YELLOW_COLOR,
+  WHITE_COLOR
 } from "../../../../components/utilities/constant";
-import images from "../../../../assets/images";
-import Button from "../../../../components/Button";
-import moment from "moment";
-import { useSelector } from "react-redux";
-import usePermission from "app/components/utilities/UserPermissions";
+import styles from "./styles";
 
 const BookingListItem = (props: any) => {
   const getLoginType = useSelector((state: any) => state.login);

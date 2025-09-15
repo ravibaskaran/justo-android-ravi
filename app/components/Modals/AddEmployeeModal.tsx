@@ -1,20 +1,20 @@
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
-import React, { useState } from "react";
+import React from "react";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Modal from "react-native-modal";
+import { RadioButton } from "react-native-paper";
+import images from "../../assets/images";
+import Button from "../Button";
+import InputField from "../InputField";
+import { normalizeSpacing } from "../scaleFontSize";
+import { RequiredStart } from "../utilities/GlobalFuncations";
+import strings from "../utilities/Localization";
 import {
   BLACK_COLOR,
   Isios,
   PRIMARY_THEME_COLOR,
   validateEmail,
-} from "app/components/utilities/constant";
-import { normalizeSpacing } from "app/components/scaleFontSize";
-import images from "app/assets/images";
-import InputField from "../InputField";
-import strings from "../utilities/Localization";
+} from "../utilities/constant";
 import styles from "./styles";
-import Button from "../Button";
-import { RadioButton } from "react-native-paper";
-import { RequiredStart } from "../utilities/GlobalFuncations";
 
 const AddEmployeeModal = (props: any) => {
   return (

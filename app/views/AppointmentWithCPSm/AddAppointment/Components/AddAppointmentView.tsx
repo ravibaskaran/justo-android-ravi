@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import ErrorMessage from "app/components/ErrorMessage";
+import ErrorMessage from "../../../../components/ErrorMessage";
 import React, { useState } from "react";
 import { View } from "react-native";
 import images from "../../../../assets/images";

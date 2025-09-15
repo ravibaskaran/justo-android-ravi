@@ -1,7 +1,7 @@
 import moment from "moment";
 import React from "react";
-import { View, Text } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { Text, View } from "react-native";
+import { ScrollView } from "react-native";
 import {
   DATE_TIME_FORMAT,
 } from "../../../../components/utilities/constant";
@@ -20,7 +20,7 @@ const StatsView = (props: any) => {
       : {};
 
   return (
-    <ScrollView>
+    <ScrollView removeClippedSubviews={false}>
       <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
           <Text style={styles.projectTxt}>No. of bookings</Text>

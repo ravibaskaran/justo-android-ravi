@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AllocateCP from './components/AllocateCP'
+import AllocateCP from './components/AllocateCP';
 
 const AllocateCPScreen = ({ navigation, }: any) => {
     const constantArry: any[] = [

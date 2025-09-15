@@ -1,15 +1,14 @@
-import { View, Text, Image, TouchableOpacity, ScrollView, Keyboard } from "react-native";
-import React, { useState } from "react";
-import Modal from "react-native-modal";
-import styles from "app/components/Modals/styles";
-import images from "app/assets/images";
-import strings from "app/components/utilities/Localization";
-import Button from "app/components/Button";
-import InputField from "app/components/InputField";
-import { Dropdown } from "react-native-element-dropdown";
-import InputCalender from "app/components/InputCalender";
 import moment from "moment";
-import { DATE_FORMAT, Isios } from "app/components/utilities/constant";
+import React from "react";
+import { Image, Keyboard, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import Modal from "react-native-modal";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import InputCalender from "../../../../components/InputCalender";
+import InputField from "../../../../components/InputField";
+import styles from "../../../../components/Modals/styles";
+import { DATE_FORMAT, Isios } from "../../../../components/utilities/constant";
+import strings from "../../../../components/utilities/Localization";
 
 
 const SuportForumFilter = (props: any) => {

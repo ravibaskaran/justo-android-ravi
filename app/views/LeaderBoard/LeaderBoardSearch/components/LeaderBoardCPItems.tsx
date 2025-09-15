@@ -1,9 +1,8 @@
-import { View, Text, TouchableOpacity, Image } from 'react-native';
 import React from 'react';
+import { Text, View } from 'react-native';
+import { normalize } from '../../../../components/scaleFontSize';
+import { FONT_FAMILY_EXTRABOLD, FONT_FAMILY_REGULAR, } from '../../../../components/utilities/constant';
 import styles from './styles';
-import images from '../../../../assets/images';
-import { normalize, normalizeHeight, normalizeWidth } from '../../../../components/scaleFontSize';
-import { FONT_FAMILY_EXTRABOLD, FONT_FAMILY_REGULAR,  } from '../../../../components/utilities/constant';
 
 const LeaderBoardCPItems = (props: any) => {
     const index = props?.indexs + 1 || 0

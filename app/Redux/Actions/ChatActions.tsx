@@ -1,6 +1,5 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import { apiCall } from "app/components/utilities/httpClient";
+import apiEndPoints from "../../components/utilities/apiEndPoints";
+import { apiCall } from "../../components/utilities/httpClient";
 import { CHAT_ERROR, GET_ALL_USER_CHAT_LIST, GET_CHAT_PROPERTY_LIST, GET_RECENT_CHAT_LIST, GET_RECENT_CHAT_LIST_ERROR, PROPERTY_LIST_ERROR, START_LOADING, STOP_LOADING, UPDATE_CHAT_STATUS, UPDATE_CHAT_STATUS_ERROR } from "../types";
 
 export const getAllUserChatList = (params: any) => async (dispatch: any) => {

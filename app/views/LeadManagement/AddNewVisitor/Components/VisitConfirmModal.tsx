@@ -1,13 +1,13 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
-import React, { useEffect, useState } from "react";
-import Modal from "react-native-modal";
-import styles from "./Styles";
-import strings from "../../../../components/utilities/Localization";
-import Button from "app/components/Button";
-import { useSelector } from "react-redux";
-import images from "app/assets/images";
 import moment from "moment";
-import { DATE_FORMAT } from "app/components/utilities/constant";
+import React, { useEffect, useState } from "react";
+import { Image, Text, TouchableOpacity, View } from "react-native";
+import Modal from "react-native-modal";
+import { useSelector } from "react-redux";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import { DATE_FORMAT } from "../../../../components/utilities/constant";
+import strings from "../../../../components/utilities/Localization";
+import styles from "./Styles";
 
 const VisitConfirmModal = (props: any) => {
     const { response = {}, check_type = "" } = useSelector((state: any) => state.checkVisitorData);

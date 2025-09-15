@@ -14,7 +14,7 @@ import Share from "react-native-share";
 
 const SeparateLinkView = (props: any) => {
   const { data, handleBackPress, response } = props;
-  console.log('response', response)
+  console.log("response", response);
 
   const shareQRCode = async () => {
     const options = {
@@ -37,10 +37,16 @@ const SeparateLinkView = (props: any) => {
         statusBarColor={PRIMARY_THEME_COLOR}
       />
       <View style={styles.warp}>
-        {response?.qr_code === "" || response?.qrcode === ""  ? (
+        {response?.qr_code === "" || response?.qrcode === "" ? (
           <Image style={styles.qrcodeImage} source={images.qrCode} />
         ) : (
-          <Image style={styles.qrcodeImage} source={{ uri: response.qr_code || response?.qrcode }} />
+          response.qr_code ||
+          (response?.qrcode && (
+            <Image
+              style={styles.qrcodeImage}
+              source={{ uri: response.qr_code || response?.qrcode }}
+            />
+          ))
         )}
       </View>
       <View style={styles.btnCopyLinkView}>

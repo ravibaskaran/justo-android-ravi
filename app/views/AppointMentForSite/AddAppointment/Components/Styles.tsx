@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { normalizeSpacing, normalize, normalizeHeight } from "../../../../components/scaleFontSize";
+import { normalize, normalizeHeight, normalizeSpacing } from "../../../../components/scaleFontSize";
 import { BLACK_COLOR, FONT_FAMILY_MEDIUM, FONT_FAMILY_SEMIBOLD, GRAY_LIGHT_COLOR, PRIMARY_THEME_COLOR, WHITE_COLOR } from "../../../../components/utilities/constant";
 
 const styles = StyleSheet.create({

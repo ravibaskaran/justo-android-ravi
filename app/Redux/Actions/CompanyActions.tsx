@@ -1,13 +1,13 @@
-import { handleApiError } from "app/components/ErrorMessage/HandleApiErrors";
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import { apiCall } from "app/components/utilities/httpClient";
+import { handleApiError } from "../../components/ErrorMessage/HandleApiErrors";
+import apiEndPoints from "../../components/utilities/apiEndPoints";
+import { apiCall } from "../../components/utilities/httpClient";
 import {
-  START_LOADING,
-  STOP_LOADING,
-  COMPANY_LIST,
-  COMPANY_LIST_ERROR,
   COMPANY_EMPLOYEE_LIST,
   COMPANY_EMPLOYEE_LIST_ERROR,
+  COMPANY_LIST,
+  COMPANY_LIST_ERROR,
+  START_LOADING,
+  STOP_LOADING,
 } from "../types";
 
 export const getCompanyList = (params: any) => async (dispatch: any) => {

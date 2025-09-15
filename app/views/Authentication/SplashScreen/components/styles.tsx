@@ -1,5 +1,5 @@
-import {Dimensions, StyleSheet} from 'react-native';
-import {normalize, normalizeHeight} from '../../../../components/scaleFontSize';
+import { Dimensions, StyleSheet } from 'react-native';
+import { normalize } from '../../../../components/scaleFontSize';
 import { FONT_FAMILY_EXTRABOLD, WHITE_COLOR } from '../../../../components/utilities/constant';
 
 const width = Dimensions.get("screen")

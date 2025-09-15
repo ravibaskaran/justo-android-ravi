@@ -1,6 +1,6 @@
-import { handleApiError } from "app/components/ErrorMessage/HandleApiErrors";
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import { apiCall } from "app/components/utilities/httpClient";
+import { handleApiError } from "../../components/ErrorMessage/HandleApiErrors";
+import apiEndPoints from "../../components/utilities/apiEndPoints";
+import { apiCall } from "../../components/utilities/httpClient";
 import { GET_PICKUP_LIST, GET_PICKUP_LIST_ERROR, START_LOADING, STOP_LOADING, UPDATE_PICKUP_STATUS, UPDATE_PICKUP_STATUS_ERROR } from "../types";
 
 export const getAllPickupList = (params: any) => async (dispatch: any) => {

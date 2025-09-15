@@ -1,23 +1,23 @@
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  Keyboard,
-} from "react-native";
-import React, { useEffect, useState } from "react";
-import Modal from "react-native-modal";
-import styles from "../../../../components/Modals/styles";
-import images from "../../../../assets/images";
-import strings from "../../../../components/utilities/Localization";
-import Button from "../../../../components/Button";
-import InputField from "../../../../components/InputField";
-import DropdownInput from "../../../../components/DropDown";
-import InputCalender from "app/components/InputCalender";
+import InputCalender from "../../../../components/InputCalender";
+import { normalizeSpacing } from "../../../../components/scaleFontSize";
+import { DATE_FORMAT, Isios } from "../../../../components/utilities/constant";
 import moment from "moment";
-import { DATE_FORMAT, Isios } from "app/components/utilities/constant";
-import { normalizeSpacing } from "app/components/scaleFontSize";
+import React from "react";
+import {
+  Image,
+  Keyboard,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import Modal from "react-native-modal";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import DropdownInput from "../../../../components/DropDown";
+import InputField from "../../../../components/InputField";
+import styles from "../../../../components/Modals/styles";
+import strings from "../../../../components/utilities/Localization";
 
 const BookingFilterModal = (props: any) => {
   const statusData = [

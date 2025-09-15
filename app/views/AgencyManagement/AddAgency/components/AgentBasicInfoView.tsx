@@ -1,14 +1,4 @@
 import TextRecognition from "@react-native-ml-kit/text-recognition";
-import ErrorMessage from "app/components/ErrorMessage";
-import InputCalender from "app/components/InputCalender";
-import AddEmployeeModal from "app/components/Modals/AddEmployeeModal";
-import ConfirmModal from "app/components/Modals/ConfirmModal";
-import PicturePickerModal from "app/components/Modals/PicturePicker";
-import MultiLocation from "app/components/MultiLocation";
-import { normalize } from "app/components/scaleFontSize";
-import { RequiredStart } from "app/components/utilities/GlobalFuncations";
-import { handleValues } from "app/components/utilities/handleValues";
-import { START_LOADING, STOP_LOADING } from "app/Redux/types";
 import moment from "moment";
 import React, { useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
@@ -16,8 +6,15 @@ import { RadioButton } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import images from "../../../../assets/images";
 import Button from "../../../../components/Button";
+import ErrorMessage from "../../../../components/ErrorMessage";
 import Header from "../../../../components/Header";
+import InputCalender from "../../../../components/InputCalender";
 import InputField from "../../../../components/InputField";
+import AddEmployeeModal from "../../../../components/Modals/AddEmployeeModal";
+import ConfirmModal from "../../../../components/Modals/ConfirmModal";
+import PicturePickerModal from "../../../../components/Modals/PicturePicker";
+import MultiLocation from "../../../../components/MultiLocation";
+import { normalize } from "../../../../components/scaleFontSize";
 import {
   BLACK_COLOR,
   DATE_FORMAT,
@@ -28,7 +25,10 @@ import {
   Regexs,
   validateEmail,
 } from "../../../../components/utilities/constant";
+import { RequiredStart } from "../../../../components/utilities/GlobalFuncations";
+import { handleValues } from "../../../../components/utilities/handleValues";
 import strings from "../../../../components/utilities/Localization";
+import { START_LOADING, STOP_LOADING } from "../../../../Redux/types";
 import styles from "./styles";
 
 const AgentBasicInfoView = (props: any) => {

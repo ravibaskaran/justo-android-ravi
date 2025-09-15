@@ -1,7 +1,6 @@
-import FastImages from "app/components/FastImage";
-import PicturePickerModal from "app/components/Modals/PicturePicker";
-import { normalize, normalizeHeight } from "app/components/scaleFontSize";
-import { RequiredStart } from "app/components/utilities/GlobalFuncations";
+import FastImages from "../../../../components/FastImage";
+import PicturePickerModal from "../../../../components/Modals/PicturePicker";
+import { normalizeHeight } from "../../../../components/scaleFontSize";
 import React, { useEffect, useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Modal from "react-native-modal";

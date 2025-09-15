@@ -63,7 +63,8 @@ const SettingView = (props: any) => {
                 statusBarColor={PRIMARY_THEME_COLOR}
             />
             <View style={styles.listView}>
-                <FlatList data={DATA} renderItem={renderItem} />
+                <FlatList
+removeClippedSubviews={false} data={DATA} renderItem={renderItem} />
             </View>
         </View>
     );

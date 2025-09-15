@@ -14,15 +14,15 @@ import strings from "../../../../components/utilities/Localization";
 import Button from "../../../../components/Button";
 import InputField from "../../../../components/InputField";
 import DropdownInput from "../../../../components/DropDown";
-import InputCalender from "app/components/InputCalender";
+import InputCalender from "../../../../components/InputCalender";
 import moment from "moment";
 import {
   DATE_FORMAT,
   Isios,
   RED_COLOR,
-} from "app/components/utilities/constant";
-import { normalizeSpacing } from "app/components/scaleFontSize";
-import ErrorMessage from "app/components/ErrorMessage";
+} from "../../../../components/utilities/constant";
+import { normalizeSpacing } from "../../../../components/scaleFontSize";
+import ErrorMessage from "../../../../components/ErrorMessage";
 const FilterModal = (props: any) => {
   const data = [
     { label: strings.active, value: 2 },

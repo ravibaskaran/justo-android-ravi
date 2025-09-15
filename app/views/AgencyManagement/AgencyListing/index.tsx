@@ -1,22 +1,22 @@
 import { useFocusEffect } from "@react-navigation/native";
-import ErrorMessage from "app/components/ErrorMessage";
-import { GREEN_COLOR, RED_COLOR } from "app/components/utilities/constant";
-import { getAllAgentList } from "app/Redux/Actions/AgencyActions";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllAgentList } from "../../../Redux/Actions/AgencyActions";
 import {
   getAssignCPList,
   removeAssignCpStatus,
   updateAssignCP,
-} from "app/Redux/Actions/SourcingManagerActions";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+} from "../../../Redux/Actions/SourcingManagerActions";
+import { transferVisitList } from "../../../Redux/Actions/TransferVisitAction";
+import { getAllProperty } from "../../../Redux/Actions/propertyActions";
+import { START_LOADING, STOP_LOADING } from "../../../Redux/types";
+import ErrorMessage from "../../../components/ErrorMessage";
+import { handleApiError } from "../../../components/ErrorMessage/HandleApiErrors";
+import apiEndPoints from "../../../components/utilities/apiEndPoints";
+import { GREEN_COLOR, RED_COLOR } from "../../../components/utilities/constant";
+import { apiCall } from "../../../components/utilities/httpClient";
+import { cpManageBackSubject } from "../../../observables/backNavigationSubject";
 import AgencyView from "./components/AgencyView";
-import { transferVisitList } from "app/Redux/Actions/TransferVisitAction";
-import { getAllProperty } from "app/Redux/Actions/propertyActions";
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import { START_LOADING, STOP_LOADING } from "app/Redux/types";
-import { apiCall } from "app/components/utilities/httpClient";
-import { handleApiError } from "app/components/ErrorMessage/HandleApiErrors";
-import { cpManageBackSubject } from "app/observables/backNavigationSubject";
 
 const AgencyListing = ({ navigation, route }: any) => {
   const { type } = route?.params || {};

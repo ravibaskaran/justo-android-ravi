@@ -1,11 +1,11 @@
-import { View, Text } from 'react-native'
 import React from 'react'
+import { View } from 'react-native'
+import images from '../../../assets/images'
+import ComingSoonScreen from '../../../components/CommonScreen/ComingSoon'
+import Header from '../../../components/Header'
+import strings from '../../../components/utilities/Localization'
+import { PRIMARY_THEME_COLOR } from '../../../components/utilities/constant'
 import styles from './styles'
-import Header from 'app/components/Header'
-import images from 'app/assets/images'
-import strings from 'app/components/utilities/Localization'
-import { PRIMARY_THEME_COLOR } from 'app/components/utilities/constant'
-import ComingSoonScreen from 'app/components/CommonScreen/ComingSoon'
 
 const SalesToolsView = (props: any) => {
     return (

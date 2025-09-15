@@ -1,14 +1,14 @@
-import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
 import React from "react";
-import styles from "./styles";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import images from "../../../../assets/images";
+import FastImages from "../../../../components/FastImage";
 import {
   BLACK_COLOR,
   GRAY_COLOR,
   ROLE_IDS,
 } from "../../../../components/utilities/constant";
-import images from "../../../../assets/images";
-import strings from "app/components/utilities/Localization";
-import FastImages from "app/components/FastImage";
+import strings from "../../../../components/utilities/Localization";
+import styles from "./styles";
 
 const PropertyDetailItem = (props: any) => {
   const imagearray = props.propertydocument?.filter((el: any) => {

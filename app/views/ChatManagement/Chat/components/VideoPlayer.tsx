@@ -1,15 +1,14 @@
+import React, { useState } from "react";
 import {
-  View,
-  Text,
   Image,
+  Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  View,
 } from "react-native";
-import React, { useState } from "react";
 import Modal from "react-native-modal";
-import images from "app/assets/images";
-import strings from "app/components/utilities/Localization";
 import Video from "react-native-video";
+import images from "../../../../assets/images";
 import styles from "./styles";
 
 const VideoPlayer = (props: any) => {

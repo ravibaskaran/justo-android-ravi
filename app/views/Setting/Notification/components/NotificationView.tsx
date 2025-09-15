@@ -1,20 +1,16 @@
-import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
-import React, { useEffect, useState } from "react";
-import Header from "app/components/Header";
-import styles from "./styles";
-import strings from "app/components/utilities/Localization";
-import images from "app/assets/images";
-import {
-  DATE_TIME_FORMAT,
-  GREEN_COLOR,
-  PRIMARY_THEME_COLOR,
-} from "app/components/utilities/constant";
-import { useDispatch, useSelector } from "react-redux";
-import { SwipeListView } from "react-native-swipe-list-view";
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
-import { notificationRemove } from "app/Redux/Actions/NotificationAction";
-import ErrorMessage from "app/components/ErrorMessage";
 import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import images from "../../../../assets/images";
+import EmptyListScreen from "../../../../components/CommonScreen/EmptyListScreen";
+import Header from "../../../../components/Header";
+import {
+  PRIMARY_THEME_COLOR
+} from "../../../../components/utilities/constant";
+import strings from "../../../../components/utilities/Localization";
+import { notificationRemove } from "../../../../Redux/Actions/NotificationAction";
+import styles from "./styles";
 
 const NotificationView = (props: any) => {
   const dispatch: any = useDispatch();
@@ -109,6 +105,7 @@ const NotificationView = (props: any) => {
           ListEmptyComponent={<EmptyListScreen message={strings.notificationHeader} />}
         /> */}
       <FlatList
+removeClippedSubviews={false}
         data={Array.isArray(listData) ? listData : []}
         renderItem={renderItem}
         onRefresh={props.getNotification}

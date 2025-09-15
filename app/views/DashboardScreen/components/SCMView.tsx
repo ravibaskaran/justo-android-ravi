@@ -1,4 +1,3 @@
-import { ROLE_IDS } from "app/components/utilities/constant";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import styles from "./styles";

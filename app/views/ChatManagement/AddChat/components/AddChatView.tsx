@@ -1,14 +1,14 @@
-import { View, Text, FlatList, Image, TouchableOpacity } from "react-native";
-import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import images from "app/assets/images";
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
-import FastImages from "app/components/FastImage";
-import { PRIMARY_THEME_COLOR } from "app/components/utilities/constant";
-import strings from "app/components/utilities/Localization";
+import React, { useEffect, useState } from "react";
+import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
+import images from "../../../../assets/images";
+import EmptyListScreen from "../../../../components/CommonScreen/EmptyListScreen";
+import FastImages from "../../../../components/FastImage";
+import Header from "../../../../components/Header";
+import SearchBar from "../../../../components/SearchBar";
+import { PRIMARY_THEME_COLOR } from "../../../../components/utilities/constant";
+import strings from "../../../../components/utilities/Localization";
 import styles from "./styles";
-import Header from "app/components/Header";
-import SearchBar from "app/components/SearchBar";
 
 const AddChatView = (props: any) => {
   const [filteredData, setFilteredData] = useState([]);
@@ -105,6 +105,7 @@ const AddChatView = (props: any) => {
         onSubmit={onSubmit}
       />
       <FlatList
+removeClippedSubviews={false}
         data={filteredData}
         renderItem={(item) => renderChatList(item.item)}
         ListEmptyComponent={<EmptyListScreen message={strings.chat} />}

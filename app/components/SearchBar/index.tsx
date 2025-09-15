@@ -1,13 +1,9 @@
-import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
 import React from "react";
-import styles from "./styles";
-import { normalize, normalizeHeight } from "../scaleFontSize";
+import { TextInput, View } from "react-native";
 import {
-  BLACK_COLOR,
-  GRAY_COLOR,
-  GRAY_LIGHT_COLOR,
+  GRAY_COLOR
 } from "../utilities/constant";
-import images from "app/assets/images";
+import styles from "./styles";
 
 const SearchBar = (props: any) => {
   return (

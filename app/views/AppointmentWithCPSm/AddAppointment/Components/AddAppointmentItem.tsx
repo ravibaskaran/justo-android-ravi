@@ -1,24 +1,19 @@
-import { View, Text, ScrollView } from "react-native";
-import React, { useState } from "react";
-import styles from "./Styles";
-import DropdownInput from "../../../../components/DropDown";
-import strings from "../../../../components/utilities/Localization";
-import images from "../../../../assets/images";
-import {
-  GRAY_LIGHT_COLOR,
-  DATE_FORMAT,
-  PRIMARY_THEME_COLOR,
-  BLACK_COLOR,
-  REGISTERD_CP,
-} from "../../../../components/utilities/constant";
-import Button from "../../../../components/Button";
-import InputCalender from "app/components/InputCalender";
 import moment from "moment";
-import Styles from "app/components/DropDown/styles";
-import { RequiredStart } from "app/components/utilities/GlobalFuncations";
-import { normalizeSpacing } from "app/components/scaleFontSize";
-import { RadioButton } from "react-native-paper";
-import InputField from "app/components/InputField";
+import React, { useState } from "react";
+import { ScrollView, Text, View } from "react-native";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import DropdownInput from "../../../../components/DropDown";
+import Styles from "../../../../components/DropDown/styles";
+import InputCalender from "../../../../components/InputCalender";
+import InputField from "../../../../components/InputField";
+import {
+  DATE_FORMAT,
+  GRAY_LIGHT_COLOR,
+  REGISTERD_CP
+} from "../../../../components/utilities/constant";
+import strings from "../../../../components/utilities/Localization";
+import styles from "./Styles";
 
 const AddAppointmentItem = (props: any) => {
   const [minAppointmentTime, setMinAppointmentTime] = useState<any>(null);

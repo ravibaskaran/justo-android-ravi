@@ -1,10 +1,9 @@
-import { View, Text } from "react-native";
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import FollowUpView from "./Components/FollowUpView";
-import { useDispatch, useSelector } from "react-redux";
 import { useFocusEffect } from "@react-navigation/native";
-import { followUpBackSubject } from "app/observables/backNavigationSubject";
-import { getAllFollowUpList } from "app/Redux/Actions/FollowUpActions";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { followUpBackSubject } from "../../../observables/backNavigationSubject";
+import { getAllFollowUpList } from "../../../Redux/Actions/FollowUpActions";
+import FollowUpView from "./Components/FollowUpView";
 
 const FollowUpScreen = ({ navigation }: any) => {
   const [followUpList, setFollowUpList] = useState<any>([]);

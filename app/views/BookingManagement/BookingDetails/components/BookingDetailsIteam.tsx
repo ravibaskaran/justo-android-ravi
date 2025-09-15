@@ -1,13 +1,3 @@
-import images from "app/assets/images";
-import {
-  BLACK_COLOR,
-  CONST_IDS,
-  DATE_BY_DAY,
-  DATE_TIME_FORMAT,
-  getCPLeadType,
-  Isios,
-  ROLE_IDS,
-} from "app/components/utilities/constant";
 import moment from "moment";
 import React from "react";
 import {
@@ -19,10 +9,20 @@ import {
   View,
 } from "react-native";
 import { useSelector } from "react-redux";
+import images from "../../../../assets/images";
 import {
   normalize,
   normalizeWidth,
 } from "../../../../components/scaleFontSize";
+import {
+  BLACK_COLOR,
+  CONST_IDS,
+  DATE_BY_DAY,
+  DATE_TIME_FORMAT,
+  getCPLeadType,
+  Isios,
+  ROLE_IDS,
+} from "../../../../components/utilities/constant";
 import strings from "../../../../components/utilities/Localization";
 import styles from "./styles";
 

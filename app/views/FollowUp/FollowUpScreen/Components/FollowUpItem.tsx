@@ -1,23 +1,16 @@
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import moment from "moment";
 import React from "react";
-import styles from "./Styles";
+import { Image, Text, TouchableOpacity, View } from "react-native";
+import { useSelector } from "react-redux";
 import images from "../../../../assets/images";
 import {
-  PURPLE_COLOR,
-  PRIMARY_THEME_COLOR,
-  DATE_BY_DAY,
-  DATE_TIME_FORMAT,
-  GREEN_COLOR,
-  YELLOW_COLOR,
-  RED_COLOR,
-  BLACK_COLOR,
   DATE_FORMAT,
-  CONST_IDS,
+  DATE_TIME_FORMAT,
+  PRIMARY_THEME_COLOR
 } from "../../../../components/utilities/constant";
 import strings from "../../../../components/utilities/Localization";
-import moment from "moment";
-import usePermission from "app/components/utilities/UserPermissions";
-import { useSelector } from "react-redux";
+import usePermission from "../../../../components/utilities/UserPermissions";
+import styles from "./Styles";
 
 const FollowUpItem = (props: any) => {
   const { edit, view } = usePermission({

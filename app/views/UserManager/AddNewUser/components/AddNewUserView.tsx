@@ -1,28 +1,27 @@
+import moment from "moment";
 import React, { useState } from "react";
-import { View, Text, ScrollView, TouchableOpacity, Image, Keyboard } from "react-native";
-import images from "../../../../assets/images";
-import Header from "../../../../components/Header";
-import InputField from "../../../../components/InputField";
-import styles from "./styles";
+import { Image, Keyboard, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { RadioButton } from "react-native-paper";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import DropdownInput from "../../../../components/DropDown";
+import Header from "../../../../components/Header";
+import InputCalender from "../../../../components/InputCalender";
+import InputField from "../../../../components/InputField";
+import CityModal from "../../../../components/Modals/CityModal";
+import PicturePickerModal from "../../../../components/Modals/PicturePicker";
+import { normalizeSpacing } from "../../../../components/scaleFontSize";
 import {
   BLACK_COLOR,
   DATE_FORMAT,
-  GRAY_COLOR,
   Isios,
   PRIMARY_THEME_COLOR,
   ROLE_IDS,
-  WHITE_COLOR,
+  WHITE_COLOR
 } from "../../../../components/utilities/constant";
-import Button from "../../../../components/Button";
+import { RequiredStart } from "../../../../components/utilities/GlobalFuncations";
 import strings from "../../../../components/utilities/Localization";
-import PicturePickerModal from "../../../../components/Modals/PicturePicker";
-import moment from "moment";
-import InputCalender from "app/components/InputCalender";
-import DropdownInput from "app/components/DropDown";
-import { normalizeSpacing } from "app/components/scaleFontSize";
-import { RequiredStart } from "app/components/utilities/GlobalFuncations";
-import CityModal from "app/components/Modals/CityModal";
+import styles from "./styles";
 
 const AddNewCMView = (props: any) => {
   const [profile, setProfile] = React.useState(false);
@@ -425,7 +424,7 @@ const AddNewCMView = (props: any) => {
                 address: val,
               });
             }}
-            inputType={"location"}
+            // inputType={"location"}
             onPressSelect={(data: any, detail: any) => {
               props.setAddNewUserData({
                 ...props.addNewUserData,

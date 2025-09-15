@@ -1,5 +1,5 @@
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import { apiCall } from "app/components/utilities/httpClient";
+import apiEndPoints from "../../components/utilities/apiEndPoints";
+import { apiCall } from "../../components/utilities/httpClient";
 import { GET_PROJECT_REPORT_DETAILS, GET_PROJECT_REPORT_ERROR, START_LOADING, STOP_LOADING } from "../types";
 
 export const GetProjectDetailsReport = (item: any) => async (dispatch: any) => {

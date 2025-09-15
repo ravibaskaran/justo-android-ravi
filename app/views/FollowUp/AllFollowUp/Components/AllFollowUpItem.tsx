@@ -1,9 +1,9 @@
-import { View, Text, ScrollView } from 'react-native'
-import React from 'react'
-import styles from './Styles'
-import { DATE_TIME_FORMAT, WHITE_COLOR } from '../../../../components/utilities/constant'
 import moment from 'moment'
-import strings from 'app/components/utilities/Localization'
+import React from 'react'
+import { ScrollView, Text, View } from 'react-native'
+import { DATE_TIME_FORMAT, WHITE_COLOR } from '../../../../components/utilities/constant'
+import strings from '../../../../components/utilities/Localization'
+import styles from './Styles'
 
 const AllFollowUpItem = (props: any) => {
 

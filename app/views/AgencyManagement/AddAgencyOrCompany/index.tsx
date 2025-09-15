@@ -1,7 +1,11 @@
-import ErrorMessage from "app/components/ErrorMessage";
-import { GREEN_COLOR, RED_COLOR, Regexs, validateEmail, } from "app/components/utilities/constant";
-import { handleValues } from "app/components/utilities/handleValues";
-import strings from "app/components/utilities/Localization";
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import { Keyboard } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import ErrorMessage from "../../../components/ErrorMessage";
+import PicturePickerModal from "../../../components/Modals/PicturePicker";
+import { GREEN_COLOR, RED_COLOR, Regexs, validateEmail, } from "../../../components/utilities/constant";
+import { handleValues } from "../../../components/utilities/handleValues";
+import strings from "../../../components/utilities/Localization";
 import {
   AgencyCreateFormRemove,
   checkEmailMobile,
@@ -10,11 +14,7 @@ import {
   emailCheckRemove,
   getAgencyDetail,
   removeAgency,
-} from "app/Redux/Actions/AgencyActions";
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import { Keyboard } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import PicturePickerModal from "../../../components/Modals/PicturePicker";
+} from "../../../Redux/Actions/AgencyActions";
 import AgentBankInfo from "./components/AgencyBankInfo";
 import AgentBasicInfoView from "./components/AgentBasicInfoView";
 import CompanyDetails from "./components/CompanyDetails";

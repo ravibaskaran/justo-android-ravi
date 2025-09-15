@@ -1,20 +1,19 @@
-import React from "react";
-import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
-import styles from "./styles";
-import TopScreensViewer from './TopScreensViewer'
-import Header from "../../../../components/Header";
-import images from "../../../../assets/images";
-import strings from "../../../../components/utilities/Localization";
-import { AMOUNT_TYPE, BLACK_COLOR, DATE_FORMAT, Isios, PRIMARY_THEME_COLOR } from "../../../../components/utilities/constant";
-import InputField from "../../../../components/InputField";
-import { RadioButton } from "react-native-paper";
-import Button from "../../../../components/Button";
-import { normalize, normalizeSpacing } from "../../../../components/scaleFontSize";
-import InputCalender from "app/components/InputCalender";
 import moment from "moment";
+import React from "react";
+import { ScrollView, Text, View } from 'react-native';
 import { TextInput } from "react-native-gesture-handler";
-import DropdownInput from "app/components/DropDown";
-import Styles from '../../../../components/Modals/styles'
+import { RadioButton } from "react-native-paper";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import DropdownInput from "../../../../components/DropDown";
+import Header from "../../../../components/Header";
+import InputCalender from "../../../../components/InputCalender";
+import InputField from "../../../../components/InputField";
+import Styles from '../../../../components/Modals/styles';
+import { normalizeSpacing } from "../../../../components/scaleFontSize";
+import { AMOUNT_TYPE, DATE_FORMAT, Isios, PRIMARY_THEME_COLOR } from "../../../../components/utilities/constant";
+import strings from "../../../../components/utilities/Localization";
+import styles from "./styles";
 
 const VisitorUpdateView = (props: any) => {
     return (

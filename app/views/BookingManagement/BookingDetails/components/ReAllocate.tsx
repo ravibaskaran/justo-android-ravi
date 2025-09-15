@@ -1,18 +1,18 @@
 
-import { View, Text, Image, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React from "react";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import Modal from "react-native-modal";
-import styles from "app/components/Modals/styles";
-import Styles from './styles'
-import images from "app/assets/images";
-import strings from "app/components/utilities/Localization";
-import Button from "app/components/Button";
-import InputField from "app/components/InputField";
-import { normalizeSpacing } from "app/components/scaleFontSize";
 import { useDispatch } from "react-redux";
-import { cancelBooking } from "app/Redux/Actions/BookingActions";
-import ErrorMessage from "app/components/ErrorMessage";
-import { RED_COLOR } from "app/components/utilities/constant";
+import { cancelBooking } from "../../../../Redux/Actions/BookingActions";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import ErrorMessage from "../../../../components/ErrorMessage";
+import InputField from "../../../../components/InputField";
+import styles from "../../../../components/Modals/styles";
+import { normalizeSpacing } from "../../../../components/scaleFontSize";
+import strings from "../../../../components/utilities/Localization";
+import { RED_COLOR } from "../../../../components/utilities/constant";
+import Styles from './styles';
 
 const ReAllocateModal = (props: any) => {
     const dispatch: any = useDispatch()

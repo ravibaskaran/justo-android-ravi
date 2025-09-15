@@ -18,10 +18,10 @@ import strings from "../../../../components/utilities/Localization";
 import InputField from "../../../../components/InputField";
 import Button from "../../../../components/Button";
 import images from "../../../../assets/images";
-import { normalize, } from "app/components/scaleFontSize";
-import PicturePickerModal from "app/components/Modals/PicturePicker";
-import ErrorMessage from "app/components/ErrorMessage";
-import { RequiredStart } from "app/components/utilities/GlobalFuncations";
+import { normalize, } from "../../../../components/scaleFontSize";
+import PicturePickerModal from "../../../../components/Modals/PicturePicker";
+import ErrorMessage from "../../../../components/ErrorMessage";
+import { RequiredStart } from "../../../../components/utilities/GlobalFuncations";
 import CheckBox from "@react-native-community/checkbox";
 
 const CompanyDetails = (props: any) => {

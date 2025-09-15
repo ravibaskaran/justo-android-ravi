@@ -1,12 +1,11 @@
-import { View, Text, Image, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
+import { View } from "react-native";
 import Modal from "react-native-modal";
-import styles from "../../../../components/Modals/styles";
-import images from "../../../../assets/images";
-import strings from "../../../../components/utilities/Localization";
 import Button from "../../../../components/Button";
-import InputField from "../../../../components/InputField";
 import DropdownInput from "../../../../components/DropDown";
+import InputField from "../../../../components/InputField";
+import styles from "../../../../components/Modals/styles";
+import strings from "../../../../components/utilities/Localization";
 
 const FilterModal = (props: any) => {
     const [value, setValue] = useState(null);

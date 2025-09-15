@@ -1,11 +1,11 @@
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import SupportForumView from "./components/SupportForumView";
 import Share from "react-native-share";
-import { supportForumListData } from "app/Redux/Actions/SupportForumAction";
+import { useDispatch, useSelector } from "react-redux";
 import RNFetchBlob from "rn-fetch-blob";
-import { START_LOADING, STOP_LOADING } from "app/Redux/types";
+import { supportForumListData } from "../../../Redux/Actions/SupportForumAction";
+import { START_LOADING, STOP_LOADING } from "../../../Redux/types";
+import SupportForumView from "./components/SupportForumView";
 
 const SupportForumScreen = ({ navigation }: any) => {
   const dispatch: any = useDispatch();

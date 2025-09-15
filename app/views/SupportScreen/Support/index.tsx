@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import SupportView from './components/SupportView';
-import { useFocusEffect } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTicketList } from 'app/Redux/Actions/SupportActions';
-import strings from 'app/components/utilities/Localization';
+import { getTicketList } from '../../../Redux/Actions/SupportActions';
+import strings from '../../../components/utilities/Localization';
+import SupportView from './components/SupportView';
 
 const SupportScreen = ({ navigation }: any) => {
     const [ticketList, setTicketList] = useState<any>([]);

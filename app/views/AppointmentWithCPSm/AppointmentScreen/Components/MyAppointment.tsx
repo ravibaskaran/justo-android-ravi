@@ -1,7 +1,8 @@
-import usePermission from "app/components/utilities/UserPermissions";
+import usePermission from "../../../../components/utilities/UserPermissions";
 import moment from "moment";
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
+import { DATE_FORMAT } from "react-native-gifted-chat";
 import images from "../../../../assets/images";
 import Button from "../../../../components/Button";
 import {
@@ -10,13 +11,12 @@ import {
   GREEN_COLOR,
   PURPLE_COLOR,
   RED_COLOR,
-  ROLE_IDS,
   REGISTERD_CP,
+  ROLE_IDS,
   YELLOW_COLOR,
 } from "../../../../components/utilities/constant";
 import strings from "../../../../components/utilities/Localization";
 import styles from "./Styles";
-import { DATE_FORMAT } from "react-native-gifted-chat";
 
 const MyAppointment = (props: any) => {
   const { edit, view, status } = usePermission({

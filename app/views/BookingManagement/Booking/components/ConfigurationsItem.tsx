@@ -1,12 +1,19 @@
 import { normalize } from "@rneui/themed";
-import { START_LOADING, STOP_LOADING } from "app/Redux/types";
-import DropdownInput from "app/components/DropDown";
-import InputField from "app/components/InputField";
-import PicturePickerModal from "app/components/Modals/PicturePicker";
-import Styles from "app/components/Modals/styles";
-import { RequiredStart } from "app/components/utilities/GlobalFuncations";
-import strings from "app/components/utilities/Localization";
-import apiEndPoints from "app/components/utilities/apiEndPoints";
+import React, { useEffect, useState } from "react";
+import { Keyboard, Text, View } from "react-native";
+import Modal from "react-native-modal";
+import { useDispatch } from "react-redux";
+import { START_LOADING, STOP_LOADING } from "../../../../Redux/types";
+import Button from "../../../../components/Button";
+import DropdownInput from "../../../../components/DropDown";
+import FastImages from "../../../../components/FastImage";
+import InputField from "../../../../components/InputField";
+import PicturePickerModal from "../../../../components/Modals/PicturePicker";
+import Styles from "../../../../components/Modals/styles";
+import { normalizeHeight } from "../../../../components/scaleFontSize";
+import { RequiredStart } from "../../../../components/utilities/GlobalFuncations";
+import strings from "../../../../components/utilities/Localization";
+import apiEndPoints from "../../../../components/utilities/apiEndPoints";
 import {
   GREEN_COLOR,
   INVENTORY_STATUS,
@@ -15,16 +22,9 @@ import {
   PRIMARY_THEME_COLOR,
   PRIMARY_THEME_COLOR_DARK,
   RED_COLOR,
-} from "app/components/utilities/constant";
-import { apiCallJW } from "app/components/utilities/httpClient";
-import React, { useEffect, useState } from "react";
-import { Keyboard, Text, View } from "react-native";
-import { useDispatch } from "react-redux";
-import Button from "../../../../components/Button";
+} from "../../../../components/utilities/constant";
+import { apiCallJW } from "../../../../components/utilities/httpClient";
 import styles from "./styles";
-import FastImages from "app/components/FastImage";
-import { normalizeHeight } from "app/components/scaleFontSize";
-import Modal from "react-native-modal";
 
 const ConfigurationsItem = (props: any) => {
   const [maininventory, setMainInventory] = useState<any>([]);

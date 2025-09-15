@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
-import PickupRequestView from "./components/PickupRequest";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllPickupList,
   updatePickupStatusAction,
-} from "app/Redux/Actions/PickUpActions";
+} from "../../../Redux/Actions/PickUpActions";
+import PickupRequestView from "./components/PickupRequest";
 
 const PickupRequestScreen = ({ navigation }: any) => {
   const [filterisVisible, setFilterisVisible] = useState(false);

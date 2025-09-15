@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { View, Text, FlatList } from "react-native";
+import React from "react";
+import { FlatList, View } from "react-native";
 import images from "../../../../assets/images";
+import EmptyListScreen from "../../../../components/CommonScreen/EmptyListScreen";
 import Header from "../../../../components/Header";
+import FilterModal from "../../../../components/Modals/FilterModal";
 import { PRIMARY_THEME_COLOR } from "../../../../components/utilities/constant";
 import strings from "../../../../components/utilities/Localization";
-import styles from "./styles";
 import PickupRequestsList from "./PickupRequestsList";
-import FilterModal from "../../../../components/Modals/FilterModal";
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
+import styles from "./styles";
 import UpdateStatusModal from "./UpdateStatusModal";
 
 const PickupRequestView = (props: any) => {
@@ -27,6 +27,7 @@ const PickupRequestView = (props: any) => {
       />
       <View style={styles.propertyListView}>
         <FlatList
+removeClippedSubviews={false}
           data={props?.DATA}
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (

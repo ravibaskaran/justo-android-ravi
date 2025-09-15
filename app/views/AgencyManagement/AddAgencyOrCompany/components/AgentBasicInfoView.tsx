@@ -23,10 +23,10 @@ import {
 import InputField from "../../../../components/InputField";
 import images from "../../../../assets/images";
 import Button from "../../../../components/Button";
-import InputCalender from "app/components/InputCalender";
+import InputCalender from "../../../../components/InputCalender";
 import moment from "moment";
-import MultiLocation from "app/components/MultiLocation";
-import { RequiredStart } from "app/components/utilities/GlobalFuncations";
+import MultiLocation from "../../../../components/MultiLocation";
+import { RequiredStart } from "../../../../components/utilities/GlobalFuncations";
 
 const AgentBasicInfoView = (props: any) => {
   const handleDelete = (item: any, index: any) => {
@@ -381,7 +381,7 @@ const AgentBasicInfoView = (props: any) => {
                 location: val,
               });
             }}
-            inputType={'location'}
+            // inputType={'location'}
             onPressSelect={(data: any, detail: any) => {
               props.setAgencyData({
                 ...props.agencyData,

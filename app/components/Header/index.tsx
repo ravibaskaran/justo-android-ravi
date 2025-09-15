@@ -10,7 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import { Badge } from "@rneui/base";
 import { normalize } from "../scaleFontSize";
-import images from "app/assets/images";
+import images from "../../assets/images";
 
 const Header = (props: any) => {
   const insets = useSafeAreaInsets();

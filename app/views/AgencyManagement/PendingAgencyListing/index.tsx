@@ -1,8 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
-import ErrorMessage from 'app/components/ErrorMessage';
-import { GREEN_COLOR } from 'app/components/utilities/constant';
-import { getAssignCPList, removeAssignCpStatus, updateAssignCP } from 'app/Redux/Actions/SourcingManagerActions';
+import ErrorMessage from '../../../components/ErrorMessage';
+import { GREEN_COLOR } from '../../../components/utilities/constant';
+import { getAssignCPList, removeAssignCpStatus, updateAssignCP } from '../../../Redux/Actions/SourcingManagerActions';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PendingAgencyView from './components/PendingAgencyView';

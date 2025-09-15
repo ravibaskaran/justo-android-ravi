@@ -1,24 +1,15 @@
-import { View, Text, TouchableOpacity, Image, Linking } from "react-native";
+import moment from "moment";
 import React from "react";
-import styles from "./styles";
+import { Text, View } from "react-native";
 import strings from "../../../../components/utilities/Localization";
 import {
   BLACK_COLOR,
-  CONST_IDS,
   DATE_FORMAT,
   DATE_TIME_FORMAT,
   GREEN_COLOR,
-  PRIMARY_THEME_COLOR,
-  PURPLE_COLOR,
-  ROLE_IDS,
-  WHITE_COLOR,
-  YELLOW_COLOR,
+  PRIMARY_THEME_COLOR
 } from "../../../../components/utilities/constant";
-import images from "../../../../assets/images";
-import Button from "../../../../components/Button";
-import moment from "moment";
-import { useSelector } from "react-redux";
-import usePermission from "app/components/utilities/UserPermissions";
+import styles from "./styles";
 
 const AppointmentListItem = (props: any) => {
   const bookingStatus =

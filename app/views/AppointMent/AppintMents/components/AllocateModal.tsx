@@ -1,10 +1,10 @@
 
-import DropdownInput from "app/components/DropDown";
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import Modal from "react-native-modal";
 import images from "../../../../assets/images";
 import Button from "../../../../components/Button";
+import DropdownInput from "../../../../components/DropDown";
 import { GRAY_LIGHT_COLOR } from "../../../../components/utilities/constant";
 import strings from "../../../../components/utilities/Localization";
 import styles from "./styles";

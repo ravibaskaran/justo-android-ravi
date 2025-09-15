@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import ScanQrView from "./components/ScanQr";
-import { useDispatch, useSelector } from "react-redux";
-import { cpAppointmentCheckIn, removeMasters } from "app/Redux/Actions/MasterActions";
-import { GREEN_COLOR, RED_COLOR, ROLE_IDS } from "app/components/utilities/constant";
-import ErrorMessage from "app/components/ErrorMessage";
 import { Alert } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { cpAppointmentCheckIn, removeMasters } from "../../Redux/Actions/MasterActions";
+import { ROLE_IDS } from "../../components/utilities/constant";
+import ScanQrView from "./components/ScanQr";
 
 const ScanQrScreen = ({ navigation }: any) => {
   const [AppId, setAppId] = useState('')

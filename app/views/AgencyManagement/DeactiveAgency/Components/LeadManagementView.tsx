@@ -1,18 +1,18 @@
-import { View, FlatList } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import styles from "./Styles";
+import { FlatList, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useDispatch, useSelector } from "react-redux";
 import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import EmptyListScreen from "../../../../components/CommonScreen/EmptyListScreen";
+import Header from "../../../../components/Header";
 import { PRIMARY_THEME_COLOR } from "../../../../components/utilities/constant";
 import strings from "../../../../components/utilities/Localization";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Header from "../../../../components/Header";
+import { removeTransferVisit } from "../../../../Redux/Actions/TransferVisitAction";
 import LeadManagementItem from "./LeadManagementItem";
-import { useNavigation } from "@react-navigation/native";
 import FilterModal from "./LeadManagementModal";
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
-import Button from "app/components/Button";
-import { useDispatch, useSelector } from "react-redux";
-import { removeTransferVisit } from "app/Redux/Actions/TransferVisitAction";
+import styles from "./Styles";
 
 const LeadManagementView = (props: any) => {
   const loadingref = false;
@@ -54,6 +54,7 @@ const LeadManagementView = (props: any) => {
       />
       <View style={styles.propertyListView}>
         <FlatList
+removeClippedSubviews={false}
           data={props?.visitorList}
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (

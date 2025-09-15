@@ -1,19 +1,19 @@
-import ErrorMessage from "app/components/ErrorMessage";
-import { GREEN_COLOR, RED_COLOR } from "app/components/utilities/constant";
-import {
-  AddBooking,
-  removeAddBookingData,
-} from "app/Redux/Actions/AppointmentCLAction";
-import { updateBookingDetailStatus } from "app/Redux/Actions/BookingActions";
-import {
-  getAllMaster,
-  getPropertyConfig,
-} from "app/Redux/Actions/MasterActions";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import ErrorMessage from "../../../components/ErrorMessage";
+import { GREEN_COLOR, RED_COLOR } from "../../../components/utilities/constant";
+import {
+  AddBooking,
+  removeAddBookingData,
+} from "../../../Redux/Actions/AppointmentCLAction";
+import { updateBookingDetailStatus } from "../../../Redux/Actions/BookingActions";
+import {
+  getAllMaster,
+  getPropertyConfig,
+} from "../../../Redux/Actions/MasterActions";
+import { START_LOADING, STOP_LOADING } from "../../../Redux/types";
 import BookingView from "./components/Booking";
-import { START_LOADING, STOP_LOADING } from "app/Redux/types";
 
 interface FlatBooking {
   flat_type: string;

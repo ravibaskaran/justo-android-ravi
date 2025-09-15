@@ -13,14 +13,14 @@ import {
   normalizeWidth,
 } from "../../../../components/scaleFontSize";
 import { ScrollView } from "react-native-gesture-handler";
-import strings from "app/components/utilities/Localization";
+import strings from "../../../../components/utilities/Localization";
 import Modal from "react-native-modal";
-import FastImages from "app/components/FastImage";
-import images from "app/assets/images";
+import FastImages from "../../../../components/FastImage";
 import FileViewer from "react-native-file-viewer";
 import RNFS from "react-native-fs";
-import ErrorMessage from "app/components/ErrorMessage";
+import ErrorMessage from "../../../../components/ErrorMessage";
 import { useNavigation } from "@react-navigation/native";
+import images from "../../../../assets/images";
 
 const PropertyDetailItem = (props: any) => {
   const item = props?.items || {};

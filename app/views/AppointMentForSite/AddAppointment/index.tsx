@@ -1,22 +1,21 @@
-import { View, Text, Alert, ScrollView } from "react-native";
-import React, { useEffect, useState } from "react";
-import AddAppointmentView from "./Components/AddAppointmentView";
-import { useDispatch, useSelector } from "react-redux";
+import ErrorMessage from "../../../components/ErrorMessage";
+import {
+  GREEN_COLOR,
+  RED_COLOR,
+  ROLE_IDS,
+} from "../../../components/utilities/constant";
+import strings from "../../../components/utilities/Localization";
 import {
   addAppointment,
   editAppointment,
   getAppointmentDetail,
   removeEditUser,
-} from "app/Redux/Actions/AppointmentWithCpActions";
-import { getAllLeadsList } from "app/Redux/Actions/LeadsActions";
-import { getAllProperty } from "app/Redux/Actions/propertyActions";
-import ErrorMessage from "app/components/ErrorMessage";
-import {
-  GREEN_COLOR,
-  RED_COLOR,
-  ROLE_IDS,
-} from "app/components/utilities/constant";
-import strings from "app/components/utilities/Localization";
+} from "../../../Redux/Actions/AppointmentWithCpActions";
+import { getAllLeadsList } from "../../../Redux/Actions/LeadsActions";
+import { getAllProperty } from "../../../Redux/Actions/propertyActions";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import AddAppointmentView from "./Components/AddAppointmentView";
 
 const AddAppointmentScreen = ({ navigation, route }: any) => {
   const { type = "", item = {} } = route?.params || {};

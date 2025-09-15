@@ -1,8 +1,8 @@
-import { getVisitorDetail } from "app/Redux/Actions/LeadsActions";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { visiterBackSubject } from "../../../observables/backNavigationSubject";
+import { getVisitorDetail } from "../../../Redux/Actions/LeadsActions";
 import LeadDetailsView from "./Components/LeadDetailsView";
-import { visiterBackSubject } from "app/observables/backNavigationSubject";
 
 const LeadDetails = ({ navigation, route }: any) => {
   const dispatch: any = useDispatch();

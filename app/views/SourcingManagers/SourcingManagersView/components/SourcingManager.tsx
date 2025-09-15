@@ -1,20 +1,20 @@
 import { FlatList, Text, View } from "react-native";
+import { useSelector } from "react-redux";
 import images from "../../../../assets/images";
 import Button from "../../../../components/Button";
+import EmptyListScreen from "../../../../components/CommonScreen/EmptyListScreen";
 import Header from "../../../../components/Header";
+import AddTargetModal from "../../../../components/Modals/AddTargetModal";
+import ConfirmModal from "../../../../components/Modals/ConfirmModal";
+import FilterModal from "../../../../components/Modals/FilterModal";
 import {
   PRIMARY_THEME_COLOR,
   ROLE_IDS,
 } from "../../../../components/utilities/constant";
-import styles from "./styles";
-import SourcingManagersItem from "./SourcingManagersItem";
 import strings from "../../../../components/utilities/Localization";
-import ConfirmModal from "../../../../components/Modals/ConfirmModal";
-import FilterModal from "../../../../components/Modals/FilterModal";
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
-import usePermission from "app/components/utilities/UserPermissions";
-import AddTargetModal from "app/components/Modals/AddTargetModal";
-import { useSelector } from "react-redux";
+import usePermission from "../../../../components/utilities/UserPermissions";
+import SourcingManagersItem from "./SourcingManagersItem";
+import styles from "./styles";
 
 const SourcingDetailsView = (props: any) => {
   const loadingref = false;
@@ -59,6 +59,7 @@ const SourcingDetailsView = (props: any) => {
       )}
       <View style={styles.listViewsec}>
         <FlatList
+removeClippedSubviews={false}
           showsVerticalScrollIndicator={false}
           data={props?.sourcingManagers}
           renderItem={({ item }) => (

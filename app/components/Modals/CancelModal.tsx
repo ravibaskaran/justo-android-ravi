@@ -1,17 +1,17 @@
-import { View, Text, Image, TouchableOpacity } from "react-native";
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import Modal from "react-native-modal";
-import styles from "./styles";
-import images from "../../assets/images";
-import strings from "../utilities/Localization";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
-import Button from "../Button";
+import Modal from "react-native-modal";
 import { useDispatch, useSelector } from "react-redux";
-import { closeVisit } from "app/Redux/Actions/LeadsActions";
-import InputField from "../InputField";
-import { getAllMaster } from "app/Redux/Actions/MasterActions";
+import images from "../../assets/images";
+import { closeVisit } from "../../Redux/Actions/LeadsActions";
+import { getAllMaster } from "../../Redux/Actions/MasterActions";
+import Button from "../Button";
 import ErrorMessage from "../ErrorMessage";
+import InputField from "../InputField";
 import { RED_COLOR } from "../utilities/constant";
+import strings from "../utilities/Localization";
+import styles from "./styles";
 
 const CancelModal = (props: any) => {
     const data = props?.data?.length > 0 ? props?.data[0] : []

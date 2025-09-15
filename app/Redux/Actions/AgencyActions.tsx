@@ -1,6 +1,6 @@
-import { handleApiError } from "app/components/ErrorMessage/HandleApiErrors";
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import { apiCall } from "app/components/utilities/httpClient";
+import { handleApiError } from "../../components/ErrorMessage/HandleApiErrors";
+import { apiCall } from "../../components/utilities/httpClient";
+import apiEndPoints from "../../components/utilities/apiEndPoints";
 import {
   ADD_TARGET_FOR_CP,
   ADD_TARGET_FOR_CP_ERROR,

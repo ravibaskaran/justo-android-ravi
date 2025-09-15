@@ -1,7 +1,7 @@
 import { View, Text, FlatList } from "react-native";
 import React from "react";
 import AppointMentForSiteList from "./AppointMentForSiteList";
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
+import EmptyListScreen from "../../../../components/CommonScreen/EmptyListScreen";
 import styles from "./Styles";
 
 const FirstRoute = (props: any) => {
@@ -11,6 +11,7 @@ const FirstRoute = (props: any) => {
         Count : {props?.moreData ? props?.moreData : 0}
       </Text>
       <FlatList
+removeClippedSubviews={false}
         data={props.siteAppointments}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
@@ -31,6 +32,8 @@ const FirstRoute = (props: any) => {
             customer_name: "",
             customer_number:"",
             property_name: "",
+            qualified: "",
+            lead_priority: "",
           });
           props.getAppointmentList(
             0,

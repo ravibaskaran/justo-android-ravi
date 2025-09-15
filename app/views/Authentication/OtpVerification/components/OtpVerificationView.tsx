@@ -1,20 +1,20 @@
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  StatusBar,
-  Linking,
-} from "react-native";
+import CheckBox from "@react-native-community/checkbox";
 import OTPInputView from "@twotalltotems/react-native-otp-input";
 import React from "react";
-import styles from "./style";
+import {
+  Image,
+  Linking,
+  ScrollView,
+  StatusBar,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import images from "../../../../assets/images";
-import strings from "../../../../components/utilities/Localization";
 import Button from "../../../../components/Button";
-import { Isios, PRIMARY_THEME_COLOR, WHITE_COLOR } from "../../../../components/utilities/constant";
-import CheckBox from "@react-native-community/checkbox";
+import { Isios, PRIMARY_THEME_COLOR } from "../../../../components/utilities/constant";
+import strings from "../../../../components/utilities/Localization";
+import styles from "./style";
 // import LogoView from "../../Logoview";
 
 const OtpVerificationView = (props: any) => {

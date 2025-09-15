@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import SalesToolsView from './components/SalesToolsView';
 
 const SalesToolsScreen = ({ navigation }: any) => {

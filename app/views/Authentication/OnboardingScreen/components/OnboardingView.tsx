@@ -1,8 +1,8 @@
-import {Image} from 'react-native';
 import React from 'react';
+import { Image } from 'react-native';
 import Onboarding from 'react-native-onboarding-swiper';
-import styles from './styles';
 import images from '../../../../assets/images';
+import styles from './styles';
 
 const OnboardingView = (props: any) => {
   const pages = [

@@ -1,11 +1,11 @@
-import { View, Text } from "react-native";
 import React, { useEffect, useState } from "react";
-import CloseAppointmentView from "./components/CloseAppointmentView";
+import { View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { closeVisit } from "app/Redux/Actions/LeadsActions";
-import { getAppointmentDetail, removeEditUser } from "app/Redux/Actions/AppointmentWithCpActions";
-import ErrorMessage from "app/components/ErrorMessage";
-import { GREEN_COLOR } from "app/components/utilities/constant";
+import { getAppointmentDetail, removeEditUser } from "../../../Redux/Actions/AppointmentWithCpActions";
+import { closeVisit } from "../../../Redux/Actions/LeadsActions";
+import ErrorMessage from "../../../components/ErrorMessage";
+import { GREEN_COLOR } from "../../../components/utilities/constant";
+import CloseAppointmentView from "./components/CloseAppointmentView";
 
 const CloseAppointment = ({navigation, route}: any) => {
   const dispatch: any = useDispatch()

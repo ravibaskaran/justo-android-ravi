@@ -1,14 +1,13 @@
-import { View, Text, StatusBar, TouchableOpacity, ScrollView } from "react-native";
 import React from "react";
-import styles from "./styles";
-import { Isios, PRIMARY_THEME_COLOR, WHITE_COLOR } from "../../../../components/utilities/constant";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Header from "../../../../components/Header";
-import strings from "../../../../components/utilities/Localization";
-import InputField from "../../../../components/InputField";
-import Button from "../../../../components/Button";
 import images from "../../../../assets/images";
-import CheckBox from "@react-native-community/checkbox";
+import Button from "../../../../components/Button";
+import Header from "../../../../components/Header";
+import InputField from "../../../../components/InputField";
+import { Isios, WHITE_COLOR } from "../../../../components/utilities/constant";
+import strings from "../../../../components/utilities/Localization";
+import styles from "./styles";
 
 const CompanyDetails = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();

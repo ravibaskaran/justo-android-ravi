@@ -1,19 +1,21 @@
+import React from "react";
 import {
-  View,
-  Text,
+  Dimensions,
+  RefreshControl,
   SafeAreaView,
   ScrollView,
-  Dimensions,
+  Text,
   TouchableOpacity,
-  Image,
-  RefreshControl,
+  View
 } from "react-native";
-import React from "react";
+import RNFS from "react-native-fs";
+import XLSX from "xlsx";
+import ErrorMessage from "../../../components/ErrorMessage";
 import {
   normalize,
   normalizeHeight,
   normalizeWidth,
-} from "app/components/scaleFontSize";
+} from "../../../components/scaleFontSize";
 import {
   BLACK_COLOR,
   GREEN_COLOR,
@@ -21,17 +23,13 @@ import {
   PRIMARY_THEME_COLOR,
   RED_COLOR,
   WHITE_COLOR,
-} from "app/components/utilities/constant";
-import styles from "./styles";
-import images from "app/assets/images";
+} from "../../../components/utilities/constant";
 import {
   handlePermission,
   openPermissionSetting,
-} from "app/components/utilities/GlobalFuncations";
-import strings from "app/components/utilities/Localization";
-import XLSX from "xlsx";
-import RNFS from "react-native-fs";
-import ErrorMessage from "app/components/ErrorMessage";
+} from "../../../components/utilities/GlobalFuncations";
+import strings from "../../../components/utilities/Localization";
+import styles from "./styles";
 
 const BusinessHeadReportTable = (props: any) => {
   const { data, handleCpDetailPress, fileName } = props;

@@ -1,10 +1,13 @@
-import {
-    START_LOADING, STOP_LOADING, LEADERBOARD_ERROR, LEADERBOARD,
-    LEADERBOARD_DETAIL_ERROR, LEADERBOARD_DETAIL
-} from "../types";
+import { handleApiError } from "../../components/ErrorMessage/HandleApiErrors";
 import apiEndPoints from "../../components/utilities/apiEndPoints";
-import { apiCall } from "app/components/utilities/httpClient";
-import { handleApiError } from "app/components/ErrorMessage/HandleApiErrors";
+import { apiCall } from "../../components/utilities/httpClient";
+import {
+    LEADERBOARD,
+    LEADERBOARD_DETAIL,
+    LEADERBOARD_DETAIL_ERROR,
+    LEADERBOARD_ERROR,
+    START_LOADING, STOP_LOADING
+} from "../types";
 
 export const learderBoardData = (params: any) => async (dispatch: any) => {
     dispatch({ type: START_LOADING })

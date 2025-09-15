@@ -1,18 +1,23 @@
 import { useFocusEffect } from "@react-navigation/native";
-import { getEmployeeList } from "app/Redux/Actions/CompanyActions";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { Keyboard } from "react-native";
+import { DATE_FORMAT } from "react-native-gifted-chat";
+import { useDispatch, useSelector } from "react-redux";
+import { getEmployeeList } from "../../../Redux/Actions/CompanyActions";
 import {
   addVisitor,
   addVisitorRemove,
   addVisitorWithoutProperty,
   CheckVisitAvailRemove,
-} from "app/Redux/Actions/LeadsActions";
-import { getAllMaster } from "app/Redux/Actions/MasterActions";
-import { getAssignCPList } from "app/Redux/Actions/SourcingManagerActions";
-import { getAllProperty } from "app/Redux/Actions/propertyActions";
-import { START_LOADING, STOP_LOADING } from "app/Redux/types";
-import ErrorMessage from "app/components/ErrorMessage";
-import strings from "app/components/utilities/Localization";
-import apiEndPoints from "app/components/utilities/apiEndPoints";
+} from "../../../Redux/Actions/LeadsActions";
+import { getAllMaster } from "../../../Redux/Actions/MasterActions";
+import { getAssignCPList } from "../../../Redux/Actions/SourcingManagerActions";
+import { getAllProperty } from "../../../Redux/Actions/propertyActions";
+import { START_LOADING, STOP_LOADING } from "../../../Redux/types";
+import ErrorMessage from "../../../components/ErrorMessage";
+import strings from "../../../components/utilities/Localization";
+import apiEndPoints from "../../../components/utilities/apiEndPoints";
 import {
   BLACK_COLOR,
   CONST_IDS,
@@ -20,14 +25,9 @@ import {
   RED_COLOR,
   Regexs,
   ROLE_IDS,
-} from "app/components/utilities/constant";
-import { CountryArray } from "app/components/utilities/countryData";
-import { apiCall } from "app/components/utilities/httpClient";
-import moment from "moment";
-import React, { useEffect, useState } from "react";
-import { Keyboard } from "react-native";
-import { DATE_FORMAT } from "react-native-gifted-chat";
-import { useDispatch, useSelector } from "react-redux";
+} from "../../../components/utilities/constant";
+import { CountryArray } from "../../../components/utilities/countryData";
+import { apiCall } from "../../../components/utilities/httpClient";
 import AddNewVisitorForm from "./Components/AddNewVisitorForm";
 
 const AddNewVisitorScreen = ({ navigation, route }: any) => {

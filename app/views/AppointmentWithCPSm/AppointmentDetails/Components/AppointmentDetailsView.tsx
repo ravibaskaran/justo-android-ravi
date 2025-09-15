@@ -1,9 +1,8 @@
-import { updateUserAppointmentStatus } from "app/Redux/Actions/AppiontmentWithUserActions";
+import { updateUserAppointmentStatus } from "../../../../Redux/Actions/AppiontmentWithUserActions";
 import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import images from "../../../../assets/images";
-import Button from "../../../../components/Button";
 import Header from "../../../../components/Header";
 import strings from "../../../../components/utilities/Localization";
 import { PRIMARY_THEME_COLOR } from "../../../../components/utilities/constant";

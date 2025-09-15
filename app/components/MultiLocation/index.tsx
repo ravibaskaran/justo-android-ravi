@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
-import images from "app/assets/images";
-import Modal from "react-native-modal";
-import { BLACK_COLOR, MAP_KEY, PRIMARY_THEME_COLOR, PRIMARY_THEME_COLOR_DARK, WHITE_COLOR } from 'app/components/utilities/constant';
-import styles from './styles';
-import Button from 'app/components/Button';
-import strings from 'app/components/utilities/Localization';
+import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import Modal from "react-native-modal";
+import images from '../../assets/images';
+import Button from '../Button';
 import Header from '../Header';
 import { normalize, normalizeHeight, normalizeSpacing } from '../scaleFontSize';
-import { handlePermission, openPermissionSetting } from '../utilities/GlobalFuncations';
+import { BLACK_COLOR, MAP_KEY, PRIMARY_THEME_COLOR, PRIMARY_THEME_COLOR_DARK, WHITE_COLOR, } from '../utilities/constant';
+import strings from '../utilities/Localization';
+import styles from './styles';
 
 const locationsView = (props: any) => {
     const [allList, setAllList] = useState<any>([])

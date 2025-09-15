@@ -1,16 +1,14 @@
-import { View, Text } from "react-native";
-import React, { useEffect, useState } from "react";
-import RecoveryDetailView from "./Components/RecoveryDetailView";
 import { useFocusEffect } from "@react-navigation/native";
-import { getAppointmentDetail } from "app/Redux/Actions/AppointmentWithCpActions";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   cancelBooking,
   getBookingDetail,
   removeBooking,
-} from "app/Redux/Actions/BookingActions";
-import ErrorMessage from "app/components/ErrorMessage";
-import { GREEN_COLOR } from "app/components/utilities/constant";
+} from "../../../Redux/Actions/BookingActions";
+import ErrorMessage from "../../../components/ErrorMessage";
+import { GREEN_COLOR } from "../../../components/utilities/constant";
+import RecoveryDetailView from "./Components/RecoveryDetailView";
 
 const RecoveryDetails = ({ navigation, route }: any) => {
   // const [status, setStatus] = useState(route?.params);

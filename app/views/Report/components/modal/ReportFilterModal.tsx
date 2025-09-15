@@ -1,23 +1,21 @@
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
-import React, { useEffect, useState } from "react";
-import Modal from "react-native-modal";
-import styles from "../../../../components/Modals/styles";
-import images from "../../../../assets/images";
-import strings from "../../../../components/utilities/Localization";
-import Button from "../../../../components/Button";
-import InputField from "../../../../components/InputField";
-import DropdownInput from "../../../../components/DropDown";
-import InputCalender from "app/components/InputCalender";
 import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import Modal from "react-native-modal";
+import { useDispatch, useSelector } from "react-redux";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import DropdownInput from "../../../../components/DropDown";
+import InputCalender from "../../../../components/InputCalender";
+import styles from "../../../../components/Modals/styles";
 import {
   DATE_FORMAT,
   Isios,
   ROLE_IDS,
-} from "app/components/utilities/constant";
-import { normalizeSpacing } from "app/components/scaleFontSize";
-import { useDispatch, useSelector } from "react-redux";
-import { CpType, SearchByTeam } from "app/components/utilities/DemoData";
-import { getUsersListForSiteHead } from "app/Redux/Actions/UserManagerActions";
+} from "../../../../components/utilities/constant";
+import { SearchByTeam } from "../../../../components/utilities/DemoData";
+import strings from "../../../../components/utilities/Localization";
+import { getUsersListForSiteHead } from "../../../../Redux/Actions/UserManagerActions";
 const FilterModal = (props: any) => {
   const today = new Date();
   const yesterday = new Date(today);

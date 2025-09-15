@@ -1,12 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
-import ErrorMessage from "app/components/ErrorMessage";
-import usePermission from "app/components/utilities/UserPermissions";
+import ErrorMessage from "../../../../components/ErrorMessage";
+import usePermission from "../../../../components/utilities/UserPermissions";
 import moment from "moment";
 import React, { useRef, useState } from "react";
 import { Platform, View } from "react-native";
 import FileViewer from "react-native-file-viewer";
 import RNFS from "react-native-fs";
 import Share from "react-native-share";
+import ViewShot from "react-native-view-shot";
 import { useSelector } from "react-redux";
 import images from "../../../../assets/images";
 import Button from "../../../../components/Button";
@@ -23,11 +24,10 @@ import {
 } from "../../../../components/utilities/constant";
 import strings from "../../../../components/utilities/Localization";
 import BookingDetailsIteam from "./BookingDetailsIteam";
+import BookingViewShot from "./BookingViewShot";
 import CancelModal from "./CancelBooking";
 import ReAllocateModal from "./ReAllocate";
 import styles from "./styles";
-import ViewShot from "react-native-view-shot";
-import BookingViewShot from "./BookingViewShot";
 
 const BookingDetailsView = (props: any) => {
   const { bookingData } = props;

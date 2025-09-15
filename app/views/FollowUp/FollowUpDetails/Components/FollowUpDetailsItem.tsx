@@ -1,12 +1,12 @@
-import { View, Text, ScrollView } from "react-native";
-import React from "react";
-import styles from "./Styles";
-import strings from "../../../../components/utilities/Localization";
 import moment from "moment";
+import React from "react";
+import { ScrollView, Text, View } from "react-native";
 import {
   capitalizeWords,
   DATE_TIME_FORMAT,
-} from "app/components/utilities/constant";
+} from "../../../../components/utilities/constant";
+import strings from "../../../../components/utilities/Localization";
+import styles from "./Styles";
 
 const FollowUpDetailsItem = (props: any) => {
   return (

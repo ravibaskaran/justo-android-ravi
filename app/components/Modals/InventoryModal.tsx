@@ -1,23 +1,15 @@
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
-import React, { useEffect, useState } from "react";
+
+import React, { useState } from "react";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Modal from "react-native-modal";
-import {
-  BLACK_COLOR,
-  Isios,
-  PRIMARY_THEME_COLOR,
-  validateEmail,
-} from "app/components/utilities/constant";
-import { normalizeSpacing } from "app/components/scaleFontSize";
-import images from "app/assets/images";
-import InputField from "../InputField";
+import { useDispatch } from "react-redux";
+import Button from "../Button";
+import DropdownInput from "../DropDown";
 import strings from "../utilities/Localization";
 import styles from "./styles";
-import Button from "../Button";
-import { RadioButton } from "react-native-paper";
-import { RequiredStart } from "../utilities/GlobalFuncations";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllMaster } from "app/Redux/Actions/MasterActions";
-import DropdownInput from "../DropDown";
+import images from "../../assets/images";
+import { Isios } from "../utilities/constant";
+import { getAllMaster } from "../../Redux/Actions/MasterActions";
 
 const InventoryModal = (props: any) => {
   const dispatch: any = useDispatch();

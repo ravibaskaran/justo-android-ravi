@@ -1,16 +1,13 @@
 import { useFocusEffect } from "@react-navigation/native";
-import ErrorMessage from "app/components/ErrorMessage";
-import { GREEN_COLOR, RED_COLOR } from "app/components/utilities/constant";
-import { getBookingDetail, updateBookingDetailStatus, cancelBooking, removeBooking, getBookingRegisterDetail }
-    from "app/Redux/Actions/BookingActions";
-import { competitorpropertyReducer } from "app/Redux/Reducers/propertyReducers";
 import React, { useEffect, useState } from "react";
-import { Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import BookingDetailsView from './components/BookingDetails'
-import { bookingBackSubject } from "app/observables/backNavigationSubject";
-import { apiCall } from "app/components/utilities/httpClient";
-import apiEndPoints from "app/components/utilities/apiEndPoints";
+import ErrorMessage from "../../../components/ErrorMessage";
+import apiEndPoints from "../../../components/utilities/apiEndPoints";
+import { GREEN_COLOR } from "../../../components/utilities/constant";
+import { apiCall } from "../../../components/utilities/httpClient";
+import { bookingBackSubject } from "../../../observables/backNavigationSubject";
+import { cancelBooking, getBookingRegisterDetail, removeBooking } from "../../../Redux/Actions/BookingActions";
+import BookingDetailsView from './components/BookingDetails';
 
 const BookingDetailsScreen = ({ navigation, route }: any) => {
     const { data = {}, type = '' } = route?.params || {}

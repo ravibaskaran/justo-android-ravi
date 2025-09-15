@@ -1,9 +1,8 @@
-import { View, Text } from "react-native";
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllUserChatList } from "../../../Redux/Actions/ChatActions";
 import AddChatView from "./components/AddChatView";
-import { useIsFocused, useFocusEffect } from "@react-navigation/native";
-import { getAllUserChatList } from "app/Redux/Actions/ChatActions";
-import { useSelector, useDispatch } from "react-redux";
 
 const AddChatScreen = ({ navigation, route }: any) => {
   const isFocused = useIsFocused();

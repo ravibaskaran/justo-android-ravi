@@ -1,5 +1,5 @@
-import images from "app/assets/images";
-import strings from "app/components/utilities/Localization";
+import images from "../assets/images";
+import strings from "../components/utilities/Localization";
 
 export const MENUITEMS = [
     // {

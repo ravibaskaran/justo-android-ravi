@@ -1,12 +1,5 @@
 import { useFocusEffect } from "@react-navigation/native";
-import ErrorMessage from "app/components/ErrorMessage";
-import { GREEN_COLOR } from "app/components/utilities/constant";
-import { getAllAgentList } from "app/Redux/Actions/AgencyActions";
-import {
-  getAssignCPList,
-  removeAssignCpStatus,
-  updateAssignCP,
-} from "app/Redux/Actions/SourcingManagerActions";
+import { getAllAgentList } from "../../../Redux/Actions/AgencyActions";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import EmployeeView from "./components/EmployeeView";

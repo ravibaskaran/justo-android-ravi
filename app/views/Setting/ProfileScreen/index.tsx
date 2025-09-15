@@ -1,8 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
-import { getAgentDetail } from 'app/Redux/Actions/AgentActions';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { getAgentDetail } from '../../../Redux/Actions/AgentActions';
 import ProfileView from './components/ProfileView';
 
 const ProfileScreen = ({ navigation, route }: any) => {

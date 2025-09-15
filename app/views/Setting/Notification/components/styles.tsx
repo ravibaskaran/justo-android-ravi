@@ -1,16 +1,11 @@
-import { normalize, normalizeHeight, normalizeSpacing, normalizeWidth } from "app/components/scaleFontSize";
+import { StyleSheet } from "react-native";
+import { normalize, normalizeHeight, normalizeSpacing, normalizeWidth } from "../../../../components/scaleFontSize";
 import {
-  BG_MAIN_COLOUR,
-  BLACK_COLOR,
-  BORDER_COLOR,
   FONT_FAMILY_EXTRABOLD,
   FONT_FAMILY_SEMIBOLD,
-  GRAY_COLOR,
   PRIMARY_THEME_COLOR,
-  RED_COLOR,
-  WHITE_COLOR,
-} from "app/components/utilities/constant";
-import { StyleSheet } from "react-native";
+  WHITE_COLOR
+} from "../../../../components/utilities/constant";
 
 const styles = StyleSheet.create({
   mainContainer: {

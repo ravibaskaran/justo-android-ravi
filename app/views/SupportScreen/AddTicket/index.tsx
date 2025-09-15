@@ -1,13 +1,13 @@
-import { View, Text, Keyboard } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import AddTicketForm from './Components/AddTicketForm'
 import { useFocusEffect } from '@react-navigation/native'
+import React, { useEffect, useState } from 'react'
+import { Keyboard } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllMaster } from 'app/Redux/Actions/MasterActions'
-import ErrorMessage from 'app/components/ErrorMessage'
-import { GREEN_COLOR, RED_COLOR } from 'app/components/utilities/constant'
-import { AddNewTicket, EditTicket, RemoveTicket } from 'app/Redux/Actions/SupportActions'
-import strings from 'app/components/utilities/Localization'
+import { getAllMaster } from '../../../Redux/Actions/MasterActions'
+import { AddNewTicket, EditTicket, RemoveTicket } from '../../../Redux/Actions/SupportActions'
+import ErrorMessage from '../../../components/ErrorMessage'
+import strings from '../../../components/utilities/Localization'
+import { GREEN_COLOR, RED_COLOR } from '../../../components/utilities/constant'
+import AddTicketForm from './Components/AddTicketForm'
 
 const AddTicketScreen = ({ navigation, route }: any) => {
     const { data, type } = route?.params || {}

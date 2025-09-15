@@ -1,37 +1,29 @@
+import MultiLocation from "../../../../components/MultiLocation";
+import { normalizeSpacing } from "../../../../components/scaleFontSize";
+import { RequiredStart } from "../../../../components/utilities/GlobalFuncations";
+import React, { useState } from "react";
 import {
-  Image,
   Keyboard,
   ScrollView,
-  StatusBar,
   Text,
-  TouchableOpacity,
-  View,
+  View
 } from "react-native";
-import React, { useState } from "react";
 import { RadioButton } from "react-native-paper";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
 import Header from "../../../../components/Header";
-import strings from "../../../../components/utilities/Localization";
-import styles from "./styles";
+import InputField from "../../../../components/InputField";
+import PicturePickerModal from "../../../../components/Modals/PicturePicker";
 import {
   BLACK_COLOR,
-  DATE_FORMAT,
   Isios,
   PRIMARY_THEME_COLOR,
   RED_COLOR,
   Regexs,
-  validateEmail,
-  WHITE_COLOR,
+  validateEmail
 } from "../../../../components/utilities/constant";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import InputField from "../../../../components/InputField";
-import images from "../../../../assets/images";
-import Button from "../../../../components/Button";
-import PicturePickerModal from "../../../../components/Modals/PicturePicker";
-import { normalizeSpacing } from "app/components/scaleFontSize";
-import InputCalender from "app/components/InputCalender";
-import moment from "moment";
-import MultiLocation from "app/components/MultiLocation";
-import { RequiredStart } from "app/components/utilities/GlobalFuncations";
+import strings from "../../../../components/utilities/Localization";
+import styles from "./styles";
 
 const AgentBasicInfoView = (props: any) => {
   const [showReraValidationError, setShowReraValidationError] =

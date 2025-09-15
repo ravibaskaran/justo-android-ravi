@@ -1,11 +1,10 @@
-import { View, Text, FlatList } from "react-native";
 import React from "react";
-import styles from "./styles";
-import strings from "app/components/utilities/Localization";
-import Header from "app/components/Header";
-import images from "app/assets/images";
+import { FlatList, View } from "react-native";
+import images from "../../../../assets/images";
+import EmptyListScreen from "../../../../components/CommonScreen/EmptyListScreen";
+import Header from "../../../../components/Header";
 import BookingListItem from "./BookingListItem";
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
+import styles from "./styles";
 
 const BookingCTAView = (props: any) => {
   return (
@@ -20,6 +19,7 @@ const BookingCTAView = (props: any) => {
       />
       <View style={styles.listView}>
         <FlatList
+removeClippedSubviews={false}
           data={Array.isArray(props.DATA) ? props.DATA : []}
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={<EmptyListScreen message={"Booking"} />}

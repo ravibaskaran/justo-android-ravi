@@ -4,20 +4,20 @@ import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Modal from "react-native-modal";
 import { useDispatch, useSelector } from "react-redux";
 
-import Button from "app/components/Button";
-import DropdownInput from "app/components/DropDown";
+import Button from "../../../components/Button";
+import DropdownInput from "../../../components/DropDown";
 
-import images from "app/assets/images";
-import InputCalender from "app/components/InputCalender";
-import styles from "app/components/Modals/styles";
+import CheckBox from "@react-native-community/checkbox";
+import images from "../../../assets/images";
+import InputCalender from "../../../components/InputCalender";
+import styles from "../../../components/Modals/styles";
 import {
   DATE_FORMAT,
   Isios,
   PRIMARY_THEME_COLOR,
-} from "app/components/utilities/constant";
-import strings from "app/components/utilities/Localization";
-import { getUserVisitList } from "app/Redux/Actions/LeadsActions";
-import CheckBox from "@react-native-community/checkbox";
+} from "../../../components/utilities/constant";
+import strings from "../../../components/utilities/Localization";
+import { getUserVisitList } from "../../../Redux/Actions/LeadsActions";
 
 const FilterModal = ({
   visible,

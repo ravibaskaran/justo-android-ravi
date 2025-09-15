@@ -1,42 +1,33 @@
-import images from "app/assets/images";
-import {
-  normalize,
-  normalizeHeight,
-  normalizeWidth,
-} from "app/components/scaleFontSize";
-import {
-  BLACK_COLOR,
-  GREEN_COLOR,
-  Isios,
-  PRIMARY_THEME_COLOR,
-  RED_COLOR,
-  ROLE_IDS,
-  WHITE_COLOR,
-} from "app/components/utilities/constant";
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Dimensions,
-  Image,
   RefreshControl,
   SafeAreaView,
   ScrollView,
   Text,
-  TouchableOpacity,
-  View,
+  View
 } from "react-native";
-import styles from "./styles";
-import ClusterHeadtable from "./tableComponents/ClusterHeadtable";
-import ErrorMessage from "app/components/ErrorMessage";
+import RNFS from "react-native-fs";
+import { useSelector } from "react-redux";
+import XLSX from "xlsx";
+import EmptyListScreen from "../../../components/CommonScreen/EmptyListScreen";
+import ErrorMessage from "../../../components/ErrorMessage";
+import {
+  normalize
+} from "../../../components/scaleFontSize";
+import {
+  GREEN_COLOR,
+  RED_COLOR,
+  ROLE_IDS,
+  WHITE_COLOR
+} from "../../../components/utilities/constant";
 import {
   handlePermission,
   openPermissionSetting,
-} from "app/components/utilities/GlobalFuncations";
-import strings from "app/components/utilities/Localization";
-import RNFS from "react-native-fs";
-import XLSX from "xlsx";
-import SMReportTable from "./SMReportTable";
-import { useSelector } from "react-redux";
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
+} from "../../../components/utilities/GlobalFuncations";
+import strings from "../../../components/utilities/Localization";
+import styles from "./styles";
+import ClusterHeadtable from "./tableComponents/ClusterHeadtable";
 
 const ClusterHeadReportTable = (props: any) => {
   const { data, onReset, handleCpDetailPress, handleCTANavigation, fileName } =

@@ -1,5 +1,5 @@
-import { PRIMARY_THEME_COLOR, WHITE_COLOR } from 'app/components/utilities/constant';
 import { StyleSheet } from 'react-native';
+import { PRIMARY_THEME_COLOR, WHITE_COLOR } from '../../../components/utilities/constant';
 
 const styles = StyleSheet.create({
     mainContainer: {

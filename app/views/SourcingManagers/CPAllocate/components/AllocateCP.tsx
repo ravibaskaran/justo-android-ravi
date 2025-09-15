@@ -1,32 +1,25 @@
+import { useNavigation } from "@react-navigation/native";
+import { useEffect } from "react";
 import {
-  View,
-  Text,
   Image,
+  Text,
   TextInput,
-  FlatList,
   TouchableOpacity,
+  View
 } from "react-native";
-import images from "../../../../assets/images";
-import Header from "../../../../components/Header";
-import { Checkbox } from "react-native-paper";
-import {
-  BLACK_COLOR,
-  GRAY_COLOR,
-  GREEN_COLOR,
-  PRIMARY_THEME_COLOR,
-  RED_COLOR,
-  WHITE_COLOR,
-} from "../../../../components/utilities/constant";
-import styles from "./styles";
-import Button from "../../../../components/Button";
-import strings from "../../../../components/utilities/Localization";
-import AllocateCPDetails from "./AllocateDetails";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
-import ErrorMessage from "app/components/ErrorMessage";
-import { useNavigation } from "@react-navigation/native";
-import AddTargetModal from "app/components/Modals/AddTargetModal";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import Header from "../../../../components/Header";
+import {
+  BLACK_COLOR,
+  PRIMARY_THEME_COLOR,
+  WHITE_COLOR
+} from "../../../../components/utilities/constant";
+import strings from "../../../../components/utilities/Localization";
+import AllocateCPDetails from "./AllocateDetails";
+import styles from "./styles";
 
 const AllocateCPView = (props: any) => {
   const navigation: any = useNavigation();

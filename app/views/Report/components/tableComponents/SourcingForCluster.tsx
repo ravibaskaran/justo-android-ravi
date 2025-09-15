@@ -1,17 +1,15 @@
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import React from "react";
-import styles from "../styles";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import {
+  normalize
+} from "../../../../components/scaleFontSize";
 import {
   BLACK_COLOR,
   Isios,
   PRIMARY_THEME_COLOR,
   WHITE_COLOR,
-} from "app/components/utilities/constant";
-import {
-  normalizeWidth,
-  normalizeHeight,
-  normalize,
-} from "app/components/scaleFontSize";
+} from "../../../../components/utilities/constant";
+import styles from "../styles";
 
 const SourcingForCluster = (props: any) => {
   const { data, headerData, handleCpDetailPress } = props;

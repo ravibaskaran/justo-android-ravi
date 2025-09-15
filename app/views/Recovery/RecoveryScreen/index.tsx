@@ -1,7 +1,7 @@
 import { useFocusEffect } from "@react-navigation/native";
-import { getRecoveryList } from "app/Redux/Actions/RecoveryActions";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { getRecoveryList } from "../../../Redux/Actions/RecoveryActions";
 import RecoveryView from "./components/RecoveryView";
 
 const RecoveryScreen = ({ navigation }: any) => {

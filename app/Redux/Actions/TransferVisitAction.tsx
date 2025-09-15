@@ -1,8 +1,8 @@
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import { apiCall } from "app/components/utilities/httpClient";
+import ErrorMessage from "../../components/ErrorMessage";
+import apiEndPoints from "../../components/utilities/apiEndPoints";
+import { GREEN_COLOR } from "../../components/utilities/constant";
+import { apiCall } from "../../components/utilities/httpClient";
 import { GET_CP_ACTIVE_LEAD, GET_CP_ACTIVE_LEAD_ERROR, REMOVE_TRANSFER_VISIT_DATA, START_LOADING, STOP_LOADING, TRANSFER_VISIT_DATA, TRANSFER_VISIT_ERROR } from "../types";
-import ErrorMessage from "app/components/ErrorMessage";
-import { GREEN_COLOR } from "app/components/utilities/constant";
 
 export const transferVisitList = (params: any) => async (dispatch: any) => {
     dispatch({ type: START_LOADING })

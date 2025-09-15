@@ -1,11 +1,11 @@
 import { useFocusEffect } from "@react-navigation/native";
 import { Text } from "@rneui/base";
-import { normalize, normalizeSpacing } from "app/components/scaleFontSize";
+import { normalize, normalizeSpacing } from "../../../../components/scaleFontSize";
 import {
   PRIMARY_THEME_COLOR_DARK,
   WHITE_COLOR,
-} from "app/components/utilities/constant";
-import { AddDropLocation } from "app/Redux/Actions/AppointmentCLAction";
+} from "../../../../components/utilities/constant";
+import { AddDropLocation } from "../../../../Redux/Actions/AppointmentCLAction";
 import React, { useState } from "react";
 import { View } from "react-native";
 import { useDispatch } from "react-redux";

@@ -1,22 +1,18 @@
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
-import React, { useState } from "react";
+import DropdownInput from "../../../../components/DropDown";
+import { normalizeSpacing } from "../../../../components/scaleFontSize";
+import React from "react";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Modal from "react-native-modal";
-import styles from "../../../../components/Modals/styles";
+import { useDispatch } from "react-redux";
 import images from "../../../../assets/images";
-import strings from "../../../../components/utilities/Localization";
 import Button from "../../../../components/Button";
 import InputField from "../../../../components/InputField";
-import InputCalender from "../../../../components/InputCalender";
-import { Dropdown } from "react-native-element-dropdown";
-import moment from "moment";
-import { useDispatch } from "react-redux";
+import styles from "../../../../components/Modals/styles";
+import strings from "../../../../components/utilities/Localization";
 import {
   getAllProperty,
   getFilterProperty,
 } from "../../../../Redux/Actions/propertyActions";
-import { DATE_FORMAT } from "app/components/utilities/constant";
-import DropdownInput from "app/components/DropDown";
-import { normalizeSpacing } from "app/components/scaleFontSize";
 
 const FilterModal = (props: any) => {
   const dispatch: any = useDispatch();

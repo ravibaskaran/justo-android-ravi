@@ -1,8 +1,6 @@
-import { normalizeHeight } from "app/components/scaleFontSize";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import styles from "./styles";
-import { ROLE_IDS } from "app/components/utilities/constant";
 
 const SiteHeadView = (props: any) => {
   const role = props?.getLoginType?.response?.data?.role_id || null;

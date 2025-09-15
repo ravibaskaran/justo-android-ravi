@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import React from "react";
 import styles from "./styles";
-import strings from "app/components/utilities/Localization";
+import strings from "../../../../components/utilities/Localization";
 
 const PropertyDetailItem = (props: any) => {
   const item = props?.items || {}

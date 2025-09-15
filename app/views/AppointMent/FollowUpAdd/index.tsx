@@ -1,10 +1,10 @@
-import ErrorMessage from "app/components/ErrorMessage";
-import { RED_COLOR } from "app/components/utilities/constant";
-import strings from "app/components/utilities/Localization";
-import { addFollowUp } from "app/Redux/Actions/FollowUpActions";
-import { getAllMaster } from "app/Redux/Actions/MasterActions";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import ErrorMessage from "../../../components/ErrorMessage";
+import { RED_COLOR } from "../../../components/utilities/constant";
+import strings from "../../../components/utilities/Localization";
+import { addFollowUp } from "../../../Redux/Actions/FollowUpActions";
+import { getAllMaster } from "../../../Redux/Actions/MasterActions";
 import FollowUpAddView from "./components/FollowUpAdd";
 
 const FollowUpAddScreen = ({ navigation, route }: any) => {

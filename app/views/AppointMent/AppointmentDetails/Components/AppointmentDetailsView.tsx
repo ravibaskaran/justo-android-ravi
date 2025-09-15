@@ -1,9 +1,9 @@
-import JustForOkModal from "app/components/Modals/JustForOkModal";
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import { Isios, ROLE_IDS } from "app/components/utilities/constant";
-import { apiCall } from "app/components/utilities/httpClient";
-import usePermission from "app/components/utilities/UserPermissions";
-import { START_LOADING, STOP_LOADING } from "app/Redux/types";
+import JustForOkModal from "../../../../components/Modals/JustForOkModal";
+import apiEndPoints from "../../../../components/utilities/apiEndPoints";
+import { Isios, ROLE_IDS } from "../../../../components/utilities/constant";
+import { apiCall } from "../../../../components/utilities/httpClient";
+import usePermission from "../../../../components/utilities/UserPermissions";
+import { START_LOADING, STOP_LOADING } from "../../../../Redux/types";
 import React, { useState } from "react";
 import { View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";

@@ -1,7 +1,7 @@
-import { View, Text, FlatList } from "react-native";
+import EmptyListScreen from "../../../../components/CommonScreen/EmptyListScreen";
+import strings from "../../../../components/utilities/Localization";
 import React from "react";
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
-import strings from "app/components/utilities/Localization";
+import { FlatList, Text, View } from "react-native";
 import AppointmentsItem from "./AppointmentsItem";
 import styles from "./styles";
 
@@ -12,6 +12,7 @@ const RouteScreen = (props: any) => {
         Count : {props?.moreData ? props?.moreData : 0}
       </Text>
       <FlatList
+removeClippedSubviews={false}
         data={Array.isArray(props.DATA) ? props.DATA : []}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={
@@ -46,6 +47,8 @@ const RouteScreen = (props: any) => {
             customer_name: "",
             customer_number:"",
             status: "",
+            qualified: "",
+            lead_priority: "",
           });
           props.setAppointmentList([]);
         }}

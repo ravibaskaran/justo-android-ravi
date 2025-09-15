@@ -2,12 +2,12 @@ import { View, Text, Image, TouchableOpacity, TextInput, FlatList } from 'react-
 import React, { useEffect, useState } from 'react'
 import Modal from "react-native-modal";
 import styles from './styles';
-import images from 'app/assets/images';
 import strings from '../utilities/Localization';
 import { normalize, normalizeSpacing } from '../scaleFontSize';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCityList } from 'app/Redux/Actions/MasterActions';
 import { BLACK_COLOR } from '../utilities/constant';
+import images from '../../assets/images';
+import { getCityList } from '../../Redux/Actions/MasterActions';
 
 const CityModal = (props: any) => {
     const dispatch: any = useDispatch()
@@ -74,6 +74,7 @@ const CityModal = (props: any) => {
                         style={styles.cityListView}
                     >
                         <FlatList
+removeClippedSubviews={false}
                             data={filterCityData}
                             showsVerticalScrollIndicator={false}
                             renderItem={({ item }) => {

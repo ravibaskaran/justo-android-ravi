@@ -1,15 +1,14 @@
-import { View, Text, Image, TouchableOpacity, Linking } from 'react-native'
 import React from 'react'
-import styles from './Styles'
+import { Image, Linking, Text, TouchableOpacity, View } from 'react-native'
 import images from '../../../../assets/images'
-import InputField from '../../../../components/InputField'
 import Button from '../../../../components/Button'
+import InputField from '../../../../components/InputField'
 import strings from '../../../../components/utilities/Localization'
-import Header from '../../../../components/Header'
+import styles from './Styles'
 // import LogoView from '../../Logoview'
-import { ScrollView } from 'react-native-gesture-handler'
 import CheckBox from '@react-native-community/checkbox'
-import { Isios, PRIMARY_THEME_COLOR } from 'app/components/utilities/constant'
+import { ScrollView } from 'react-native-gesture-handler'
+import { Isios, PRIMARY_THEME_COLOR } from '../../../../components/utilities/constant'
 
 const ForgotPasswordView = (props: any) => {
   return (

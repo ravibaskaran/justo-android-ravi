@@ -1,46 +1,41 @@
+import CheckBox from "@react-native-community/checkbox";
 import { useFocusEffect } from "@react-navigation/native";
-import DropdownInput from "app/components/DropDown";
-import ErrorMessage from "app/components/ErrorMessage";
-import InputCalender from "app/components/InputCalender";
-import CountryPickerModal from "app/components/Modals/CountryPickerModal";
-import JustForOkModal from "app/components/Modals/JustForOkModal";
-import { CpLeadType } from "app/components/utilities/DemoData";
-import moment from "moment";
 import React from "react";
 import {
   Pressable,
   ScrollView,
   Text,
-  TextInput,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import { RadioButton } from "react-native-paper";
 import { useSelector } from "react-redux";
 import images from "../../../../assets/images";
 import Button from "../../../../components/Button";
+import DropdownInput from "../../../../components/DropDown";
+import ErrorMessage from "../../../../components/ErrorMessage";
 import Header from "../../../../components/Header";
 import InputField from "../../../../components/InputField";
+import CountryPickerModal from "../../../../components/Modals/CountryPickerModal";
+import JustForOkModal from "../../../../components/Modals/JustForOkModal";
 import Styles from "../../../../components/Modals/styles";
 import {
   normalize,
   normalizeSpacing,
 } from "../../../../components/scaleFontSize";
 import {
-  AMOUNT_TYPE,
   BLACK_COLOR,
   CONST_IDS,
-  DATE_FORMAT,
   Isios,
   PRIMARY_THEME_COLOR,
   RED_COLOR,
   Regexs,
   ROLE_IDS,
-  WHITE_COLOR,
+  WHITE_COLOR
 } from "../../../../components/utilities/constant";
+import { CpLeadType } from "../../../../components/utilities/DemoData";
 import strings from "../../../../components/utilities/Localization";
 import styles from "./styles";
-import CheckBox from "@react-native-community/checkbox";
 
 const VisitorUpdateView = (props: any) => {
   const { userData = {} } = useSelector((state: any) => state.userData);
@@ -1075,7 +1070,7 @@ const VisitorUpdateView = (props: any) => {
             }}
             valueshow={props?.updateForm?.location}
             headingText={"Resident Location"}
-            inputType={"location"}
+            // inputType={"location"}
             onPressSelect={(data: any, detail: any) => {
               props.setUpdateForm({
                 ...props.updateForm,

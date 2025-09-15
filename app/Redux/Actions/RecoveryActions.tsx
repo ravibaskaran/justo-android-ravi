@@ -1,6 +1,6 @@
-import { handleApiError } from "app/components/ErrorMessage/HandleApiErrors";
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import { apiCall } from "app/components/utilities/httpClient";
+import { handleApiError } from "../../components/ErrorMessage/HandleApiErrors";
+import apiEndPoints from "../../components/utilities/apiEndPoints";
+import { apiCall } from "../../components/utilities/httpClient";
 import { GET_RECOVERY_LIST, GET_RECOVERY_LIST_ERROR, START_LOADING, STOP_LOADING } from "../types";
 
 export const getRecoveryList = (params: any) => async (dispatch: any) => {

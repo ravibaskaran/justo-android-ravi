@@ -1,14 +1,22 @@
+import CheckBox from "@react-native-community/checkbox";
+import React, { useEffect, useState } from "react";
 import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  Linking,
   Keyboard,
+  Linking,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useDispatch, useSelector } from "react-redux";
 import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import ErrorMessage from "../../../../components/ErrorMessage";
+import Header from "../../../../components/Header";
 import InputField from "../../../../components/InputField";
+import PicturePickerModal from "../../../../components/Modals/PicturePicker";
+import { normalize } from "../../../../components/scaleFontSize";
 import {
   BLACK_COLOR,
   GREEN_COLOR,
@@ -17,23 +25,14 @@ import {
   RED_COLOR,
   Regexs,
 } from "../../../../components/utilities/constant";
+import { RequiredStart } from "../../../../components/utilities/GlobalFuncations";
 import strings from "../../../../components/utilities/Localization";
-import styles from "./styles";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Button from "../../../../components/Button";
-import Header from "../../../../components/Header";
-import { useDispatch, useSelector } from "react-redux";
-import PicturePickerModal from "app/components/Modals/PicturePicker";
+import { editAgent } from "../../../../Redux/Actions/AgencyActions";
 import {
   addAgent,
   addAgentRemove,
-  editAgent,
-} from "app/Redux/Actions/AgentActions";
-import ErrorMessage from "app/components/ErrorMessage";
-import { normalize } from "app/components/scaleFontSize";
-import { RequiredStart } from "app/components/utilities/GlobalFuncations";
-import CheckBox from "@react-native-community/checkbox";
-import { RadioButton } from "react-native-paper";
+} from "../../../../Redux/Actions/AgentActions";
+import styles from "./styles";
 
 const AgentBankInfo = ({ navigation, route }: any) => {
   const dispatch: any = useDispatch();

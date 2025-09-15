@@ -1,6 +1,6 @@
-import { handleApiError } from "app/components/ErrorMessage/HandleApiErrors";
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import { apiCall } from "app/components/utilities/httpClient";
+import { handleApiError } from "../../components/ErrorMessage/HandleApiErrors";
+import apiEndPoints from "../../components/utilities/apiEndPoints";
+import { apiCall } from "../../components/utilities/httpClient";
 import { BOOKINGREGISTER_DETAIL, BOOKINGREGISTER_DETAIL_ERROR, BOOKING_CANCEL, BOOKING_CANCEL_ERROR, BOOKING_DETAIL, BOOKING_DETAIL_ERROR, BOOKING_LIST, BOOKING_LIST_ERROR, BOOKING_STATUS_UPDATE, BOOKING_STATUS_UPDATE_ERROR, REGISTER_BOOKING, REGISTER_BOOKING_ERROR, REGISTER_BOOKING_LIST, REGISTER_BOOKING_LIST_ERROR, REMOVE_BOOKING, START_LOADING, STOP_LOADING } from "../types";
 
 export const getBookingList = (params: any) => async (dispatch: any) => {

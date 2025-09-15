@@ -1,4 +1,3 @@
-import usePermission from "app/components/utilities/UserPermissions";
 import React from "react";
 import { View } from "react-native";
 import { useSelector } from "react-redux";
@@ -13,6 +12,7 @@ import {
   WHITE_COLOR,
 } from "../../../../components/utilities/constant";
 import strings from "../../../../components/utilities/Localization";
+import usePermission from "../../../../components/utilities/UserPermissions";
 import LeadDetailsIteam from "./LeadDetailsIteam";
 import styles from "./Styles";
 

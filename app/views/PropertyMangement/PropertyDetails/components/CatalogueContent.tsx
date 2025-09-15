@@ -1,4 +1,3 @@
-import ErrorMessage from "app/components/ErrorMessage";
 import React, { useState } from "react";
 import {
   FlatList,
@@ -12,6 +11,7 @@ import RNFS from "react-native-fs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
 import images from "../../../../assets/images";
+import ErrorMessage from "../../../../components/ErrorMessage";
 import Header from "../../../../components/Header";
 import {
   normalizeHeight
@@ -84,6 +84,7 @@ const CatalogueContent = ({ navigation, route }: any) => {
       />
       <View style={{flex: 1}}>
         <FlatList
+removeClippedSubviews={false}
           data={array}
           numColumns={1}
           showsVerticalScrollIndicator={false}

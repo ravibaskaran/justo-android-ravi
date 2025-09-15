@@ -1,22 +1,20 @@
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
-import React, { useEffect, useState } from "react";
-import Modal from "react-native-modal";
-import styles from "../../../../components/Modals/styles";
-import images from "../../../../assets/images";
-import strings from "../../../../components/utilities/Localization";
-import Button from "../../../../components/Button";
-import InputField from "../../../../components/InputField";
-import DropdownInput from "../../../../components/DropDown";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllMaster } from "app/Redux/Actions/MasterActions";
+import ErrorMessage from "../../../../components/ErrorMessage";
+import { RED_COLOR } from "../../../../components/utilities/constant";
+import { getAllMaster } from "../../../../Redux/Actions/MasterActions";
 import {
   getAllPropertyCompetitor,
   removePropertyCompetitor,
-} from "app/Redux/Actions/propertyActions";
-import { normalizeSpacing } from "app/components/scaleFontSize";
-import ErrorMessage from "app/components/ErrorMessage";
-import { RED_COLOR } from "app/components/utilities/constant";
-import { RequiredStart } from "app/components/utilities/GlobalFuncations";
+} from "../../../../Redux/Actions/propertyActions";
+import React, { useEffect, useState } from "react";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import Modal from "react-native-modal";
+import { useDispatch, useSelector } from "react-redux";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import DropdownInput from "../../../../components/DropDown";
+import InputField from "../../../../components/InputField";
+import styles from "../../../../components/Modals/styles";
+import strings from "../../../../components/utilities/Localization";
 
 const CancelModal = (props: any) => {
   const dispatch: any = useDispatch();

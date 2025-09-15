@@ -1,7 +1,7 @@
-import { View, Text, FlatList } from 'react-native'
-import React from 'react'
-import styles from './styles'
 import moment from 'moment';
+import React from 'react';
+import { FlatList, Text, View } from 'react-native';
+import styles from './styles';
 
 const RouteScreen = (props: any) => {
   const renderItem = (item: any) => {
@@ -38,6 +38,7 @@ const RouteScreen = (props: any) => {
         </View>
       </View>
       <FlatList
+removeClippedSubviews={false}
         data={props.cpCheckingList}
         showsVerticalScrollIndicator={false}
         renderItem={({ item, index }: any) => renderItem(item)}

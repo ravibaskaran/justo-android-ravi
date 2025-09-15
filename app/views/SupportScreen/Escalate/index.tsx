@@ -1,12 +1,12 @@
-import { View, Text, Keyboard } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import EscalateView from './components/EscalateView'
 import { useFocusEffect } from '@react-navigation/native'
+import React, { useEffect, useState } from 'react'
+import { Keyboard } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import { RemoveTicket, escalateReqTicket, getEscalateUsersList } from 'app/Redux/Actions/SupportActions'
-import ErrorMessage from 'app/components/ErrorMessage'
-import { GREEN_COLOR, RED_COLOR } from 'app/components/utilities/constant'
-import strings from 'app/components/utilities/Localization'
+import ErrorMessage from '../../../components/ErrorMessage'
+import { GREEN_COLOR, RED_COLOR } from '../../../components/utilities/constant'
+import strings from '../../../components/utilities/Localization'
+import { RemoveTicket, escalateReqTicket, getEscalateUsersList } from '../../../Redux/Actions/SupportActions'
+import EscalateView from './components/EscalateView'
 
 const EscalateScreen = ({ navigation, route }: any) => {
     const data = route?.params || {}

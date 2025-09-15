@@ -1,7 +1,7 @@
-import { apiCall } from "app/components/utilities/httpClient";
-import { ADD_NEW_TICKET, ADD_NEW_TICKET_ERROR, ASSIGN_ESCALATE_TICKET, ASSIGN_ESCALATE_TICKET_ERROR, EDIT_TICKET, EDIT_TICKET_ERROR, ESCALATE_USER_LIST, REMOVE_TICKET, START_LOADING, STOP_LOADING, TICKET_DEATILS, TICKET_DEATILS_ERROR, TICKET_LIST, TICKET_LIST_ERROR, UPDATE_TICKET_STATUS, UPDATE_TICKET_STATUS_ERROR } from "../types"
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import { handleApiError } from "app/components/ErrorMessage/HandleApiErrors";
+import { handleApiError } from "../../components/ErrorMessage/HandleApiErrors";
+import apiEndPoints from "../../components/utilities/apiEndPoints";
+import { apiCall } from "../../components/utilities/httpClient";
+import { ADD_NEW_TICKET, ADD_NEW_TICKET_ERROR, ASSIGN_ESCALATE_TICKET, ASSIGN_ESCALATE_TICKET_ERROR, EDIT_TICKET, EDIT_TICKET_ERROR, ESCALATE_USER_LIST, REMOVE_TICKET, START_LOADING, STOP_LOADING, TICKET_DEATILS, TICKET_DEATILS_ERROR, TICKET_LIST, TICKET_LIST_ERROR, UPDATE_TICKET_STATUS, UPDATE_TICKET_STATUS_ERROR } from "../types";
 
 export const AddNewTicket = (params: any) => async (dispatch: any) => {
     dispatch({ type: START_LOADING })

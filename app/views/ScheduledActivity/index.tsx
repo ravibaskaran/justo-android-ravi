@@ -3,13 +3,13 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useWindowDimensions } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
+import ErrorMessage from "../../components/ErrorMessage";
+import { GREEN_COLOR } from "../../components/utilities/constant";
 import {
   closefollowupRemove,
   GetScheduledActivityList,
-} from "app/Redux/Actions/ActivityActions";
+} from "../../Redux/Actions/ActivityActions";
 import ScheduledActivityView from "./components/ScheduledActivityView";
-import ErrorMessage from "app/components/ErrorMessage";
-import { GREEN_COLOR } from "app/components/utilities/constant";
 
 const ITEMS_PER_PAGE = 10;
 

@@ -1,22 +1,21 @@
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import PicturePickerModal from "../../../../components/Modals/PicturePicker";
+import { normalize } from "../../../../components/scaleFontSize";
+import { handleValues } from "../../../../components/utilities/handleValues";
 import React, { useState } from "react";
+import {
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import Header from "../../../../components/Header";
 import InputField from "../../../../components/InputField";
 import { BLACK_COLOR, Isios, PRIMARY_THEME_COLOR, } from "../../../../components/utilities/constant";
 import strings from "../../../../components/utilities/Localization";
 import styles from "./styles";
-import Button from "../../../../components/Button";
-import Header from "../../../../components/Header";
-import PicturePickerModal from "app/components/Modals/PicturePicker";
-import { normalize } from "app/components/scaleFontSize";
-import { RequiredStart } from "app/components/utilities/GlobalFuncations";
-import { RadioButton } from "react-native-paper";
-import { handleValues } from "app/components/utilities/handleValues";
+import { RequiredStart } from "../../../../components/utilities/GlobalFuncations";
 
 const AgentBankInfo = (props: any) => {
   const [reravisible, setreraVisible] = useState(false)

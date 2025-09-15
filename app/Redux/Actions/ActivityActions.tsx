@@ -1,6 +1,6 @@
-import apiEndPoints from "app/components/utilities/apiEndPoints";
+import apiEndPoints from "../../components/utilities/apiEndPoints";
+import { apiCall } from "../../components/utilities/httpClient";
 import { CLOSE_FOLLOWUP, CLOSE_FOLLOWUP_ERROR, GET_SCHEDULED_ACTIVITY, REMOVE_CLOSE_FOLLOWUP_DATA, SCHEDULED_ACTIVITY_ERROR, START_LOADING, STOP_LOADING } from "../types";
-import { apiCall } from "app/components/utilities/httpClient";
 
 export const GetScheduledActivityList = (params: any) => async (dispatch: any) => {
   dispatch({ type: START_LOADING });

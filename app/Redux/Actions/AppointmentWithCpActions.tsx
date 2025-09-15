@@ -1,6 +1,6 @@
-import { handleApiError } from "app/components/ErrorMessage/HandleApiErrors";
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import { apiCall } from "app/components/utilities/httpClient";
+import { handleApiError } from "../../components/ErrorMessage/HandleApiErrors";
+import apiEndPoints from "../../components/utilities/apiEndPoints";
+import { apiCall } from "../../components/utilities/httpClient";
 import {
     ADD_APPOINTMENT, ADD_APPOINTMENT_ERROR, EDIT_APPOINTMENT,
     EDIT_APPOINTMENT_ERROR, GET_APPOINTMENT_DETAILS,

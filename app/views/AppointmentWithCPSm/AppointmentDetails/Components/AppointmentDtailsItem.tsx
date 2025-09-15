@@ -1,20 +1,18 @@
-import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
-import React, { useEffect, useState } from "react";
-import styles from "./Styles";
-import moment from "moment";
-import Geocoder from "react-native-geocoding";
+import FastImages from "../../../../components/FastImage";
+import { normalizeHeight } from "../../../../components/scaleFontSize";
 import {
   BLACK_COLOR,
   GREEN_COLOR,
-  MAP_KEY,
   RED_COLOR,
   REGISTERD_CP,
-  YELLOW_COLOR,
-} from "app/components/utilities/constant";
-import strings from "app/components/utilities/Localization";
+  YELLOW_COLOR
+} from "../../../../components/utilities/constant";
+import strings from "../../../../components/utilities/Localization";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { ScrollView, Text, View } from "react-native";
 import Modal from "react-native-modal";
-import FastImages from "app/components/FastImage";
-import { normalizeHeight } from "app/components/scaleFontSize";
+import styles from "./Styles";
 
 const AppointmentDtailsItem = (props: any) => {
   const [isVisable, setIsVisable] = useState(false);

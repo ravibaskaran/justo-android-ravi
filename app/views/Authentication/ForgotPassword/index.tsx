@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { FORGOT_NULL } from '../../../Redux/types'
 import ErrorMessage from '../../../components/ErrorMessage'
 import { RED_COLOR } from '../../../components/utilities/constant'
 import strings from '../../../components/utilities/Localization'
 import { forgotemailverify } from '../../../Redux/Actions/AuthActions'
+import { FORGOT_NULL } from '../../../Redux/types'
 import ForgotPasswordView from './components/ForgotPasswordView'
 
 const ForgotPassword = ({navigation}: any) => {

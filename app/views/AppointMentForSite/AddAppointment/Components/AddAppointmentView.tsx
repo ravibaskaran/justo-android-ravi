@@ -1,13 +1,12 @@
-import { View, Text, StatusBar } from 'react-native'
-import React, { useState } from 'react'
-import styles from './Styles'
+import { useNavigation } from '@react-navigation/native';
+import React from 'react';
+import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { PRIMARY_THEME_COLOR, PRIMARY_THEME_COLOR_DARK } from '../../../../components/utilities/constant';
-import Header from '../../../../components/Header';
 import images from '../../../../assets/images';
+import Header from '../../../../components/Header';
 import strings from '../../../../components/utilities/Localization';
 import AddAppointmentItem from './AddAppointmentItem';
-import { useNavigation } from '@react-navigation/native';
+import styles from './Styles';
 
 const AddAppointmentView = (props: any) => {
     const insets = useSafeAreaInsets();

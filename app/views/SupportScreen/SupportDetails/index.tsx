@@ -1,9 +1,8 @@
-import { View, Text } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import SupportDetailsView from './Components/SupportDetailsView'
 import { useFocusEffect } from '@react-navigation/native'
-import { getTicketDetails } from 'app/Redux/Actions/SupportActions'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { getTicketDetails } from '../../../Redux/Actions/SupportActions'
+import SupportDetailsView from './Components/SupportDetailsView'
 
 const SupportScreenDetails = ({ navigation, route }: any) => {
     const {ticketid, type} = route?.params || {}

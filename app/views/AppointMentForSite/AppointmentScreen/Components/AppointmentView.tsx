@@ -1,6 +1,6 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import usePermission from "app/components/utilities/UserPermissions";
-import { START_LOADING } from "app/Redux/types";
+import usePermission from "../../../../components/utilities/UserPermissions";
+import { START_LOADING } from "../../../../Redux/types";
 import React, { useEffect, useState } from "react";
 import { BackHandler, useWindowDimensions, View } from "react-native";
 import { TabBar, TabView } from "react-native-tab-view";
@@ -248,6 +248,8 @@ const AppointmentView = (props: any) => {
             customer_name: "",
             customer_number:"",
             property_name: "",
+            qualified: "",
+            lead_priority: "",
           });
           props.getAppointmentList(0, {});
           props.setSiteAppointments([]);

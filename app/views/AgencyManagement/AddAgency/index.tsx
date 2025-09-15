@@ -1,17 +1,3 @@
-import ErrorMessage from "app/components/ErrorMessage";
-import ConfirmModal from "app/components/Modals/ConfirmModal";
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import {
-  BLACK_COLOR,
-  GREEN_COLOR,
-  RED_COLOR,
-  Regexs,
-  ROLE_IDS,
-  validateEmail,
-} from "app/components/utilities/constant";
-import { handleValues } from "app/components/utilities/handleValues";
-import { apiCall } from "app/components/utilities/httpClient";
-import strings from "app/components/utilities/Localization";
 import {
   AgencyCreateFormRemove,
   checkEmailMobile,
@@ -20,17 +6,30 @@ import {
   emailCheckRemove,
   getAgencyDetail,
   removeAgency,
-} from "app/Redux/Actions/AgencyActions";
-import { getAllProperty } from "app/Redux/Actions/propertyActions";
-import { getAssignCPList } from "app/Redux/Actions/SourcingManagerActions";
-import { START_LOADING, STOP_LOADING } from "app/Redux/types";
+} from "../../../Redux/Actions/AgencyActions";
+import { START_LOADING, STOP_LOADING } from "../../../Redux/types";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Keyboard } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
+import ErrorMessage from "../../../components/ErrorMessage";
+import ConfirmModal from "../../../components/Modals/ConfirmModal";
 import PicturePickerModal from "../../../components/Modals/PicturePicker";
+import apiEndPoints from "../../../components/utilities/apiEndPoints";
+import {
+  BLACK_COLOR,
+  GREEN_COLOR,
+  RED_COLOR,
+  Regexs,
+  ROLE_IDS,
+  validateEmail,
+} from "../../../components/utilities/constant";
+import { handleValues } from "../../../components/utilities/handleValues";
+import { apiCall } from "../../../components/utilities/httpClient";
+import strings from "../../../components/utilities/Localization";
 import AgentBankInfo from "./components/AgentBankInfo";
 import AgentBasicInfoView from "./components/AgentBasicInfoView";
 import CompanyDetails from "./components/CompanyDetails";
+import { getAllProperty } from "../../../Redux/Actions/propertyActions";
 
 const AgentBasicInfo = ({ navigation, route }: any) => {
   const { type, data } = route.params || {};

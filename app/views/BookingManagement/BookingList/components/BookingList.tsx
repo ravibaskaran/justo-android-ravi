@@ -1,16 +1,15 @@
 import React, { useState } from "react";
-import { View, Text, Image, FlatList } from "react-native";
-import images from "../../../../assets/images";
-import Header from "../../../../components/Header";
-import strings from "../../../../components/utilities/Localization";
-import styles from "./styles";
-import BookingListItem from "./BookingListItem";
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
+import { FlatList, Text, View } from "react-native";
 import { useSelector } from "react-redux";
-import { ROLE_IDS, WHITE_COLOR } from "app/components/utilities/constant";
-import Button from "app/components/Button";
-import { normalizeSpacing } from "app/components/scaleFontSize";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import EmptyListScreen from "../../../../components/CommonScreen/EmptyListScreen";
+import Header from "../../../../components/Header";
+import { WHITE_COLOR } from "../../../../components/utilities/constant";
+import strings from "../../../../components/utilities/Localization";
 import BookingFilterModal from "./BookingFilterModal";
+import BookingListItem from "./BookingListItem";
+import styles from "./styles";
 
 const BookingListView = (props: any) => {
   const getLoginType = useSelector((state: any) => state.login);
@@ -70,6 +69,7 @@ const BookingListView = (props: any) => {
 
       <View style={styles.listView}>
         <FlatList
+removeClippedSubviews={false}
           data={Array.isArray(props.DATA) ? props.DATA : []}
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={

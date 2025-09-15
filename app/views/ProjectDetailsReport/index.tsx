@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 
 import { useFocusEffect } from "@react-navigation/native";
-import { GetProjectDetailsReport } from "app/Redux/Actions/ProjectReportActions";
 import { useDispatch, useSelector } from "react-redux";
+import { GetProjectDetailsReport } from "../../Redux/Actions/ProjectReportActions";
 import ProjectReportView from "./components/ProjectReportView";
 
 const ProjectReportScreen = ({ navigation }: any) => {

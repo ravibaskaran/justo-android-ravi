@@ -1,16 +1,14 @@
 
-import { View, Text, ScrollView, Alert } from "react-native";
+import { getAppointmentDetail } from "../../../../Redux/Actions/AppointmentWithCpActions";
+import { cpAppointmentCheckIn, removeMasters } from "../../../../Redux/Actions/MasterActions";
 import React, { useEffect } from "react";
+import { Alert, ScrollView, Text, View } from "react-native";
 import Modal from "react-native-modal";
-import styles from "./Styles";
-import strings from "../../../../components/utilities/Localization";
-import Button from "../../../../components/Button";
-import { normalizeSpacing } from "app/components/scaleFontSize";
 import { useDispatch, useSelector } from "react-redux";
-import { cpAppointmentCheckIn, removeMasters } from "app/Redux/Actions/MasterActions";
-import ErrorMessage from "app/components/ErrorMessage";
-import { GREEN_COLOR } from "app/components/utilities/constant";
-import { getAppointmentDetail } from "app/Redux/Actions/AppointmentWithCpActions";
+import Button from "../../../../components/Button";
+import { normalizeSpacing } from "../../../../components/scaleFontSize";
+import strings from "../../../../components/utilities/Localization";
+import styles from "./Styles";
 
 const CheckedinModel = (props: any) => {
     const {getDetail} = props

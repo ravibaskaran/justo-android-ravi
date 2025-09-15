@@ -1,21 +1,20 @@
-import { View, Text, StatusBar } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
+import { View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useSelector } from "react-redux";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import Header from "../../../../components/Header";
 import {
-  BLACK_COLOR,
   Isios,
   PRIMARY_THEME_COLOR_DARK,
-  WHITE_COLOR,
+  WHITE_COLOR
 } from "../../../../components/utilities/constant";
-import Header from "../../../../components/Header";
-import images from "../../../../assets/images";
 import strings from "../../../../components/utilities/Localization";
-import styles from "./Styles";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Button from "../../../../components/Button";
+import usePermission from "../../../../components/utilities/UserPermissions";
 import FollowUpDetailsItem from "./FollowUpDetailsItem";
-import { useNavigation } from "@react-navigation/native";
-import { useSelector } from "react-redux";
-import usePermission from "app/components/utilities/UserPermissions";
+import styles from "./Styles";
 
 const FollowUpDetailsView = (props: any) => {
   const { detailsData } = props;

@@ -1,5 +1,4 @@
 import { useNavigation } from "@react-navigation/native";
-import AddTargetModal from "app/components/Modals/AddTargetModal";
 import { useEffect } from "react";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -7,6 +6,7 @@ import { useSelector } from "react-redux";
 import images from "../../../../assets/images";
 import Button from "../../../../components/Button";
 import Header from "../../../../components/Header";
+import AddTargetModal from "../../../../components/Modals/AddTargetModal";
 import {
   BLACK_COLOR,
   PRIMARY_THEME_COLOR,

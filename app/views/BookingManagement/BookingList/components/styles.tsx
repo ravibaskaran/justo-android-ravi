@@ -12,9 +12,7 @@ import {
   GRAY_COLOR,
   GRAY_LIGHT_COLOR,
   PRIMARY_THEME_COLOR,
-  PRIMARY_THEME_COLOR_DARK,
-  RED_COLOR,
-  WHITE_COLOR,
+  WHITE_COLOR
 } from "../../../../components/utilities/constant";
 
 const styles = StyleSheet.create({

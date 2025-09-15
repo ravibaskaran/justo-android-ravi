@@ -1,6 +1,9 @@
 import { useFocusEffect } from "@react-navigation/native";
-import ErrorMessage from "app/components/ErrorMessage";
-import apiEndPoints from "app/components/utilities/apiEndPoints";
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import { Keyboard } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import ErrorMessage from "../../../components/ErrorMessage";
+import apiEndPoints from "../../../components/utilities/apiEndPoints";
 import {
   BLACK_COLOR,
   CONST_IDS,
@@ -8,21 +11,18 @@ import {
   RED_COLOR,
   ROLE_IDS,
   Regexs,
-} from "app/components/utilities/constant";
-import { CountryArray } from "app/components/utilities/countryData";
-import { apiCall } from "app/components/utilities/httpClient";
-import { getEmployeeList } from "app/Redux/Actions/CompanyActions";
+} from "../../../components/utilities/constant";
+import { CountryArray } from "../../../components/utilities/countryData";
+import { apiCall } from "../../../components/utilities/httpClient";
+import { getEmployeeList } from "../../../Redux/Actions/CompanyActions";
 import {
   addVisitorRemove,
   editVisitor,
   getVisitorDetail,
-} from "app/Redux/Actions/LeadsActions";
-import { getAllMaster } from "app/Redux/Actions/MasterActions";
-import { getAllProperty } from "app/Redux/Actions/propertyActions";
-import { START_LOADING, STOP_LOADING } from "app/Redux/types";
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import { Keyboard } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+} from "../../../Redux/Actions/LeadsActions";
+import { getAllMaster } from "../../../Redux/Actions/MasterActions";
+import { getAllProperty } from "../../../Redux/Actions/propertyActions";
+import { START_LOADING, STOP_LOADING } from "../../../Redux/types";
 import VisitorUpdateFirstView from "./components/VisitorUpdateFirst";
 
 const VisitorUpdateScreen = ({ navigation, route }: any) => {

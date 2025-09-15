@@ -1,4 +1,3 @@
-import usePermission from "app/components/utilities/UserPermissions";
 import moment from "moment";
 import React from "react";
 import {
@@ -13,6 +12,7 @@ import { useSelector } from "react-redux";
 import images from "../../../../assets/images";
 import Button from "../../../../components/Button";
 import strings from "../../../../components/utilities/Localization";
+import usePermission from "../../../../components/utilities/UserPermissions";
 import {
   BLACK_COLOR,
   CALL_COLOR,

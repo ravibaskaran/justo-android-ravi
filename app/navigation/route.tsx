@@ -1,124 +1,120 @@
-import React, { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import axios from "axios";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 // Auth model
-import SplashScreen from "../views/Authentication/SplashScreen";
-import OnboardingScreen from "../views/Authentication/OnboardingScreen";
 import LoginScreen from "../views/Authentication/LoginScreen";
+import SplashScreen from "../views/Authentication/SplashScreen";
 import DashboardScreen from "../views/DashboardScreen";
-import customDrawer from "./customDrawer";
-import PropertyScreen from "../views/PropertyMangement/PropertyScreen";
 import PropertyDetails from "../views/PropertyMangement/PropertyDetails";
+import PropertyScreen from "../views/PropertyMangement/PropertyScreen";
+import customDrawer from "./customDrawer";
 
 /**Agency module**/
-import AgencyListingScreen from "../views/AgencyManagement/AgencyListing";
 import AddnewAgency from "../views/AgencyManagement/AddAgency";
 import AgencyBankInfo from "../views/AgencyManagement/AddAgency/components/AgentBankInfo";
 import AgencyDetails from "../views/AgencyManagement/AgencyDetailView";
+import AgencyListingScreen from "../views/AgencyManagement/AgencyListing";
 import PendingAgencyListScreen from "../views/AgencyManagement/PendingAgencyListing";
 
 /**Lead Visitor module**/
-import LeadManagementScreen from "../views/LeadManagement/LeadManagementScreen";
 import LeadDetails from "../views/LeadManagement/LeadDetails";
+import LeadManagementScreen from "../views/LeadManagement/LeadManagementScreen";
 
 /**Souricing  module**/
-import SourcingManager from "../views/SourcingManagers/SourcingManagersView";
 import AddNewSM from "../views/SourcingManagers/AddNewSm";
 import SMDetails from "../views/SourcingManagers/SMDetails";
+import SourcingManager from "../views/SourcingManagers/SourcingManagersView";
 
 /**Closing  module**/
-import ClosingManager from "../views/ClosingManager/ClosingMangerView";
 import AddNewCM from "../views/ClosingManager/AddNewCM";
+import ClosingManager from "../views/ClosingManager/ClosingMangerView";
 import CMDetails from "../views/ClosingManager/CMDetails";
 //
-import FollowUpDetails from "../views/FollowUp/FollowUpDetails";
-import EditFollowUp from "../views/FollowUp/FollowUpScreen/Components/EditFollowUp";
-import AllFollowUpScreen from "../views/FollowUp/AllFollowUp";
-import FollowUpScreen from "../views/FollowUp/FollowUpScreen";
-import AppointmentScreenCPSM from "../views/AppointmentWithCPSm/AppointmentScreen";
-import AppointmentDetails from "../views/AppointmentWithCPSm/AppointmentDetails";
-import AddAppointmentScreen from "../views/AppointmentWithCPSm/AddAppointment";
-import PickupRequestScreen from "../views/SourcingManagers/PickupRequest";
-import SettingScreen from "../views/Setting/SettingScreen";
-import ProfileScreen from "../views/Setting/ProfileScreen";
-import EditProfileScreen from "../views/Setting/EditProfileScreen";
-import ChangePasswordScreen from "../views/Setting/ChangePassword";
-import SeparateLinkScreen from "../views/Setting/SeparateLink";
-import BookingListScreen from "../views/BookingManagement/BookingList";
-import BookingDetailsScreen from "../views/BookingManagement/BookingDetails";
+import auth from "@react-native-firebase/auth";
+import { GLOBAL_URL, RED_COLOR } from "../components/utilities/constant";
+import { setDefaultHeader } from "../components/utilities/httpClient";
+import DeactiveAgencyScreen from "../views/AgencyManagement/DeactiveAgency";
 import AppointmentsScreen from "../views/AppointMent/AppintMents";
 import AppointmentDetailsScreen from "../views/AppointMent/AppointmentDetails";
-import AppointmentForSiteScreen from "../views/AppointMentForSite/AppointmentScreen";
-import AppointmentForSiteDetailScreen from "../views/AppointMentForSite/AppointmentDetails";
+import FollowUpAddScreen from "../views/AppointMent/FollowUpAdd";
 import AddAppointmentForSiteScreen from "../views/AppointMentForSite/AddAppointment";
-import FollUpAddScreen from "../views/FollowUp/FollowUpAdd";
-import VisitorUpdateScreen from "../views/LeadManagement/VisitorUpdate";
-import ScanQrScreen from "../views/ScanQr";
-import BookingScreen from "../views/BookingManagement/Booking";
-import LeaderBoardScreen from "../views/LeaderBoard/LeaderBoardScreen";
-import LeaderBoardSearchScreen from "../views/LeaderBoard/LeaderBoardSearch";
-import { apiCall, setDefaultHeader } from "../components/utilities/httpClient";
-import apiEndPoints from "../components/utilities/apiEndPoints";
+import AppointmentAddScreen from "../views/AppointMentForSite/AppointmentAdd";
+import AppointmentForSiteDetailScreen from "../views/AppointMentForSite/AppointmentDetails";
+import AppointmentForSiteScreen from "../views/AppointMentForSite/AppointmentScreen";
+import AddAppointmentScreen from "../views/AppointmentWithCPSm/AddAppointment";
+import AppointmentDetails from "../views/AppointmentWithCPSm/AppointmentDetails";
+import AppointmentScreenCPSM from "../views/AppointmentWithCPSm/AppointmentScreen";
+import ChangePassword from "../views/Authentication/ChangePassword";
 import ForgotPassword from "../views/Authentication/ForgotPassword";
 import OtpVerificationScreen from "../views/Authentication/OtpVerification";
-import ChangePassword from "../views/Authentication/ChangePassword";
+import BookingScreen from "../views/BookingManagement/Booking";
+import BookingDetailsScreen from "../views/BookingManagement/BookingDetails";
+import BookingRegistration from "../views/BookingManagement/BookingDetails/components/Registration";
+import BookingListScreen from "../views/BookingManagement/BookingList";
+import CancelBookingScreen from "../views/BookingManagement/CancelBooking";
+import AddChatScreen from "../views/ChatManagement/AddChat";
+import ChatViewScreen from "../views/ChatManagement/Chat";
+import ChatScreen from "../views/ChatManagement/Chat/components/ChatScreen";
+import PropertyChat from "../views/ChatManagement/PropertyChat";
+import CpChecking from "../views/CpChecking/CpCheckingScreen";
+import AllFollowUpScreen from "../views/FollowUp/AllFollowUp";
+import FollUpAddScreen from "../views/FollowUp/FollowUpAdd";
+import FollowUpDetails from "../views/FollowUp/FollowUpDetails";
+import FollowUpScreen from "../views/FollowUp/FollowUpScreen";
+import EditFollowUp from "../views/FollowUp/FollowUpScreen/Components/EditFollowUp";
+import LeaderBoardScreen from "../views/LeaderBoard/LeaderBoardScreen";
+import LeaderBoardSearchScreen from "../views/LeaderBoard/LeaderBoardSearch";
+import AddNewVisitorScreen from "../views/LeadManagement/AddNewVisitor";
+import VisitorUpdateScreen from "../views/LeadManagement/VisitorUpdate";
+import AllocatePropertyScreen from "../views/PropertyMangement/PropertyAllocate";
+import CatalogueContent from "../views/PropertyMangement/PropertyDetails/components/CatalogueContent";
 import ImageContent from "../views/PropertyMangement/PropertyDetails/components/ImageContent";
 import VideoContent from "../views/PropertyMangement/PropertyDetails/components/VideoContent";
-import CatalogueContent from "../views/PropertyMangement/PropertyDetails/components/CatalogueContent";
-import AllocatePropertyScreen from "../views/PropertyMangement/PropertyAllocate";
-import AllocateCPScreen from "app/views/SourcingManagers/CPAllocate";
-import ErrorMessage from "app/components/ErrorMessage";
-import { GLOBAL_URL, RED_COLOR } from "app/components/utilities/constant";
-import AddNewVisitorScreen from "app/views/LeadManagement/AddNewVisitor";
-import FollowUpAddScreen from "app/views/AppointMent/FollowUpAdd";
-import SupportScreen from "app/views/SupportScreen/Support";
-import SalesToolsScreen from "app/views/SalesTools";
-import ReportScreen from "app/views/Report";
-import ChatViewScreen from "app/views/ChatManagement/Chat";
-import CancelBookingScreen from "app/views/BookingManagement/CancelBooking";
-import RecoveryScreen from "app/views/Recovery/RecoveryScreen";
-import PropertyChat from "app/views/ChatManagement/PropertyChat";
-import ChatScreen from "app/views/ChatManagement/Chat/components/ChatScreen";
-import Notification from "app/views/Setting/Notification";
-import DeactiveAgencyScreen from "app/views/AgencyManagement/DeactiveAgency";
-import AllowAgencyListing from "app/views/AgencyManagement/AllowAgencyListing";
-import auth from "@react-native-firebase/auth";
-import { updateFirebase } from "app/Redux/Actions/FirebaseActions";
-import AppointmentAddScreen from "app/views/AppointMentForSite/AppointmentAdd";
-import SupportForumScreen from "app/views/SupportForumScreen/SupportForum";
-import SupportForumDetail from "app/views/SupportForumScreen/SupportForumDtl";
-import SupportScreenDetails from "app/views/SupportScreen/SupportDetails";
-import AddTicketScreen from "app/views/SupportScreen/AddTicket";
-import RecoveryDetails from "app/views/Recovery/RecoveryDetail";
-import ShowReply from "app/views/SupportScreen/SupportDetails/Components/ShowReply";
-import TicketStatusUpdate from "app/views/SupportScreen/Support/components/TicketStatusUpdate";
-import CpChecking from "app/views/CpChecking/CpCheckingScreen";
-import BookingRegistration from "app/views/BookingManagement/BookingDetails/components/Registration";
-import AddChatScreen from "app/views/ChatManagement/AddChat";
-import UserManagementScreen from "app/views/UserManager/UserManagement";
-import AddNewUserScreen from "app/views/UserManager/AddNewUser";
-import UserDetailsScreen from "app/views/UserManager/UserDetails";
-import EscalateScreen from "app/views/SupportScreen/Escalate";
-import {
-  navigate,
-  navigationRef,
-} from "app/components/utilities/GlobalFuncations";
-import PropertyInventory from "app/views/PropertyMangement/PropertyInventory";
-import CloseAppointment from "app/views/AppointMent/CloseAppointment";
-import EmployeeListing from "app/views/AgencyManagement/EmployeeListing";
-import AddEmployee from "app/views/AgencyManagement/AddEmployee";
-import CpDetailForReport from "app/views/CpDetailForReport";
-import AppointmentCTA from "app/views/ReportCTAManagement/AppointmentCTA";
-import BookingCTA from "app/views/ReportCTAManagement/BookingCTA";
-import TodaysFollowUpScreen from "app/views/FollowUp/TodaysFollowUP";
-import ProjectReportScreen from "app/views/ProjectDetailsReport";
-import DraftVisitorUpdateScreen from "app/views/LeadManagement/DraftVisitorEdit";
-import ScheduledActivityScreen from "app/views/ScheduledActivity";
+import RecoveryDetails from "../views/Recovery/RecoveryDetail";
+import RecoveryScreen from "../views/Recovery/RecoveryScreen";
+import ReportScreen from "../views/Report";
+import SalesToolsScreen from "../views/SalesTools";
+import ScanQrScreen from "../views/ScanQr";
+import ChangePasswordScreen from "../views/Setting/ChangePassword";
+import EditProfileScreen from "../views/Setting/EditProfileScreen";
+import Notification from "../views/Setting/Notification";
+import ProfileScreen from "../views/Setting/ProfileScreen";
+import SeparateLinkScreen from "../views/Setting/SeparateLink";
+import SettingScreen from "../views/Setting/SettingScreen";
+import PickupRequestScreen from "../views/SourcingManagers/PickupRequest";
+import SupportForumScreen from "../views/SupportForumScreen/SupportForum";
+import SupportForumDetail from "../views/SupportForumScreen/SupportForumDtl";
+import AddTicketScreen from "../views/SupportScreen/AddTicket";
+import EscalateScreen from "../views/SupportScreen/Escalate";
+import SupportScreen from "../views/SupportScreen/Support";
+import TicketStatusUpdate from "../views/SupportScreen/Support/components/TicketStatusUpdate";
+import SupportScreenDetails from "../views/SupportScreen/SupportDetails";
+import ShowReply from "../views/SupportScreen/SupportDetails/Components/ShowReply";
+import AddNewUserScreen from "../views/UserManager/AddNewUser";
+import UserDetailsScreen from "../views/UserManager/UserDetails";
+import UserManagementScreen from "../views/UserManager/UserManagement";
+
+import ErrorMessage from "../components/ErrorMessage";
+import { navigationRef } from "../components/utilities/GlobalFuncations";
+import { updateFirebase } from "../Redux/Actions/FirebaseActions";
+import AddEmployee from "../views/AgencyManagement/AddEmployee";
+import AllowAgencyListing from "../views/AgencyManagement/AllowAgencyListing";
+import EmployeeListing from "../views/AgencyManagement/EmployeeListing";
+import CloseAppointment from "../views/AppointMent/CloseAppointment";
+import CpDetailForReport from "../views/CpDetailForReport";
+import TodaysFollowUpScreen from "../views/FollowUp/TodaysFollowUP";
+import DraftVisitorUpdateScreen from "../views/LeadManagement/DraftVisitorEdit";
+import ProjectReportScreen from "../views/ProjectDetailsReport";
+import PropertyInventory from "../views/PropertyMangement/PropertyInventory";
+import AppointmentCTA from "../views/ReportCTAManagement/AppointmentCTA";
+import BookingCTA from "../views/ReportCTAManagement/BookingCTA";
+import ScheduledActivityScreen from "../views/ScheduledActivity";
+import AllocateCPScreen from "../views/SourcingManagers/CPAllocate";
 
 const Stack = createNativeStackNavigator();
 const AppStack = createNativeStackNavigator();
@@ -130,7 +126,7 @@ const screenOptions = { headerShown: false, gestureEnabled: true };
 const DrawerComponent = () => {
   return (
     <Drawer.Navigator
-      initialRouteName="Home"
+      initialRouteName="DashboardScreen"
       screenOptions={{
         headerShown: false,
         drawerType: "front",

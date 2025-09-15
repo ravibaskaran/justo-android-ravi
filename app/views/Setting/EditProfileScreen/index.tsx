@@ -1,20 +1,16 @@
-import { View, Text, Keyboard } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import EditProfileView from "./components/EditProfileView";
-import { updateUserSettingData } from "app/Redux/Actions/SettingActions";
+import { Keyboard } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
-import ErrorMessage from "app/components/ErrorMessage";
+import ErrorMessage from "../../../components/ErrorMessage";
 import {
   GREEN_COLOR,
-  Regexs,
-  validateEmail,
-  RED_COLOR,
-} from "app/components/utilities/constant";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { addAgentForm, getAgentDetail } from "app/Redux/Actions/AgentActions";
-import { GET_AGENT_DETAIL } from "app/Redux/types";
-import { useFocusEffect } from "@react-navigation/native";
+  RED_COLOR
+} from "../../../components/utilities/constant";
+import { addAgentForm, getAgentDetail } from "../../../Redux/Actions/AgentActions";
+import { updateUserSettingData } from "../../../Redux/Actions/SettingActions";
+import EditProfileView from "./components/EditProfileView";
 
 const EditProfileScreen = ({ navigation, route }: any) => {
   const allDetails = route?.params;

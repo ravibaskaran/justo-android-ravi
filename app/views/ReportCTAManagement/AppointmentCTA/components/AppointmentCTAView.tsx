@@ -1,10 +1,10 @@
-import { View, Text, FlatList } from "react-native";
 import React from "react";
-import styles from "./styles";
-import Header from "app/components/Header";
-import images from "app/assets/images";
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
+import { FlatList, View } from "react-native";
+import images from "../../../../assets/images";
+import EmptyListScreen from "../../../../components/CommonScreen/EmptyListScreen";
+import Header from "../../../../components/Header";
 import AppointmentListItem from "./AppointmentListItem";
+import styles from "./styles";
 
 const AppointmentCTAView = (props: any) => {
   return (
@@ -19,6 +19,7 @@ const AppointmentCTAView = (props: any) => {
       />
       <View style={styles.listView}>
         <FlatList
+removeClippedSubviews={false}
           data={Array.isArray(props.DATA) ? props.DATA : []}
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={<EmptyListScreen message={"Appointment"} />}

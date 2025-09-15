@@ -1,7 +1,7 @@
 import { GLOBAL_URL } from "./constant";
 import axios from "axios";
-import configureStore from "app/Redux/Store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import configureStore from "../../Redux/Store";
 
 const httpClient = axios.create({
   baseURL: `${GLOBAL_URL}/api/`,

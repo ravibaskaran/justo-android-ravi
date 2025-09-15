@@ -1,17 +1,17 @@
 import { useFocusEffect } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import ErrorMessage from "../../../components/ErrorMessage";
+import { GREEN_COLOR, ROLE_IDS } from "../../../components/utilities/constant";
 import {
   AddTargetForCpAction,
   removeAddTarget,
-} from "app/Redux/Actions/AgencyActions";
+} from "../../../Redux/Actions/AgencyActions";
 import {
   getSourcingHeadSMList,
   getSourcingManagerList,
-} from "app/Redux/Actions/SourcingManagerActions";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+} from "../../../Redux/Actions/SourcingManagerActions";
 import SourcingDetailsView from "./components/SourcingManager";
-import ErrorMessage from "app/components/ErrorMessage";
-import { GREEN_COLOR, ROLE_IDS } from "app/components/utilities/constant";
 
 const SourcingDetailScreen = ({ navigation, route }: any) => {
   const { type } = route?.params || {};

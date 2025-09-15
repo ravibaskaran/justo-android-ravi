@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RED_COLOR, Regexs, validateEmail } from '../../../components/utilities/constant';
-import LoginView from './components/LoginView';
-import { users } from '../../../components/utilities/DemoData';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useToast } from "react-native-toast-notifications";
-import strings from '../../../components/utilities/Localization';
-import ErrorMessage from '../../../components/ErrorMessage';
-import { setDefaultHeader } from '../../../components/utilities/httpClient';
-import { userLogin } from '../../../Redux/Actions/AuthActions';
+import React, { useState } from 'react';
 import { Platform } from 'react-native';
+import { useDispatch } from 'react-redux';
+import ErrorMessage from '../../../components/ErrorMessage';
+import { RED_COLOR, Regexs } from '../../../components/utilities/constant';
+import strings from '../../../components/utilities/Localization';
+import { userLogin } from '../../../Redux/Actions/AuthActions';
+import LoginView from './components/LoginView';
 
 const LoginScreen = ({ navigation }: any) => {
   // const [validEmail, setIsValidEmail] = useState(false);

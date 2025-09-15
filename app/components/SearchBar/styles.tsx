@@ -6,12 +6,11 @@ import {
   normalizeWidth,
 } from "../scaleFontSize";
 import {
-  Isios,
-  FONT_FAMILY_SEMIBOLD,
-  GRAY_LIGHT_COLOR,
-  WHITE_COLOR,
-  PRIMARY_THEME_COLOR,
   BLACK_COLOR,
+  FONT_FAMILY_SEMIBOLD,
+  Isios,
+  PRIMARY_THEME_COLOR,
+  WHITE_COLOR
 } from "../utilities/constant";
 
 const styles = StyleSheet.create({

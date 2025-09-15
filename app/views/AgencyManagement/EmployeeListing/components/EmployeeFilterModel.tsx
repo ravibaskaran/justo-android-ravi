@@ -1,16 +1,16 @@
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
-import React, { useState } from "react";
-import Modal from "react-native-modal";
-import styles from "../../../../components/Modals/styles";
-import images from "../../../../assets/images";
-import strings from "../../../../components/utilities/Localization";
-import Button from "../../../../components/Button";
-import InputField from "../../../../components/InputField";
-import DropdownInput from "../../../../components/DropDown";
-import InputCalender from "app/components/InputCalender";
 import moment from "moment";
-import { DATE_FORMAT, Isios } from "app/components/utilities/constant";
-import { normalizeSpacing } from "app/components/scaleFontSize";
+import React from "react";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import Modal from "react-native-modal";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import DropdownInput from "../../../../components/DropDown";
+import InputCalender from "../../../../components/InputCalender";
+import InputField from "../../../../components/InputField";
+import styles from "../../../../components/Modals/styles";
+import { normalizeSpacing } from "../../../../components/scaleFontSize";
+import { DATE_FORMAT, Isios } from "../../../../components/utilities/constant";
+import strings from "../../../../components/utilities/Localization";
 const FilterModal = (props: any) => {
   const data = [
     { label: strings.active, value: 2 },
@@ -103,7 +103,7 @@ const FilterModal = (props: any) => {
             <View style={styles.inputWrap}>
               <InputField
                 valueshow={props?.filterData?.search_by_location}
-                inputType={'location'}
+                // inputType={'location'}
                 onPressSelect={(data: any, detail: any) => {
                   props.setFilterData({
                     ...props.filterData,

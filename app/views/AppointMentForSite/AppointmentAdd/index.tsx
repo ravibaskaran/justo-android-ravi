@@ -1,11 +1,11 @@
-import ErrorMessage from "app/components/ErrorMessage";
-import { DATE_FORMAT, GREEN_COLOR, RED_COLOR } from "app/components/utilities/constant";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import ErrorMessage from "../../../components/ErrorMessage";
+import { DATE_FORMAT, GREEN_COLOR, RED_COLOR } from "../../../components/utilities/constant";
+import strings from "../../../components/utilities/Localization";
+import { addAppointment, editAppointment, removeEditUser } from "../../../Redux/Actions/AppointmentWithCpActions";
 import AppointmentAddView from "./components/AppointmentAdd";
-import { addAppointment, editAppointment, removeEditUser } from "app/Redux/Actions/AppointmentWithCpActions";
-import moment from "moment";
-import strings from "app/components/utilities/Localization";
 
 const AppointmentAddScreen = ({ navigation, route }: any) => {
     const appointmentId = route?.params || {}

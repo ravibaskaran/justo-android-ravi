@@ -1,9 +1,5 @@
-import { View, Text, TouchableOpacity, Image, TouchableWithoutFeedback } from 'react-native'
-import React, { useState } from 'react'
-import styles from './Styles';
-import Modal from "react-native-modal";
-import images from 'app/assets/images';
-import Video from 'react-native-video';
+import React, { useState } from 'react';
+import { View } from 'react-native';
 import VideoPlayer from 'react-native-media-console';
 
 

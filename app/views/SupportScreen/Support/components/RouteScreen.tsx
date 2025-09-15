@@ -1,9 +1,9 @@
-import { View, Text, FlatList } from "react-native";
 import React from "react";
-import SupportItem from "./SupportItem";
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
-import strings from "app/components/utilities/Localization";
+import { FlatList, Text, View } from "react-native";
+import EmptyListScreen from "../../../../components/CommonScreen/EmptyListScreen";
+import strings from "../../../../components/utilities/Localization";
 import styles from "./styles";
+import SupportItem from "./SupportItem";
 
 const RouteScreen = (props: any) => {
   return (
@@ -12,6 +12,7 @@ const RouteScreen = (props: any) => {
         Count : {props?.totalData ? props?.totalData : 0}
       </Text>
       <FlatList
+removeClippedSubviews={false}
         data={Array.isArray(props.ticketList) ? props.ticketList : []}
         renderItem={({ item }) => (
           <SupportItem

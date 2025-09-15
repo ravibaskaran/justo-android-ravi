@@ -1,18 +1,13 @@
-import { View, Text, FlatList, TextInput } from "react-native";
 import React from "react";
-import styles from "./styles";
-import images from "app/assets/images";
-import strings from "app/components/utilities/Localization";
-import Header from "app/components/Header";
+import { FlatList, Text, TextInput, View } from "react-native";
+import images from "../../../assets/images";
+import Header from "../../../components/Header";
 import {
   BLACK_COLOR,
-  FONT_FAMILY_SEMIBOLD,
-  Isios,
-  PRIMARY_THEME_COLOR,
-  WHITE_COLOR,
-} from "app/components/utilities/constant";
-import { normalize } from "app/components/scaleFontSize";
-import moment from "moment";
+  PRIMARY_THEME_COLOR
+} from "../../../components/utilities/constant";
+import strings from "../../../components/utilities/Localization";
+import styles from "./styles";
 
 const CpDetailForReportView = (props: any) => {
   const renderItem = (item: any) => {
@@ -72,6 +67,7 @@ const CpDetailForReportView = (props: any) => {
           </View>
         </View>
         <FlatList
+removeClippedSubviews={false}
           data={props.cpList}
           showsVerticalScrollIndicator={false}
           renderItem={({ item, index }: any) => renderItem(item)}

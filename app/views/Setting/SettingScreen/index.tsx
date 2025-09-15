@@ -1,6 +1,6 @@
-import { userLogout } from 'app/Redux/Actions/AuthActions';
-import React from 'react'
+import React from 'react';
 import { useDispatch } from 'react-redux';
+import { userLogout } from '../../../Redux/Actions/AuthActions';
 import SettingView from './components/SettingView';
 
 const SettingScreen = ({ navigation, route }: any) => {

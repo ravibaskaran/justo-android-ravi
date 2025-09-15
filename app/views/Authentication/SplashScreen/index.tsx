@@ -1,10 +1,9 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useEffect, useState } from 'react';
-import SplashScreenVeiw from './components/SplashScreenVeiw';
-import { CommonActions, useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
+import { getPermission } from '../../../Redux/Actions/permissionAction';
+import { navigate } from '../../../components/utilities/GlobalFuncations';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { getPermission } from 'app/Redux/Actions/permissionAction';
-import { navigate } from 'app/components/utilities/GlobalFuncations';
+import SplashScreenVeiw from './components/SplashScreenVeiw';
 
 const SplashScreen = ({ navigation, route }: any) => {
   const {

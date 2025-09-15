@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { View, Text, useWindowDimensions, Image, TouchableOpacity, Linking } from 'react-native';
+import { Linking, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import { TabBar, TabView } from 'react-native-tab-view';
 import images from '../../../../assets/images';
 import Header from '../../../../components/Header';
 import { PRIMARY_THEME_COLOR, PRIMARY_THEME_COLOR_DARK, TABBAR_COLOR } from '../../../../components/utilities/constant';
 import strings from '../../../../components/utilities/Localization';
-import styles from './styles';
-import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
-import UserInfo from './UserInfo';
 import StatsView from './StatsViews';
+import styles from './styles';
+import UserInfo from './UserInfo';
 
 const UserDetailsView = (props: any) => {
     const layout = useWindowDimensions();

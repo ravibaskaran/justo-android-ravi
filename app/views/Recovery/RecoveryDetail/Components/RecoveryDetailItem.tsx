@@ -1,16 +1,14 @@
-import {
-  View,
-  Text,
-  ScrollView,
-  Image,
-  TouchableOpacity,
-  Linking,
-} from "react-native";
 import React from "react";
+import {
+  Linking,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native";
+import { normalize } from "../../../../components/scaleFontSize";
+import strings from "../../../../components/utilities/Localization";
 import styles from "./Styles";
-import moment from "moment";
-import { normalize } from "app/components/scaleFontSize";
-import strings from "app/components/utilities/Localization";
 
 const RecoveryDetailItem = (props: any) => {
   const appdetail = props?.data || {};

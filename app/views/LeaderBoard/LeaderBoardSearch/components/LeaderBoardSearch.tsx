@@ -1,15 +1,13 @@
 import React from "react";
-import { View, Text, Image, FlatList } from 'react-native';
+import { FlatList, Text, View } from 'react-native';
 import images from "../../../../assets/images";
-import Button from "../../../../components/Button";
-import DropdownInput from "../../../../components/DropDown";
+import EmptyListScreen from "../../../../components/CommonScreen/EmptyListScreen";
 import Header from "../../../../components/Header";
 import { normalize } from "../../../../components/scaleFontSize";
 import { PRIMARY_THEME_COLOR, WHITE_COLOR } from "../../../../components/utilities/constant";
 import strings from "../../../../components/utilities/Localization";
+import LeaderBoardCPItems from '../components/LeaderBoardCPItems';
 import styles from "./styles";
-import LeaderBoardCPItems from '../components/LeaderBoardCPItems'
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
 
 const LeaderBoardSearchView = (props: any) => {
     return (
@@ -75,6 +73,7 @@ const LeaderBoardSearchView = (props: any) => {
                     }]}>Sold</Text>
                 </View>
                 <FlatList
+removeClippedSubviews={false}
                     data={props?.leaderBoardDetail?.property_allocateds &&
                         Array.isArray(props?.leaderBoardDetail?.property_allocateds) ?
                         props?.leaderBoardDetail?.property_allocateds : []}

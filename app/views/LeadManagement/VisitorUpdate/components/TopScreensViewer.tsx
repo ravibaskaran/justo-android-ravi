@@ -1,8 +1,8 @@
 
 import React from "react";
-import { View, Text, Image } from 'react-native';
+import { Text, View } from 'react-native';
+import { BG_MAIN_COLOUR, PRIMARY_THEME_COLOR } from "../../../../components/utilities/constant";
 import styles from "./styles";
-import { BG_MAIN_COLOUR, PRIMARY_THEME_COLOR, WHITE_COLOR } from "../../../../components/utilities/constant";
 
 const TopScreensViewer = (props: any) => {
     return (

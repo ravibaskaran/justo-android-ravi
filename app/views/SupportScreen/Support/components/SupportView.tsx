@@ -1,16 +1,16 @@
-import { View, Text, useWindowDimensions, FlatList } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import styles from './styles'
-import Header from 'app/components/Header'
-import images from 'app/assets/images'
-import strings from 'app/components/utilities/Localization'
-import { PRIMARY_THEME_COLOR, PRIMARY_THEME_COLOR_DARK, TABBAR_COLOR } from 'app/components/utilities/constant'
-import Button from 'app/components/Button'
-import { SceneMap, TabBar, TabView } from 'react-native-tab-view'
-import EmptyListScreen from 'app/components/CommonScreen/EmptyListScreen'
-import SupportItem from './SupportItem'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
+import React, { useState } from 'react'
+import { FlatList, useWindowDimensions, View } from 'react-native'
+import { TabBar, TabView } from 'react-native-tab-view'
+import images from '../../../../assets/images'
+import Button from '../../../../components/Button'
+import EmptyListScreen from '../../../../components/CommonScreen/EmptyListScreen'
+import Header from '../../../../components/Header'
+import strings from '../../../../components/utilities/Localization'
+import { PRIMARY_THEME_COLOR, PRIMARY_THEME_COLOR_DARK, TABBAR_COLOR } from '../../../../components/utilities/constant'
 import RouteScreen from './RouteScreen'
+import SupportItem from './SupportItem'
+import styles from './styles'
 
 const SupportView = (props: any) => {
     const layout = useWindowDimensions();
@@ -58,6 +58,7 @@ const SupportView = (props: any) => {
     );
     const FirstRoute = () => (
         <FlatList
+removeClippedSubviews={false}
             data={Array.isArray(props.ticketList) ? props.ticketList : []}
             renderItem={({ item }) => (
                 <SupportItem
@@ -96,6 +97,7 @@ const SupportView = (props: any) => {
 
     const SecondRoute = () => (
         <FlatList
+removeClippedSubviews={false}
             data={Array.isArray(props.ticketList) ? props.ticketList : []}
             renderItem={({ item }) => (
                 <SupportItem

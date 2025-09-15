@@ -1,12 +1,12 @@
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { propertyBackSubject } from "../../../observables/backNavigationSubject";
 import {
   getAllProperty,
   statusUpdate,
 } from "../../../Redux/Actions/propertyActions";
 import PropertyView from "./components/PropertyView";
-import { propertyBackSubject } from "app/observables/backNavigationSubject";
 
 const PropertyScreen = ({ navigation }: any) => {
   const dispatch: any = useDispatch();

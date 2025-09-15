@@ -1,19 +1,18 @@
-import { View, Text, Alert, BackHandler } from "react-native";
-import React, { useCallback, useEffect, useState } from "react";
-import AppointmentDetailsView from "./Components/AppointmentDetailsView";
 import { useFocusEffect } from "@react-navigation/native";
-import { getAppointmentDetail } from "app/Redux/Actions/AppointmentWithCpActions";
-import { useDispatch, useSelector } from "react-redux";
+import { appointmentBackSubject } from "../../../observables/backNavigationSubject";
 import {
   AddBooking,
   removeAddBookingData,
-} from "app/Redux/Actions/AppointmentCLAction";
-import ErrorMessage from "app/components/ErrorMessage";
-import { GREEN_COLOR } from "app/components/utilities/constant";
-import { removeEditUser } from "app/Redux/Actions/AppointmentWithCpActions";
-import { apiCall } from "app/components/utilities/httpClient";
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import { appointmentBackSubject } from "app/observables/backNavigationSubject";
+} from "../../../Redux/Actions/AppointmentCLAction";
+import { removeEditUser } from "../../../Redux/Actions/AppointmentWithCpActions";
+import React, { useCallback, useEffect, useState } from "react";
+import { BackHandler } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import ErrorMessage from "../../../components/ErrorMessage";
+import apiEndPoints from "../../../components/utilities/apiEndPoints";
+import { GREEN_COLOR } from "../../../components/utilities/constant";
+import { apiCall } from "../../../components/utilities/httpClient";
+import AppointmentDetailsView from "./Components/AppointmentDetailsView";
 
 const AppointmentDetails = ({ navigation, route }: any) => {
   const data = route?.params || {};

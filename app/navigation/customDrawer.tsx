@@ -1,32 +1,31 @@
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  StatusBar,
-  Platform,
-} from "react-native";
-import React, { useEffect, useState } from "react";
-import styles from "./styles";
-import images from "../assets/images";
-import strings from "../components/utilities/Localization";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import DeviceInfo from "react-native-device-info";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import auth from "@react-native-firebase/auth";
 import {
   DrawerContentScrollView,
   useDrawerStatus,
 } from "@react-navigation/drawer";
+import { Badge } from "@rneui/base";
+import React, { useEffect, useState } from "react";
+import {
+  Image,
+  StatusBar,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native";
+import DeviceInfo from "react-native-device-info";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useDispatch, useSelector } from "react-redux";
+import images from "../assets/images";
 import {
   PRIMARY_THEME_COLOR,
   ROLE_IDS,
 } from "../components/utilities/constant";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { userLogout, getUserDetails } from "../Redux/Actions/AuthActions";
-import { useDispatch, useSelector } from "react-redux";
-import auth from "@react-native-firebase/auth";
-import { getPermission } from "app/Redux/Actions/permissionAction";
-import { Badge } from "@rneui/base";
-import { normalize } from "app/components/scaleFontSize";
+import strings from "../components/utilities/Localization";
+import { userLogout } from "../Redux/Actions/AuthActions";
+import styles from "./styles";
+import { normalize } from "../components/scaleFontSize";
+import { getPermission } from "../Redux/Actions/permissionAction";
 
 const customDrawer = ({ navigation }: any) => {
   const dispatch: any = useDispatch();

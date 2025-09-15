@@ -1,12 +1,11 @@
-import React, { useState } from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
-import styles from "./styles";
-import strings from "../../../components/utilities/Localization";
 import {
-    normalize,
+  normalize,
   normalizeHeight,
   normalizeSpacing,
-} from "app/components/scaleFontSize";
+} from "../../../components/scaleFontSize";
+import React from "react";
+import { Text, View } from "react-native";
+import styles from "./styles";
 
 const ReceiptionistDashboardView = (props: any) => {
   return (

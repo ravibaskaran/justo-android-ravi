@@ -1,15 +1,15 @@
-import images from "app/assets/images";
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
-import Header from "app/components/Header";
-import {
-  DATE_FORMAT,
-  PRIMARY_THEME_COLOR,
-} from "app/components/utilities/constant";
 import moment from "moment";
 import React, { useState } from "react";
 import { FlatList, Text, View } from "react-native";
 import Share from "react-native-share";
 import XLSX from "xlsx";
+import images from "../../../assets/images";
+import EmptyListScreen from "../../../components/CommonScreen/EmptyListScreen";
+import Header from "../../../components/Header";
+import {
+  DATE_FORMAT,
+  PRIMARY_THEME_COLOR,
+} from "../../../components/utilities/constant";
 import FilterModal from "./FilterModel";
 import ProjectReportList from "./ProjectReportList";
 import styles from "./styles";
@@ -229,6 +229,7 @@ const ProjectReportView = (props: any) => {
         <Text style={styles.date}>Count: {props.pdrData?.length}</Text>
       </View>
       <FlatList
+removeClippedSubviews={false}
         data={props.pdrData}
         renderItem={({ item }) => (
           <ProjectReportList items={item} date={props.displayDate || today} />

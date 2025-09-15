@@ -1,10 +1,10 @@
-import JustForOkModal from "app/components/Modals/JustForOkModal";
 import React from "react";
 import { ScrollView, View } from "react-native";
 import images from "../../../../assets/images";
 import Button from "../../../../components/Button";
 import Header from "../../../../components/Header";
 import InputField from "../../../../components/InputField";
+import JustForOkModal from "../../../../components/Modals/JustForOkModal";
 import { normalize } from "../../../../components/scaleFontSize";
 import {
   CONST_IDS,

@@ -1,7 +1,7 @@
 import { useFocusEffect } from "@react-navigation/native";
-import { deleteNotification, getNotificationList } from "app/Redux/Actions/NotificationAction";
 import React from "react";
 import { useDispatch } from "react-redux";
+import { deleteNotification, getNotificationList } from "../../../Redux/Actions/NotificationAction";
 import NotificationView from "./components/NotificationView";
 
 const Notification = ({ navigation, route }: any) => {

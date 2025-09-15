@@ -1,10 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
-import images from "app/assets/images";
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
-import Header from "app/components/Header";
-import strings from "app/components/utilities/Localization";
 import React from "react";
 import { FlatList, Text, View } from "react-native";
+import images from "../../../assets/images";
+import EmptyListScreen from "../../../components/CommonScreen/EmptyListScreen";
+import Header from "../../../components/Header";
+import strings from "../../../components/utilities/Localization";
 import FollowUpItem from "../FollowUpScreen/Components/FollowUpItem";
 import styles from "./Styles";
 
@@ -41,6 +41,7 @@ const FollowUpView = (props: any) => {
           Count : {props?.moreData ? props?.moreData : 0}
         </Text>
         <FlatList
+removeClippedSubviews={false}
           data={Array.isArray(props?.followUpList) ? props?.followUpList : []}
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (

@@ -1,29 +1,27 @@
-import ErrorMessage from "app/components/ErrorMessage";
-import {
-  GREEN_COLOR,
-  Isios,
-  RED_COLOR,
-  Regexs,
-  validateEmail,
-} from "app/components/utilities/constant";
-import { handleValues } from "app/components/utilities/handleValues";
-import strings from "app/components/utilities/Localization";
-import {
-  addAgent,
-  addAgentForm,
-  addAgentRemove,
-  editAgent,
-  getAgentDetail,
-} from "app/Redux/Actions/AgentActions";
-import React, { useEffect, useState, useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Keyboard } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import AgentBasicInfoView from "./components/AgentBasicInfoView";
+import ErrorMessage from "../../../components/ErrorMessage";
+import {
+  GREEN_COLOR,
+  RED_COLOR,
+  Regexs,
+  validateEmail
+} from "../../../components/utilities/constant";
+import { handleValues } from "../../../components/utilities/handleValues";
+import strings from "../../../components/utilities/Localization";
 import {
   checkEmailMobile,
   emailCheckRemove,
   getAgencyDetail,
-} from "app/Redux/Actions/AgencyActions";
+} from "../../../Redux/Actions/AgencyActions";
+import {
+  addAgent,
+  addAgentForm,
+  addAgentRemove,
+  editAgent
+} from "../../../Redux/Actions/AgentActions";
+import AgentBasicInfoView from "./components/AgentBasicInfoView";
 
 const AddEmployee = ({ navigation, route }: any) => {
   const { data = {}, type = "", ID = "" } = route?.params;

@@ -14,11 +14,11 @@ import strings from "../../../../components/utilities/Localization";
 import Button from "../../../../components/Button";
 import InputField from "../../../../components/InputField";
 import DropdownInput from "../../../../components/DropDown";
-import InputCalender from "app/components/InputCalender";
+import InputCalender from "../../../../components/InputCalender";
 import moment from "moment";
-import { DATE_FORMAT, Isios } from "app/components/utilities/constant";
-import { normalize, normalizeSpacing } from "app/components/scaleFontSize";
-import { getAllProperty } from "app/Redux/Actions/propertyActions";
+import { DATE_FORMAT, Isios } from "../../../../components/utilities/constant";
+import { normalize, normalizeSpacing } from "../../../../components/scaleFontSize";
+import { getAllProperty } from "../../../../Redux/Actions/propertyActions";
 import { useDispatch, useSelector } from "react-redux";
 import Styles from "../../../../components/Modals/styles";
 
@@ -276,6 +276,66 @@ const FilterModal = (props: any) => {
                         <Text style={styles.textItem}>{item.type_name}</Text>
                       </View>
                     </>
+                  );
+                }}
+              />
+            </View>
+
+              <View style={[styles.inputWrap, { top: normalizeSpacing(10) }]}>
+              <DropdownInput
+                headingText={"Lead Priority"}
+                placeholder={"Lead Priority"}
+                data={[
+                  { label: "Hot", value: "hot" },
+                  { label: "Warm", value: "warm" },
+                  { label: "Cold", value: "cold" },
+                ]}
+                inputWidth={"100%"}
+                paddingLeft={16}
+                maxHeight={300}
+                labelField="label"
+                valueField={"value"}
+                value={props?.filterData?.lead_priority}
+                onChange={(item: any) => {
+                  props.setFilterData({
+                    ...props.filterData,
+                    lead_priority: item.value,
+                  });
+                }}
+                newRenderItem={(item: any) => {
+                  return (
+                    <View style={styles.item}>
+                      <Text style={styles.textItem}>{item.label}</Text>
+                    </View>
+                  );
+                }}
+              />
+            </View>
+            <View style={[styles.inputWrap, { top: normalizeSpacing(10) }]}>
+              <DropdownInput
+                headingText={"Lead Status"}
+                placeholder={"Lead Status"}
+                data={[
+                  { label: "Qualified", value: "true" },
+                  { label: "Unqualified", value: "false" },
+                ]}
+                inputWidth={"100%"}
+                paddingLeft={16}
+                maxHeight={300}
+                labelField="label"
+                valueField={"value"}
+                value={props?.filterData?.qualified}
+                onChange={(item: any) => {
+                  props.setFilterData({
+                    ...props.filterData,
+                    qualified: item.value,
+                  });
+                }}
+                newRenderItem={(item: any) => {
+                  return (
+                    <View style={styles.item}>
+                      <Text style={styles.textItem}>{item.label}</Text>
+                    </View>
                   );
                 }}
               />

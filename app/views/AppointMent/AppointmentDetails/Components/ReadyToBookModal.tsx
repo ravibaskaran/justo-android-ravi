@@ -1,18 +1,16 @@
 
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
-import React, { useState } from "react";
-import Modal from "react-native-modal";
-import styles from "./Styles";
-import images from "../../../../assets/images";
-import strings from "../../../../components/utilities/Localization";
-import { Dropdown } from "react-native-element-dropdown";
-import Button from "../../../../components/Button";
-import InputField from "../../../../components/InputField";
-import { DATE_FORMAT, RED_COLOR, WHITE_COLOR } from "../../../../components/utilities/constant";
-import InputCalender from "app/components/InputCalender";
 import moment from "moment";
-import ErrorMessage from "app/components/ErrorMessage";
-import { RequiredStart } from "app/components/utilities/GlobalFuncations";
+import React from "react";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import Modal from "react-native-modal";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import ErrorMessage from "../../../../components/ErrorMessage";
+import InputCalender from "../../../../components/InputCalender";
+import InputField from "../../../../components/InputField";
+import { DATE_FORMAT, RED_COLOR } from "../../../../components/utilities/constant";
+import strings from "../../../../components/utilities/Localization";
+import styles from "./Styles";
 
 const ReadyToBookModal = (props: any) => {
     return (

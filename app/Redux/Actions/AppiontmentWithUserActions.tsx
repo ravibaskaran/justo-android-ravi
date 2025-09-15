@@ -1,5 +1,5 @@
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import { apiCall } from "app/components/utilities/httpClient";
+import apiEndPoints from "../../components/utilities/apiEndPoints";
+import { apiCall } from "../../components/utilities/httpClient";
 import { ADD_USER_APPOINTMENT, ADD_USER_APPOINTMENT_ERROR, EDIT_USER_APPOINTMENT, EDIT_USER_APPOINTMENT_ERROR, GET_USER_APPOINTMENT_LIST, GET_USER_APPOINTMENT_LIST_ERROR, REMOVE_USER_APPOINTMENT, START_LOADING, STOP_LOADING, UPDATE_USERAPPOINTMENT_STATUS, UPDATE_USERAPPOINTMENT_STATUS_ERROR } from "../types";
 
 export const addUserAppointment = (params: any) => async (dispatch: any) => {

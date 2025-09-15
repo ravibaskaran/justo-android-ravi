@@ -1,33 +1,33 @@
 import { useFocusEffect } from "@react-navigation/native";
-import { getAllAppointmentList } from "app/Redux/Actions/AppointmentWithCpActions";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { BackHandler } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllAppointmentList } from "../../../Redux/Actions/AppointmentWithCpActions";
 import {
   getClosHManagerList,
   getClosingManagerList,
-} from "app/Redux/Actions/ClosingManager";
-import { removeMasters } from "app/Redux/Actions/MasterActions";
-import { START_LOADING, STOP_LOADING } from "app/Redux/types";
-import ErrorMessage from "app/components/ErrorMessage";
-import { handleApiError } from "app/components/ErrorMessage/HandleApiErrors";
-import ConfirmModal from "app/components/Modals/ConfirmModal";
+} from "../../../Redux/Actions/ClosingManager";
+import { removeMasters } from "../../../Redux/Actions/MasterActions";
+import { START_LOADING, STOP_LOADING } from "../../../Redux/types";
+import ErrorMessage from "../../../components/ErrorMessage";
+import { handleApiError } from "../../../components/ErrorMessage/HandleApiErrors";
+import ConfirmModal from "../../../components/Modals/ConfirmModal";
 import {
   handlePermission,
   openPermissionSetting,
-} from "app/components/utilities/GlobalFuncations";
-import strings from "app/components/utilities/Localization";
-import apiEndPoints from "app/components/utilities/apiEndPoints";
+} from "../../../components/utilities/GlobalFuncations";
+import strings from "../../../components/utilities/Localization";
+import apiEndPoints from "../../../components/utilities/apiEndPoints";
 import {
   DATE_FORMAT,
   GREEN_COLOR,
   ROLE_IDS,
-} from "app/components/utilities/constant";
-import { apiCall } from "app/components/utilities/httpClient";
-import moment from "moment";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+} from "../../../components/utilities/constant";
+import { apiCall } from "../../../components/utilities/httpClient";
+import { appointmentBackSubject } from "../../../observables/backNavigationSubject";
 import AppointmentView from "./components/Appointments";
 import AppointmentsForReport from "./components/AppointmentsForReport";
-import { BackHandler } from "react-native";
-import { appointmentBackSubject } from "app/observables/backNavigationSubject";
 
 const AppointmentsScreen = ({ navigation, route }: any) => {
   const [dropLocisVisible, setDropLocisVisible] = useState(false);
@@ -55,6 +55,8 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
     customer_number: "",
     property_name: "",
     status: "",
+    qualified: "",
+    lead_priority: "",
   });
   const todayAppointment = {
     start_date: moment(new Date()).format(DATE_FORMAT),
@@ -78,6 +80,8 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
           customer_number: "",
           property_name: "",
           status: "",
+          qualified: "",
+          lead_priority: "",
         });
       }
       return () => {};
@@ -135,6 +139,8 @@ const AppointmentsScreen = ({ navigation, route }: any) => {
           customer_number: data?.customer_number?.trim()
             ? data?.customer_number?.trim()
             : "",
+          qualified: data?.qualified || "",
+          lead_priority: data?.lead_priority || "",
           property_name: data?.property_name ? data?.property_name : "",
           status: data?.status ? data?.status : "",
           appointment_type: 2,

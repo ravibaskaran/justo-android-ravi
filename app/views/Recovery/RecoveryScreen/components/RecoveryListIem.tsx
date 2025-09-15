@@ -1,15 +1,15 @@
-import { View, Text, TouchableOpacity, Image, Linking } from "react-native";
+import moment from "moment";
 import React from "react";
-import styles from "./styles";
-import strings from "../../../../components/utilities/Localization";
+import { Image, Linking, Text, TouchableOpacity, View } from "react-native";
 import images from "../../../../assets/images";
 import Button from "../../../../components/Button";
 import {
-  WHITE_COLOR,
   CALL_COLOR,
   DATE_TIME_FORMAT,
-} from "app/components/utilities/constant";
-import moment from "moment";
+  WHITE_COLOR,
+} from "../../../../components/utilities/constant";
+import strings from "../../../../components/utilities/Localization";
+import styles from "./styles";
 
 const RecoveryListIem = (props: any) => {
   return (

@@ -1,22 +1,12 @@
-import { View, Text, TouchableOpacity, Image, Linking } from "react-native";
+import moment from "moment";
 import React from "react";
-import styles from "./styles";
-import strings from "../../../../components/utilities/Localization";
+import { Text, View } from "react-native";
 import {
   BLACK_COLOR,
-  CONST_IDS,
   DATE_TIME_FORMAT,
-  GREEN_COLOR,
-  PURPLE_COLOR,
-  ROLE_IDS,
-  WHITE_COLOR,
-  YELLOW_COLOR,
+  GREEN_COLOR
 } from "../../../../components/utilities/constant";
-import images from "../../../../assets/images";
-import Button from "../../../../components/Button";
-import moment from "moment";
-import { useSelector } from "react-redux";
-import usePermission from "app/components/utilities/UserPermissions";
+import styles from "./styles";
 
 const BookingListItem = (props: any) => {
   return (

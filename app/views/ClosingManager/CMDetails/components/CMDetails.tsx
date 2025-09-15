@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import {
-  View,
-  Text,
-  useWindowDimensions,
-  Image,
-  TouchableOpacity,
   Linking,
+  Text,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
 } from "react-native";
+import { TabBar, TabView } from "react-native-tab-view";
+import { useSelector } from "react-redux";
 import images from "../../../../assets/images";
 import Header from "../../../../components/Header";
 import {
@@ -16,11 +17,9 @@ import {
   TABBAR_COLOR,
 } from "../../../../components/utilities/constant";
 import strings from "../../../../components/utilities/Localization";
-import styles from "./styles";
-import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import CMInfoView from "./CMInfo";
 import StatsView from "./StatsViews";
-import { useSelector } from "react-redux";
+import styles from "./styles";
 
 const CMDetailsView = (props: any) => {
   const { userData = {} } = useSelector((state: any) => state.userData);
@@ -63,14 +62,25 @@ const CMDetailsView = (props: any) => {
   );
   const FirstRoute = () => <StatsView items={props?.CMdetail} />;
   const SecondRoute = () => <CMInfoView items={props?.CMdetail} />;
-  const renderScene = ({ index, route }: any) => {
+  const renderScene = ({ route }: any) => {
     switch (route.key) {
       case "first":
-        return <FirstRoute />;
+        return (
+          <View style={{ flex: 1 }}>
+            <StatsView items={props.CMdetail} />
+          </View>
+        );
       case "second":
-        return <SecondRoute />;
+        return (
+          <View style={{ flex: 1 }}>
+            <CMInfoView items={props.CMdetail} />
+          </View>
+        );
+      default:
+        return null;
     }
   };
+
   return (
     <View style={styles.mainContainer}>
       <Header
@@ -107,12 +117,13 @@ const CMDetailsView = (props: any) => {
           <Text style={styles.buttonTxt}>SMS</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.propertyListView}>
+      <View style={[styles.propertyListView, { flex: 1 }]}>
         <TabView
+          style={{ flex: 1 }}
           renderTabBar={renderTabBar}
           initialLayout={{ width: layout.width }}
           navigationState={indexData}
-          renderScene={({ index, route }: any) => renderScene({ index, route })}
+          renderScene={renderScene}
           onIndexChange={handleIndexChange}
         />
       </View>

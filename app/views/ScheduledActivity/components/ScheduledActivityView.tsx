@@ -3,20 +3,20 @@ import { FlatList, Text, View } from "react-native";
 import { TabBar, TabView } from "react-native-tab-view";
 import { useDispatch } from "react-redux";
 
-import images from "app/assets/images";
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
-import Header from "app/components/Header";
-import strings from "app/components/utilities/Localization";
+import { closeFollowUp } from "../../../Redux/Actions/ActivityActions";
+import images from "../../../assets/images";
+import EmptyListScreen from "../../../components/CommonScreen/EmptyListScreen";
+import Header from "../../../components/Header";
+import strings from "../../../components/utilities/Localization";
 import {
   PRIMARY_THEME_COLOR,
   PRIMARY_THEME_COLOR_DARK,
   TABBAR_COLOR,
-} from "app/components/utilities/constant";
+} from "../../../components/utilities/constant";
 import ActivityItem from "./ActivityItem";
 import CloseModal from "./CloseModal";
 import FilterModal from "./FilterModal";
 import styles from "./styles";
-import { closeFollowUp } from "app/Redux/Actions/ActivityActions";
 
 const ScheduledActivityView = ({
   flatListRef,
@@ -64,6 +64,7 @@ const ScheduledActivityView = ({
 
   const renderScene = () => (
     <FlatList
+removeClippedSubviews={false}
       data={activityList}
       ref={flatListRef}
       showsVerticalScrollIndicator={false}

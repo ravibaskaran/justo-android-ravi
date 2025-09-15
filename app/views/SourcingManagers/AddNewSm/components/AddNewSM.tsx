@@ -1,30 +1,29 @@
+import moment from "moment";
 import React, { useState } from "react";
-import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
-import images from "../../../../assets/images";
-import Header from "../../../../components/Header";
-import InputField from "../../../../components/InputField";
-import styles from "./styles";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { RadioButton } from "react-native-paper";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import DropdownInput from "../../../../components/DropDown";
+import Header from "../../../../components/Header";
+import InputCalender from "../../../../components/InputCalender";
+import InputField from "../../../../components/InputField";
+import CityModal from "../../../../components/Modals/CityModal";
+import PicturePickerModal from "../../../../components/Modals/PicturePicker";
+import { normalizeSpacing } from "../../../../components/scaleFontSize";
 import {
   BLACK_COLOR,
   DATE_FORMAT,
-  GRAY_COLOR,
   PRIMARY_THEME_COLOR,
   WHITE_COLOR,
 } from "../../../../components/utilities/constant";
-import Button from "../../../../components/Button";
+import { RequiredStart } from "../../../../components/utilities/GlobalFuncations";
 import strings from "../../../../components/utilities/Localization";
-import PicturePickerModal from "../../../../components/Modals/PicturePicker";
-import moment from "moment";
-import InputCalender from "app/components/InputCalender";
-import DropdownInput from "app/components/DropDown";
-import { normalizeSpacing } from "app/components/scaleFontSize";
-import { RequiredStart } from "app/components/utilities/GlobalFuncations";
-import CityModal from "app/components/Modals/CityModal";
+import styles from "./styles";
 
 const AddNewSMView = (props: any) => {
   const [profile, setProfile] = React.useState(false);
-  const [ShowCity, setShowCity] = useState(false)
+  const [ShowCity, setShowCity] = useState(false);
 
   return (
     <View style={styles.mainContainer}>
@@ -40,19 +39,15 @@ const AddNewSMView = (props: any) => {
         barStyle={"light-content"}
         statusBarColor={PRIMARY_THEME_COLOR}
       />
-      <ScrollView keyboardShouldPersistTaps={'handled'}
-        contentContainerStyle={styles.wrap}>
+      <ScrollView
+        keyboardShouldPersistTaps={"handled"}
+        contentContainerStyle={styles.wrap}
+      >
         <TouchableOpacity
           onPress={() => setProfile(true)}
           style={[styles.imageCircle]}
         >
-          {!props.addNewSmData?.profile_picture ? (
-            <Image
-              style={styles.DummyloginBanner}
-              source={images.user}
-              resizeMode="cover"
-            />
-          ) : (
+          {props.addNewSmData?.profile_picture ? (
             <Image
               style={styles.loginBanner}
               source={{
@@ -60,6 +55,12 @@ const AddNewSMView = (props: any) => {
                   ? props.addNewSmData?.profile_picture?.uri
                   : props.addNewSmData?.profile_picture,
               }}
+              resizeMode="cover"
+            />
+          ) : (
+            <Image
+              style={styles.DummyloginBanner}
+              source={images.user}
               resizeMode="cover"
             />
           )}
@@ -107,7 +108,7 @@ const AddNewSMView = (props: any) => {
             disableSpecialCharacters={true}
             require={true}
             placeholderText={"First Name"}
-            handleInputBtnPress={() => { }}
+            handleInputBtnPress={() => {}}
             headingText={"SM First Name"}
             valueshow={props.addNewSmData?.firstname}
             onChangeText={(val: any) => {
@@ -123,7 +124,7 @@ const AddNewSMView = (props: any) => {
             disableSpecialCharacters={true}
             require={true}
             placeholderText={"Last Name"}
-            handleInputBtnPress={() => { }}
+            handleInputBtnPress={() => {}}
             headingText={"SM Last Name"}
             valueshow={props.addNewSmData?.lastname}
             onChangeText={(val: any) => {
@@ -138,10 +139,10 @@ const AddNewSMView = (props: any) => {
           <InputField
             require={true}
             placeholderText={"3675 9834 6012"}
-            handleInputBtnPress={() => { }}
+            handleInputBtnPress={() => {}}
             headingText={"Aadhaar No."}
-            inputType={'aadhaar'}
-            keyboardtype={'number-pad'}
+            inputType={"aadhaar"}
+            keyboardtype={"number-pad"}
             valueshow={props.addNewSmData?.adhar_no}
             onChangeText={(val: any) => {
               props.setAddNewSmData({
@@ -157,7 +158,7 @@ const AddNewSMView = (props: any) => {
             disableSpecialCharacters={true}
             require={true}
             placeholderText={"BNZAA2318JM"}
-            handleInputBtnPress={() => { }}
+            handleInputBtnPress={() => {}}
             headingText={"Pancard No."}
             valueshow={props.addNewSmData?.pancard_no}
             onChangeText={(val: any) => {
@@ -251,9 +252,11 @@ const AddNewSMView = (props: any) => {
             }}
             value={
               props?.addNewSmData?.dateofbirth === null ||
-                props?.addNewSmData?.dateofbirth === undefined ||
-                props?.addNewSmData?.dateofbirth === '' ? '' :
-                moment(props?.addNewSmData?.dateofbirth).format(DATE_FORMAT)}
+              props?.addNewSmData?.dateofbirth === undefined ||
+              props?.addNewSmData?.dateofbirth === ""
+                ? ""
+                : moment(props?.addNewSmData?.dateofbirth).format(DATE_FORMAT)
+            }
           />
         </View>
         <View style={styles.inputWrap}>
@@ -261,7 +264,7 @@ const AddNewSMView = (props: any) => {
             disableSpecialCharacters={true}
             require={true}
             placeholderText={strings.mobileNo}
-            handleInputBtnPress={() => { }}
+            handleInputBtnPress={() => {}}
             headingText={strings.mobileNo}
             maxLength={10}
             keyboardtype={"number-pad"}
@@ -279,10 +282,10 @@ const AddNewSMView = (props: any) => {
             disableSpecialCharacters={true}
             require={true}
             placeholderText={strings.whatsappNo}
-            handleInputBtnPress={() => { }}
+            handleInputBtnPress={() => {}}
             headingText={strings.whatsappNo}
             maxLength={10}
-            keyboardtype={'number-pad'}
+            keyboardtype={"number-pad"}
             valueshow={props.addNewSmData?.whatsapp_no}
             onChangeText={(val: any) => {
               props.setAddNewSmData({
@@ -296,7 +299,7 @@ const AddNewSMView = (props: any) => {
           <InputField
             require={true}
             placeholderText={strings.email + " " + strings.address}
-            handleInputBtnPress={() => { }}
+            handleInputBtnPress={() => {}}
             headingText={strings.email + " " + strings.address}
             valueshow={props.addNewSmData?.email}
             onChangeText={(val: any) => {
@@ -313,7 +316,7 @@ const AddNewSMView = (props: any) => {
               editable={false}
               require={true}
               placeholderText={"City"}
-              handleInputBtnPress={() => { }}
+              handleInputBtnPress={() => {}}
               headingText={"City"}
               valueshow={props.addNewSmData?.city}
             />
@@ -352,11 +355,11 @@ const AddNewSMView = (props: any) => {
               }}
             />
         </View> */}
-        <View style={{ marginTop: normalizeSpacing(30), }}>
+        <View style={{ marginTop: normalizeSpacing(30) }}>
           <InputField
             require={true}
             placeholderText={"Area Location"}
-            handleInputBtnPress={() => { }}
+            handleInputBtnPress={() => {}}
             headingText={"Area Location"}
             valueshow={props.addNewSmData?.area}
             onChangeText={(val: any) => {
@@ -365,14 +368,14 @@ const AddNewSMView = (props: any) => {
                 area: val,
               });
             }}
-            inputType={'location'}
+            // inputType={'location'}
             onPressSelect={(data: any, detail: any) => {
               props.setAddNewSmData({
                 ...props.addNewSmData,
                 area: data?.description,
                 latitude: detail?.geometry?.location?.lat,
-                longitude: detail?.geometry?.location?.lng
-              })
+                longitude: detail?.geometry?.location?.lng,
+              });
             }}
           />
         </View>
@@ -380,7 +383,7 @@ const AddNewSMView = (props: any) => {
           <InputField
             require={true}
             placeholderText={"House Address"}
-            handleInputBtnPress={() => { }}
+            handleInputBtnPress={() => {}}
             headingText={"House Address"}
             valueshow={props.addNewSmData?.address}
             onChangeText={(val: any) => {
@@ -389,7 +392,6 @@ const AddNewSMView = (props: any) => {
                 address: val,
               });
             }}
-
           />
         </View>
         <View style={{ marginVertical: 10, marginBottom: 20 }}>

@@ -1,12 +1,11 @@
 import { useFocusEffect } from "@react-navigation/native";
-import { AddTargetForCpAction, removeAddTarget } from "app/Redux/Actions/AgencyActions";
-import { getClosingManagerList } from "app/Redux/Actions/ClosingManager";
-import { getUsersListForSiteHead } from "app/Redux/Actions/UserManagerActions";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import ErrorMessage from "../../../components/ErrorMessage";
+import { GREEN_COLOR } from "../../../components/utilities/constant";
+import { AddTargetForCpAction, removeAddTarget } from "../../../Redux/Actions/AgencyActions";
+import { getUsersListForSiteHead } from "../../../Redux/Actions/UserManagerActions";
 import UserManagementView from "./components/UserManagementView";
-import ErrorMessage from "app/components/ErrorMessage";
-import { GREEN_COLOR } from "app/components/utilities/constant";
 
 const UserManagementScreen = ({ navigation }: any) => {
   const [status, setStatus] = useState(false);

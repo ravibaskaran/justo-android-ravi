@@ -1,11 +1,11 @@
-import { View, Text, ScrollView, FlatList } from "react-native";
 import React from "react";
-import Header from "app/components/Header";
-import styles from "./styles";
-import images from "app/assets/images";
-import strings from "app/components/utilities/Localization";
+import { FlatList, View } from "react-native";
+import images from "../../../../assets/images";
+import EmptyListScreen from "../../../../components/CommonScreen/EmptyListScreen";
+import Header from "../../../../components/Header";
+import strings from "../../../../components/utilities/Localization";
 import InventoryItem from "./InventoryItem";
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
+import styles from "./styles";
 
 const PropertyinventoryView = (props: any) => {
   return (
@@ -26,6 +26,7 @@ const PropertyinventoryView = (props: any) => {
           return <InventoryItem item={item} />;
         })} */}
         <FlatList
+removeClippedSubviews={false}
           data={props.inventory}
           renderItem={({item}: any) => {
             return <InventoryItem item={item} />;

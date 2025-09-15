@@ -1,18 +1,15 @@
-import { View, Text, TouchableOpacity, Image, Linking } from "react-native";
+import moment from "moment";
 import React from "react";
-import styles from "./styles";
+import { Linking, Text, View } from "react-native";
+import Button from "../../../../components/Button";
 import strings from "../../../../components/utilities/Localization";
+import usePermission from "../../../../components/utilities/UserPermissions";
 import {
-  BLACK_COLOR,
   CALL_COLOR,
   GREEN_COLOR,
-  WHITE_COLOR,
-  YELLOW_COLOR,
+  WHITE_COLOR
 } from "../../../../components/utilities/constant";
-import images from "../../../../assets/images";
-import moment from "moment";
-import Button from "app/components/Button";
-import usePermission from "app/components/utilities/UserPermissions";
+import styles from "./styles";
 
 const PickupRequestsList = (props: any) => {
   const item = props?.items || {};

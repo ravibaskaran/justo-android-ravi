@@ -1,9 +1,9 @@
-import Button from "app/components/Button";
-import { WHITE_COLOR } from "app/components/utilities/constant";
 import React from "react";
 import { Text, View } from "react-native";
 import Modal from "react-native-modal";
 import styles from "./styles";
+import Button from "../Button";
+import { WHITE_COLOR } from "../utilities/constant";
 
 const JustForOkModal = (props: any) => {
     

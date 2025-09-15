@@ -1,6 +1,6 @@
-import { handleApiError } from "app/components/ErrorMessage/HandleApiErrors";
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import { apiCall } from "app/components/utilities/httpClient";
+import { handleApiError } from "../../components/ErrorMessage/HandleApiErrors";
+import apiEndPoints from "../../components/utilities/apiEndPoints";
+import { apiCall } from "../../components/utilities/httpClient";
 import { START_LOADING, STOP_LOADING, ADD_DROPLOCATION_ERROR, ADD_DROPLOCATION, ADD_BOOKING, ADD_BOOKING_ERROR, ALLOCATE_CM_APPOINTMENT, ALLOCATE_CM_APPOINTMENT_ERROR, REMOVE_ADD_BOOKING } from "../types";
 
 export const AddDropLocation = (params: any) => async (dispatch: any) => {

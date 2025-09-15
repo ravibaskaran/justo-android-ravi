@@ -1,7 +1,7 @@
-import { handleApiError } from "app/components/ErrorMessage/HandleApiErrors";
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import { apiCall } from "app/components/utilities/httpClient";
-import { GET_ASSIGNCP_LIST, GET_ASSIGNCP_LIST_ERROR, GET_USERS_LIST_FOR_SH, GET_USERS_LIST_FOR_SH_ERROR, START_LOADING, STOP_LOADING } from "../types";
+import { handleApiError } from "../../components/ErrorMessage/HandleApiErrors";
+import apiEndPoints from "../../components/utilities/apiEndPoints";
+import { apiCall } from "../../components/utilities/httpClient";
+import { GET_USERS_LIST_FOR_SH, GET_USERS_LIST_FOR_SH_ERROR, START_LOADING, STOP_LOADING } from "../types";
 
 export const getUsersListForSiteHead = (parma: any) => async (dispatch: any) => {
         dispatch({ type: START_LOADING })

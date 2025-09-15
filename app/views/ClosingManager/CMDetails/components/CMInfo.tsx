@@ -1,11 +1,9 @@
-import React from "react";
-import { View, Text, TouchableOpacity, Image } from 'react-native';
-import styles from "./styles";
-import { BLACK_COLOR, GRAY_COLOR, GRAY_LIGHT_COLOR } from "../../../../components/utilities/constant";
-import { ScrollView } from "react-native-gesture-handler";
-import images from "../../../../assets/images";
-import strings from "../../../../components/utilities/Localization";
 import moment from "moment";
+import React from "react";
+import { Text, View } from 'react-native';
+import { ScrollView } from "react-native-gesture-handler";
+import strings from "../../../../components/utilities/Localization";
+import styles from "./styles";
 
 const SMInfoView = (props: any) => {
     const item = props?.items || {}
@@ -19,7 +17,7 @@ const SMInfoView = (props: any) => {
     var calculatedAge: any = Math.abs(ageDate.getUTCFullYear() - 1970);
 
     return (
-        <ScrollView>
+        <ScrollView removeClippedSubviews={false}>
             <View style={styles.Txtview}>
                 <View style={styles.projectContainer}>
                     <Text style={styles.projectTxt}>Name</Text>

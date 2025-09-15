@@ -1,15 +1,13 @@
-import { normalizeSpacing, normalize } from "app/components/scaleFontSize";
+import { StyleSheet } from "react-native";
+import { normalize, normalizeSpacing } from "../../../../components/scaleFontSize";
 import {
   BLACK_COLOR,
   FONT_FAMILY_EXTRABOLD,
   FONT_FAMILY_SEMIBOLD,
-  GRAY_LIGHT_COLOR,
   PRIMARY_THEME_COLOR,
-  PRIMARY_THEME_COLOR_DARK,
   WHITE_COLOR,
-  WHITE_COLOR_LIGHT,
-} from "app/components/utilities/constant";
-import { StyleSheet } from "react-native";
+  WHITE_COLOR_LIGHT
+} from "../../../../components/utilities/constant";
 
 const styles = StyleSheet.create({
   wrap: {

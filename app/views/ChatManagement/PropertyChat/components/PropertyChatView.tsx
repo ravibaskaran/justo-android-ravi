@@ -1,15 +1,15 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
-import React, { useState } from "react";
-import Header from "app/components/Header";
-import images from "app/assets/images";
-import styles from "./styles";
-import { PRIMARY_THEME_COLOR } from "app/components/utilities/constant";
-import { FlatList } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
-import SearchBar from "app/components/SearchBar";
-import strings from "app/components/utilities/Localization";
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
-import FastImages from "app/components/FastImage";
+import React from "react";
+import { Image, Text, TouchableOpacity, View } from "react-native";
+import { FlatList } from "react-native-gesture-handler";
+import images from "../../../../assets/images";
+import EmptyListScreen from "../../../../components/CommonScreen/EmptyListScreen";
+import FastImages from "../../../../components/FastImage";
+import Header from "../../../../components/Header";
+import SearchBar from "../../../../components/SearchBar";
+import { PRIMARY_THEME_COLOR } from "../../../../components/utilities/constant";
+import strings from "../../../../components/utilities/Localization";
+import styles from "./styles";
 
 const PropertyChatView = (props: any) => {
   const { handleBackPress, chatData } = props;
@@ -65,6 +65,7 @@ const PropertyChatView = (props: any) => {
         onSubmit={onSubmit}
       />
       <FlatList
+removeClippedSubviews={false}
         data={chatData?.userChatData}
         renderItem={({item, index}) => renderPropertyList(item, index)}
         ListEmptyComponent={<EmptyListScreen message={strings.user} />}

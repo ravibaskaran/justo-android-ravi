@@ -1,12 +1,12 @@
-import { View, Text, StatusBar } from 'react-native'
-import React from 'react'
-import styles from './Styles'
-import Header from '../../../../components/Header';
+import usePermission from '../../../../components/utilities/UserPermissions';
+import React from 'react';
+import { View } from 'react-native';
 import images from '../../../../assets/images';
+import Button from '../../../../components/Button';
+import Header from '../../../../components/Header';
 import strings from '../../../../components/utilities/Localization';
 import AppointmentDtailsItem from './AppointmentDtailsItem';
-import Button from '../../../../components/Button';
-import usePermission from 'app/components/utilities/UserPermissions';
+import styles from './Styles';
 
 const AppointmentDetailsView = (props: any) => {
     const {status} = usePermission({

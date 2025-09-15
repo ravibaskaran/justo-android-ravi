@@ -1,9 +1,10 @@
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import { apiCall } from "app/components/utilities/httpClient";
+import apiEndPoints from "../../components/utilities/apiEndPoints";
+import { apiCall } from "../../components/utilities/httpClient";
 import {
-    GET_CLOSINGMANAGER_LIST, GET_CLOSINGMANAGER_LIST_ERROR,
     GET_CLOSINGMANAGER_DETAIL, GET_CLOSINGMANAGER_DETAIL_ERROR,
-    STOP_LOADING, START_LOADING
+    GET_CLOSINGMANAGER_LIST, GET_CLOSINGMANAGER_LIST_ERROR,
+    START_LOADING,
+    STOP_LOADING
 } from "../types";
 
 export const getClosHManagerList = (params: any) => async (dispatch: any) => {

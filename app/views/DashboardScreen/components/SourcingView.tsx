@@ -1,6 +1,6 @@
-import { ROLE_IDS } from "app/components/utilities/constant";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import { ROLE_IDS } from "../../../components/utilities/constant";
 import styles from "./styles";
 
 const SourcingDashboardView = (props: any) => {

@@ -1,11 +1,11 @@
 import { useFocusEffect } from "@react-navigation/native";
-import { getAllAppointmentList } from "app/Redux/Actions/AppointmentWithCpActions";
+import { getAllAppointmentList } from "../../../Redux/Actions/AppointmentWithCpActions";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AppointmentView from "./Components/AppointmentView";
 import moment from "moment";
-import { DATE_FORMAT } from "app/components/utilities/constant";
-import { appointmentSVBackSubject } from "app/observables/backNavigationSubject";
+import { DATE_FORMAT } from "../../../components/utilities/constant";
+import { appointmentSVBackSubject } from "../../../observables/backNavigationSubject";
 
 const AppointmentScreen = ({ navigation, route }: any) => {
   const dispatch: any = useDispatch();
@@ -24,6 +24,8 @@ const AppointmentScreen = ({ navigation, route }: any) => {
     customer_name: "",
     customer_number: "",
     property_name: "",
+    qualified: "",
+    lead_priority: "",
   });
   const todayAppointment = {
     start_date: moment(new Date()).format(DATE_FORMAT),
@@ -48,6 +50,8 @@ const AppointmentScreen = ({ navigation, route }: any) => {
           customer_name: "",
           customer_number: "",
           property_name: "",
+          qualified: "",
+          lead_priority: "",
         });
       }
       return () => {};
@@ -81,6 +85,8 @@ const AppointmentScreen = ({ navigation, route }: any) => {
           customer_number: data?.customer_number?.trim()
             ? data?.customer_number?.trim()
             : "",
+          qualified: data?.qualified || "",
+          lead_priority: data?.lead_priority || "",
           property_name: data?.property_name ? data?.property_name : "",
           status: data?.status ? data?.status : "",
           appointment_type: 2,

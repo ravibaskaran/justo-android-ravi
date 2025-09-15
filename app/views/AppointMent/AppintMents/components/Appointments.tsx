@@ -8,17 +8,17 @@ import Button from "../../../../components/Button";
 import AllocateModal from "./AllocateModal";
 import DropLocationModal from "./DropLocationModal";
 import { useDispatch } from "react-redux";
-import { AddDropLocation } from "app/Redux/Actions/AppointmentCLAction";
+import { AddDropLocation } from "../../../../Redux/Actions/AppointmentCLAction";
 import AppointmentFilterModal from "./AppointmentFilterModal ";
-import usePermission from "app/components/utilities/UserPermissions";
+import usePermission from "../../../../components/utilities/UserPermissions";
 import { TabBar, TabView } from "react-native-tab-view";
 import {
   PRIMARY_THEME_COLOR_DARK,
   TABBAR_COLOR,
-} from "app/components/utilities/constant";
+} from "../../../../components/utilities/constant";
 import { useFocusEffect } from "@react-navigation/native";
 import RouteScreen from "./RouteScreen";
-import { START_LOADING } from "app/Redux/types";
+import { START_LOADING } from "../../../../Redux/types";
 
 const AppointmentListView = (props: any) => {
   const [locationModel, setLocationModel] = useState(false);
@@ -145,6 +145,8 @@ const AppointmentListView = (props: any) => {
       customer_number: "",
       status: "",
       property_name: "",
+      qualified: "",
+      lead_priority: "",
     });
   };
 

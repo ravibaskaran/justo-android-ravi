@@ -1,7 +1,7 @@
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import { apiCall } from "app/components/utilities/httpClient";
+import apiEndPoints from "../../components/utilities/apiEndPoints";
+import { apiCall } from "../../components/utilities/httpClient";
 import { GET_AGENT_DETAIL, AGENT_ERROR, AGENT_LIST, AGENT_STATUSUPDATE, ADD_AGENT, ADD_AGENT_FORM, EDIT_AGENT, STOP_LOADING, START_LOADING, REMOVE_AGENT } from "../types";
-import { handleApiError } from "app/components/ErrorMessage/HandleApiErrors";
+import { handleApiError } from "../../components/ErrorMessage/HandleApiErrors";
 
 export const addAgent = (params: any) => async (dispatch: any) => {
     dispatch({ type: START_LOADING });

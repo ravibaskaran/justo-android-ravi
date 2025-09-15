@@ -1,21 +1,16 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
 import React from "react";
-import styles from "./styles";
+import { Image, Text, TouchableOpacity, View } from "react-native";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
 import {
   BLACK_COLOR,
-  BLUE_COLOR,
-  GREEN_COLOR,
-  Isios,
   PRIMARY_THEME_COLOR,
   PURPLE_COLOR,
-  RED_COLOR,
-  WHITE_COLOR,
-  YELLOW_COLOR,
+  WHITE_COLOR
 } from "../../../../components/utilities/constant";
-import images from "../../../../assets/images";
 import strings from "../../../../components/utilities/Localization";
-import Button from "../../../../components/Button";
-import usePermission from "app/components/utilities/UserPermissions";
+import usePermission from "../../../../components/utilities/UserPermissions";
+import styles from "./styles";
 
 const SourcingManagersItem = (props: any) => {
   const { view, edit, allocate } = usePermission({

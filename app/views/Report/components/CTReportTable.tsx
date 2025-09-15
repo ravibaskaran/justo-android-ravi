@@ -1,18 +1,3 @@
-import {
-  normalize,
-  normalizeHeight,
-  normalizeSpacing,
-  normalizeWidth,
-} from "app/components/scaleFontSize";
-import {
-  BLACK_COLOR,
-  FONT_FAMILY_SEMIBOLD,
-  GREEN_COLOR,
-  Isios,
-  PRIMARY_THEME_COLOR,
-  RED_COLOR,
-  WHITE_COLOR,
-} from "app/components/utilities/constant";
 import React from "react";
 import {
   Dimensions,
@@ -24,17 +9,25 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import styles from "./styles";
-import images from "app/assets/images";
-import XLSX from "xlsx";
 import RNFS from "react-native-fs";
+import XLSX from "xlsx";
+import ErrorMessage from "../../../components/ErrorMessage";
+import {
+  normalize
+} from "../../../components/scaleFontSize";
+import {
+  BLACK_COLOR,
+  GREEN_COLOR,
+  PRIMARY_THEME_COLOR,
+  RED_COLOR
+} from "../../../components/utilities/constant";
 import {
   handlePermission,
   openPermissionSetting,
-} from "app/components/utilities/GlobalFuncations";
-import strings from "app/components/utilities/Localization";
-import ErrorMessage from "app/components/ErrorMessage";
+} from "../../../components/utilities/GlobalFuncations";
+import strings from "../../../components/utilities/Localization";
 import ItemCard from "./ItemCard";
+import styles from "./styles";
 
 const CTReportTable = (props: any) => {
   const { data, fileName, userData } = props;

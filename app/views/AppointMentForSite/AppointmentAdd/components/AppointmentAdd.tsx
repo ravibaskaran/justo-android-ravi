@@ -1,17 +1,16 @@
+import moment from "moment";
 import React from "react";
-import { View, Text, Image, FlatList, ScrollView } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import images from "../../../../assets/images";
 import Button from "../../../../components/Button";
 import DropdownInput from "../../../../components/DropDown";
+import Styles from "../../../../components/DropDown/styles";
 import Header from "../../../../components/Header";
+import InputCalender from "../../../../components/InputCalender";
 import InputField from "../../../../components/InputField";
-import { DATE_FORMAT, Isios, ONE_MONTH_DATES, PRIMARY_THEME_COLOR, TIME_FORMAT } from "../../../../components/utilities/constant";
+import { DATE_FORMAT, Isios, ONE_MONTH_DATES, PRIMARY_THEME_COLOR } from "../../../../components/utilities/constant";
 import strings from "../../../../components/utilities/Localization";
 import styles from "./styles";
-import Styles from "../../../../components/DropDown/styles";
-import InputCalender from "app/components/InputCalender";
-import moment from "moment";
-import { leadTypes } from "app/components/utilities/DemoData";
 
 const AppointmentAddView = (props: any) => {
     return (

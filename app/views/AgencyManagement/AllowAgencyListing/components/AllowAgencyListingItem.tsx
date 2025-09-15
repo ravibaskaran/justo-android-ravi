@@ -1,10 +1,10 @@
-import { View, Text, TouchableOpacity, Image } from 'react-native';
 import React from 'react';
-import styles from './styles';
-import strings from '../../../../components/utilities/Localization';
-import { BLACK_COLOR, GREEN_COLOR, RED_COLOR, WHITE_COLOR, YELLOW_COLOR } from '../../../../components/utilities/constant';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import images from '../../../../assets/images';
 import Button from '../../../../components/Button';
+import strings from '../../../../components/utilities/Localization';
+import { BLACK_COLOR, GREEN_COLOR, WHITE_COLOR } from '../../../../components/utilities/constant';
+import styles from './styles';
 
 const AllowAgencyListing = (props: any) => {
   return (

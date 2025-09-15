@@ -1,8 +1,8 @@
 import moment from "moment";
 import React from "react";
-import { View, Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { ScrollView } from "react-native-gesture-handler";
-import { DATE_FORMAT, DATE_TIME_FORMAT } from "../../../../components/utilities/constant";
+import { DATE_TIME_FORMAT } from "../../../../components/utilities/constant";
 import strings from "../../../../components/utilities/Localization";
 import styles from "./styles";
 

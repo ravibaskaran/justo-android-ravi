@@ -1,9 +1,8 @@
-import { StyleSheet, Text, View, Alert } from 'react-native'
-import React, { useLayoutEffect, useState } from 'react'
-import PropertyDetailView from './components/PropertyDetailView';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useLayoutEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { getManagerList, getPropertyDetail } from '../../../Redux/Actions/propertyActions';
-import { propertyBackSubject } from 'app/observables/backNavigationSubject';
+import { propertyBackSubject } from '../../../observables/backNavigationSubject';
+import PropertyDetailView from './components/PropertyDetailView';
 
 const PropertyDetails = ({ navigation, route }: any) => {
   const [isloading, setIsloading] = useState(false)

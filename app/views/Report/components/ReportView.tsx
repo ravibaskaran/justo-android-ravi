@@ -1,28 +1,24 @@
-import { View, Text } from "react-native";
+import moment from "moment";
 import React from "react";
-import styles from "./styles";
-import Header from "app/components/Header";
-import images from "app/assets/images";
-import strings from "app/components/utilities/Localization";
+import { Text, View } from "react-native";
+import Share from "react-native-share";
+import images from "../../../assets/images";
+import Header from "../../../components/Header";
+import strings from "../../../components/utilities/Localization";
 import {
   DATE_FORMAT,
-  FONT_FAMILY_SEMIBOLD,
-  Isios,
   PRIMARY_THEME_COLOR,
-  ROLE_IDS,
-} from "app/components/utilities/constant";
-import ComingSoonScreen from "app/components/CommonScreen/ComingSoon";
-import SMReportTable from "./SMReportTable";
+  ROLE_IDS
+} from "../../../components/utilities/constant";
+import BusinessHeadReportTable from "./BusinessHeadReportTable";
 import CMReportTable from "./CMReportTable";
-import STReportTable from "./STReportTable";
 import CTReportTable from "./CTReportTable";
 import ClusterHeadReportTable from "./ClusterHeadReportTable";
-import FilterModal from "./modal/ReportFilterModal";
-import BusinessHeadReportTable from "./BusinessHeadReportTable";
-import moment from "moment";
-import { normalize } from "app/components/scaleFontSize";
 import SCMReportTable from "./SCMReportTable";
-import Share from "react-native-share";
+import SMReportTable from "./SMReportTable";
+import STReportTable from "./STReportTable";
+import FilterModal from "./modal/ReportFilterModal";
+import styles from "./styles";
 
 const ReportView = (props: any) => {
   const {

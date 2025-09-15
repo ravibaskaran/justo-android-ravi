@@ -1,13 +1,12 @@
-import { View, Text, Keyboard } from "react-native";
 import React, { useEffect, useState } from "react";
-import ChangePasswordView from "./components/ChangePasswordView";
-import strings from "app/components/utilities/Localization";
-import ErrorMessage from "app/components/ErrorMessage";
-import { GREEN_COLOR, RED_COLOR } from "app/components/utilities/constant";
-import { changePassword, userLogout } from "app/Redux/Actions/AuthActions";
+import { Keyboard } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { CHANGEPASSWORD_NULL } from "app/Redux/types";
+import ErrorMessage from "../../../components/ErrorMessage";
+import { GREEN_COLOR, RED_COLOR } from "../../../components/utilities/constant";
+import strings from "../../../components/utilities/Localization";
+import { changePassword, userLogout } from "../../../Redux/Actions/AuthActions";
+import { CHANGEPASSWORD_NULL } from "../../../Redux/types";
+import ChangePasswordView from "./components/ChangePasswordView";
 
 const ChangePasswordScreen = ({ navigation, route }: any) => {
   const dispatch: any = useDispatch();

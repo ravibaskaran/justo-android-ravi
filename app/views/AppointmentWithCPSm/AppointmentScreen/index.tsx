@@ -1,10 +1,10 @@
 import { useFocusEffect } from "@react-navigation/native";
-import { getUserAppointmentList } from "app/Redux/Actions/AppiontmentWithUserActions";
 import React, { useEffect, useState } from "react";
+import { BackHandler } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
+import { getUserAppointmentList } from "../../../Redux/Actions/AppiontmentWithUserActions";
 import AppointmentView from "./Components/AppointmentView";
 import CPAppointmentsForReport from "./Components/CPAppointmentsForReport";
-import { BackHandler } from "react-native";
 
 const AppointmentScreenCPSM = ({ navigation, route }: any) => {
   const [appointmentList, setAppointmentList] = useState<any>([]);

@@ -4,16 +4,16 @@ import { Provider } from "react-redux";
 import configureStore from "./app/Redux/Store";
 import { PersistGate } from "redux-persist/es/integration/react";
 import NetInfo from "@react-native-community/netinfo";
-import ErrorMessage from "app/components/ErrorMessage";
-import { BLACK_COLOR } from "app/components/utilities/constant";
 import messaging from "@react-native-firebase/messaging";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import notifee, { AndroidImportance, EventType } from "@notifee/react-native";
 import VersionCheck from "react-native-version-check";
 import { Alert, BackHandler, Linking, Text } from "react-native";
-import { navigate } from "app/components/utilities/GlobalFuncations";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Root from "./app/navigation";
+import ErrorMessage from "./app/components/ErrorMessage";
+import { BLACK_COLOR } from "./app/components/utilities/constant";
+import { navigate } from "./app/components/utilities/GlobalFuncations";
 export async function onDisplayNotification(title: any, body: any, data: any) {
   await notifee.requestPermission();
   const channelId = await notifee.createChannel({

@@ -1,16 +1,15 @@
-import { View, Text } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
-import CpCheckingView from "./components/CpCheckingView";
+import { useDispatch, useSelector } from "react-redux";
 import {
   handlePermission,
   openPermissionSetting,
-} from "app/components/utilities/GlobalFuncations";
-import strings from "app/components/utilities/Localization";
-import { useDispatch, useSelector } from "react-redux";
-import { getCpCheckingList } from "app/Redux/Actions/CpCheckingActions";
-import { useFocusEffect } from "@react-navigation/native";
-import { removeMasters } from "app/Redux/Actions/MasterActions";
-import moment from "moment";
+} from "../../../components/utilities/GlobalFuncations";
+import strings from "../../../components/utilities/Localization";
+import { getCpCheckingList } from "../../../Redux/Actions/CpCheckingActions";
+import { removeMasters } from "../../../Redux/Actions/MasterActions";
+import CpCheckingView from "./components/CpCheckingView";
 
 const CpChecking = ({ navigation }: any) => {
   const { response = {}, list = false } = useSelector(

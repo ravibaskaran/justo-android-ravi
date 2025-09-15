@@ -1,8 +1,8 @@
-import { getAgencyDetail } from "app/Redux/Actions/AgencyActions";
+import { getAgencyDetail } from "../../../Redux/Actions/AgencyActions";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AgentDetailView from "./components/AgentDetailView";
-import { cpManageBackSubject } from "app/observables/backNavigationSubject";
+import { cpManageBackSubject } from "../../../observables/backNavigationSubject";
 
 const AgentDetail = ({ navigation, route }: any) => {
   const dispatch: any = useDispatch();

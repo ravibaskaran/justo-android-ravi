@@ -3,17 +3,17 @@ import React, { useState } from "react";
 import { FlatList, Text, View } from "react-native";
 import { TabBar, TabView } from "react-native-tab-view";
 
-import Button from "app/components/Button";
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
-import Header from "app/components/Header";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import EmptyListScreen from "../../../../components/CommonScreen/EmptyListScreen";
+import Header from "../../../../components/Header";
 import {
   PRIMARY_THEME_COLOR,
   PRIMARY_THEME_COLOR_DARK,
   TABBAR_COLOR,
-} from "app/components/utilities/constant";
-import strings from "app/components/utilities/Localization";
-import usePermission from "app/components/utilities/UserPermissions";
-import images from "../../../../assets/images";
+} from "../../../../components/utilities/constant";
+import strings from "../../../../components/utilities/Localization";
+import usePermission from "../../../../components/utilities/UserPermissions";
 import LeadManagementItem from "./LeadManagementItem";
 import FilterModal from "./LeadManagementModal";
 import styles from "./Styles";
@@ -64,6 +64,7 @@ const LeadManagementView = (props: any) => {
 
   const renderVisitorList = () => (
     <FlatList
+removeClippedSubviews={false}
       data={props.visitorList}
       ref={props.flatListRef}
       showsVerticalScrollIndicator={false}

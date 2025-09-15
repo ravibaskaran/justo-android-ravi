@@ -1,8 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
-import { learderBoardDetailData } from "app/Redux/Actions/LeaderBoardAction";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { learderBoardDetailData } from "../../../Redux/Actions/LeaderBoardAction";
 import LeaderBoardSearchView from "./components/LeaderBoardSearch";
 
 const LeaderBoardSearchScreen = ({ navigation, route }: any) => {

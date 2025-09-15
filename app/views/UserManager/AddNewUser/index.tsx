@@ -1,24 +1,23 @@
 import { useFocusEffect } from "@react-navigation/native";
-import ErrorMessage from "app/components/ErrorMessage";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import ErrorMessage from "../../../components/ErrorMessage";
 import {
   GREEN_COLOR,
   RED_COLOR,
   Regexs,
   ROLE_IDS,
   validateEmail,
-} from "app/components/utilities/constant";
-import { getChatListForProperty } from "app/Redux/Actions/ChatActions";
-import { getClosingDetail } from "app/Redux/Actions/ClosingManager";
-import { getCityList, getRolesList } from "app/Redux/Actions/MasterActions";
+} from "../../../components/utilities/constant";
+import { getChatListForProperty } from "../../../Redux/Actions/ChatActions";
+import { getClosingDetail } from "../../../Redux/Actions/ClosingManager";
+import { getCityList, getRolesList } from "../../../Redux/Actions/MasterActions";
 import {
   removeAuthUser,
   updateUserSettingData,
   userRegister,
-} from "app/Redux/Actions/SettingActions";
-import { getUsersListForSiteHead } from "app/Redux/Actions/UserManagerActions";
-import React, { useEffect, useState } from "react";
-import { View, Text, Image, Alert } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+} from "../../../Redux/Actions/SettingActions";
+import { getUsersListForSiteHead } from "../../../Redux/Actions/UserManagerActions";
 import AddNewUserView from "./components/AddNewUserView";
 
 const AddNewUserScreen = ({ navigation, route }: any) => {

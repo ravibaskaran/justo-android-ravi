@@ -8,12 +8,12 @@ import {
 } from 'react-native-permissions';
 import { Isios, RED_COLOR } from './constant';
 import strings from './Localization';
-import images from 'app/assets/images';
 import { normalizeWidth, normalizeHeight, normalizeSpacing } from '../scaleFontSize';
 import { createNavigationContainerRef } from '@react-navigation/native';
 import ErrorMessage from '../ErrorMessage';
 import FileViewer from "react-native-file-viewer";
 import RNFS from "react-native-fs";
+import images from '../../assets/images';
 
 const OS: any = Platform
 const OsVer = parseInt(OS.constants['Release'], 10); 
@@ -69,20 +69,18 @@ export const handlePermission = async (
   return await res;
 };
 
-export const permissionWrite = async (type = 'request') => {
-  const res = (type = 'request'
-    ? await request(
-      Isios
-        ? PERMISSIONS.IOS.PHOTO_LIBRARY
-        : PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
-    )
-    : await check(
-      Isios
-        ? PERMISSIONS.IOS.PHOTO_LIBRARY
-        : PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
-    ));
-  return res;
-};
+export const permissionWrite = async (type: 'request' | 'check' = 'request') => {
+  // pick the right permission constant
+  const permission = Isios
+    ? PERMISSIONS.IOS.PHOTO_LIBRARY
+    : PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE
+
+  if (type === 'request') {
+    return await request(permission)
+  } else {
+    return await check(permission)
+  }
+}
 export const checkPermissions = async (permission: any) => {
   let result = '';
   switch (permission) {

@@ -1,10 +1,8 @@
-import { USER_LOGIN, USER_LOGOUT, LOGIN_ERROR, TOKEN_GENRATE, FORGOT_PASSWORD, FORGOT_ERROR, OTPVERIFY, OTPVERIFY_ERROR, UPDATEPASSWORD, UPDATEPASSWORD_ERROR, RESENDOTP, RESENDOTP_ERROR, CHANGEPASSWORD, CHANGEPASSWORD_ERROR, USERREGISTER, USERREGISTER_ERROR, START_LOADING, STOP_LOADING, REMOVE_USERDATA, GET_USER_DETAILS, GET_USER_DETAILS_ERROR } from '../types'
-import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { handleApiError } from '../../components/ErrorMessage/HandleApiErrors';
 import apiEndPoints from '../../components/utilities/apiEndPoints';
 import { apiCall } from '../../components/utilities/httpClient';
-import { handleApiError } from 'app/components/ErrorMessage/HandleApiErrors';
-import { Isios } from 'app/components/utilities/constant';
+import { CHANGEPASSWORD, CHANGEPASSWORD_ERROR, FORGOT_ERROR, FORGOT_PASSWORD, GET_USER_DETAILS, GET_USER_DETAILS_ERROR, LOGIN_ERROR, OTPVERIFY, OTPVERIFY_ERROR, REMOVE_USERDATA, RESENDOTP, START_LOADING, STOP_LOADING, TOKEN_GENRATE, UPDATEPASSWORD, UPDATEPASSWORD_ERROR, USER_LOGIN, USER_LOGOUT, USERREGISTER, USERREGISTER_ERROR } from '../types';
 const initialState = {
     response: null,
     detail: false,

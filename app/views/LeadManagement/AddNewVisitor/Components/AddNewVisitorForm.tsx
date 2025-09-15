@@ -1,18 +1,4 @@
 import CheckBox from "@react-native-community/checkbox";
-import DropdownInput from "app/components/DropDown";
-import ErrorMessage from "app/components/ErrorMessage";
-import InputCalender from "app/components/InputCalender";
-import CountryPickerModal from "app/components/Modals/CountryPickerModal";
-import JustForOkModal from "app/components/Modals/JustForOkModal";
-import {
-  normalizeHeight,
-  normalizeSpacing,
-  normalizeWidth,
-} from "app/components/scaleFontSize";
-import { CpLeadType } from "app/components/utilities/DemoData";
-import { RequiredStart } from "app/components/utilities/GlobalFuncations";
-import usePermission from "app/components/utilities/UserPermissions";
-import moment from "moment";
 import React, { useEffect, useState } from "react";
 import {
   Keyboard,
@@ -20,30 +6,39 @@ import {
   Pressable,
   ScrollView,
   Text,
-  TextInput,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import { RadioButton } from "react-native-paper";
 import { useSelector } from "react-redux";
 import images from "../../../../assets/images";
 import Button from "../../../../components/Button";
+import DropdownInput from "../../../../components/DropDown";
+import ErrorMessage from "../../../../components/ErrorMessage";
 import Header from "../../../../components/Header";
 import InputField from "../../../../components/InputField";
+import CountryPickerModal from "../../../../components/Modals/CountryPickerModal";
+import JustForOkModal from "../../../../components/Modals/JustForOkModal";
 import Styles from "../../../../components/Modals/styles";
 import {
-  AMOUNT_TYPE,
+  normalizeHeight,
+  normalizeSpacing,
+  normalizeWidth,
+} from "../../../../components/scaleFontSize";
+import {
   BLACK_COLOR,
   CONST_IDS,
-  DATE_FORMAT,
   Isios,
   PRIMARY_THEME_COLOR,
   RED_COLOR,
   Regexs,
   ROLE_IDS,
-  WHITE_COLOR,
+  WHITE_COLOR
 } from "../../../../components/utilities/constant";
+import { CpLeadType } from "../../../../components/utilities/DemoData";
+import { RequiredStart } from "../../../../components/utilities/GlobalFuncations";
 import strings from "../../../../components/utilities/Localization";
+import usePermission from "../../../../components/utilities/UserPermissions";
 import styles from "./Styles";
 import VisitConfirmModal from "./VisitConfirmModal";
 
@@ -1203,7 +1198,7 @@ const AddNewVisitorForm = (props: any) => {
               }}
               valueshow={props?.formData?.location}
               headingText={"Resident Location"}
-              inputType={"location"}
+              // inputType={"location"}
               onPressSelect={(data: any, detail: any) => {
                 props.setFormData({
                   ...props.formData,

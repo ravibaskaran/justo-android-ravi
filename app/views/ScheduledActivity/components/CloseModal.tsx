@@ -1,12 +1,12 @@
 // CloseModal.js
 import React, { useEffect } from "react";
-import { View, ScrollView, Text, TouchableOpacity, Image } from "react-native";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Modal from "react-native-modal";
-import Button from "app/components/Button";
-import InputField from "app/components/InputField";
-import styles from "app/components/Modals/styles";
-import strings from "app/components/utilities/Localization";
-import images from "app/assets/images";
+import images from "../../../assets/images";
+import Button from "../../../components/Button";
+import InputField from "../../../components/InputField";
+import styles from "../../../components/Modals/styles";
+import strings from "../../../components/utilities/Localization";
 
 const CloseModal = ({
   visible,

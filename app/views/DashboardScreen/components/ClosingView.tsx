@@ -1,13 +1,12 @@
-import React, { useState } from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
-import styles from "./styles";
-import strings from "../../../components/utilities/Localization";
+import React from "react";
+import { Image, Text, TouchableOpacity, View } from "react-native";
+import images from "../../../assets/images";
+import { normalizeSpacing } from "../../../components/scaleFontSize";
 import {
   PRIMARY_THEME_COLOR_DARK,
   ROLE_IDS,
-} from "app/components/utilities/constant";
-import images from "app/assets/images";
-import { normalizeSpacing } from "app/components/scaleFontSize";
+} from "../../../components/utilities/constant";
+import styles from "./styles";
 
 const ClosingDashboardView = (props: any) => {
   const targetData = props?.dashboardData?.userTarget || {};

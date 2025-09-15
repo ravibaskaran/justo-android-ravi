@@ -1,5 +1,4 @@
 import { useNavigation } from "@react-navigation/native";
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
 import React, { useEffect, useState } from "react";
 import {
   FlatList,
@@ -9,6 +8,7 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 import images from "../../../../assets/images";
+import EmptyListScreen from "../../../../components/CommonScreen/EmptyListScreen";
 import Header from "../../../../components/Header";
 import strings from "../../../../components/utilities/Localization";
 import { getAllMaster } from "../../../../Redux/Actions/MasterActions";
@@ -121,6 +121,7 @@ const PropertyView = (props: any) => {
             : 0}
         </Text>
         <FlatList
+removeClippedSubviews={false}
           data={propertyList}
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={

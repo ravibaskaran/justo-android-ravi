@@ -9,9 +9,9 @@ import {
 import React, { useEffect, useState } from "react";
 import Modal from "react-native-modal";
 import styles from "./styles";
-import images from "app/assets/images";
 import { normalizeSpacing } from "../scaleFontSize";
 import { Isios } from "../utilities/constant";
+import images from "../../assets/images";
 
 const CountryPickerModal = (props: any) => {
   const [scrollIndex, setscrollIndex] = useState(0);
@@ -73,6 +73,7 @@ const CountryPickerModal = (props: any) => {
           </View>
         </View>
         <FlatList
+removeClippedSubviews={false}
           initialScrollIndex={scrollIndex}
           nestedScrollEnabled={true}
           data={props.countryData}

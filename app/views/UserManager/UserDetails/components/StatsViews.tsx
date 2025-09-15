@@ -1,14 +1,10 @@
 import moment from "moment";
 import React from "react";
-import { View, Text } from "react-native";
+import { Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import Button from "../../../../components/Button";
-import { normalize } from "../../../../components/scaleFontSize";
 import {
-  BLACK_COLOR,
-  DATE_FORMAT,
   DATE_TIME_FORMAT,
-  ROLE_IDS,
+  ROLE_IDS
 } from "../../../../components/utilities/constant";
 import strings from "../../../../components/utilities/Localization";
 import styles from "./styles";

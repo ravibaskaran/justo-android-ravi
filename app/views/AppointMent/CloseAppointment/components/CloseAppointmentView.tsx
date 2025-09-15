@@ -1,23 +1,18 @@
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
-import React, { useEffect, useState } from "react";
-import Modal from "react-native-modal";
-import images from "../../../../assets/images";
-import strings from "../../../../components/utilities/Localization";
-import Button from "../../../../components/Button";
-import InputField from "../../../../components/InputField";
-import DropdownInput from "../../../../components/DropDown";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllMaster } from "app/Redux/Actions/MasterActions";
-import {
-  getAllPropertyCompetitor,
-  removePropertyCompetitor,
-} from "app/Redux/Actions/propertyActions";
-import { normalizeSpacing } from "app/components/scaleFontSize";
-import ErrorMessage from "app/components/ErrorMessage";
-import { Isios, RED_COLOR } from "app/components/utilities/constant";
 import { useFocusEffect } from "@react-navigation/native";
-import { RequiredStart } from "app/components/utilities/GlobalFuncations";
-import Header from "app/components/Header";
+import React, { useEffect, useState } from "react";
+import { ScrollView, Text, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllMaster } from "../../../../Redux/Actions/MasterActions";
+import { getAllPropertyCompetitor } from "../../../../Redux/Actions/propertyActions";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import DropdownInput from "../../../../components/DropDown";
+import ErrorMessage from "../../../../components/ErrorMessage";
+import Header from "../../../../components/Header";
+import InputField from "../../../../components/InputField";
+import { RequiredStart } from "../../../../components/utilities/GlobalFuncations";
+import strings from "../../../../components/utilities/Localization";
+import { Isios, RED_COLOR } from "../../../../components/utilities/constant";
 import styles from "./styles";
 
 const CloseAppointmentView = (props: any) => {
@@ -27,14 +22,14 @@ const CloseAppointmentView = (props: any) => {
   const [propetyInput, setPropetyInput] = useState<any>(false);
   const [reasonSelect, setReasonSelect] = useState<any>(false);
   const masterData = useSelector((state: any) => state.masterData) || {};
-  const item = props?.item?.length > 0 ? props?.item[0] : {}
+  const item = props?.item?.length > 0 ? props?.item[0] : {};
   const propertyData =
     useSelector((state: any) => state.competitorproperty) || {};
 
   useFocusEffect(
     React.useCallback(() => {
-      handleMasterDatas(8)
-      return () => { };
+      handleMasterDatas(8);
+      return () => {};
     }, [])
   );
 
@@ -75,17 +70,19 @@ const CloseAppointmentView = (props: any) => {
   }, [propertyData]);
   useEffect(() => {
     props.setCancelValue({
-      resion: '',
-      property_id: '',
-      comment: '',
-      property_name: '',
-      remark: '',
-      appointment_status: 6
-    })
+      resion: "",
+      property_id: "",
+      comment: "",
+      property_name: "",
+      remark: "",
+      appointment_status: 6,
+    });
     if (masterData?.response?.status === 200) {
       if (masterData?.response?.data?.length > 0) {
         setMasterDatas(
-          masterData?.response?.data?.length > 0 ? masterData?.response?.data : []
+          masterData?.response?.data?.length > 0
+            ? masterData?.response?.data
+            : []
         );
       } else {
         setMasterDatas([]);
@@ -105,11 +102,13 @@ const CloseAppointmentView = (props: any) => {
       if (props?.cancelValue?.resion === "") {
         isError = false;
         errorMessage = strings.resionSelectReqVal;
-      } if (propetyInput && props?.cancelValue?.property_name === "") {
+      }
+      if (propetyInput && props?.cancelValue?.property_name === "") {
         isError = false;
         errorMessage = strings.competitorReqVal;
       } else if (
-        props?.cancelValue?.resion === "639d691c9f37df12d3ea64e2" && !propetyInput &&
+        props?.cancelValue?.resion === "639d691c9f37df12d3ea64e2" &&
+        !propetyInput &&
         props?.cancelValue?.property_id === ""
       ) {
         isError = false;
@@ -124,7 +123,6 @@ const CloseAppointmentView = (props: any) => {
     }
     return isError;
   };
-
 
   const handleCancel = () => {
     if (validation()) {
@@ -156,9 +154,8 @@ const CloseAppointmentView = (props: any) => {
           <View style={styles.borderView} />
           <View style={{ marginHorizontal: 10 }}>
             <View style={styles.inputWrap}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Text style={styles.titleTxt}>{strings.selectType} 
-                </Text>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Text style={styles.titleTxt}>{strings.selectType}</Text>
                 <RequiredStart />
               </View>
               <DropdownInput
@@ -170,10 +167,10 @@ const CloseAppointmentView = (props: any) => {
                   //     { label: strings.STSNotFitForSale, value: 6 },
                   //   ]
                   //   :
-                    [
-                      // { label: strings.STSVisitCancel, value: 4 },
-                      { label: strings.STSNotFitForSale, value: 6 },
-                    ]
+                  [
+                    // { label: strings.STSVisitCancel, value: 4 },
+                    { label: strings.STSNotFitForSale, value: 6 },
+                  ]
                 }
                 inputWidth={"100%"}
                 paddingLeft={16}
@@ -198,9 +195,9 @@ const CloseAppointmentView = (props: any) => {
                 }}
               />
             </View>
-            {props?.cancelValue?.appointment_status === 6 ?
-              (<View style={styles.inputWrap}>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            {props?.cancelValue?.appointment_status === 6 ? (
+              <View style={styles.inputWrap}>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <Text style={styles.titleTxt}>{strings.selectReason}</Text>
                   <RequiredStart />
                 </View>
@@ -215,7 +212,6 @@ const CloseAppointmentView = (props: any) => {
                   valueField={"_id"}
                   value={props?.cancelValue?.resion}
                   onChange={(item: any) => {
-
                     setReasonSelect(false);
                     props.setCancelValue({
                       ...props.cancelValue,
@@ -232,7 +228,8 @@ const CloseAppointmentView = (props: any) => {
                     );
                   }}
                 />
-              </View>) : null}
+              </View>
+            ) : null}
             {reasonSelect ? (
               <View>
                 <Text style={styles.errorTxt}>
@@ -244,10 +241,12 @@ const CloseAppointmentView = (props: any) => {
               <View style={styles.inputWrap}>
                 <View style={styles.propertyVw}>
                   <Text style={styles.titleTxt}>
-                    {propetyInput ? strings.propertyHeader + " " + strings.name : strings.selectproperty}
+                    {propetyInput
+                      ? strings.propertyHeader + " " + strings.name
+                      : strings.selectproperty}
                   </Text>
                   {(!propetyInput && props?.cancelValue?.property_id === "") ||
-                    props?.cancelValue?.property_id === undefined ? (
+                  props?.cancelValue?.property_id === undefined ? (
                     <View style={styles.addNewBttn}>
                       <Button
                         width={80}
@@ -262,9 +261,11 @@ const CloseAppointmentView = (props: any) => {
                 {propetyInput ? (
                   <InputField
                     disableSpecialCharacters={true}
-                    placeholderText={strings.propertyHeader + " " + strings.name}
+                    placeholderText={
+                      strings.propertyHeader + " " + strings.name
+                    }
                     // headingText={strings.propertyHeader + " " + strings.name}
-                    handleInputBtnPress={() => { }}
+                    handleInputBtnPress={() => {}}
                     valueshow={props?.cancelValue?.property_name}
                     onChangeText={(val: any) => {
                       props.setCancelValue({
@@ -276,7 +277,11 @@ const CloseAppointmentView = (props: any) => {
                 ) : (
                   <DropdownInput
                     placeholder={strings.selectproperty}
-                    data={Array.isArray(propertyCompetitor) ? propertyCompetitor : []}
+                    data={
+                      Array.isArray(propertyCompetitor)
+                        ? propertyCompetitor
+                        : []
+                    }
                     inputWidth={"100%"}
                     paddingLeft={16}
                     maxHeight={300}
@@ -309,7 +314,7 @@ const CloseAppointmentView = (props: any) => {
               <Text style={styles.titleTxt}>{strings.comment}</Text>
               <InputField
                 placeholderText={strings.comment}
-                handleInputBtnPress={() => { }}
+                handleInputBtnPress={() => {}}
                 inputheight={80}
                 multiline={true}
                 valueshow={props?.cancelValue?.remark}
@@ -330,7 +335,7 @@ const CloseAppointmentView = (props: any) => {
           </View>
         </View>
       </ScrollView>
-      </View>
+    </View>
   );
 };
 

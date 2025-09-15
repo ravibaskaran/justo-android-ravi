@@ -1,12 +1,11 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
-import ErrorMessage from 'app/components/ErrorMessage';
-import { GREEN_COLOR, ROLE_IDS } from 'app/components/utilities/constant';
-import { getAssignCPList, removeAssignCpStatus, updateAssignCP } from 'app/Redux/Actions/SourcingManagerActions';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import ErrorMessage from '../../../components/ErrorMessage';
+import { GREEN_COLOR, ROLE_IDS } from '../../../components/utilities/constant';
+import { getAllocateCpSoH, getAllocateRequest } from '../../../Redux/Actions/propertyActions';
+import { removeAssignCpStatus, updateAssignCP } from '../../../Redux/Actions/SourcingManagerActions';
 import AllowAgencyView from './components/AllowAgencyView';
-import { getAllocateCpSoH, getAllocateRequest } from 'app/Redux/Actions/propertyActions';
 
 const AllowAgencyListing = ({ navigation }: any) => {
   const dispatch: any = useDispatch()

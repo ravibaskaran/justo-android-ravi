@@ -1,5 +1,5 @@
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import { apiCall } from "app/components/utilities/httpClient";
+import apiEndPoints from "../../components/utilities/apiEndPoints";
+import { apiCall } from "../../components/utilities/httpClient";
 import { CP_CHECKING_LIST_ERROR, GET_CP_CHECKING_LIST, START_LOADING, STOP_LOADING } from "../types";
 
 export const getCpCheckingList = (params: any) => async (dispatch: any) => {

@@ -1,22 +1,22 @@
-import { getAllProperty } from "app/Redux/Actions/propertyActions";
-import InputCalender from "app/components/InputCalender";
-import { normalizeSpacing } from "app/components/scaleFontSize";
-import { VisitStatus } from "app/components/utilities/DemoData";
-import { DATE_FORMAT, Isios } from "app/components/utilities/constant";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Modal from "react-native-modal";
 import { useDispatch, useSelector } from "react-redux";
+import { getAllProperty } from "../../../../Redux/Actions/propertyActions";
 import images from "../../../../assets/images";
 import Button from "../../../../components/Button";
 import DropdownInput from "../../../../components/DropDown";
+import InputCalender from "../../../../components/InputCalender";
 import InputField from "../../../../components/InputField";
 import {
   default as Styles,
   default as styles,
 } from "../../../../components/Modals/styles";
+import { normalizeSpacing } from "../../../../components/scaleFontSize";
+import { VisitStatus } from "../../../../components/utilities/DemoData";
 import strings from "../../../../components/utilities/Localization";
+import { DATE_FORMAT, Isios } from "../../../../components/utilities/constant";
 
 const FilterModal = (props: any) => {
   const dispatch: any = useDispatch();

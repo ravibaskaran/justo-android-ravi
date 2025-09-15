@@ -1,22 +1,22 @@
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
-import React, { useEffect, useState } from "react";
-import Modal from "react-native-modal";
-import styles from "../../../../components/Modals/styles";
-import images from "../../../../assets/images";
-import strings from "../../../../components/utilities/Localization";
-import Button from "../../../../components/Button";
-import InputCalender from "app/components/InputCalender";
+import CheckBox from "@react-native-community/checkbox";
 import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import Modal from "react-native-modal";
+import { useDispatch, useSelector } from "react-redux";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import DropdownInput from "../../../../components/DropDown";
+import InputCalender from "../../../../components/InputCalender";
+import styles from "../../../../components/Modals/styles";
+import { normalizeSpacing } from "../../../../components/scaleFontSize";
 import {
   DATE_FORMAT,
   Isios,
   PRIMARY_THEME_COLOR,
-} from "app/components/utilities/constant";
-import DropdownInput from "app/components/DropDown";
-import { useDispatch, useSelector } from "react-redux";
-import { getUserVisitList } from "app/Redux/Actions/LeadsActions";
-import CheckBox from "@react-native-community/checkbox";
-import { normalizeSpacing } from "app/components/scaleFontSize";
+} from "../../../../components/utilities/constant";
+import strings from "../../../../components/utilities/Localization";
+import { getUserVisitList } from "../../../../Redux/Actions/LeadsActions";
 const FilterModal = (props: any) => {
   const dispatch: any = useDispatch();
   const { response = {}, list = "" } =

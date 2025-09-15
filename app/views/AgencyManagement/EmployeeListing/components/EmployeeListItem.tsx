@@ -1,13 +1,13 @@
-import { View, Text } from "react-native";
-import React from "react";
-import styles from "./styles";
-import strings from "../../../../components/utilities/Localization";
-import Button from "app/components/Button";
+import Button from "../../../../components/Button";
 import {
   PURPLE_COLOR,
   ROLE_IDS,
   WHITE_COLOR,
-} from "app/components/utilities/constant";
+} from "../../../../components/utilities/constant";
+import React from "react";
+import { Text, View } from "react-native";
+import strings from "../../../../components/utilities/Localization";
+import styles from "./styles";
 
 const EmployeeListItem = (props: any) => {
   return (

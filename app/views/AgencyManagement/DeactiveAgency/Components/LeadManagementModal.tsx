@@ -1,19 +1,14 @@
-import { View, Text, Image, TouchableOpacity } from "react-native";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import { getAssignCPList } from "../../../../Redux/Actions/SourcingManagerActions";
+import { transferVisitList } from "../../../../Redux/Actions/TransferVisitAction";
+import React, { useLayoutEffect, useState } from "react";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import Modal from "react-native-modal";
-import styles from "../../../../components/Modals/styles";
-import images from "../../../../assets/images";
-import strings from "../../../../components/utilities/Localization";
-import Button from "../../../../components/Button";
-import InputField from "../../../../components/InputField";
-import DropdownInput from "../../../../components/DropDown";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllMaster } from "app/Redux/Actions/MasterActions";
-import InputCalender from "app/components/InputCalender";
-import moment from "moment";
-import { DATE_FORMAT } from "app/components/utilities/constant";
-import { getAssignCPList } from "app/Redux/Actions/SourcingManagerActions";
-import { transferVisitList } from "app/Redux/Actions/TransferVisitAction";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import DropdownInput from "../../../../components/DropDown";
+import styles from "../../../../components/Modals/styles";
+import strings from "../../../../components/utilities/Localization";
 
 const FilterModal = (props: any) => {
   const dispatch: any = useDispatch();

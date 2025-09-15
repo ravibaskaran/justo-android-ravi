@@ -1,18 +1,18 @@
-import { View, Text, FlatList, Image, TouchableOpacity } from "react-native";
+import moment from "moment";
 import React, { useState } from "react";
-import styles from "./styles";
-import Header from "app/components/Header";
-import images from "app/assets/images";
-import strings from "app/components/utilities/Localization";
+import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
+import images from "../../../../assets/images";
+import EmptyListScreen from "../../../../components/CommonScreen/EmptyListScreen";
+import FastImages from "../../../../components/FastImage";
+import Header from "../../../../components/Header";
+import { normalizeSpacing } from "../../../../components/scaleFontSize";
+import strings from "../../../../components/utilities/Localization";
 import {
   DATE_TIME_FORMAT,
   PRIMARY_THEME_COLOR,
-} from "app/components/utilities/constant";
-import { normalizeSpacing } from "app/components/scaleFontSize";
+} from "../../../../components/utilities/constant";
 import SuportForumFilter from "./SupportForumFilter";
-import moment from "moment";
-import FastImages from "app/components/FastImage";
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
+import styles from "./styles";
 
 const SupportForumView = (props: any) => {
   const [filterisVisible, setFilterisVisible] = useState(false);
@@ -35,6 +35,7 @@ const SupportForumView = (props: any) => {
       />
       <View style={{ flex: 1, marginHorizontal: normalizeSpacing(10) }}>
         <FlatList
+removeClippedSubviews={false}
           data={
             Array.isArray(props?.supportForumList) ? props.supportForumList : []
           }

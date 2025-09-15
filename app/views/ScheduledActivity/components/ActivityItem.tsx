@@ -1,15 +1,14 @@
-import images from "app/assets/images";
+import moment from "moment";
+import React from "react";
+import { Text, TouchableOpacity, View } from "react-native";
+import ViewMoreText from "../../../components/CommonScreen/ViewMoreText";
 import {
   DATE_FORMAT,
   DATE_TIME_FORMAT,
   PURPLE_COLOR,
-} from "app/components/utilities/constant";
-import strings from "app/components/utilities/Localization";
-import moment from "moment";
-import React from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+} from "../../../components/utilities/constant";
+import strings from "../../../components/utilities/Localization";
 import styles from "./styles";
-import ViewMoreText from "app/components/CommonScreen/ViewMoreText";
 
 const ActivityItem = (props: any) => {
   return (

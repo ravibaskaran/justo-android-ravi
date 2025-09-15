@@ -1,14 +1,22 @@
-import {
-    START_LOADING, STOP_LOADING, DASHBOARD_SOURCING_ERROR,
-    GET_DASHBOARD_SOURCING, DASHBOARD_UPDATE_ERROR, STATUS_UPDATE_DATA,
-    USER_STATUS_UPDATE, USER_STATUS_UPDATE_ERROR, GET_DASHBOARD_CLOSING,
-    DASHBOARD_CLOSING_ERROR, DASHBOARD_POSTSALES_ERROR, GET_DASHBOARD_POSTSALES, GET_DASHBOARD_RECEPTIONIST, DASHBOARD_RECEPTIONIST_ERROR, GET_DASHBOARD_SITE_HEAD, GET_DASHBOARD_SITE_HEAD_ERROR,
-    GET_DASHBOARD_SCM,
-    DASHBOARD_SCM_ERROR
-} from "../types";
+import { handleApiError } from "../../components/ErrorMessage/HandleApiErrors";
 import apiEndPoints from "../../components/utilities/apiEndPoints";
-import { apiCall } from "app/components/utilities/httpClient";
-import { handleApiError } from "app/components/ErrorMessage/HandleApiErrors";
+import { apiCall } from "../../components/utilities/httpClient";
+import {
+    DASHBOARD_CLOSING_ERROR, DASHBOARD_POSTSALES_ERROR,
+    DASHBOARD_RECEPTIONIST_ERROR,
+    DASHBOARD_SCM_ERROR,
+    DASHBOARD_SOURCING_ERROR,
+    DASHBOARD_UPDATE_ERROR,
+    GET_DASHBOARD_CLOSING,
+    GET_DASHBOARD_POSTSALES, GET_DASHBOARD_RECEPTIONIST,
+    GET_DASHBOARD_SCM,
+    GET_DASHBOARD_SITE_HEAD, GET_DASHBOARD_SITE_HEAD_ERROR,
+    GET_DASHBOARD_SOURCING,
+    START_LOADING,
+    STATUS_UPDATE_DATA,
+    STOP_LOADING,
+    USER_STATUS_UPDATE, USER_STATUS_UPDATE_ERROR
+} from "../types";
 
 export const dashboardSourcingData = (userDetail: any) => async (dispatch: any) => {
     dispatch({ type: START_LOADING })

@@ -1,15 +1,14 @@
 import { useFocusEffect } from "@react-navigation/native";
-import ErrorMessage from "app/components/ErrorMessage";
-import { GREEN_COLOR, RED_COLOR, ROLE_IDS } from "app/components/utilities/constant";
-import { AddTargetForCpAction, removeAddTarget } from "app/Redux/Actions/AgencyActions";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import ErrorMessage from "../../../components/ErrorMessage";
+import { GREEN_COLOR, ROLE_IDS } from "../../../components/utilities/constant";
+import { AddTargetForCpAction, removeAddTarget } from "../../../Redux/Actions/AgencyActions";
 import {
   allocatePropertyToUser,
   getManagerList,
   removeAllocateData,
-} from "app/Redux/Actions/propertyActions";
-import { getAssignCPList } from "app/Redux/Actions/SourcingManagerActions";
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+} from "../../../Redux/Actions/propertyActions";
 import AllocateCP from "./components/AllocateCP";
 
 const AllocatePropertyScreen = ({ navigation, route }: any) => {

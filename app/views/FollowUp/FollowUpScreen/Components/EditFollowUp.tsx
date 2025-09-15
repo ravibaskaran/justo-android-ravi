@@ -1,7 +1,4 @@
 import { useFocusEffect } from "@react-navigation/native";
-import DropdownInput from "app/components/DropDown";
-import InputCalender from "app/components/InputCalender";
-import { getAllMaster } from "app/Redux/Actions/MasterActions";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import {
@@ -14,8 +11,10 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 import images from "../../../../assets/images";
 import Button from "../../../../components/Button";
+import DropdownInput from "../../../../components/DropDown";
 import Styles from "../../../../components/DropDown/styles";
 import Header from "../../../../components/Header";
+import InputCalender from "../../../../components/InputCalender";
 import InputField from "../../../../components/InputField";
 import {
   DATE_FORMAT,
@@ -25,13 +24,14 @@ import {
   WHITE_COLOR
 } from "../../../../components/utilities/constant";
 import strings from "../../../../components/utilities/Localization";
+import { getAllMaster } from "../../../../Redux/Actions/MasterActions";
 import styles from "./Styles";
 
-import ErrorMessage from "app/components/ErrorMessage";
+import ErrorMessage from "../../../../components/ErrorMessage";
 import {
   getAllFollowUpDetails,
   updateFollowUp,
-} from "app/Redux/Actions/FollowUpActions";
+} from "../../../../Redux/Actions/FollowUpActions";
 
 const EditFollowUp = ({ navigation, route }: any) => {
   const followUpId = route?.params || "";

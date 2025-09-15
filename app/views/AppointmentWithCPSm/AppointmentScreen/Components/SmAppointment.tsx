@@ -1,20 +1,19 @@
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import usePermission from "../../../../components/utilities/UserPermissions";
+import moment from "moment";
 import React from "react";
-import styles from "./Styles";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import images from "../../../../assets/images";
-import strings from "../../../../components/utilities/Localization";
 import Button from "../../../../components/Button";
 import {
-  PURPLE_COLOR,
-  CALL_COLOR,
-  RED_COLOR,
-  GREEN_COLOR,
   BLACK_COLOR,
-  YELLOW_COLOR,
   DATE_FORMAT,
+  GREEN_COLOR,
+  PURPLE_COLOR,
+  RED_COLOR,
+  YELLOW_COLOR
 } from "../../../../components/utilities/constant";
-import moment from "moment";
-import usePermission from "app/components/utilities/UserPermissions";
+import strings from "../../../../components/utilities/Localization";
+import styles from "./Styles";
 
 const SmAppointment = (props: any) => {
   const { status, approve } = usePermission({

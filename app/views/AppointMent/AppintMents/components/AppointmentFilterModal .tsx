@@ -1,18 +1,18 @@
-import InputCalender from "app/components/InputCalender";
-import { normalizeSpacing } from "app/components/scaleFontSize";
-import { DATE_FORMAT, Isios } from "app/components/utilities/constant";
+import InputCalender from "../../../../components/InputCalender";
+import { normalizeSpacing } from "../../../../components/scaleFontSize";
+import { DATE_FORMAT, Isios } from "../../../../components/utilities/constant";
+import { getAllProperty } from "../../../../Redux/Actions/propertyActions";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Modal from "react-native-modal";
+import { useDispatch, useSelector } from "react-redux";
 import images from "../../../../assets/images";
 import Button from "../../../../components/Button";
 import DropdownInput from "../../../../components/DropDown";
 import InputField from "../../../../components/InputField";
 import styles from "../../../../components/Modals/styles";
 import strings from "../../../../components/utilities/Localization";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllProperty } from "app/Redux/Actions/propertyActions";
 
 const AppointmentFilterModal = (props: any) => {
   const statusData = [
@@ -56,7 +56,6 @@ const AppointmentFilterModal = (props: any) => {
       setAllProperty([]);
     }
   }, [propertyData]);
-
 
   const handleApply = () => {
     props.setIsVisible(false);
@@ -233,6 +232,65 @@ const AppointmentFilterModal = (props: any) => {
                 }}
               />
             </View>
+            <View style={[styles.inputWrap, { top: normalizeSpacing(10) }]}>
+              <DropdownInput
+                headingText={"Lead Priority"}
+                placeholder={"Lead Priority"}
+                data={[
+                  { label: "Hot", value: "hot" },
+                  { label: "Warm", value: "warm" },
+                  { label: "Cold", value: "cold" },
+                ]}
+                inputWidth={"100%"}
+                paddingLeft={16}
+                maxHeight={300}
+                labelField="label"
+                valueField={"value"}
+                value={props?.filterData?.lead_priority}
+                onChange={(item: any) => {
+                  props.setFilterData({
+                    ...props.filterData,
+                    lead_priority: item.value,
+                  });
+                }}
+                newRenderItem={(item: any) => {
+                  return (
+                    <View style={styles.item}>
+                      <Text style={styles.textItem}>{item.label}</Text>
+                    </View>
+                  );
+                }}
+              />
+            </View>
+            <View style={[styles.inputWrap, { top: normalizeSpacing(10) }]}>
+              <DropdownInput
+                headingText={"Lead Status"}
+                placeholder={"Lead Status"}
+                data={[
+                  { label: "Qualified", value: "true" },
+                  { label: "Unqualified", value: "false" },
+                ]}
+                inputWidth={"100%"}
+                paddingLeft={16}
+                maxHeight={300}
+                labelField="label"
+                valueField={"value"}
+                value={props?.filterData?.qualified}
+                onChange={(item: any) => {
+                  props.setFilterData({
+                    ...props.filterData,
+                    qualified: item.value,
+                  });
+                }}
+                newRenderItem={(item: any) => {
+                  return (
+                    <View style={styles.item}>
+                      <Text style={styles.textItem}>{item.label}</Text>
+                    </View>
+                  );
+                }}
+              />
+            </View>
           </View>
           <View
             style={{
@@ -251,6 +309,8 @@ const AppointmentFilterModal = (props: any) => {
                   customer_name: "",
                   customer_number: "",
                   status: "",
+                  qualified: "",
+                  lead_priority: "",
                 });
               }}
               buttonText={strings.reset}

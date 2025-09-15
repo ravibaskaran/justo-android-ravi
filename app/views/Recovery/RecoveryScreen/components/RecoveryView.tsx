@@ -1,12 +1,12 @@
-import { View, Text, FlatList } from "react-native";
 import React from "react";
-import styles from "./styles";
-import Header from "app/components/Header";
-import images from "app/assets/images";
-import strings from "app/components/utilities/Localization";
-import { PRIMARY_THEME_COLOR } from "app/components/utilities/constant";
+import { FlatList, View } from "react-native";
+import images from "../../../../assets/images";
+import EmptyListScreen from "../../../../components/CommonScreen/EmptyListScreen";
+import Header from "../../../../components/Header";
+import strings from "../../../../components/utilities/Localization";
+import { PRIMARY_THEME_COLOR } from "../../../../components/utilities/constant";
 import RecoveryListIem from "./RecoveryListIem";
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
+import styles from "./styles";
 
 const RecoveryView = (props: any) => {
   const loadingref = false
@@ -28,6 +28,7 @@ const RecoveryView = (props: any) => {
       />
       <View style={styles.listView}>
         <FlatList
+removeClippedSubviews={false}
           data={Array.isArray(props.recoveryList) ? props.recoveryList : []}
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={

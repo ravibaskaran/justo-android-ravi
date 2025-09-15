@@ -1,16 +1,14 @@
-import { View, Text, StatusBar, Image, useWindowDimensions } from 'react-native'
+import moment from 'moment'
 import React, { useState } from 'react'
-import Header from '../../../../components/Header'
-import { PRIMARY_THEME_COLOR, PRIMARY_THEME_COLOR_DARK, TABBAR_COLOR, WHITE_COLOR } from '../../../../components/utilities/constant'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useWindowDimensions, View } from 'react-native'
+import { TabBar, TabView } from 'react-native-tab-view'
 import images from '../../../../assets/images'
+import Header from '../../../../components/Header'
+import { PRIMARY_THEME_COLOR, PRIMARY_THEME_COLOR_DARK, TABBAR_COLOR } from '../../../../components/utilities/constant'
 import strings from '../../../../components/utilities/Localization'
-import { normalizeSpacing } from "../../../../components/scaleFontSize";
-import styles from './styles'
 import AgentDetailInfo from './AgentDetailInfo'
 import AgentDetailStats from './AgentDetailStats'
-import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
-import moment from 'moment'
+import styles from './styles'
 
 
 const PropertyDetailView = (props: any) => {

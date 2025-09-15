@@ -1,11 +1,11 @@
-import { View, Text, Image, Linking, TouchableOpacity } from 'react-native'
-import React from 'react'
-import styles from './styles'
-import Button from 'app/components/Button'
-import strings from 'app/components/utilities/Localization'
-import { WHITE_COLOR, PRIMARY_THEME_COLOR, CALL_COLOR, PURPLE_COLOR, BLUE_COLOR, BLACK_COLOR, GREEN_COLOR, RED_COLOR } from 'app/components/utilities/constant'
-import images from 'app/assets/images'
 import moment from 'moment'
+import React from 'react'
+import { Image, Text, TouchableOpacity, View } from 'react-native'
+import images from '../../../../assets/images'
+import Button from '../../../../components/Button'
+import strings from '../../../../components/utilities/Localization'
+import { BLACK_COLOR, BLUE_COLOR, GREEN_COLOR, PURPLE_COLOR, RED_COLOR, WHITE_COLOR } from '../../../../components/utilities/constant'
+import styles from './styles'
 
 const SupportItem = (props: any) => {
   return (

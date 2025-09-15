@@ -1,6 +1,6 @@
 import { normalize } from "@rneui/themed";
-import { normalizeHeight, normalizeSpacing, normalizeWidth } from "app/components/scaleFontSize";
-import { BLACK_COLOR, FONT_FAMILY_EXTRABOLD, FONT_FAMILY_MEDIUM, GRAY_COLOR, PRIMARY_THEME_COLOR, RED_COLOR, WHITE_COLOR } from "app/components/utilities/constant";
+import { normalizeHeight, normalizeSpacing, normalizeWidth } from "../../../../components/scaleFontSize";
+import { BLACK_COLOR, FONT_FAMILY_EXTRABOLD, FONT_FAMILY_MEDIUM, GRAY_COLOR, PRIMARY_THEME_COLOR, RED_COLOR, WHITE_COLOR } from "../../../../components/utilities/constant";
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({

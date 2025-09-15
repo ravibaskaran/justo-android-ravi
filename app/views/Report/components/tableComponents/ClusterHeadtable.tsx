@@ -1,21 +1,11 @@
-import {
-  normalize,
-  normalizeHeight,
-  normalizeWidth,
-} from "app/components/scaleFontSize";
 import React from "react";
-import { Text, View } from "react-native";
-import styles from "../styles";
-import {
-  BLACK_COLOR,
-  Isios,
-  PRIMARY_THEME_COLOR,
-  WHITE_COLOR,
-} from "app/components/utilities/constant";
+import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import SourcingForCluster from "./SourcingForCluster";
+import {
+  normalize
+} from "../../../../components/scaleFontSize";
 import ClosingForCluster from "./ClosingForCluster";
-import SMReportTable from "../SMReportTable";
+import SourcingForCluster from "./SourcingForCluster";
 
 const ClusterHeadtable = (props: any) => {
   const { data, headerData, onReset, handleCpDetailPress, role_ID, handleCTANavigation } = props;

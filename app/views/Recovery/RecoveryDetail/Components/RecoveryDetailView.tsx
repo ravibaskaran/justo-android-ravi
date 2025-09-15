@@ -1,13 +1,13 @@
-import { View } from "react-native";
 import React from "react";
-import styles from "./Styles";
-import images from "app/assets/images";
-import Button from "app/components/Button";
-import Header from "app/components/Header";
-import { PRIMARY_THEME_COLOR } from "app/components/utilities/constant";
-import strings from "app/components/utilities/Localization";
+import { View } from "react-native";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import Header from "../../../../components/Header";
+import { PRIMARY_THEME_COLOR } from "../../../../components/utilities/constant";
+import strings from "../../../../components/utilities/Localization";
+import CancelModal from "../../../../views/BookingManagement/BookingDetails/components/CancelBooking";
 import RecoveryDetailItem from "./RecoveryDetailItem";
-import CancelModal from "app/views/BookingManagement/BookingDetails/components/CancelBooking";
+import styles from "./Styles";
 
 const AppointmentDetailsView = (props: any) => {
   return (

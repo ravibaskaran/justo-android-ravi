@@ -1,17 +1,17 @@
-import images from "app/assets/images";
-import Button from "app/components/Button";
-import DropdownInput from "app/components/DropDown";
-import styles from "app/components/Modals/styles";
-import strings from "app/components/utilities/Localization";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Modal from "react-native-modal";
 import { useDispatch, useSelector } from "react-redux";
-import { GetProjectDetailsReport } from "app/Redux/Actions/ProjectReportActions";
-import { getAllProperty } from "app/Redux/Actions/propertyActions";
-import InputCalender from "app/components/InputCalender";
-import moment from "moment";
-import { DATE_FORMAT } from "app/components/utilities/constant";
+import { GetProjectDetailsReport } from "../../../Redux/Actions/ProjectReportActions";
+import { getAllProperty } from "../../../Redux/Actions/propertyActions";
+import images from "../../../assets/images";
+import Button from "../../../components/Button";
+import DropdownInput from "../../../components/DropDown";
+import InputCalender from "../../../components/InputCalender";
+import styles from "../../../components/Modals/styles";
+import strings from "../../../components/utilities/Localization";
+import { DATE_FORMAT } from "../../../components/utilities/constant";
 
 const FilterModal = (props: any) => {
   const propertyData = useSelector((state: any) => state.propertyData) || {};

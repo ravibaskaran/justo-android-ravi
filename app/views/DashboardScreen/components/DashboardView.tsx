@@ -1,18 +1,17 @@
-import React, { useState } from "react";
+import ComingSoonScreen from "../../../components/CommonScreen/ComingSoon";
+import { normalizeSpacing } from "../../../components/scaleFontSize";
+import React from "react";
 import {
-  View,
-  Text,
-  ScrollView,
   Image,
-  FlatList,
-  TouchableOpacity,
   RefreshControl,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View
 } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Switch } from "react-native-switch";
-import Header from "../../../components/Header";
 import images from "../../../assets/images";
-import styles from "./styles";
+import Header from "../../../components/Header";
 import strings from "../../../components/utilities/Localization";
 import {
   GREEN_COLOR,
@@ -22,14 +21,13 @@ import {
   ROLE_IDS,
   WHITE_COLOR,
 } from "../../../components/utilities/constant";
-import SourcingDashboardView from "./SourcingView";
 import ClosingDashboardView from "./ClosingView";
-import ComingSoonScreen from "app/components/CommonScreen/ComingSoon";
 import PostSaleDashboardView from "./PostSalesView";
 import ReceiptionistDashboardView from "./ReceptionistView";
-import SiteHeadView from "./SiteHeadView";
-import { normalizeSpacing } from "app/components/scaleFontSize";
 import SCMView from "./SCMView";
+import SiteHeadView from "./SiteHeadView";
+import SourcingDashboardView from "./SourcingView";
+import styles from "./styles";
 
 const DashboardView = (props: any) => {
   const roleType = props?.getLoginType?.response?.data?.role_id || null;

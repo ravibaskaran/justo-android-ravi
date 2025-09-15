@@ -1,11 +1,11 @@
-import apiEndPoints from "app/components/utilities/apiEndPoints";
+import apiEndPoints from "../../components/utilities/apiEndPoints";
+import { apiCall } from "../../components/utilities/httpClient";
 import {
   GET_REPORT_DETAILS,
   GET_REPORT_ERROR,
   START_LOADING,
   STOP_LOADING,
 } from "../types";
-import { apiCall } from "app/components/utilities/httpClient";
 
 export const GetCMReport = (item: any) => async (dispatch: any) => {
   dispatch({ type: START_LOADING });

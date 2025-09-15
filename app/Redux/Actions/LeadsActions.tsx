@@ -1,9 +1,16 @@
-import { handleApiError } from "app/components/ErrorMessage/HandleApiErrors";
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import { apiCall } from "app/components/utilities/httpClient";
+import { handleApiError } from "../../components/ErrorMessage/HandleApiErrors";
+import apiEndPoints from "../../components/utilities/apiEndPoints";
+import { apiCall } from "../../components/utilities/httpClient";
 import {
-    GET_VISITOR_DETAIL, VISITOR_ERROR, VISITOR_LIST, VISITOR_STATUSUPDATE, ADD_VISITOR,
-    ADD_VISITOR_FORM, EDIT_VISITOR, REMOVE_VISITOR, START_LOADING, STOP_LOADING, GET_USERVISIT_LIST, GET_USERVISIT_LIST_ERROR, CLOSEVISIT, CLOSEVISIT_ERROR, ADD_VISITOR_WITHOUT_PROPERTY, CHECKVISITMOBILE, CHECKVISITMOBILE_ERROR, REMOVE_CHECKVISITMOBILE
+    ADD_VISITOR,
+    ADD_VISITOR_WITHOUT_PROPERTY, CHECKVISITMOBILE, CHECKVISITMOBILE_ERROR,
+    CLOSEVISIT, CLOSEVISIT_ERROR,
+    EDIT_VISITOR,
+    GET_USERVISIT_LIST, GET_USERVISIT_LIST_ERROR,
+    GET_VISITOR_DETAIL,
+    REMOVE_CHECKVISITMOBILE,
+    REMOVE_VISITOR, START_LOADING, STOP_LOADING,
+    VISITOR_ERROR, VISITOR_LIST, VISITOR_STATUSUPDATE
 } from "../types";
 
 export const getAllLeadsList = (params: any) => async (dispatch: any) => {

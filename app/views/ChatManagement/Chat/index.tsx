@@ -1,11 +1,10 @@
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
-import {
-  getAllUserChatList,
-  getRecentChatList,
-} from "app/Redux/Actions/ChatActions";
-import React, { useEffect, useLayoutEffect } from "react";
+import React from "react";
 import { Keyboard } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  getRecentChatList
+} from "../../../Redux/Actions/ChatActions";
 import ChatView from "./components/ChatView";
 
 const ChatViewScreen = ({ navigation }: any) => {

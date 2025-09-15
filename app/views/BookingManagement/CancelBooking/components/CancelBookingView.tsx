@@ -1,13 +1,13 @@
-import { View, Text, FlatList } from "react-native";
 import React, { useState } from "react";
-import styles from "./styles";
-import Header from "app/components/Header";
-import images from "app/assets/images";
-import strings from "app/components/utilities/Localization";
-import { PRIMARY_THEME_COLOR } from "app/components/utilities/constant";
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
-import CancelBookingItems from "./CancelBookingItems";
+import { FlatList, Text, View } from "react-native";
+import images from "../../../../assets/images";
+import EmptyListScreen from "../../../../components/CommonScreen/EmptyListScreen";
+import Header from "../../../../components/Header";
+import strings from "../../../../components/utilities/Localization";
+import { PRIMARY_THEME_COLOR } from "../../../../components/utilities/constant";
 import BookingFilterModal from "../../BookingList/components/BookingFilterModal";
+import CancelBookingItems from "./CancelBookingItems";
+import styles from "./styles";
 
 const CancelBookingView = (props: any) => {
   const [isVisable, setisVisable] = useState(false);
@@ -42,6 +42,7 @@ const CancelBookingView = (props: any) => {
       </Text>
       <View style={styles.listView}>
         <FlatList
+removeClippedSubviews={false}
           data={Array.isArray(props.DATA) ? props.DATA : []}
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={

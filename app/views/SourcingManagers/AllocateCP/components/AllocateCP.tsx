@@ -1,24 +1,22 @@
 import {
-  View,
-  Text,
-  Image,
-  TextInput,
   FlatList,
+  Image,
+  Text,
+  TextInput,
   TouchableOpacity,
+  View,
 } from "react-native";
 import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
 import Header from "../../../../components/Header";
-import { Checkbox } from "react-native-paper";
 import {
   BLACK_COLOR,
-  GRAY_COLOR,
   PRIMARY_THEME_COLOR,
-  WHITE_COLOR,
+  WHITE_COLOR
 } from "../../../../components/utilities/constant";
-import styles from "./styles";
-import Button from "../../../../components/Button";
 import strings from "../../../../components/utilities/Localization";
 import AllocateCPDetails from "../components/AllocateDetails";
+import styles from "./styles";
 
 const AllocateCPView = (props: any) => {
   return (
@@ -68,6 +66,7 @@ const AllocateCPView = (props: any) => {
         />
         {props.allList ? (
           <FlatList
+removeClippedSubviews={false}
             data={props.cpList}
             renderItem={({ item, index }: any) => {
               const getSelected =

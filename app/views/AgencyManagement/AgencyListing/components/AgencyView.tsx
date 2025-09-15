@@ -1,30 +1,28 @@
-import { View, Text, StatusBar, FlatList, Alert } from "react-native";
-import React, { useState } from "react";
-import styles from "./styles";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import AgencyListItem from "./AgencyListItem";
 import { useNavigation } from "@react-navigation/native";
-import Header from "../../../../components/Header";
+import React, { useState } from "react";
+import { FlatList, Text, View } from "react-native";
 import images from "../../../../assets/images";
-import strings from "../../../../components/utilities/Localization";
+import Header from "../../../../components/Header";
 import ConfirmModal from "../../../../components/Modals/ConfirmModal";
-import FilterModal from "./AgencyFilterModel";
 import {
-  PRIMARY_THEME_COLOR_DARK,
-  ROLE_IDS,
+  ROLE_IDS
 } from "../../../../components/utilities/constant";
+import strings from "../../../../components/utilities/Localization";
+import FilterModal from "./AgencyFilterModel";
+import AgencyListItem from "./AgencyListItem";
+import styles from "./styles";
 
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { useSelector } from "react-redux";
+import EmptyListScreen from "../../../../components/CommonScreen/EmptyListScreen";
+import AddPropertyModel from "../../../../components/Modals/AddPropertyModel";
+import { normalizeWidth } from "../../../../components/scaleFontSize";
 import {
   BLACK_COLOR,
   PRIMARY_THEME_COLOR,
   WHITE_COLOR,
 } from "../../../../components/utilities/constant";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
-import { useSelector } from "react-redux";
-import { normalizeWidth } from "app/components/scaleFontSize";
-import usePermission from "app/components/utilities/UserPermissions";
-import AddPropertyModel from "app/components/Modals/AddPropertyModel";
+import usePermission from "../../../../components/utilities/UserPermissions";
 
 const AgencyView = (props: any) => {
   const loadingref = false;
@@ -201,6 +199,7 @@ const AgencyView = (props: any) => {
         } */}
         <View style={styles.propertyListViewsec}>
           <FlatList
+removeClippedSubviews={false}
             showsVerticalScrollIndicator={false}
             data={Array.isArray(props?.agentList) ? props?.agentList : []}
             ListEmptyComponent={<EmptyListScreen message={strings.agency} />}

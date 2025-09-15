@@ -1,7 +1,7 @@
 import CheckBox from "@react-native-community/checkbox";
-import ErrorMessage from "app/components/ErrorMessage";
-import PicturePickerModal from "app/components/Modals/PicturePicker";
-import { normalize, } from "app/components/scaleFontSize";
+import ErrorMessage from "../../../../components/ErrorMessage";
+import PicturePickerModal from "../../../../components/Modals/PicturePicker";
+import { normalize, } from "../../../../components/scaleFontSize";
 import React, { useState } from "react";
 import {
   Linking,

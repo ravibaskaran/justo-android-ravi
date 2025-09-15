@@ -1,10 +1,10 @@
-import usePermission from "app/components/utilities/UserPermissions";
 import moment from "moment";
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { useSelector } from "react-redux";
 import images from "../../../../assets/images";
 import strings from "../../../../components/utilities/Localization";
+import usePermission from "../../../../components/utilities/UserPermissions";
 import {
   DATE_TIME_FORMAT,
   GREEN_COLOR,

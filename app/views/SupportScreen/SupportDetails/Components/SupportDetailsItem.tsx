@@ -1,17 +1,20 @@
-import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
-import styles from "./styles";
-import strings from "app/components/utilities/Localization";
-import { GREEN_COLOR, RED_COLOR } from "app/components/utilities/constant";
-import FastImages from "app/components/FastImage";
-import { normalizeHeight } from "app/components/scaleFontSize";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Modal from "react-native-modal";
+import FastImages from "../../../../components/FastImage";
+import { normalizeHeight } from "../../../../components/scaleFontSize";
+import strings from "../../../../components/utilities/Localization";
+import {
+  GREEN_COLOR,
+  RED_COLOR,
+} from "../../../../components/utilities/constant";
+import styles from "./styles";
 
 const SupportDetailsItem = (props: any) => {
   const item = props?.item || {};
   const [isVisable, setIsVisable] = useState(false);
   const [onPressData, setOnPressData] = useState<any>({});
-  console.log('typeof item.image: ', typeof item.image);
+  console.log("typeof item.image: ", typeof item.image);
   console.log("item.base_url + item.image: ", item.image === "undefined");
 
   return (
@@ -92,7 +95,9 @@ const SupportDetailsItem = (props: any) => {
         </View>
         <View style={styles.nameContainer}>
           <Text style={styles.nameTxt}>
-            {item.remark === "undefined" || item.remark === ""  ? strings.notfount : item.remark }
+            {item.remark === "undefined" || item.remark === ""
+              ? strings.notfount
+              : item.remark}
           </Text>
         </View>
       </View>
@@ -103,7 +108,7 @@ const SupportDetailsItem = (props: any) => {
         <View>
           <Text>:</Text>
         </View>
-        {item.image === "undefined" || item.image === ""  ? (
+        {item.image === "undefined" || item.image === "" ? (
           <View style={styles.nameContainer}>
             <Text style={styles.nameTxt}>{strings.notfount}</Text>
           </View>
@@ -114,11 +119,13 @@ const SupportDetailsItem = (props: any) => {
             }}
             style={[styles.nameContainer, { marginLeft: 10 }]}
           >
-            <Image
-              source={{ uri: item.base_url + item.image }}
-              resizeMode={"contain"}
-              style={styles.Img}
-            />
+            {item.image && (
+              <Image
+                source={{ uri: item.base_url + item.image }}
+                resizeMode={"contain"}
+                style={styles.Img}
+              />
+            )}
           </TouchableOpacity>
         )}
       </View>

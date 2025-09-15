@@ -1,15 +1,3 @@
-import ErrorMessage from "app/components/ErrorMessage";
-import { normalize } from "app/components/scaleFontSize";
-import {
-  BLACK_COLOR,
-  GREEN_COLOR,
-  RED_COLOR,
-} from "app/components/utilities/constant";
-import {
-  handlePermission,
-  openPermissionSetting,
-} from "app/components/utilities/GlobalFuncations";
-import strings from "app/components/utilities/Localization";
 import React from "react";
 import {
   Dimensions,
@@ -23,8 +11,20 @@ import {
 } from "react-native";
 import RNFS from "react-native-fs";
 import XLSX from "xlsx";
-import styles from "./styles";
+import ErrorMessage from "../../../components/ErrorMessage";
+import { normalize } from "../../../components/scaleFontSize";
+import {
+  BLACK_COLOR,
+  GREEN_COLOR,
+  RED_COLOR,
+} from "../../../components/utilities/constant";
+import {
+  handlePermission,
+  openPermissionSetting,
+} from "../../../components/utilities/GlobalFuncations";
+import strings from "../../../components/utilities/Localization";
 import ItemCard from "./ItemCard";
+import styles from "./styles";
 
 const CMReportTable = (props: any) => {
   const { data, userData, fileName } = props;

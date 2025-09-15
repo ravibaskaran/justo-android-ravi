@@ -1,6 +1,8 @@
-import images from "app/assets/images";
-import Button from "app/components/Button";
-import { normalizeSpacing } from "app/components/scaleFontSize";
+import moment from "moment";
+import React from "react";
+import { ScrollView, Text, View } from "react-native";
+import Button from "../../../../components/Button";
+import { normalizeSpacing } from "../../../../components/scaleFontSize";
 import {
   BLACK_COLOR,
   DATE_BY_DAY,
@@ -10,11 +12,8 @@ import {
   PRIMARY_THEME_COLOR,
   WHITE_COLOR,
   getCPLeadType,
-} from "app/components/utilities/constant";
-import strings from "app/components/utilities/Localization";
-import moment from "moment";
-import React from "react";
-import { Image, ScrollView, Text, View } from "react-native";
+} from "../../../../components/utilities/constant";
+import strings from "../../../../components/utilities/Localization";
 import styles from "./Styles";
 
 const AppointmentDtailsItem = (props: any) => {

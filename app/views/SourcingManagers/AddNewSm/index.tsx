@@ -1,23 +1,22 @@
 import { useFocusEffect } from "@react-navigation/native";
-import ErrorMessage from "app/components/ErrorMessage";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import ErrorMessage from "../../../components/ErrorMessage";
 import {
   GREEN_COLOR,
   RED_COLOR,
   Regexs,
   ROLE_IDS,
   validateEmail,
-} from "app/components/utilities/constant";
-import { getAgentDetail } from "app/Redux/Actions/AgentActions";
-import { removeAuthUser } from "app/Redux/Actions/AuthActions";
-import { getCityList, getRolesList } from "app/Redux/Actions/MasterActions";
+} from "../../../components/utilities/constant";
+import { getAgentDetail } from "../../../Redux/Actions/AgentActions";
+import { removeAuthUser } from "../../../Redux/Actions/AuthActions";
+import { getCityList, getRolesList } from "../../../Redux/Actions/MasterActions";
 import {
   updateUserSettingData,
   userRegister,
-} from "app/Redux/Actions/SettingActions";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+} from "../../../Redux/Actions/SettingActions";
 import AddNewSM from "./components/AddNewSM";
-import auth from "@react-native-firebase/auth";
 
 const AddNewSMScreen = ({ navigation, route }: any) => {
   const { type, data } = route?.params || "";

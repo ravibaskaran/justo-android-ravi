@@ -1,10 +1,10 @@
 import { useFocusEffect } from "@react-navigation/native";
-import { getBookingList } from "app/Redux/Actions/BookingActions";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { DATE_FORMAT } from "../../../components/utilities/constant";
+import { getBookingList } from "../../../Redux/Actions/BookingActions";
 import CancelBookingView from "./components/CancelBookingView";
-import moment from "moment";
-import { DATE_FORMAT } from "app/components/utilities/constant";
 
 const CancelBookingScreen = ({ navigation, route }: any) => {
   const parmas = route.params;

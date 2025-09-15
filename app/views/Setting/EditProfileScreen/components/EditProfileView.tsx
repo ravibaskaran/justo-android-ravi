@@ -1,25 +1,20 @@
+import React, { useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import React, { useEffect, useState } from "react";
 import { RadioButton } from "react-native-paper";
-import Header from "../../../../components/Header";
-import strings from "../../../../components/utilities/Localization";
-import styles from "./styles";
-import {
-  BLACK_COLOR,
-  DATE_FORMAT_EXCL,
-  Isios,
-  PRIMARY_THEME_COLOR,
-} from "../../../../components/utilities/constant";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import InputField from "../../../../components/InputField";
 import images from "../../../../assets/images";
 import Button from "../../../../components/Button";
-import moment from "moment";
-import { useSelector } from "react-redux";
-import InputCalender from "app/components/InputCalender";
-import PicturePickerModal from "app/components/Modals/PicturePicker";
-import FastImages from "app/components/FastImage";
-import CityModal from "app/components/Modals/CityModal";
+import Header from "../../../../components/Header";
+import InputField from "../../../../components/InputField";
+import CityModal from "../../../../components/Modals/CityModal";
+import PicturePickerModal from "../../../../components/Modals/PicturePicker";
+import {
+  BLACK_COLOR,
+  Isios,
+  PRIMARY_THEME_COLOR
+} from "../../../../components/utilities/constant";
+import strings from "../../../../components/utilities/Localization";
+import styles from "./styles";
 
 const EditProfileView = (props: any) => {
   const { onPressBack, allDetails, setEditData, editData } = props;

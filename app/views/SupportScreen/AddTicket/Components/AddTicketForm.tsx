@@ -1,26 +1,26 @@
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import React, { useState } from "react";
 import styles from "./styles";
-import Header from "app/components/Header";
-import images from "app/assets/images";
-import strings from "app/components/utilities/Localization";
+import Header from "../../../../components/Header";
+import images from "../../../../assets/images";
+import strings from "../../../../components/utilities/Localization";
 import {
   BLACK_COLOR,
   Isios,
   PRIMARY_THEME_COLOR,
   WHITE_COLOR,
-} from "app/components/utilities/constant";
-import InputField from "app/components/InputField";
-import DropdownInput from "app/components/DropDown";
-import Button from "app/components/Button";
+} from "../../../../components/utilities/constant";
+import InputField from "../../../../components/InputField";
+import DropdownInput from "../../../../components/DropDown";
+import Button from "../../../../components/Button";
 import {
   normalizeWidth,
   normalizeHeight,
   normalize,
-} from "app/components/scaleFontSize";
-import PicturePickerModal from "app/components/Modals/PicturePicker";
+} from "../../../../components/scaleFontSize";
+import PicturePickerModal from "../../../../components/Modals/PicturePicker";
 import Modal from "react-native-modal";
-import FastImages from "app/components/FastImage";
+import FastImages from "../../../../components/FastImage";
 
 const AddTicketForm = (props: any) => {
   const [visible, setVisible] = useState(false);

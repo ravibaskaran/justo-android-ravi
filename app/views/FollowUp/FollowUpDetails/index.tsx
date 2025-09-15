@@ -1,9 +1,9 @@
 import { useFocusEffect } from "@react-navigation/native";
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import { apiCall } from "app/components/utilities/httpClient";
-import { followUpBackSubject } from "app/observables/backNavigationSubject";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import apiEndPoints from "../../../components/utilities/apiEndPoints";
+import { apiCall } from "../../../components/utilities/httpClient";
+import { followUpBackSubject } from "../../../observables/backNavigationSubject";
 import FollowUpDetailsView from "./Components/FollowUpDetailsView";
 
 const FollowUpDetails = ({ navigation, route }: any) => {

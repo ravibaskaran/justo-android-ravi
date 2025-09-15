@@ -1,7 +1,7 @@
 import { useFocusEffect } from "@react-navigation/native";
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import { apiCall } from "app/components/utilities/httpClient";
-import { appointmentSVBackSubject } from "app/observables/backNavigationSubject";
+import apiEndPoints from "../../../components/utilities/apiEndPoints";
+import { apiCall } from "../../../components/utilities/httpClient";
+import { appointmentSVBackSubject } from "../../../observables/backNavigationSubject";
 import React, { useEffect, useState } from "react";
 import { BackHandler } from "react-native";
 import { useDispatch, useSelector } from "react-redux";

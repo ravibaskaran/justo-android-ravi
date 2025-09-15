@@ -1,14 +1,13 @@
-import { View, Text, FlatList, TouchableOpacity, useWindowDimensions } from "react-native";
 import React, { useEffect, useState } from "react";
-import Header from "app/components/Header";
-import images from "app/assets/images";
-import strings from "app/components/utilities/Localization";
-import styles from "./styles";
-import { PRIMARY_THEME_COLOR, PRIMARY_THEME_COLOR_DARK, TABBAR_COLOR } from "app/components/utilities/constant";
-import Button from "app/components/Button";
-import moment from "moment";
+import { useWindowDimensions, View } from "react-native";
 import { TabBar, TabView } from "react-native-tab-view";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import Header from "../../../../components/Header";
+import { PRIMARY_THEME_COLOR, PRIMARY_THEME_COLOR_DARK, TABBAR_COLOR } from "../../../../components/utilities/constant";
+import strings from "../../../../components/utilities/Localization";
 import RouteScreen from "./RouteScreen";
+import styles from "./styles";
 
 const CpCheckingView = (props: any) => {
   const loadingref = false

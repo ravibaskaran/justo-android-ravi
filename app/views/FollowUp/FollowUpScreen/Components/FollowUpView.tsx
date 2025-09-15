@@ -1,16 +1,14 @@
-import { View, Text, StatusBar, FlatList } from "react-native";
-import React, { useState } from "react";
-import styles from "./Styles";
-import { PRIMARY_THEME_COLOR_DARK } from "../../../../components/utilities/constant";
-import Header from "../../../../components/Header";
-import images from "../../../../assets/images";
-import strings from "../../../../components/utilities/Localization";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import FollowUpItem from "./FollowUpItem";
 import { useNavigation } from "@react-navigation/native";
+import EmptyListScreen from "../../../../components/CommonScreen/EmptyListScreen";
+import React, { useState } from "react";
+import { FlatList, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import images from "../../../../assets/images";
+import Header from "../../../../components/Header";
+import strings from "../../../../components/utilities/Localization";
+import FollowUpItem from "./FollowUpItem";
 import FilterModal from "./FollowUpModal";
-import { useSelector } from "react-redux";
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
+import styles from "./Styles";
 
 const FollowUpView = (props: any) => {
   const loadingref = false;
@@ -56,6 +54,7 @@ const FollowUpView = (props: any) => {
           Count : {props?.moreData ? props?.moreData : 0}
         </Text>
         <FlatList
+removeClippedSubviews={false}
           data={Array.isArray(props?.followUpList) ? props?.followUpList : []}
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (

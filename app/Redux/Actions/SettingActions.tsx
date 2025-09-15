@@ -1,7 +1,7 @@
-import { UPDATE_PROFILE_ERROR, UPDATE_PROFILE, START_LOADING, STOP_LOADING, USERREGISTER, USERREGISTER_ERROR, REMOVE_USERDATA } from "../types";
+import { handleApiError } from "../../components/ErrorMessage/HandleApiErrors";
 import apiEndPoints from "../../components/utilities/apiEndPoints";
-import { apiCall } from "app/components/utilities/httpClient";
-import { handleApiError } from "app/components/ErrorMessage/HandleApiErrors";
+import { apiCall } from "../../components/utilities/httpClient";
+import { REMOVE_USERDATA, START_LOADING, STOP_LOADING, UPDATE_PROFILE, UPDATE_PROFILE_ERROR, USERREGISTER, USERREGISTER_ERROR } from "../types";
 
 export const updateUserSettingData =
   (userDetail: any) => async (dispatch: any) => {

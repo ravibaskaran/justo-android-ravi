@@ -1,15 +1,15 @@
-import ErrorMessage from "app/components/ErrorMessage";
-import { GREEN_COLOR, RED_COLOR } from "app/components/utilities/constant";
+import React, { useEffect, useState } from "react";
+import { Keyboard } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import ErrorMessage from "../../../components/ErrorMessage";
+import { GREEN_COLOR, RED_COLOR } from "../../../components/utilities/constant";
+import strings from "../../../components/utilities/Localization";
 import {
   addFollowUp,
   allfollowupRemove,
-} from "app/Redux/Actions/FollowUpActions";
-import { getAllMaster } from "app/Redux/Actions/MasterActions";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+} from "../../../Redux/Actions/FollowUpActions";
+import { getAllMaster } from "../../../Redux/Actions/MasterActions";
 import FollowUpAddView from "./components/FollowUpAdd";
-import strings from "app/components/utilities/Localization";
-import { Keyboard } from "react-native";
 
 const FollowUpAddScreen = ({ navigation, route }: any) => {
   const followUpId = route?.params || "";

@@ -1,15 +1,15 @@
 import React from "react";
-import { View, Text, Image, FlatList } from 'react-native';
+import { FlatList, View } from 'react-native';
 import images from "../../../../assets/images";
 import Button from "../../../../components/Button";
+import EmptyListScreen from "../../../../components/CommonScreen/EmptyListScreen";
 import Header from "../../../../components/Header";
 import InputField from "../../../../components/InputField";
 import { normalize } from "../../../../components/scaleFontSize";
 import { PRIMARY_THEME_COLOR } from "../../../../components/utilities/constant";
 import strings from "../../../../components/utilities/Localization";
+import LeaderBoardItems from './LeaderBoardItems';
 import styles from "./styles";
-import LeaderBoardItems from './LeaderBoardItems'
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
 
 const LeaderBoardView = (props: any) => {
     const onRefresh = () => {
@@ -60,6 +60,7 @@ const LeaderBoardView = (props: any) => {
                 </View>
             </View>
             <FlatList
+removeClippedSubviews={false}
                 data={Array.isArray(props?.leaderBoardList) ?
                     props?.leaderBoardList : []}
                 scrollEnabled={true}

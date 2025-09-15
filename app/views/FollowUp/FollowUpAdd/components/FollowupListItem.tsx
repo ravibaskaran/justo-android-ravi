@@ -1,8 +1,6 @@
-import { View, Text, TouchableOpacity, Image } from 'react-native';
 import React from 'react';
+import { Text, View } from 'react-native';
 import styles from './styles';
-import strings from '../../../../components/utilities/Localization';
-import { BLACK_COLOR, YELLOW_COLOR } from '../../../../components/utilities/constant';
 
 const FollowUpListItem = (props: any) => {
     return (

@@ -1,23 +1,21 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  TextInput,
-  FlatList,
-  ScrollView,
-} from "react-native";
 import React from "react";
-import Header from "app/components/Header";
-import images from "app/assets/images";
-import strings from "app/components/utilities/Localization";
+import {
+  FlatList,
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
+} from "react-native";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import Header from "../../../../components/Header";
+import strings from "../../../../components/utilities/Localization";
 import {
   BLACK_COLOR,
   PRIMARY_THEME_COLOR,
-} from "app/components/utilities/constant";
+} from "../../../../components/utilities/constant";
 import styles from "./styles";
-import Button from "app/components/Button";
-import { normalize } from "app/components/scaleFontSize";
 
 const EscalateView = (props: any) => {
   return (
@@ -64,6 +62,7 @@ const EscalateView = (props: any) => {
           />
           {/* {props.allList ? */}
           <FlatList
+removeClippedSubviews={false}
             data={props.escalateUsers}
             renderItem={({ item, index }: any) => {
               const getSelected =

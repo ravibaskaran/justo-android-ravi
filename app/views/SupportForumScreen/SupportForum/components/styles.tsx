@@ -1,5 +1,5 @@
-import { normalizeSpacing, normalize, normalizeWidth, normalizeHeight } from 'app/components/scaleFontSize';
-import { FONT_FAMILY_EXTRABOLD, FONT_FAMILY_SEMIBOLD, PRIMARY_THEME_COLOR, WHITE_COLOR } from 'app/components/utilities/constant';
+import { normalizeSpacing, normalize, normalizeWidth, normalizeHeight } from '../../../../components/scaleFontSize';
+import { FONT_FAMILY_EXTRABOLD, FONT_FAMILY_SEMIBOLD, PRIMARY_THEME_COLOR, WHITE_COLOR } from '../../../../components/utilities/constant';
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({

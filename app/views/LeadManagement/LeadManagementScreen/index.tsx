@@ -6,11 +6,11 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { BackHandler, useWindowDimensions } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getAllLeadsList } from "app/Redux/Actions/LeadsActions";
-import strings from "app/components/utilities/Localization";
-import { ROLE_IDS } from "app/components/utilities/constant";
-import { visiterBackSubject } from "app/observables/backNavigationSubject";
 import { DATE_FORMAT } from "react-native-gifted-chat";
+import { getAllLeadsList } from "../../../Redux/Actions/LeadsActions";
+import strings from "../../../components/utilities/Localization";
+import { ROLE_IDS } from "../../../components/utilities/constant";
+import { visiterBackSubject } from "../../../observables/backNavigationSubject";
 
 import LeadManagementView from "./Components/LeadManagementView"; // presentational component
 

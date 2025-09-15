@@ -1,23 +1,15 @@
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
-import React, { useState } from "react";
+import React from "react";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Modal from "react-native-modal";
-import { Dropdown } from "react-native-element-dropdown";
-import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  DATE_FORMAT,
-  Isios,
-  ROLE_IDS,
-} from "app/components/utilities/constant";
-import DropdownInput from "app/components/DropDown";
-import { normalizeSpacing } from "app/components/scaleFontSize";
-import images from "app/assets/images";
-import { getFilterProperty } from "app/Redux/Actions/propertyActions";
+import images from "../../assets/images";
+import Button from "../Button";
+import DropdownInput from "../DropDown";
 import InputField from "../InputField";
+import { normalizeSpacing } from "../scaleFontSize";
+import { Isios, ROLE_IDS } from "../utilities/constant";
 import strings from "../utilities/Localization";
 import styles from "./styles";
-import Button from "../Button";
-import InputCalender from "../InputCalender";
 
 const AddTargetModal = (props: any) => {
   const dispatch: any = useDispatch();

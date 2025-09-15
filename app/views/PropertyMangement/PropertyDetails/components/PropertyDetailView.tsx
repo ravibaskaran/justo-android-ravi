@@ -1,22 +1,21 @@
-import { View, Text, StatusBar, FlatList, Alert } from "react-native";
-import React, { useState, useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import { View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useSelector } from "react-redux";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
 import Header from "../../../../components/Header";
+import ConfirmModal from "../../../../components/Modals/ConfirmModal";
+import JustForOkModal from "../../../../components/Modals/JustForOkModal";
 import {
   GRAY_COLOR,
   ROLE_IDS,
 } from "../../../../components/utilities/constant";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import images from "../../../../assets/images";
 import strings from "../../../../components/utilities/Localization";
-import styles from "./styles";
+import usePermission from "../../../../components/utilities/UserPermissions";
 import PropertyDetailItem from "./PropertyDetailItem";
-import { useNavigation } from "@react-navigation/native";
-import Button from "../../../../components/Button";
-import ConfirmModal from "../../../../components/Modals/ConfirmModal";
-import moment from "moment";
-import { useSelector } from "react-redux";
-import usePermission from "app/components/utilities/UserPermissions";
-import JustForOkModal from "app/components/Modals/JustForOkModal";
+import styles from "./styles";
 
 const PropertyDetailView = (props: any) => {
   const [isVisible, setIsVisible] = useState(false);

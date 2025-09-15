@@ -1,32 +1,28 @@
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  Linking,
-  Keyboard,
-} from "react-native";
-import styles from "./Styles";
-import Styles from "app/components/DropDown/styles";
-import InputField from "../../../../components/InputField";
-import DropdownInput from "../../../../components/DropDown";
-import strings from "../../../../components/utilities/Localization";
-import images from "../../../../assets/images";
-import { RadioButton } from "react-native-paper";
-import {
-  PRIMARY_THEME_COLOR,
-  BLACK_COLOR,
-  DATE_FORMAT,
-  TIME_FORMAT,
-  ONE_MONTH_DATES,
-  Isios,
-} from "../../../../components/utilities/constant";
-import Button from "../../../../components/Button";
-import InputCalender from "app/components/InputCalender";
-import moment from "moment";
-import { leadTypes } from "app/components/utilities/DemoData";
 import CheckBox from "@react-native-community/checkbox";
+import moment from "moment";
 import { useState } from "react";
+import {
+  Keyboard,
+  Linking,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import DropdownInput from "../../../../components/DropDown";
+import Styles from "../../../../components/DropDown/styles";
+import InputCalender from "../../../../components/InputCalender";
+import InputField from "../../../../components/InputField";
+import {
+  DATE_FORMAT,
+  Isios,
+  ONE_MONTH_DATES,
+  PRIMARY_THEME_COLOR
+} from "../../../../components/utilities/constant";
+import strings from "../../../../components/utilities/Localization";
+import styles from "./Styles";
 
 const AddAppointmentItem = (props: any) => {
 

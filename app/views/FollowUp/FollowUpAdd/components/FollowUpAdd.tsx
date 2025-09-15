@@ -1,4 +1,3 @@
-import InputCalender from "app/components/InputCalender";
 import moment from "moment";
 import React, { useEffect } from "react";
 import { ScrollView, Text, View } from "react-native";
@@ -7,6 +6,7 @@ import Button from "../../../../components/Button";
 import DropdownInput from "../../../../components/DropDown";
 import Styles from "../../../../components/DropDown/styles";
 import Header from "../../../../components/Header";
+import InputCalender from "../../../../components/InputCalender";
 import InputField from "../../../../components/InputField";
 import {
   DATE_FORMAT,
@@ -210,6 +210,7 @@ const FollowUpAddView = (props: any) => {
         </View>
         <View style={styles.listView}>
           {/* <FlatList
+removeClippedSubviews={false}
                     data={props.DATA}
                     showsVerticalScrollIndicator={false}
                     renderItem={({ item }) => <FollupListItem items={item}

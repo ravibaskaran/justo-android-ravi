@@ -1,7 +1,7 @@
 import { useFocusEffect } from '@react-navigation/native';
-import { getClosingDetail } from 'app/Redux/Actions/ClosingManager';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { getClosingDetail } from '../../../Redux/Actions/ClosingManager';
 import CMDetailsView from './components/CMDetails';
 
 const CMDetailsScreen = ({ navigation, route }: any) => {

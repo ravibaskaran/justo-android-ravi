@@ -1,10 +1,3 @@
-import {
-  BLACK_COLOR,
-  capitalizeWords,
-  DATE_TIME_FORMAT,
-  getCPLeadType,
-  Isios,
-} from "app/components/utilities/constant";
 import moment from "moment";
 import React from "react";
 import {
@@ -18,6 +11,13 @@ import {
   normalize,
   normalizeWidth,
 } from "../../../../components/scaleFontSize";
+import {
+  BLACK_COLOR,
+  capitalizeWords,
+  DATE_TIME_FORMAT,
+  getCPLeadType,
+  Isios,
+} from "../../../../components/utilities/constant";
 import strings from "../../../../components/utilities/Localization";
 import styles from "./Styles";
 

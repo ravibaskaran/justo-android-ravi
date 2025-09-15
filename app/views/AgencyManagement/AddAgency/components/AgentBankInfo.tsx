@@ -1,7 +1,5 @@
-import AddPropertyModel from "app/components/Modals/AddPropertyModel";
-import PicturePickerModal from "app/components/Modals/PicturePicker";
-import { normalize } from "app/components/scaleFontSize";
-import { RequiredStart } from "app/components/utilities/GlobalFuncations";
+import AddPropertyModel from "../../../../components/Modals/AddPropertyModel";
+import PicturePickerModal from "../../../../components/Modals/PicturePicker";
 import React, { useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { RadioButton } from "react-native-paper";
@@ -16,6 +14,8 @@ import {
 } from "../../../../components/utilities/constant";
 import strings from "../../../../components/utilities/Localization";
 import styles from "./styles";
+import { RequiredStart } from "../../../../components/utilities/GlobalFuncations";
+import { normalize } from "../../../../components/scaleFontSize";
 
 const AgentBankInfo = (props: any) => {
   const [reravisible, setreraVisible] = useState(false);

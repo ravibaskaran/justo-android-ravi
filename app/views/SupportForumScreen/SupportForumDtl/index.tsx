@@ -1,10 +1,10 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react'
+import Share from "react-native-share"
 import { useDispatch, useSelector } from 'react-redux'
-import SupportForumDetail from './components/SupportForumDetail'
-import { supportForumDetailData } from 'app/Redux/Actions/SupportForumAction'
 import RNFetchBlob from 'rn-fetch-blob'
-import { START_LOADING, STOP_LOADING } from 'app/Redux/types'
-import Share from "react-native-share";
+import { supportForumDetailData } from '../../../Redux/Actions/SupportForumAction'
+import { START_LOADING, STOP_LOADING } from '../../../Redux/types'
+import SupportForumDetail from './components/SupportForumDetail'
 
 const SupportForumScreen = ({ navigation, route }: any) => {
     const dispatch: any = useDispatch()

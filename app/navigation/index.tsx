@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import "react-native-gesture-handler";
-import Loader from "app/components/CommonScreen/Loader";
-import useLoader from "app/components/useLoader";
 import { AppState, View } from "react-native";
-import Route from "./route";
+import "react-native-gesture-handler";
 import { useSelector } from "react-redux";
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import { apiCall } from "app/components/utilities/httpClient";
+import Route from "./route";
+import Loader from "../components/CommonScreen/Loader";
+import useLoader from "../components/useLoader";
+import apiEndPoints from "../components/utilities/apiEndPoints";
+import { apiCall } from "../components/utilities/httpClient";
 
 const Root = () => {
   const [loading] = useLoader();

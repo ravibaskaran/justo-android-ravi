@@ -1,9 +1,11 @@
-import { normalize, normalizeHeight, normalizeSpacing, normalizeWidth } from 'app/components/scaleFontSize'
-import {
-    BLACK_COLOR,
-    FONT_FAMILY_EXTRABOLD, FONT_FAMILY_REGULAR, BG_MAIN_COLOUR, PRIMARY_THEME_COLOR, WHITE_COLOR, WHITE_COLOR_LIGHT
-} from 'app/components/utilities/constant'
 import { StyleSheet } from 'react-native'
+import { normalize, normalizeHeight, normalizeSpacing, normalizeWidth } from '../../../../components/scaleFontSize'
+import {
+    BG_MAIN_COLOUR,
+    BLACK_COLOR,
+    FONT_FAMILY_EXTRABOLD, FONT_FAMILY_REGULAR,
+    PRIMARY_THEME_COLOR, WHITE_COLOR
+} from '../../../../components/utilities/constant'
 
 const styles = StyleSheet.create({
     mainContainer: {

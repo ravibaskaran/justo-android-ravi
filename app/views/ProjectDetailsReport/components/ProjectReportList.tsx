@@ -1,7 +1,7 @@
-import images from "app/assets/images";
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import Share from "react-native-share";
+import images from "../../../assets/images";
 import styles from "./styles";
 
 // DataRow component to handle displaying rows

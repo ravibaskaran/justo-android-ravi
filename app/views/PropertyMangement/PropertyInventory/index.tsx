@@ -1,14 +1,12 @@
-import { View, Text } from "react-native";
-import React, { useEffect, useState } from "react";
-import PropertyinventoryView from "./components/PropertyinventoryView";
-import axios from "axios";
-import { apiCall, apiCallJW } from "app/components/utilities/httpClient";
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import { JW_LOGIN, JW_PASSWORD } from "app/components/utilities/constant";
-import InventoryModal from "app/components/Modals/InventoryModal";
-import { useDispatch } from "react-redux";
-import { START_LOADING, STOP_LOADING } from "app/Redux/types";
 import { useFocusEffect } from "@react-navigation/native";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import InventoryModal from "../../../components/Modals/InventoryModal";
+import apiEndPoints from "../../../components/utilities/apiEndPoints";
+import { JW_LOGIN, JW_PASSWORD } from "../../../components/utilities/constant";
+import { apiCallJW } from "../../../components/utilities/httpClient";
+import { START_LOADING, STOP_LOADING } from "../../../Redux/types";
+import PropertyinventoryView from "./components/PropertyinventoryView";
 
 const PropertyInventory = ({ navigation, route }: any) => {
   const { propName } = route.params;

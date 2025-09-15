@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { View, Text, Image, TouchableOpacity, } from "react-native";
+import { normalizeHeight } from "../../../components/scaleFontSize";
+import React from "react";
+import { Text, TouchableOpacity, View } from "react-native";
 import styles from "./styles";
-import strings from "../../../components/utilities/Localization";
-import { normalizeHeight, normalizeSpacing } from "app/components/scaleFontSize";
 
 const PostSaleDashboardView = (props: any) => {
     const targetData = props?.dashboardData?.target || {}

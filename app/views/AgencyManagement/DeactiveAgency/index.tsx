@@ -1,5 +1,5 @@
 import { useFocusEffect } from '@react-navigation/native'
-import { getCpActiveLead } from 'app/Redux/Actions/TransferVisitAction'
+import { getCpActiveLead } from '../../../Redux/Actions/TransferVisitAction'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import LeadManagementView from './Components/LeadManagementView'

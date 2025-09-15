@@ -1,14 +1,14 @@
 import { useFocusEffect } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import { BackHandler } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { todayDate } from "../../../components/utilities/constant";
+import { bookingBackSubject } from "../../../observables/backNavigationSubject";
 import {
   getBookingList,
   getRegisteredList,
-} from "app/Redux/Actions/BookingActions";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+} from "../../../Redux/Actions/BookingActions";
 import BookingListView from "./components/BookingList";
-import { todayDate } from "app/components/utilities/constant";
-import { BackHandler } from "react-native";
-import { bookingBackSubject } from "app/observables/backNavigationSubject";
 
 const BookingListScreen = ({ navigation, route }: any) => {
   const { type = "", onpressType = "" } = route?.params || {};

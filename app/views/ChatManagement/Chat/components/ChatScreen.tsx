@@ -1,48 +1,41 @@
-import { View, Text, Image, TouchableOpacity } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import {
-  Actions,
   Bubble,
   Composer,
   GiftedChat,
   InputToolbar,
-  Send,
+  Send
 } from "react-native-gifted-chat";
-import styles from "./styles";
-import Header from "app/components/Header";
-import images from "app/assets/images";
+import images from "../../../../assets/images";
+import Header from "../../../../components/Header";
 import {
   PRIMARY_THEME_COLOR,
   RED_COLOR,
-  WHITE_COLOR,
-  WHITE_COLOR_LIGHT,
-} from "app/components/utilities/constant";
-import PicturePickerModal from "app/components/Modals/PicturePicker";
-import { launchImageLibrary } from "react-native-image-picker";
+  WHITE_COLOR
+} from "../../../../components/utilities/constant";
+import styles from "./styles";
 
 import storage from "@react-native-firebase/storage";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { firebase } from "@react-native-firebase/database";
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import { useIsFocused } from "@react-navigation/native";
 import moment from "moment";
-import ImagePicker from "react-native-image-crop-picker";
 import DocumentPicker from "react-native-document-picker";
+import Modal from "react-native-modal";
+import { useDispatch, useSelector } from "react-redux";
+import RNFetchBlob from "rn-fetch-blob";
+import ErrorMessage from "../../../../components/ErrorMessage";
+import FastImages from "../../../../components/FastImage";
 import {
   normalizeHeight,
   normalizeSpacing,
-} from "app/components/scaleFontSize";
-import Video from "react-native-video";
-import RNFetchBlob from "rn-fetch-blob";
-import { chatStatusUpdate } from "app/Redux/Actions/ChatActions";
-import { useDispatch, useSelector } from "react-redux";
-import { START_LOADING, STOP_LOADING } from "app/Redux/types";
-import Modal from "react-native-modal";
-import FastImages from "app/components/FastImage";
+} from "../../../../components/scaleFontSize";
+import apiEndPoints from "../../../../components/utilities/apiEndPoints";
+import { OpenDoc } from "../../../../components/utilities/GlobalFuncations";
+import { chatStatusUpdate } from "../../../../Redux/Actions/ChatActions";
+import { STOP_LOADING } from "../../../../Redux/types";
 import VideoPlayer from "./VideoPlayer";
-import ErrorMessage from "app/components/ErrorMessage";
-import { OpenDoc } from "app/components/utilities/GlobalFuncations";
 
 const ChatScreen = ({ navigation, route }: any) => {
   const item = route.params || {};

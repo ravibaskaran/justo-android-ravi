@@ -1,15 +1,15 @@
-import { View, FlatList, } from 'react-native';
-import React, { useState } from 'react';
-import styles from './styles';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import PendingAgencyList from './PendingAgencyListItem';
 import { useNavigation } from '@react-navigation/native';
-import Header from '../../../../components/Header';
+import EmptyListScreen from '../../../../components/CommonScreen/EmptyListScreen';
+import React, { useState } from 'react';
+import { FlatList, View, } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import images from '../../../../assets/images';
-import strings from '../../../../components/utilities/Localization'
+import Header from '../../../../components/Header';
 import ConfirmModal from '../../../../components/Modals/ConfirmModal';
 import { PRIMARY_THEME_COLOR } from '../../../../components/utilities/constant';
-import EmptyListScreen from 'app/components/CommonScreen/EmptyListScreen';
+import strings from '../../../../components/utilities/Localization';
+import PendingAgencyList from './PendingAgencyListItem';
+import styles from './styles';
 
 
 
@@ -54,6 +54,7 @@ const PendingAgencyView = (props: any) => {
         </View> */}
         <View style={styles.propertyListViewsec}>
           <FlatList
+removeClippedSubviews={false}
             showsVerticalScrollIndicator={false}
             data={Array.isArray(props?.pendingAgency) ? props?.pendingAgency : []}
             ListEmptyComponent={<EmptyListScreen message={strings.pendingconfirm} />}

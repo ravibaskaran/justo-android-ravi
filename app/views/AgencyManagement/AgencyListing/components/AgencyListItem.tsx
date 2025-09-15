@@ -1,4 +1,4 @@
-import usePermission from "app/components/utilities/UserPermissions";
+import usePermission from "../../../../components/utilities/UserPermissions";
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import images from "../../../../assets/images";

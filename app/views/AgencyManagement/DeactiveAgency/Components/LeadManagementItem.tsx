@@ -1,8 +1,8 @@
-import { View, Text, TouchableOpacity, Image, Linking } from "react-native";
-import React from "react";
-import styles from "./Styles";
-import strings from "../../../../components/utilities/Localization";
 import moment from "moment";
+import React from "react";
+import { Text, View } from "react-native";
+import strings from "../../../../components/utilities/Localization";
+import styles from "./Styles";
 
 const LeadManagementItem = (props: any) => {
   return (
@@ -18,7 +18,7 @@ const LeadManagementItem = (props: any) => {
       </View>
       <View style={styles.Txtview}>
         <View style={styles.projectContainer}>
-          <Text style={styles.projectTxt}>{strings.configuration} :</Text>
+          <Text style={styles.projectTxt}>{strings.configurations} :</Text>
         </View>
         <View style={styles.nameContainer}>
           <Text style={styles.nameTxt}>{props.items.configuration ?

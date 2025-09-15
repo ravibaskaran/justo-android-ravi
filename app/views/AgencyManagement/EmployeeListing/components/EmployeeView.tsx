@@ -7,8 +7,8 @@ import FilterModal from "./EmployeeFilterModel";
 import AgencyListItem from "./EmployeeListItem";
 import styles from "./styles";
 
-import Button from "app/components/Button";
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
+import Button from "../../../../components/Button";
+import EmptyListScreen from "../../../../components/CommonScreen/EmptyListScreen";
 import {
   PRIMARY_THEME_COLOR
 } from "../../../../components/utilities/constant";
@@ -70,6 +70,7 @@ const EmployeeView = (props: any) => {
         <View style={[styles.btnView, {marginBottom: 50}]}>
           <View style={styles.propertyListViewsec}>
             <FlatList
+removeClippedSubviews={false}
               showsVerticalScrollIndicator={false}
               data={Array.isArray(props?.agentList) ? props?.agentList : []}
               ListEmptyComponent={

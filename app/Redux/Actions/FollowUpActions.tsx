@@ -1,5 +1,5 @@
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import { apiCall } from "app/components/utilities/httpClient";
+import apiEndPoints from "../../components/utilities/apiEndPoints";
+import { apiCall } from "../../components/utilities/httpClient";
 import {
   ADD_FOLLOWUP,
   ADD_FOLLOWUP_ERROR,

@@ -1,14 +1,12 @@
-import { View, Text, StatusBar, FlatList } from 'react-native'
 import React from 'react'
-import styles from './Styles'
-import { PRIMARY_THEME_COLOR, PRIMARY_THEME_COLOR_DARK } from '../../../../components/utilities/constant'
-import Header from '../../../../components/Header'
-import images from '../../../../assets/images'
-import strings from '../../../../components/utilities/Localization'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import AllFollowUpItem from './AllFollowUpItem'
+import { FlatList, View } from 'react-native'
 import { useSelector } from 'react-redux'
-import EmptyListScreen from 'app/components/CommonScreen/EmptyListScreen'
+import images from '../../../../assets/images'
+import EmptyListScreen from '../../../../components/CommonScreen/EmptyListScreen'
+import Header from '../../../../components/Header'
+import strings from '../../../../components/utilities/Localization'
+import AllFollowUpItem from './AllFollowUpItem'
+import styles from './Styles'
 
 const AllFollowUpView = (props: any) => {
   const { response = {}, list = '' } = useSelector((state: any) => state.followUp)
@@ -25,6 +23,7 @@ const AllFollowUpView = (props: any) => {
       />
       <View style={styles.iteamView}>
         <FlatList
+removeClippedSubviews={false}
           data={Array.isArray(props?.allFollowUpList) ? props?.allFollowUpList : []}
           ListEmptyComponent={<EmptyListScreen message={strings.allfollowup} />}
           renderItem={({ item }) => <AllFollowUpItem items={item} />}

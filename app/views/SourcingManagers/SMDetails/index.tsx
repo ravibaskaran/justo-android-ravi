@@ -1,7 +1,7 @@
 import { useFocusEffect } from '@react-navigation/native';
-import { getSourcingManagerDetail } from 'app/Redux/Actions/SourcingManagerActions';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { getSourcingManagerDetail } from '../../../Redux/Actions/SourcingManagerActions';
 import SMDetailsView from './components/SMDetails';
 
 const SMDetailsScreen = ({ navigation, route }: any) => {

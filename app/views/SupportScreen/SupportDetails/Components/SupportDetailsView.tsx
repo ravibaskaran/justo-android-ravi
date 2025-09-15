@@ -1,12 +1,12 @@
-import { View, Text, ScrollView } from 'react-native'
+import images from '../../../../assets/images'
+import Button from '../../../../components/Button'
+import Header from '../../../../components/Header'
+import strings from '../../../../components/utilities/Localization'
+import { PRIMARY_THEME_COLOR } from '../../../../components/utilities/constant'
 import React from 'react'
-import styles from './styles'
-import Header from 'app/components/Header'
-import images from 'app/assets/images'
-import strings from 'app/components/utilities/Localization'
-import { PRIMARY_THEME_COLOR } from 'app/components/utilities/constant'
+import { View } from 'react-native'
 import SupportDetailsItem from './SupportDetailsItem'
-import Button from 'app/components/Button'
+import styles from './styles'
 
 const SupportDetailsView = (props: any) => {
   return (

@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react'
-import OtpVerificationView from './components/OtpVerificationView'
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { OTPVERIFY_NULL } from '../../../Redux/types';
-import strings from '../../../components/utilities/Localization';
 import ErrorMessage from '../../../components/ErrorMessage';
 import { GREEN_COLOR, RED_COLOR } from '../../../components/utilities/constant';
+import strings from '../../../components/utilities/Localization';
 import { otpVerify, Resendotp } from '../../../Redux/Actions/AuthActions';
+import { OTPVERIFY_NULL } from '../../../Redux/types';
+import OtpVerificationView from './components/OtpVerificationView';
 
 const OtpVerificationScreen = ({ navigation, route }: any) => {
   const { type, email } = route?.params || {}

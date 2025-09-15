@@ -1,10 +1,8 @@
-import { apiCall } from "app/components/utilities/httpClient";
-import { NOTIFICATION_STATUS, PERMISSION_MODULES, PERMISSION_MODULES_ERROR } from "../types";
-import apiEndPoints from "app/components/utilities/apiEndPoints";
-import { MENUITEMS } from "../PermissionType";
-import { GLOBAL_URL } from "app/components/utilities/constant";
-import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import { GLOBAL_URL } from "../../components/utilities/constant";
+import { MENUITEMS } from "../PermissionType";
+import { NOTIFICATION_STATUS, PERMISSION_MODULES, PERMISSION_MODULES_ERROR } from "../types";
 
 const checkPermission = (data: any, isAdmin: any) => {
   const sideBarList = [

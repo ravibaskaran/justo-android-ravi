@@ -1,19 +1,18 @@
-import { View, Text, ScrollView, Image } from "react-native";
+import moment from "moment";
 import React from "react";
-import styles from "./Styles";
+import { Image, ScrollView, Text, View } from "react-native";
 import images from "../../../../assets/images";
 import {
   BLACK_COLOR,
   DATE_BY_DAY,
   DATE_FORMAT,
-  DATE_TIME_FORMAT,
   getCPLeadType,
   GREEN_COLOR,
   PRIMARY_THEME_COLOR,
-  YELLOW_COLOR,
-} from "app/components/utilities/constant";
-import moment from "moment";
-import strings from "app/components/utilities/Localization";
+  YELLOW_COLOR
+} from "../../../../components/utilities/constant";
+import strings from "../../../../components/utilities/Localization";
+import styles from "./Styles";
 
 const AppointmentDtailsItem = (props: any) => {
   const currentDate = `${moment(new Date()).format(

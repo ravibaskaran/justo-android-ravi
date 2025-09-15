@@ -1,18 +1,17 @@
-import {
-  BLACK_COLOR,
-  CONST_IDS,
-  DATE_BY_DAY,
-  DATE_TIME_FORMAT,
-  getCPLeadType,
-  ROLE_IDS,
-} from "app/components/utilities/constant";
 import moment from "moment";
 import React from "react";
 import { ScrollView, Text, View } from "react-native";
 import { useSelector } from "react-redux";
+import { normalize, normalizeSpacing } from "../../../../components/scaleFontSize";
+import {
+  BLACK_COLOR,
+  CONST_IDS,
+  DATE_TIME_FORMAT,
+  getCPLeadType,
+  ROLE_IDS
+} from "../../../../components/utilities/constant";
 import strings from "../../../../components/utilities/Localization";
 import styles from "./styles";
-import { normalize, normalizeSpacing } from "app/components/scaleFontSize";
 
 const BookingViewShot = (props: any) => {
   const getLoginType = useSelector((state: any) => state.login);

@@ -1,19 +1,18 @@
-import ErrorMessage from "app/components/ErrorMessage";
-import { GREEN_COLOR, ROLE_IDS } from "app/components/utilities/constant";
-import strings from "app/components/utilities/Localization";
+import ErrorMessage from "../../../components/ErrorMessage";
+import { GREEN_COLOR, ROLE_IDS } from "../../../components/utilities/constant";
+import strings from "../../../components/utilities/Localization";
 import {
   RemoveAppointment,
   addUserAppointment,
   editUserAppointment,
-} from "app/Redux/Actions/AppiontmentWithUserActions";
-import { getUserVisitList } from "app/Redux/Actions/LeadsActions";
-import { getAllMaster } from "app/Redux/Actions/MasterActions";
-import { getAllProperty } from "app/Redux/Actions/propertyActions";
+} from "../../../Redux/Actions/AppiontmentWithUserActions";
+import { getUserVisitList } from "../../../Redux/Actions/LeadsActions";
+import { getAllMaster } from "../../../Redux/Actions/MasterActions";
+import { getAllProperty } from "../../../Redux/Actions/propertyActions";
 import {
   getAssignCPList,
-  getSourcingHeadSMList,
   getSourcingManagerList,
-} from "app/Redux/Actions/SourcingManagerActions";
+} from "../../../Redux/Actions/SourcingManagerActions";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AddAppointmentView from "./Components/AddAppointmentView";
@@ -84,33 +83,22 @@ const AddAppointmentScreen = ({ navigation, route }: any) => {
 
   useEffect(() => {
     if (
-      getLoginType?.response?.data?.role_id === ROLE_IDS.sourcingtl_id ||
-      getLoginType?.response?.data?.role_id === ROLE_IDS.clusterhead_id
+      (getLoginType?.response?.data?.role_id === ROLE_IDS.sourcingmanager_id ||
+        ROLE_IDS.scm_id ||
+        getLoginType?.response?.data?.role_id === ROLE_IDS.sourcing_head_id ||
+        getLoginType?.response?.data?.role_id === ROLE_IDS.sourcingtl_id ||
+        getLoginType?.response?.data?.role_id === ROLE_IDS.clusterhead_id ||
+        getLoginType?.response?.data?.role_id === ROLE_IDS.sitehead_id) &&
+      type != strings.edit
     ) {
-      setRole("TL");
-      dispatch(getSourcingManagerList({}));
-    } else if (
-      getLoginType?.response?.data?.role_id === ROLE_IDS.sourcing_head_id
-    ) {
-      dispatch(getSourcingHeadSMList({}));
+      setRole("SM");
+      dispatch(
+        getAssignCPList({
+          user_id: getLoginType?.response?.data?.user_id,
+        })
+      );
     } else {
-      if (
-        (getLoginType?.response?.data?.role_id ===
-          ROLE_IDS.sourcingmanager_id ||
-          ROLE_IDS.scm_id ||
-          getLoginType?.response?.data?.role_id === ROLE_IDS.clusterhead_id ||
-          getLoginType?.response?.data?.role_id === ROLE_IDS.sitehead_id) &&
-        type != strings.edit
-      ) {
-        setRole("SM");
-        dispatch(
-          getAssignCPList({
-            user_id: getLoginType?.response?.data?.user_id,
-          })
-        );
-      } else {
-        setListData([]);
-      }
+      setListData([]);
     }
   }, [getLoginType]);
 

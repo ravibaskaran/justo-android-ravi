@@ -1,11 +1,11 @@
 import Geolocation from "@react-native-community/geolocation";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
-import ErrorMessage from "app/components/ErrorMessage";
+import EmptyListScreen from "../../../../components/CommonScreen/EmptyListScreen";
+import ErrorMessage from "../../../../components/ErrorMessage";
 import {
   RemoveAppointment,
   updateUserAppointmentStatus,
-} from "app/Redux/Actions/AppiontmentWithUserActions";
+} from "../../../../Redux/Actions/AppiontmentWithUserActions";
 import React, { useEffect, useState } from "react";
 import { FlatList, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
@@ -129,6 +129,7 @@ const CPAppointmentsForReport = (props: any) => {
         </Text>
 
         <FlatList
+removeClippedSubviews={false}
           data={props.appointmentList}
           renderItem={({ item }) => (
             <MyAppointment

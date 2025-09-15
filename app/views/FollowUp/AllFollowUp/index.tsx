@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import AllFollowUpView from "./Components/AllFollowUpView";
 import { useFocusEffect } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllFollowUpList } from "app/Redux/Actions/FollowUpActions";
+import { getAllFollowUpList } from "../../../Redux/Actions/FollowUpActions";
+import AllFollowUpView from "./Components/AllFollowUpView";
 
 const AllFollowUpScreen = ({ navigation, route }: any) => {
   const data = route?.params || {};

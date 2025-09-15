@@ -1,14 +1,14 @@
 import Geolocation from "@react-native-community/geolocation";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import EmptyListScreen from "app/components/CommonScreen/EmptyListScreen";
-import ErrorMessage from "app/components/ErrorMessage";
-import usePermission from "app/components/utilities/UserPermissions";
+import EmptyListScreen from "../../../../components/CommonScreen/EmptyListScreen";
+import ErrorMessage from "../../../../components/ErrorMessage";
+import usePermission from "../../../../components/utilities/UserPermissions";
 import {
   RemoveAppointment,
   updateUserAppointmentStatus,
-} from "app/Redux/Actions/AppiontmentWithUserActions";
-import { START_LOADING, STOP_LOADING } from "app/Redux/types";
-import AppointmentFilterModal from "app/views/AppointMent/AppintMents/components/AppointmentFilterModal ";
+} from "../../../../Redux/Actions/AppiontmentWithUserActions";
+import { START_LOADING, STOP_LOADING } from "../../../../Redux/types";
+import AppointmentFilterModal from "../../../../views/AppointMent/AppintMents/components/AppointmentFilterModal ";
 import React, { useEffect, useState } from "react";
 import {
   Alert,
@@ -408,6 +408,7 @@ const AppointmentView = (props: any) => {
         {props.appointmentList?.length ? props.appointmentList?.length : 0}
       </Text>
       <FlatList
+removeClippedSubviews={false}
         data={props.appointmentList}
         renderItem={({ item }) => (
           <MyAppointment
@@ -441,6 +442,7 @@ const AppointmentView = (props: any) => {
       {roleId === ROLE_IDS.sourcingtl_id ||
       roleId === ROLE_IDS.sourcing_head_id ? (
         <FlatList
+removeClippedSubviews={false}
           data={props.appointmentList}
           renderItem={({ item }) => (
             <SmAppointment
@@ -467,6 +469,7 @@ const AppointmentView = (props: any) => {
         />
       ) : (
         <FlatList
+removeClippedSubviews={false}
           data={props.appointmentList}
           renderItem={({ item }) => (
             <MyAppointment
@@ -513,12 +516,7 @@ const AppointmentView = (props: any) => {
         leftImageSrc={images.menu}
         rightFirstImageScr={indexData?.index == 1 ? images.filter : null}
         rightSecondImageScr={images.notification}
-        headerText={
-          roleId === ROLE_IDS.sourcingtl_id ||
-          roleId === ROLE_IDS.sourcing_head_id
-            ? strings.appointmentWithSMHeader
-            : strings.appointmentWithCPHeader
-        }
+        headerText={strings.appointmentWithCPHeader}
         handleOnLeftIconPress={props.handleDrawerPress}
         headerStyle={styles.headerStyle}
         RightFirstIconStyle={styles.RightFirstIconStyle}

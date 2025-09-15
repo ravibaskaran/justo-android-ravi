@@ -2,18 +2,18 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import Modal from "react-native-modal";
 import styles from "../../../../components/Modals/styles";
-import images from "app/assets/images";
-import Button from "app/components/Button";
-import strings from "app/components/utilities/Localization";
+import Button from "../../../../components/Button";
+import strings from "../../../../components/utilities/Localization";
 import { Dropdown } from "react-native-element-dropdown";
 import { useDispatch, useSelector } from "react-redux";
 import {
   assignCPSM,
   getSourcingHeadSMList,
   getSourcingManagerList,
-} from "app/Redux/Actions/SourcingManagerActions";
-import ErrorMessage from "app/components/ErrorMessage";
-import { RED_COLOR, ROLE_IDS } from "app/components/utilities/constant";
+} from "../../../../Redux/Actions/SourcingManagerActions";
+import ErrorMessage from "../../../../components/ErrorMessage";
+import { RED_COLOR, ROLE_IDS } from "../../../../components/utilities/constant";
+import images from "../../../../assets/images";
 const data = [
   { label: "Item 1", value: "1" },
   { label: "Item 2", value: "2" },

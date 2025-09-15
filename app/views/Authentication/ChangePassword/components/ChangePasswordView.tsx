@@ -1,12 +1,12 @@
-import { View, Text, Image, TouchableOpacity, ScrollView, Linking } from "react-native";
-import React, { useState } from "react";
-import styles from "./styles";
-import images from "../../../../assets/images";
-import InputField from "../../../../components/InputField";
-import Button from "../../../../components/Button";
-import strings from "../../../../components/utilities/Localization";
 import CheckBox from "@react-native-community/checkbox";
-import { Isios, PRIMARY_THEME_COLOR } from "app/components/utilities/constant";
+import React, { useState } from "react";
+import { Image, Linking, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import images from "../../../../assets/images";
+import Button from "../../../../components/Button";
+import InputField from "../../../../components/InputField";
+import { Isios, PRIMARY_THEME_COLOR } from "../../../../components/utilities/constant";
+import strings from "../../../../components/utilities/Localization";
+import styles from "./styles";
 // import Logoview from "../../Logoview"
 
 const ChangePasswordView = (props: any) => {
