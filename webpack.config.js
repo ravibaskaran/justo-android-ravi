@@ -25,6 +25,8 @@ module.exports = {
   resolve: {
     alias: {
       'react-native$': 'react-native-web',
+      // Platform constants fix for web compatibility
+      'react-native-web/dist/exports/Platform$': path.resolve(__dirname, 'web-stubs/PlatformWeb.js'),
       'react-native-linear-gradient': 'react-native-web-linear-gradient',
       
       // Vector Icons - Must be more specific to exact module paths
@@ -71,6 +73,7 @@ module.exports = {
       'rn-fetch-blob$': path.resolve(__dirname, 'web-stubs/RNFetchBlob.js'),
       'react-native-snackbar$': path.resolve(__dirname, 'web-stubs/Snackbar.js'),
       'react-native-localization$': path.resolve(__dirname, 'web-stubs/Localization.js'),
+      'react-native-fast-image$': path.resolve(__dirname, 'web-stubs/FastImage.js'),
       
       // Date picker Expo constants fix
       'expo-constants$': path.resolve(__dirname, 'web-stubs/ExpoConstants.js'),

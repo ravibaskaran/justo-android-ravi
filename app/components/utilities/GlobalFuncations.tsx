@@ -16,7 +16,9 @@ import RNFS from "react-native-fs";
 import images from '../../assets/images';
 
 const OS: any = Platform
-const OsVer = parseInt(OS.constants['Release'], 10); 
+const OsVer = Platform.OS === 'android'
+  ? parseInt(String((Platform as any).constants?.Release ?? 30), 10)
+  : 0; 
 
 export const handlePermission = async (
   permission: any,
