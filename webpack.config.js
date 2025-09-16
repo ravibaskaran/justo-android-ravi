@@ -69,6 +69,8 @@ module.exports = {
       'react-native-share$': path.resolve(__dirname, 'web-stubs/Share.js'),
       'react-native-device-info$': path.resolve(__dirname, 'web-stubs/DeviceInfo.js'),
       'rn-fetch-blob$': path.resolve(__dirname, 'web-stubs/RNFetchBlob.js'),
+      'react-native-snackbar$': path.resolve(__dirname, 'web-stubs/Snackbar.js'),
+      'react-native-localization$': path.resolve(__dirname, 'web-stubs/Localization.js'),
       
       // Date picker Expo constants fix
       'expo-constants$': path.resolve(__dirname, 'web-stubs/ExpoConstants.js'),
@@ -140,6 +142,15 @@ module.exports = {
     ),
     new webpack.NormalModuleReplacementPlugin(
       /^\.\/useLinking$/,
+      path.resolve(__dirname, 'web-stubs/ReactNavigationPatches.js')
+    ),
+    new webpack.NormalModuleReplacementPlugin(
+      /^\.\/useFrameSize$/,
+      path.resolve(__dirname, 'web-stubs/ReactNavigationPatches.js')
+    ),
+    // More specific replacement for React Navigation Elements useFrameSize
+    new webpack.NormalModuleReplacementPlugin(
+      /@react-navigation\/elements\/lib\/module\/useFrameSize/,
       path.resolve(__dirname, 'web-stubs/ReactNavigationPatches.js')
     ),
   ],

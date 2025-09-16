@@ -6,6 +6,20 @@ export const useBackButton = () => {};
 export const useDocumentTitle = () => {};
 export const useLinking = () => ({ getInitialState: () => {}, getStateFromPath: () => {}, getPathFromState: () => {} });
 
+// Fix for useFrameSize hook that uses raw require() calls
+export const useFrameSize = () => {
+  if (typeof window !== 'undefined') {
+    return {
+      width: window.innerWidth,
+      height: window.innerHeight
+    };
+  }
+  return { width: 375, height: 812 }; // Default mobile dimensions
+};
+
+// FrameSizeProvider component for React Navigation Elements
+export const FrameSizeProvider = ({ children }) => children;
+
 export default {
   addCancelListener,
   MaskedView,
@@ -13,4 +27,6 @@ export default {
   useBackButton,
   useDocumentTitle,
   useLinking,
+  useFrameSize,
+  FrameSizeProvider,
 };
