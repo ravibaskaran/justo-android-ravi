@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const appDirectory = path.resolve(__dirname);
@@ -45,11 +46,6 @@ module.exports = {
     extensions: ['.web.tsx', '.web.ts', '.web.jsx', '.web.js', '.tsx', '.ts', '.jsx', '.js'],
     mainFields: ['react-native', 'browser', 'module', 'main'],
     fullySpecified: false,
-    byDependency: {
-      esm: {
-        fullySpecified: false,
-      },
-    },
   },
   module: {
     rules: [
@@ -74,6 +70,9 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './public/index.html',
+    }),
+    new webpack.DefinePlugin({
+      __DEV__: JSON.stringify(process.env.NODE_ENV !== 'production'),
     }),
   ],
   devServer: {
