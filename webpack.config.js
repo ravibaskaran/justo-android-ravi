@@ -27,11 +27,38 @@ module.exports = {
       'react-native$': 'react-native-web',
       'react-native-linear-gradient': 'react-native-web-linear-gradient',
       'react-native-vector-icons': path.resolve(__dirname, 'web-stubs/VectorIcons.js'),
+      
+      // Vector Icons - Individual icon sets for @rneui compatibility
+      'react-native-vector-icons/Zocial': path.resolve(__dirname, 'web-stubs/VectorIcons.js'),
+      'react-native-vector-icons/Octicons': path.resolve(__dirname, 'web-stubs/VectorIcons.js'),
+      'react-native-vector-icons/MaterialIcons': path.resolve(__dirname, 'web-stubs/VectorIcons.js'),
+      'react-native-vector-icons/MaterialCommunityIcons': path.resolve(__dirname, 'web-stubs/VectorIcons.js'),
+      'react-native-vector-icons/Ionicons': path.resolve(__dirname, 'web-stubs/VectorIcons.js'),
+      'react-native-vector-icons/Foundation': path.resolve(__dirname, 'web-stubs/VectorIcons.js'),
+      'react-native-vector-icons/EvilIcons': path.resolve(__dirname, 'web-stubs/VectorIcons.js'),
+      'react-native-vector-icons/Entypo': path.resolve(__dirname, 'web-stubs/VectorIcons.js'),
+      'react-native-vector-icons/FontAwesome': path.resolve(__dirname, 'web-stubs/VectorIcons.js'),
+      'react-native-vector-icons/FontAwesome5': path.resolve(__dirname, 'web-stubs/VectorIcons.js'),
+      'react-native-vector-icons/SimpleLineIcons': path.resolve(__dirname, 'web-stubs/VectorIcons.js'),
+      'react-native-vector-icons/Feather': path.resolve(__dirname, 'web-stubs/VectorIcons.js'),
+      'react-native-vector-icons/AntDesign': path.resolve(__dirname, 'web-stubs/VectorIcons.js'),
+      'react-native-vector-icons/Fontisto': path.resolve(__dirname, 'web-stubs/VectorIcons.js'),
+      
+      // Expo Vector Icons compatibility
+      '@expo/vector-icons/MaterialCommunityIcons': path.resolve(__dirname, 'web-stubs/VectorIcons.js'),
+      '@react-native-vector-icons/material-design-icons': path.resolve(__dirname, 'web-stubs/VectorIcons.js'),
+      
+      // React Navigation drawer layout fix
+      'react-native-drawer-layout': path.resolve(__dirname, 'web-stubs/DrawerLayout.js'),
+      
+      // Firebase
       '@react-native-firebase/app': path.resolve(__dirname, 'web-stubs/Firebase.js'),
       '@react-native-firebase/auth': path.resolve(__dirname, 'web-stubs/Firebase.js'),
       '@react-native-firebase/messaging': path.resolve(__dirname, 'web-stubs/Firebase.js'),
       '@react-native-firebase/database': path.resolve(__dirname, 'web-stubs/Firebase.js'),
       '@react-native-firebase/storage': path.resolve(__dirname, 'web-stubs/Firebase.js'),
+      
+      // Other React Native modules
       '@react-native-async-storage/async-storage': path.resolve(__dirname, 'web-stubs/AsyncStorage.js'),
       '@notifee/react-native': path.resolve(__dirname, 'web-stubs/Notifee.js'),
       'react-native-version-check': path.resolve(__dirname, 'web-stubs/VersionCheck.js'),
@@ -42,6 +69,9 @@ module.exports = {
       'react-native-share': path.resolve(__dirname, 'web-stubs/Share.js'),
       'react-native-device-info': path.resolve(__dirname, 'web-stubs/DeviceInfo.js'),
       'rn-fetch-blob': path.resolve(__dirname, 'web-stubs/RNFetchBlob.js'),
+      
+      // Date picker Expo constants fix
+      'expo-constants': path.resolve(__dirname, 'web-stubs/ExpoConstants.js'),
     },
     extensions: ['.web.tsx', '.web.ts', '.web.jsx', '.web.js', '.tsx', '.ts', '.jsx', '.js'],
     mainFields: ['react-native', 'browser', 'module', 'main'],
@@ -51,10 +81,14 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx|ts|tsx)$/,
-        exclude: /node_modules(?!(\/|\\\\)(react-native-.*|@react-native.*|react-navigation.*|rn-fetch-blob))/,
+        exclude: /node_modules(?!(\/|\\\\)(react-native-.*|@react-native.*|react-navigation.*|rn-fetch-blob|@twotalltotems))/,
         use: {
           loader: 'babel-loader',
-          options: babelConfig,
+          options: {
+            ...babelConfig,
+            compact: false,
+            cacheDirectory: true,
+          },
         },
       },
       {
