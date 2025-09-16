@@ -45,6 +45,11 @@ module.exports = {
     extensions: ['.web.tsx', '.web.ts', '.web.jsx', '.web.js', '.tsx', '.ts', '.jsx', '.js'],
     mainFields: ['react-native', 'browser', 'module', 'main'],
     fullySpecified: false,
+    byDependency: {
+      esm: {
+        fullySpecified: false,
+      },
+    },
   },
   module: {
     rules: [
