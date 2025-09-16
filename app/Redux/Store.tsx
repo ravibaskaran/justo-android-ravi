@@ -69,14 +69,13 @@ const rootReducer = (state: any, action: any) => {
 
 const enhancers = [applyMiddleware(...middleware)];
 const persistConfig: any = { enhancers };
-const store = createStore(rootReducer, undefined, compose(...enhancers));
+export const store = createStore(rootReducer, undefined, (compose as any)(...enhancers));
 store.subscribe(() => saveToLocalStorage(store.getState()));
-const persistor = persistStore(store, persistConfig, () => {
+export const persistor = persistStore(store, persistConfig, () => {
 });
 const configureStore = () => {
   return { persistor, store };
 };
-
 
 export default configureStore;
 

@@ -5,7 +5,10 @@ import App from './App';
 import { name as appName } from './app.json';
 
 // Initialize performance monitoring for web
-import './app/utils/performance';
+import './app/utils/performanceMonitor';
+
+// Initialize testing system in development
+import './app/utils/testingSystem';
 
 // Register the app
 AppRegistry.registerComponent(appName, () => App);
