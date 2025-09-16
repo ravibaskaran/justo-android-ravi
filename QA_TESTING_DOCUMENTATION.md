@@ -16,45 +16,46 @@ This document establishes a complete quality assurance framework for the Justo R
 
 ### **Testing Philosophy**
 ```
-Prevention > Detection > Correction
+Web-First Testing > Mobile CI/CD Validation > Production Deployment
 ```
-- **Prevention**: Early testing in design and development phases
-- **Detection**: Comprehensive automated and manual testing
-- **Correction**: Rapid issue resolution and validation
+- **Web-First Testing**: Comprehensive testing in web environment before mobile builds
+- **Mobile CI/CD Validation**: External CI/CD pipelines validate mobile-specific functionality
+- **Production Deployment**: Confidence through layered testing approach
 
 ## Testing Scope & Coverage
 
 ### **Application Domains**
 ```
-┌─────────────────────────┬───────────────┬─────────────────────────┐
-│      Domain             │   Priority    │    Testing Focus        │
-├─────────────────────────┼───────────────┼─────────────────────────┤
-│ Authentication & Auth   │   Critical    │ Security & Session Mgmt │
-│ Lead Management         │   Critical    │ Data Integrity & Flow   │
-│ Agency Management       │   Critical    │ CRUD Operations & Logic │
-│ Booking Management      │   Critical    │ Sales Process & Money   │
-│ Property Management     │   High        │ Content & Media Handling│
-│ Communication (Chat)    │   High        │ Real-time Functionality │
-│ Dashboard & Reports     │   High        │ Data Visualization      │
-│ File Management         │   High        │ Upload/Download Security│
-│ Navigation & UI         │   High        │ UX Consistency & Access │
-│ Settings & Preferences  │   Medium      │ User Customization      │
-└─────────────────────────┴───────────────┴─────────────────────────┘
+┌─────────────────────────┬───────────────┬─────────────────────────┬─────────────────┐
+│      Domain             │   Priority    │    Testing Focus        │  Testing Phase  │
+├─────────────────────────┼───────────────┼─────────────────────────┼─────────────────┤
+│ Authentication & Auth   │   Critical    │ Security & Session Mgmt │ Web + CI/CD     │
+│ Lead Management         │   Critical    │ Data Integrity & Flow   │ Web Primary     │
+│ Agency Management       │   Critical    │ CRUD Operations & Logic │ Web Primary     │
+│ Booking Management      │   Critical    │ Sales Process & Money   │ Web Primary     │
+│ Property Management     │   High        │ Content & Media Handling│ Web + CI/CD     │
+│ Communication (Chat)    │   High        │ Real-time Functionality │ Web + CI/CD     │
+│ Dashboard & Reports     │   High        │ Data Visualization      │ Web Primary     │
+│ File Management         │   High        │ Upload/Download Security│ CI/CD Primary   │
+│ Navigation & UI         │   High        │ UX Consistency & Access │ Web Primary     │
+│ Settings & Preferences  │   Medium      │ User Customization      │ Web Primary     │
+└─────────────────────────┴───────────────┴─────────────────────────┴─────────────────┘
 ```
 
-### **Testing Types Matrix**
+### **Testing Types Matrix (Web-First Strategy)**
 ```
 ┌──────────────────────┬────────┬────────┬────────┬────────┬────────┬────────┐
 │   Testing Type       │ Phase1 │ Phase2 │ Phase3 │ Phase4 │ Phase5 │ Phase6 │
 ├──────────────────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-│ Unit Testing         │   N/A  │   ✅   │   ✅   │   ✅   │   ✅   │   ✅   │
-│ Integration Testing  │   N/A  │   ✅   │   ✅   │   ✅   │   ✅   │   ✅   │
-│ API Testing          │   N/A  │   ✅   │   ✅   │   ⚠️   │   ⚠️   │   ✅   │
-│ UI Testing           │   N/A  │   ⚠️   │   ⚠️   │   ✅   │   ⚠️   │   ✅   │
-│ Performance Testing  │   N/A  │   ✅   │   ✅   │   ✅   │   ✅   │   ✅   │
-│ Security Testing     │   N/A  │   ✅   │   ✅   │   ⚠️   │   ✅   │   ✅   │
-│ Accessibility Test   │   N/A  │   N/A  │   N/A  │   ✅   │   N/A  │   ✅   │
-│ Regression Testing   │   N/A  │   ✅   │   ✅   │   ✅   │   ✅   │   ✅   │
+│ Web Unit Testing     │   N/A  │   ✅   │   ✅   │   ✅   │   ✅   │   ✅   │
+│ Web Integration      │   N/A  │   ✅   │   ✅   │   ✅   │   ✅   │   ✅   │
+│ API Testing (Web)    │   N/A  │   ✅   │   ✅   │   ✅   │   ✅   │   ✅   │
+│ UI Testing (Web)     │   N/A  │   ✅   │   ✅   │   ✅   │   ✅   │   ✅   │
+│ Mobile CI/CD Testing │   N/A  │   ⚠️   │   ✅   │   ✅   │   ✅   │   ✅   │
+│ Performance (Web)    │   N/A  │   ✅   │   ✅   │   ✅   │   ✅   │   ✅   │
+│ Security Testing     │   N/A  │   ✅   │   ✅   │   ✅   │   ✅   │   ✅   │
+│ Accessibility (Web)  │   N/A  │   N/A  │   ⚠️   │   ✅   │   ✅   │   ✅   │
+│ Mobile Device Testing│   N/A  │   N/A  │   ⚠️   │   ✅   │   ✅   │   ✅   │
 │ User Acceptance      │   N/A  │   N/A  │   N/A  │   ⚠️   │   N/A  │   ✅   │
 └──────────────────────┴────────┴────────┴────────┴────────┴────────┴────────┘
 ```
