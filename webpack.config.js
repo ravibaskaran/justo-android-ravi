@@ -74,6 +74,9 @@ module.exports = {
       'react-native-snackbar$': path.resolve(__dirname, 'web-stubs/Snackbar.js'),
       'react-native-localization$': path.resolve(__dirname, 'web-stubs/Localization.js'),
       'react-native-fast-image$': path.resolve(__dirname, 'web-stubs/FastImage.js'),
+      'react-native-image-crop-picker$': path.resolve(__dirname, 'web-stubs/ImageCropPicker.js'),
+      'react-native-tab-view$': path.resolve(__dirname, 'web-stubs/TabView.js'),
+      'react-native-gifted-chat$': path.resolve(__dirname, 'web-stubs/GiftedChat.js'),
       
       // Date picker Expo constants fix
       'expo-constants$': path.resolve(__dirname, 'web-stubs/ExpoConstants.js'),
